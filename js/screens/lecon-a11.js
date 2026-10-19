@@ -92,42 +92,42 @@ const VOCAB_PAGES = [
   },
   {
     kind: "words", title: "Mon nom", scene: ["scene-name", "Remplir un formulaire : « What is your name? »"],
-    words: [["first name", "prénom"], ["last name", "nom de famille"], ["nickname", "surnom"], ["full name", "nom complet"], ["age", "âge"], ["initial", "initiale"], ["title (Mr, Mrs)", "titre (M., Mme)"]],
+    words: [["first name", "prénom"], ["last name", "nom de famille"], ["nickname", "surnom"], ["full name", "nom complet"], ["age", "âge"], ["initial", "initiale"], ["title (Mr, Mrs)", "titre (M., Mme)"], ["middle name", "deuxième prénom"], ["signature", "signature"], ["capital letters", "majuscules"]],
     tip: "Le “first name” est le prénom ; le “last name” (ou “surname”) est le nom de famille.",
     examples: [["My first name is {name}.", "Mon prénom est {name}."], ["What is your last name?", "Quel est ton nom de famille ?"]],
     q: ["“Last name” veut dire…", ["prénom", "nom de famille", "surnom"], 1],
   },
   {
     kind: "words", title: "Naissance et lieu", scene: ["scene-birth", "Montrer d’où l’on vient : « I was born in… »"],
-    words: [["date of birth", "date de naissance"], ["place of birth", "lieu de naissance"], ["country", "pays"], ["city", "ville"], ["birthday", "anniversaire"], ["town", "petite ville"], ["village", "village"]],
+    words: [["date of birth", "date de naissance"], ["place of birth", "lieu de naissance"], ["country", "pays"], ["city", "ville"], ["birthday", "anniversaire"], ["town", "petite ville"], ["village", "village"], ["born", "né(e)"], ["year of birth", "année de naissance"], ["month of birth", "mois de naissance"]],
     tip: "On dit “I was born in…” pour donner son lieu de naissance.",
     examples: [["My country is France.", "Mon pays est la France."], ["I live in Paris.", "J’habite à Paris."]],
     q: ["“City” veut dire…", ["pays", "ville", "adresse"], 1],
   },
   {
     kind: "words", title: "Nationalité et résidence", scene: ["scene-nationality", "Les drapeaux : « What is your nationality? »"], icon: "🌍",
-    words: [["nationality", "nationalité"], ["address", "adresse"], ["phone number", "numéro de téléphone"], ["email", "adresse e-mail"], ["postcode", "code postal"], ["street", "rue"], ["mobile", "portable"]],
+    words: [["nationality", "nationalité"], ["address", "adresse"], ["phone number", "numéro de téléphone"], ["email", "adresse e-mail"], ["postcode", "code postal"], ["street", "rue"], ["mobile", "portable"], ["passport", "passeport"], ["ID card", "carte d’identité"], ["flat / apartment", "appartement"]],
     tip: "“Nationality” se termine souvent par -ish, -an ou -ese : British, Canadian, Chinese.",
     examples: [["What is your nationality?", "Quelle est ta nationalité ?"], ["What is your address?", "Quelle est ton adresse ?"]],
     q: ["“Address” veut dire…", ["adresse", "âge", "poids"], 0],
   },
   {
     kind: "words", title: "Les nombres", scene: ["scene-numbers", "Compter : « one, two, three… »"], icon: "🔢",
-    words: [["one, two, three", "un, deux, trois"], ["ten", "dix"], ["fifteen", "quinze"], ["twenty", "vingt"], ["thirty", "trente"], ["a hundred", "cent"]],
+    words: [["one, two, three", "un, deux, trois"], ["ten", "dix"], ["fifteen", "quinze"], ["twenty", "vingt"], ["thirty", "trente"], ["a hundred", "cent"], ["zero", "zéro"], ["five", "cinq"], ["twelve", "douze"], ["number", "numéro / nombre"]],
     tip: "Attention : “fifteen” = 15 mais “fifty” = 50 ; “thirteen” = 13 mais “thirty” = 30.",
     examples: [["I am twenty-two years old.", "J’ai vingt-deux ans."], ["My phone number is oh seven, one two…", "Mon numéro est le 07 12…"]],
     q: ["“Fifty” veut dire…", ["15", "50", "5"], 1],
   },
   {
     kind: "words", title: "Apparence physique", scene: ["scene-describe", "Décrire une personne : « He has curly brown hair. »"], icon: "📏",
-    words: [["height", "taille"], ["weight", "poids"], ["shoe size", "pointure"], ["skin colour", "couleur de peau"], ["eye colour", "couleur des yeux"], ["hair colour", "couleur des cheveux"]],
+    words: [["height", "taille"], ["weight", "poids"], ["shoe size", "pointure"], ["skin colour", "couleur de peau"], ["eye colour", "couleur des yeux"], ["hair colour", "couleur des cheveux"], ["tall", "grand(e)"], ["short", "petit(e)"], ["slim", "mince"], ["young", "jeune"]],
     tip: "Pour la taille : “I am one metre seventy.” Pour les yeux : “I have blue eyes.”",
     examples: [["I am one metre seventy.", "Je mesure 1,70 m."], ["My shoe size is thirty-nine.", "Je chausse du 39."], ["She has long brown hair.", "Elle a de longs cheveux châtains."]],
     q: ["“Shoe size” veut dire…", ["pointure", "taille", "poids"], 0],
   },
   {
     kind: "words", title: "Le corps", scene: ["scene-body", "Les parties du corps : « head, arms, legs, feet »"], icon: "🧍",
-    words: [["head", "tête"], ["eye", "œil"], ["hand", "main"], ["arm", "bras"], ["leg", "jambe"], ["foot (feet)", "pied (pieds)"]],
+    words: [["head", "tête"], ["eye", "œil"], ["hand", "main"], ["arm", "bras"], ["leg", "jambe"], ["foot (feet)", "pied (pieds)"], ["nose", "nez"], ["mouth", "bouche"], ["ear", "oreille"], ["finger", "doigt"]],
     tip: "Pluriels irréguliers : one foot → two feet ; one tooth → two teeth.",
     examples: [["I have two arms and two legs.", "J’ai deux bras et deux jambes."], ["Her hands are small.", "Ses mains sont petites."]],
     q: ["“Leg” veut dire…", ["bras", "jambe", "main"], 1],
@@ -405,7 +405,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       B.vocab[pi] = p;
       if (p.wasGreet) return; // phrases clés : elles vivent dans « Conversation »
       // Écrans équilibrés (jamais un mot seul) : 6 mots max par écran, 4 si l'image de la scène est affichée en entier (16:9).
-      const L = p.words.length, C = (B._cap || (B._cap = {}))[pi] || {}, capF = C.f || (hasScene(p) ? 7 : 10), capL = C.l || (hasScene(p) ? 6 : 8), capM = C.m || 10, ch = [];
+      const L = p.words.length, C = (B._cap || (B._cap = {}))[pi] || {}, capF = C.f || (hasScene(p) ? 9 : 14), capL = C.l || (hasScene(p) ? 8 : 10), capM = C.m || 14, ch = [];
       let caps = [Math.min(capF, capL)];
       if (L > caps[0]) { caps = [capF, capL]; while (caps.reduce((x, y) => x + y, 0) < L) caps.splice(caps.length - 1, 0, capM); }
       const tot = caps.reduce((x, y) => x + y, 0); let sizes = caps.map((c) => Math.floor(L * c / tot)); let rest = L - sizes.reduce((x, y) => x + y, 0);
@@ -430,7 +430,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     let L = gap(); if (L < 24) return;
     const cards = m.querySelectorAll(":scope > .lc-card"), c = cards[cards.length - 1]; if (!c) return;
     const lis = c.querySelectorAll(":scope > ul:not(.lc-bub) > li, :scope ul.lc-words > li"); 
-    if (lis.length) { const pad = Math.min(26, Math.floor(L / (2 * lis.length))); if (pad > 1) lis.forEach((li) => { li.style.paddingTop = (parseFloat(getComputedStyle(li).paddingTop) + pad) + "px"; li.style.paddingBottom = (parseFloat(getComputedStyle(li).paddingBottom) + pad) + "px"; }); L = gap(); }
+    if (lis.length && !c.querySelector(".lc-words, .lc-scene-voc")) { const pad = Math.min(26, Math.floor(L / (2 * lis.length))); if (pad > 1) lis.forEach((li) => { li.style.paddingTop = (parseFloat(getComputedStyle(li).paddingTop) + pad) + "px"; li.style.paddingBottom = (parseFloat(getComputedStyle(li).paddingBottom) + pad) + "px"; }); L = gap(); }
     const chs = c.querySelectorAll(".lc-choice");
     if (chs.length && L > 16) { const pad = Math.min(10, Math.floor(L / (2 * chs.length))); if (pad > 1) chs.forEach((b) => { b.style.paddingTop = (parseFloat(getComputedStyle(b).paddingTop) + pad) + "px"; b.style.paddingBottom = (parseFloat(getComputedStyle(b).paddingBottom) + pad) + "px"; }); L = gap(); }
     if (m.scrollHeight > m.clientHeight + 2 || m.lastElementChild.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6) reset();
@@ -448,11 +448,11 @@ export function renderLesson(root, B, { onExit } = {}) {
         const sc = hasScene(B.vocab[pi]);
         const chk = (i) => { page = i; B._over = false; showVocab(); return B._over; };
         let fixed = false;
-        if (idx.length === 1) { if (chk(idx[0])) { const f = C.f || (sc ? 7 : 10), l = C.l || (sc ? 6 : 8); if (f >= l && f > 2) C.f = f - 1; else if (l > 2) C.l = l - 1; else break; fixed = true; } }
+        if (idx.length === 1) { if (chk(idx[0])) { const f = C.f || (sc ? 9 : 14), l = C.l || (sc ? 8 : 10); if (f >= l && f > 2) C.f = f - 1; else if (l > 2) C.l = l - 1; else break; fixed = true; } }
         else {
-          if (chk(idx[0])) { const f = C.f || (sc ? 7 : 10); if (f > 2) { C.f = f - 1; fixed = true; } }
-          else if (idx.length > 2 && chk(idx[1])) { const m = C.m || 10; if (m > 2) { C.m = m - 1; fixed = true; } }
-          else if (chk(idx[idx.length - 1])) { const l = C.l || (sc ? 6 : 8); if (l > 2) { C.l = l - 1; fixed = true; } }
+          if (chk(idx[0])) { const f = C.f || (sc ? 9 : 14); if (f > 2) { C.f = f - 1; fixed = true; } }
+          else if (idx.length > 2 && chk(idx[1])) { const m = C.m || 14; if (m > 2) { C.m = m - 1; fixed = true; } }
+          else if (chk(idx[idx.length - 1])) { const l = C.l || (sc ? 8 : 10); if (l > 2) { C.l = l - 1; fixed = true; } }
         }
         if (!fixed) break;
       }
@@ -549,7 +549,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       const over = !!(le && ft && (le.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 6 || mn.scrollHeight > mn.clientHeight + 2));
       if (B._probing) { B._over = over; return; }
       if (over) {
-        const C = B._cap[st.pi] || (B._cap[st.pi] = {}), key = st.ci === 0 ? "f" : st.last ? "l" : "m", cur = C[key] || (key === "f" ? (hasScene(p) ? 7 : 10) : key === "l" ? (hasScene(p) ? 6 : 8) : 10);
+        const C = B._cap[st.pi] || (B._cap[st.pi] = {}), key = st.ci === 0 ? "f" : st.last ? "l" : "m", cur = C[key] || (key === "f" ? (hasScene(p) ? 9 : 14) : key === "l" ? (hasScene(p) ? 8 : 10) : 10);
         if (cur > 2) { C[key] = cur - 1; B._steps = null; showVocab(); return; }
       }
     }
