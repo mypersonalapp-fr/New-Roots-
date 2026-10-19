@@ -595,3 +595,6 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .jx-sub{display:block;font-size:.78em;font-weight:500;opacity:.7;margin-top:1px}
 .jx-frbtn{width:100%;margin-top:10px}
 .jx-title b{white-space:normal}
+
+/* Vocabulaire : image de scène plus basse pour laisser la place à 5 mots par écran. */
+.lc-scene-voc img{ aspect-ratio:2.5/1; object-fit:cover; }
