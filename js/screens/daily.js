@@ -1,7 +1,8 @@
 // The Roots Daily — actualités et mails à lire en anglais, questions SANS QCM (réponse tapée).
 // Contenu dans js/data/the-roots-daily-en.js. Progression locale (localStorage, try/catch).
 
-import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261019e8";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261019e9";
+import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261019e9";
 
 const KEY = "the_roots_daily_v1";
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -58,7 +59,7 @@ export function renderDaily(container) {
 
   // Ouverture l'un après l'autre : un numéro (ou mail) ne s'ouvre que quand le précédent est terminé.
   function seq(x) { return DAILY_ITEMS.filter((i) => i.level === x.level && i.type === x.type).sort((a, b) => (a.n || 0) - (b.n || 0) || String(a.date).localeCompare(String(b.date))); }
-  function isOpen(x) { const S = seq(x), k = S.findIndex((i) => i.id === x.id); return k <= 0 || !!state.done[S[k - 1].id]; }
+  function isOpen(x) { if (UNLOCK_ALL_PREVIEW) return true; const S = seq(x), k = S.findIndex((i) => i.id === x.id); return k <= 0 || !!state.done[S[k - 1].id]; }
 
   function card(x, big) {
     const d = state.done[x.id];
