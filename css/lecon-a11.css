@@ -2,7 +2,7 @@
    Fonds d'origine jour/nuit ; cartes illustrées, CTA orange. Suit data-theme. */
 
 .lc-screen{ position:fixed; inset:0; overflow:hidden; background:var(--bg); color:var(--ink); font-family:var(--font-main); }
-.lc-wrap{ position:relative; z-index:1; height:100dvh; max-width:520px; margin:0 auto; display:flex; flex-direction:column; padding:max(10px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom)); }
+.lc-wrap{ width:100%; position:relative; z-index:1; height:100dvh; max-width:520px; margin:0 auto; display:flex; flex-direction:column; padding:max(10px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom)); }
 .lc-screen *{ box-sizing:border-box; }
 
 /* en-tête */
@@ -598,3 +598,6 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 
 /* Vocabulaire : image de scène plus basse pour laisser la place à 5 mots par écran. */
 .lc-scene-voc img{ aspect-ratio:16/9; object-fit:contain; }
+
+.lc-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.lc-chips .lc-chip{ font-size:14px; }
