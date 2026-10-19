@@ -3,6 +3,7 @@
 // connexion / mot de passe oublié) → coquille de l'application.
 
 import { store } from "./data/store.js?v=20260930a";
+import "./data/ui-i18n.js?v=20261019g6";
 import { renderSplash } from "./screens/splash.js?v=20260930a";
 import { renderAuthMenu } from "./screens/auth-menu.js?v=20260930a";
 import { renderLogin } from "./screens/login.js?v=20260930a";
