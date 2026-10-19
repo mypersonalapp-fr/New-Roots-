@@ -1,6 +1,6 @@
 // The Roots — pratique du vocabulaire : 5 séries par page de mots (associer, compléter, remettre en ordre, produire, mini-défi).
 // Tout est généré à partir des mots et des exemples de la page ; l'élève tape, touche et dit — il ne se contente pas de choisir.
-import { createVoice } from "./voice.js?v=20261019f9";
+import { createVoice } from "./voice.js?v=20261019g3";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const norm = (t) => String(t || "").toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:"“”]/g, "").replace(/\s+/g, " ").trim();
@@ -14,8 +14,8 @@ export function buildPractice(p, sub = (s) => s) {
   const exs = (p.examples || []).map(([en, fr]) => [sub(en), sub(fr)]);
   const stages = [];
 
-  // 1 · Associer (5 paires)
-  const pairs = shuffle(words).slice(0, 5);
+  // 1 · Associer (jusqu'à 7 paires : la page se remplit avec les mots de la leçon)
+  const pairs = shuffle(words).slice(0, 7);
   stages.push({ type: "match", title: "Relie chaque mot à son sens", hint: "Touche un mot anglais, puis sa traduction.", pairs });
 
   // 2 · Compléter (3 items) : trou dans une phrase d'exemple si possible, sinon indice français → l'élève tape le mot
@@ -50,7 +50,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
   const missed = new Set();
   let si = startAt, score = 0, total = 0;
 
-  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261019f9" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
+  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261019g3" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
   const shell = (st, inner, cnt = "") => {
     host.innerHTML = `<div class="pr-top"><span>Pratique ${si + 1}/${stages.length}</span><span>${esc(cnt)}</span></div>
       <div class="pr-bar"><i style="width:${Math.round(((si + 0.5) / stages.length) * 100)}%"></i></div>

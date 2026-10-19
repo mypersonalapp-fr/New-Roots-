@@ -11,7 +11,7 @@ export const VOCAB_PLUS_A1 = {};
 
 /* ===== A1.1 — Mon identité ===== */
 VOCAB_PLUS_A1[1] = [
-  P("Origine et résidence", "🌍", "origin=origine; country of origin=pays d'origine; residence=résidence; place of residence=lieu de résidence; resident=habitant; native=natif; citizen=citoyen; abroad=à l'étranger",
+  P("Origine et résidence", "🌍", "origin=origine; country of origin=pays d'origine; residence=résidence; place of residence=lieu de résidence; resident=habitant; native=natif; citizen=citoyen; abroad=à l'étranger; hometown=ville natale; capital=capitale",
     "“Origin” = d'où l'on vient ; “residence” = où l'on habite maintenant.", ["My country of origin is Brazil.=Mon pays d'origine est le Brésil.", "My place of residence is Paris.=Mon lieu de résidence est Paris."]),
   P("Les formulaires", "📝", "first name=prénom; surname=nom de famille; full name=nom complet; date of birth=date de naissance; address=adresse; postcode=code postal; email address=adresse e-mail; phone number=numéro de téléphone; signature=signature; form=formulaire",
     "Sur un formulaire britannique : “first name” (prénom) et “surname” ou “last name” (nom de famille).", ["Please write your full name.=Écrivez votre nom complet, s'il vous plaît.", "What is your postcode?=Quel est votre code postal ?"]),
@@ -21,9 +21,9 @@ VOCAB_PLUS_A1[1] = [
     "Les noms de pays prennent une majuscule en anglais, comme les nationalités et les langues.", ["I'm from Portugal.=Je viens du Portugal.", "She lives in Canada.=Elle habite au Canada."]),
   P("Les nationalités", "🏳️", "French=français(e); Spanish=espagnol(e); Italian=italien(ne); German=allemand(e); Portuguese=portugais(e); Brazilian=brésilien(ne); Moroccan=marocain(e); Senegalese=sénégalais(e); Canadian=canadien(ne); Japanese=japonais(e)",
     "Pas de féminin en anglais : “He is French. She is French.”", ["He is Brazilian.=Il est brésilien.", "We are Italian.=Nous sommes italiens."]),
-  P("Les langues", "🗣️", "English=anglais; French=français; Spanish=espagnol; Arabic=arabe; Chinese=chinois; Russian=russe; Portuguese=portugais; German=allemand; language=langue; mother tongue=langue maternelle",
+  P("Les langues", "🗣️", "English=anglais; French=français; Spanish=espagnol; Arabic=arabe; Chinese=chinois; Russian=russe; Portuguese=portugais; German=allemand; language=langue; mother tongue=langue maternelle; Italian=italien; Japanese=japonais; Turkish=turc; Dutch=néerlandais; fluent=courant; to translate=traduire",
     "On dit “I speak English” (sans article). “Mother tongue” = langue maternelle.", ["I speak French and English.=Je parle français et anglais.", "Her mother tongue is Arabic.=Sa langue maternelle est l'arabe."]),
-  P("Les nombres de 20 à 100", "🔢", "twenty=vingt; thirty=trente; forty=quarante; fifty=cinquante; sixty=soixante; seventy=soixante-dix; eighty=quatre-vingts; ninety=quatre-vingt-dix; hundred=cent; twenty-one=vingt et un",
+  P("Les nombres de 20 à 100", "🔢", "twenty=vingt; thirty=trente; forty=quarante; fifty=cinquante; sixty=soixante; seventy=soixante-dix; eighty=quatre-vingts; ninety=quatre-vingt-dix; hundred=cent; twenty-one=vingt et un; thirty-five=trente-cinq; ninety-nine=quatre-vingt-dix-neuf; a thousand=mille",
     "Attention : thirteen (13) / thirty (30), fourteen (14) / forty (40) : on n'écrit pas “fourty”.", ["I am thirty-five years old.=J'ai trente-cinq ans.", "It costs a hundred pounds.=Cela coûte cent livres."]),
   P("Les mois et les dates", "📅", "January=janvier; February=février; March=mars; April=avril; May=mai; June=juin; July=juillet; August=août; September=septembre; October=octobre; November=novembre; December=décembre",
     "Les mois prennent une majuscule. Date : “the fifth of May” ou “May the fifth”.", ["My birthday is in June.=Mon anniversaire est en juin.", "I was born in March.=Je suis né(e) en mars."]),
