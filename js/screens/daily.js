@@ -1,7 +1,7 @@
 // The Roots Daily — actualités et mails à lire en anglais, questions SANS QCM (réponse tapée).
 // Contenu dans js/data/the-roots-daily-en.js. Progression locale (localStorage, try/catch).
 
-import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261019e7";
+import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261019e8";
 
 const KEY = "the_roots_daily_v1";
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -56,8 +56,17 @@ export function renderDaily(container) {
   const nn = (n) => ("0" + n).slice(-2);
   const fmt = (d) => { if (!d) return ""; try { return new Date(d + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }); } catch (e) { return d; } };
 
+  // Ouverture l'un après l'autre : un numéro (ou mail) ne s'ouvre que quand le précédent est terminé.
+  function seq(x) { return DAILY_ITEMS.filter((i) => i.level === x.level && i.type === x.type).sort((a, b) => (a.n || 0) - (b.n || 0) || String(a.date).localeCompare(String(b.date))); }
+  function isOpen(x) { const S = seq(x), k = S.findIndex((i) => i.id === x.id); return k <= 0 || !!state.done[S[k - 1].id]; }
+
   function card(x, big) {
     const d = state.done[x.id];
+    if (!isOpen(x)) return `<div class="dl-card dl-locked${big ? " dl-big" : ""}" aria-disabled="true">
+      <span class="dl-meta">${x.type === "mail" ? "✉️ Mail" : "📰 N° " + nn(x.n)}</span>
+      <b class="dl-title">🔒 ${esc(x.title)}</b>
+      <span class="dl-state">Termine le précédent pour l'ouvrir</span>
+    </div>`;
     return `<button class="dl-card${big ? " dl-big" : ""}" data-open="${x.id}">
       ${x.img && x.img.hero ? `<img class="dl-img" src="${esc(x.img.hero)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
       <span class="dl-meta">${x.type === "mail" ? "✉️ Mail" : "📰 N° " + nn(x.n) + " · " + esc(x.tag || "News")}${x.date ? " · " + fmt(x.date) : ""} · ${x.minutes} min${x.demo ? " · <i>Exemple de mise en page</i>" : ""}</span>
@@ -107,7 +116,7 @@ export function renderDaily(container) {
         <div class="dp-vr"></div>
         <aside class="dp-side">${story("Food", x.food, x.img.food)}<div class="dp-rs"></div>${story("City", x.city, x.img.city)}<div class="dp-rs"></div>${story("Weather", x.wx, x.img.wx)}</aside>
       </div>
-      <nav class="dp-issues" aria-label="Issues">${DAILY_ITEMS.filter((i) => i.type === "news" && i.level === x.level).sort((a, b) => a.n - b.n).map((i) => `<button data-open="${i.id}"${i.id === x.id ? ' aria-current="true"' : ""}>${nn(i.n)}</button>`).join("")}</nav>
+      <nav class="dp-issues" aria-label="Issues">${DAILY_ITEMS.filter((i) => i.type === "news" && i.level === x.level).sort((a, b) => a.n - b.n).map((i) => `${isOpen(i) ? `<button data-open="${i.id}"${i.id === x.id ? ' aria-current="true"' : ""}>${nn(i.n)}</button>` : `<button disabled aria-disabled="true" style="opacity:.4">🔒</button>`}`).join("")}</nav>
       <div class="dp-tip" id="dlTip">Touche un mot souligné pour sa traduction.</div>
     </div>`;
   }
@@ -181,7 +190,7 @@ export function renderDaily(container) {
     const t = e.target;
     const lv = t.closest("[data-lv]"); if (lv) { level = lv.dataset.lv; paint(); return; }
     const ty = t.closest("[data-type]"); if (ty) { type = ty.dataset.type; paint(); return; }
-    const op = t.closest("[data-open]"); if (op) { openId = op.dataset.open; [results, vals, fbs].forEach((o) => Object.keys(o).forEach((k) => delete o[k])); step = 0; sheet = false; paint(); container.scrollTop = 0; return; }
+    const op = t.closest("[data-open]"); if (op && DAILY_ITEMS.find((i) => i.id === op.dataset.open) && !isOpen(DAILY_ITEMS.find((i) => i.id === op.dataset.open))) return; if (op) { openId = op.dataset.open; [results, vals, fbs].forEach((o) => Object.keys(o).forEach((k) => delete o[k])); step = 0; sheet = false; paint(); container.scrollTop = 0; return; }
     if (t.closest("[data-back]")) { openId = null; step = 0; sheet = false; paint(); return; }
     const fl = t.closest("[data-fl]"); if (fl) { go(+fl.dataset.fl); return; }
     const sh = t.closest("[data-sheet]"); if (sh) { sheet = sh.dataset.sheet === "1"; paint(); return; }

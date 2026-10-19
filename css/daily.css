@@ -180,3 +180,6 @@
 .fl-btn{ color:var(--ink); }
 .fl-btn.am{ color:#fff; }
 .fl-qh,.fl-sh{ color:var(--ink-soft); }
+
+/* Numéros verrouillés : s'ouvrent l'un après l'autre, quand le précédent est terminé. */
+.dl-card.dl-locked{ opacity:.8; border-style:dashed; cursor:default; }

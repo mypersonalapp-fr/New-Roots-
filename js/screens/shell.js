@@ -4,8 +4,8 @@
 // routage entre les onglets.
 
 import { renderDashboard } from "./dashboard.js?v=20261001a";
-import { renderSettings } from "./settings.js?v=20261019e7";
-import { renderMesCours } from "./mes-cours.js?v=20261019e7";
+import { renderSettings } from "./settings.js?v=20261019e8";
+import { renderMesCours } from "./mes-cours.js?v=20261019e8";
 import { renderMesArbres } from "./mes-arbres.js?v=20260930a";
 import { renderComprehension } from "./comprehension.js?v=20261001d";
 import { renderExpression } from "./expression.js?v=20261001d";
@@ -13,7 +13,7 @@ import { renderTraduction } from "./traduction.js?v=20260930a";
 import { renderDictionnaire } from "./dictionnaire.js?v=20260930a";
 import { renderConversation } from "./conversation.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
-import { renderDaily } from "./daily.js?v=20261019e7";
+import { renderDaily } from "./daily.js?v=20261019e8";
 import { renderBibliotheque } from "./bibliotheque.js?v=20261001a";
 import { renderAideFaq } from "./aide-faq.js?v=20261001c";
 import { mountMyWorld } from "./my-world.js?v=20260930a";
@@ -111,6 +111,7 @@ export function renderShell(root) {
       </div>
     </nav>
   `;
+  root.innerHTML = ""; // repart d'un écran propre (sinon l'écran précédent — ex. une leçon — reste dessous)
   root.appendChild(el);
 
   const body = el.querySelector("#appBody");
@@ -158,6 +159,7 @@ export function renderShell(root) {
     // Chaque onglet s'ouvre en haut de page (la zone qui défile est
     // .app-body, elle garderait sinon la position de l'onglet précédent).
     body.scrollTop = 0;
+    body.className = "app-body"; // retire les classes laissées par l'onglet précédent (ex. .dl-flow de Daily : plus de marges ni de fond)
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* rien */ }
     titleEl.textContent = TITLES[id];
     // My World occupe tout l'écran (son propre fond jour/nuit) : on masque
