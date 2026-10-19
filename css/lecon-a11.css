@@ -606,3 +606,4 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-vl{ gap:4px; }
 .lc-vl li{ padding-top:3px; padding-bottom:3px; }
 .lc-vl .lc-spk{ width:34px; height:34px; min-width:34px; flex-basis:34px; font-size:15px; }
+.lc-vl .lc-w small{ font-size:11.5px; }
