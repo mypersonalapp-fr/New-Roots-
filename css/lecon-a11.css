@@ -601,3 +601,8 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 
 .lc-chips{ display:flex; flex-wrap:wrap; gap:8px; }
 .lc-chips .lc-chip{ font-size:14px; }
+
+/* Anti-vide : cases de vocabulaire ajustées au texte (police inchangée) */
+.lc-vl{ gap:4px; }
+.lc-vl li{ padding-top:3px; padding-bottom:3px; }
+.lc-vl .lc-spk{ width:34px; height:34px; min-width:34px; flex-basis:34px; font-size:15px; }
