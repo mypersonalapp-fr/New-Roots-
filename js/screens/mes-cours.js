@@ -9,11 +9,11 @@
 // rassemble ces résultats pour toutes les langues, façon livret scolaire.
 
 import { store } from "../data/store.js?v=20260930a";
-import { renderLesson } from "./lecon-a11.js?v=20261019e6";
-import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261019e6";
-import { renderShell } from "./shell.js?v=20261019e6";
-import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261019e6";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261019e6";
+import { renderLesson } from "./lecon-a11.js?v=20261019e7";
+import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261019e7";
+import { renderShell } from "./shell.js?v=20261019e7";
+import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261019e7";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261019e7";
 import { renderLevelTest } from "./level-test.js?v=20260930a";
 import { t, formatDate } from "../data/i18n.js?v=20260930a";
 import { A1_EN_GENERAL_OBJECTIVE, A1_EN_PALIERS, A1_EN_ENTRY_MODULE } from "../data/programme-a1-en.js?v=20260930a";
@@ -23,14 +23,14 @@ import { B2_EN_GENERAL_OBJECTIVE, B2_EN_PALIERS, B2_EN_ENTRY_MODULE } from "../d
 import { C1_EN_GENERAL_OBJECTIVE, C1_EN_PALIERS, C1_EN_ENTRY_MODULE } from "../data/programme-c1-en.js?v=20260930a";
 import { A1_ES_GENERAL_OBJECTIVE, A1_ES_PALIERS } from "../data/programme-a1-es.js?v=20260930a";
 import { A2_ES_GENERAL_OBJECTIVE, A2_ES_PALIERS } from "../data/programme-a2-es.js?v=20261007a";
-import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261019e6";
-import { plantSvg } from "./plant.js?v=20261019e6";
+import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261019e7";
+import { plantSvg } from "./plant.js?v=20261019e7";
 import { BLOCAGES_ES, BLOCAGES_ES_TITLE, blocageHref, blocagesDone } from "../data/atelier-es-blocages.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
-import { currentCharacter } from "./lecon-a11.js?v=20261019e6";
-import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2 } from "../data/lecons-a2.js?v=20261019e6";
-import { runRattrapage } from "./rattrapage.js?v=20261019e6";
-import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261019e6";
+import { currentCharacter } from "./lecon-a11.js?v=20261019e7";
+import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2 } from "../data/lecons-a2.js?v=20261019e7";
+import { runRattrapage } from "./rattrapage.js?v=20261019e7";
+import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261019e7";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---
@@ -193,7 +193,7 @@ function bothFlagsFor(l) {
 }
 
 // --- Bulletin scolaire (maquette 1) : notes par compétence, lacunes détectées, tests réussis / à repasser ---
-const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261019e6`;
+const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261019e7`;
 const BL_SK = [BL_IMG("exam-a1-reading"), BL_IMG("exam-a1-listening"), BL_IMG("ic-grammar"), BL_IMG("exam-a1-writing"), BL_IMG("exam-a1-speaking")];
 const BL_GAP = { "Grammaire": "ic-grammar", "Lecture": "ic-reading", "Écoute": "ic-listening" };
 export function bulletinParts(level = "A1") {
@@ -215,8 +215,13 @@ export function bulletinParts(level = "A1") {
   return { B, head, skills, gaps, rt: rtCard, grid, word };
 }
 export function bulletinHtml(level = "A1") { const x = bulletinParts(level); return x.head + x.skills + x.gaps + x.rt + x.grid + x.word; }
+// Reprise après une leçon : on revient sur « Mes cours » (même langue, même niveau ouvert), pas sur l'Accueil.
+const MC = { resume: null };
 export function renderMesCours(container, shellRoot) {
-  let openCode = null; // code de la langue ouverte, ou null = liste
+  const R = MC.resume; MC.resume = null;
+  let pathLevel = R ? R.pathLevel : null; // niveau ouvert dans « Mon parcours » (A1, A2…), null = les carrés
+  const exitToCourses = () => { MC.resume = { code: openCode, pathLevel }; try { sessionStorage.setItem("the_roots_last_tab", "mes-cours"); } catch (e) { /* stockage indisponible */ } renderShell(shellRoot); };
+  let openCode = R ? R.code : null; // code de la langue ouverte, ou null = liste
   let openLivret = false;
   let openProgram = null; // { code, level, palier: string|null } — null = fermé
   let openAteliers = null; // espagnol : null = fermé, "home" = rubrique Mes ateliers, "blocages" ou "atelier" = un des deux ateliers
@@ -450,15 +455,47 @@ export function renderMesCours(container, shellRoot) {
       return `<div class="dash-box"><h3>📗 Mon parcours A2</h3><div class="card"><div style="font-size:12px;color:var(--ink-soft)">${built.filter((L) => lessonStatusA2(L.n).passed).length}/${built.length} leçons validées · A2.5 à A2.12 : bientôt${UNLOCK_ALL_PREVIEW ? " · mode vérification : tout est ouvert" : ""}</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">${rows}</div></div></div>`;
     };
     const openA2 = async (n) => {
-      try { const B = await loadBundleA2(n); renderLesson(shellRoot, B, { onExit: () => renderShell(shellRoot) }); }
+      try { const B = await loadBundleA2(n); renderLesson(shellRoot, B, { onExit: exitToCourses }); }
       catch (e) { console.error(e); alert("Cette leçon n’a pas pu s’ouvrir."); }
     };
     const openA1 = async (n) => {
-      try { const B = await loadBundle(n); renderLesson(shellRoot, B, { onExit: () => renderShell(shellRoot) }); }
+      try { const B = await loadBundle(n); renderLesson(shellRoot, B, { onExit: exitToCourses }); }
       catch (e) { console.error(e); alert("Cette leçon n’a pas pu s’ouvrir."); }
     };
+    // --- Mon parcours : un carré par niveau (A1 → C2). Le niveau trouvé par le test est ouvert ; chaque suivant s'ouvre
+    // quand le précédent est validé (toutes ses leçons réussies). Tant que UNLOCK_ALL_PREVIEW est vrai, A1 et A2 restent ouverts. ---
+    const LVN = PROGRAM_LEVELS, entryIdx = Math.max(0, LVN.indexOf(langData.entryLevel || langData.level || "A1"));
+    const lvInfo = (L) => {
+      if (L === "A1") { const d = A1_LIST.filter((x) => lessonStatus(x.n).passed).length; return { built: true, done: d, total: 12, ok: d >= 12 }; }
+      if (L === "A2") { const d = A2_LIST.filter((x) => x.n >= 1 && lessonStatusA2(x.n).passed).length; return { built: true, done: d, total: 12, ok: d >= 12 }; }
+      return { built: false, done: 0, total: 12, ok: false };
+    };
+    const parcoursHtml = () => {
+      const sq = LVN.map((L, i) => {
+        const inf = lvInfo(L), open = inf.built && (UNLOCK_ALL_PREVIEW || i <= entryIdx || lvInfo(LVN[i - 1]).ok);
+        return `<button type="button" class="mc-sq${open ? "" : " off"}" data-pl="${L}" ${open ? "" : "disabled"}>
+          <span class="mc-sq-ic" aria-hidden="true">${open ? (inf.ok ? "✓" : "🔓") : "🔒"}</span><b>${L}</b>
+          <small>${inf.built ? `${inf.done}/${inf.total} leçons` : "Bientôt"}</small></button>`;
+      }).join("");
+      return `<div class="dash-box"><h3>🌱 Mon parcours</h3><div class="mc-sqgrid">${sq}</div>${UNLOCK_ALL_PREVIEW ? `<div style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;text-align:center">Mode vérification : A1 et A2 sont ouverts.</div>` : ""}</div>`;
+    };
+    // Programme résumé, visible seulement tant que le test de niveau n'est pas fait (le détail reste dans l'onglet « Programme »).
+    const programBrief = () => `<div class="dash-box"><h3>📚 Le programme</h3><div class="card">
+      <div class="mc-sqrow">${LVN.map((L) => `<span class="mc-minisq">${L}</span>`).join("")}</div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin:10px 0 0">6 niveaux, 12 paliers par niveau. Ton parcours s'affichera ici dès que le test de niveau sera fait.</p>
+    </div></div>`;
+    if (pathLevel) {
+      const isA2 = pathLevel === "A2";
+      container.innerHTML = `<div class="mc-topbar"><button class="settings-back" id="mcBack">‹ Mon parcours</button></div>${isA2 ? a2PathHtml() : a1PathHtml()}`;
+      container.querySelector("#mcBack").addEventListener("click", () => { pathLevel = null; paint(); });
+      const exB2 = container.querySelector("#mcExam");
+      if (exB2) exB2.addEventListener("click", async () => { try { renderLesson(shellRoot, await loadExamBundle(), { onExit: exitToCourses }); } catch (e) { console.error(e); alert("Le contrôle n’a pas pu s’ouvrir."); } });
+      container.querySelectorAll("[data-a2]").forEach((b) => b.addEventListener("click", () => openA2(Number(b.dataset.a2))));
+      container.querySelectorAll("[data-a1]").forEach((b) => b.addEventListener("click", () => openA1(Number(b.dataset.a1))));
+      return;
+    }
     container.innerHTML = `
-      <button class="settings-back" id="mcBack">${t("mc_back", lang)}</button>
+      <div class="mc-topbar"><button class="settings-back" id="mcBack">${t("mc_back", lang)}</button><button type="button" class="mc-progtab" id="mcOpenProgram">📋 Programme</button></div>
       <div class="dash-box">
         <h3>${flagFor(langData)} ${langData.label}</h3>
         <div class="card">
@@ -489,7 +526,8 @@ export function renderMesCours(container, shellRoot) {
         </div>
       </div>
 
-      ${code === "en" && (langData.leveled || UNLOCK_ALL_PREVIEW) ? a1PathHtml() + a2PathHtml() : ""}
+      ${!langData.leveled ? programBrief() : ""}
+      ${code === "en" && (langData.leveled || UNLOCK_ALL_PREVIEW) ? parcoursHtml() : ""}
 
       ${langData.leveled && code === "en" ? `
         ${renfortsHtml(code) ? `<div class="dash-box"><h3>Mes renforts</h3><div class="card">${renfortsHtml(code)}</div></div>` : ""}
@@ -552,7 +590,6 @@ export function renderMesCours(container, shellRoot) {
             ? t("mc_pdf_available", lang)
             : `<span class="mc-lock-icon" style="font-size:14px">🔒</span> ${t("mc_pdf_locked", lang).replace("🔒 ", "")}`}
         </div>
-        <button class="btn btn-ghost" id="mcOpenProgram" style="width:100%;margin-top:10px">${t("prog_btn", lang)}</button>
       </div>
     `;
 
@@ -567,9 +604,8 @@ export function renderMesCours(container, shellRoot) {
     const previewBtn = container.querySelector("#mcPreviewOpen");
     if (previewBtn) previewBtn.addEventListener("click", () => { window.location.href = code === "es" ? "lessons.html?lang=es#lesson=200" : "lessons.html"; });
     const exB = container.querySelector("#mcExam");
-    if (exB) exB.addEventListener("click", async () => { try { renderLesson(shellRoot, await loadExamBundle(), { onExit: () => renderShell(shellRoot) }); } catch (e) { console.error(e); alert("Le contrôle n’a pas pu s’ouvrir."); } });
-    container.querySelectorAll("[data-a2]").forEach((b) => b.addEventListener("click", () => openA2(Number(b.dataset.a2))));
-    container.querySelectorAll("[data-a1]").forEach((b) => b.addEventListener("click", () => openA1(Number(b.dataset.a1))));
+    if (exB) exB.addEventListener("click", async () => { try { renderLesson(shellRoot, await loadExamBundle(), { onExit: exitToCourses }); } catch (e) { console.error(e); alert("Le contrôle n’a pas pu s’ouvrir."); } });
+    container.querySelectorAll("[data-pl]").forEach((b) => b.addEventListener("click", () => { pathLevel = b.dataset.pl; paint(); }));
     const continueBtn = container.querySelector("#mcContinue");
     if (continueBtn) continueBtn.addEventListener("click", () => { if (code === "es") {
         // Premier lancement (aucune progression espagnole) : on ouvre le premier palier, A1.1.
@@ -761,7 +797,7 @@ export function renderMesCours(container, shellRoot) {
     container.querySelector("#progBackToOverview").addEventListener("click", () => { openProgram = { code, level, palier: null }; paint(); });
     const openLesson = container.querySelector("#progOpenLesson");
     if (openLesson) openLesson.addEventListener("click", async () => {
-      try { const B = await loadBundle(A1_LIST.find((L) => L.code === p.code).n); renderLesson(shellRoot, B, { onExit: () => renderShell(shellRoot) }); }
+      try { const B = await loadBundle(A1_LIST.find((L) => L.code === p.code).n); renderLesson(shellRoot, B, { onExit: exitToCourses }); }
       catch (e) { console.error(e); alert("Cette leçon n’a pas pu s’ouvrir."); }
     });
   }

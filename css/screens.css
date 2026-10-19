@@ -1204,3 +1204,17 @@
 .bl-tabs .bl-bdg{ top:-4px; right:-2px; }
 .bl-tr2{ grid-template-columns:48px 1fr; }
 .bl-leg{ grid-template-columns:1fr 1fr; }
+
+/* --- Mes cours : onglet « Programme » en haut à droite + parcours en carrés --- */
+.mc-topbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.mc-progtab{ display:inline-flex; align-items:center; gap:4px; background:var(--surface,#fff); border:1.5px solid var(--brand-teal); color:var(--brand-teal);
+  font-family:var(--font-main); font-weight:800; font-size:13px; padding:6px 12px; border-radius:999px; margin-bottom:8px; cursor:pointer; }
+.mc-sqgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.mc-sq{ position:relative; aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px;
+  background:var(--surface,#fff); border:2px solid var(--brand-teal); border-radius:18px; font-family:var(--font-main); color:var(--ink); cursor:pointer; }
+.mc-sq b{ font-size:26px; font-weight:800; line-height:1; }
+.mc-sq small{ font-size:11px; color:var(--ink-soft); text-align:center; }
+.mc-sq-ic{ position:absolute; top:6px; right:8px; font-size:13px; }
+.mc-sq.off{ opacity:.55; border-style:dashed; border-color:var(--border); cursor:default; }
+.mc-sqrow{ display:flex; gap:6px; flex-wrap:wrap; }
+.mc-minisq{ min-width:40px; padding:8px 0; text-align:center; font-weight:800; font-size:14px; border:1.5px dashed var(--border); border-radius:10px; color:var(--ink-soft); }
