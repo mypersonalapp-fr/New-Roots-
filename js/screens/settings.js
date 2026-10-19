@@ -182,6 +182,12 @@ export function renderSettings(container, onChange) {
       }
     }
 
+    const AV = {
+      fr: { t: "Mon personnage pédagogique", d: "Choisis une fille ou un garçon, puis un personnage. Ton choix est conservé pour les leçons.", g: "Fille", b: "Garçon", n: "Tu pourras changer de personnage à tout moment." },
+      en: { t: "My teaching character", d: "Choose a girl or a boy, then a character. Your choice is kept for the lessons.", g: "Girl", b: "Boy", n: "You can change character at any time." },
+      pt: { t: "A minha personagem de ensino", d: "Escolhe uma rapariga ou um rapaz, depois uma personagem. A tua escolha é guardada para as lições.", g: "Rapariga", b: "Rapaz", n: "Podes mudar de personagem a qualquer momento." },
+      es: { t: "Mi personaje docente", d: "Elige una chica o un chico, y luego un personaje. Tu elección se guarda para las lecciones.", g: "Chica", b: "Chico", n: "Puedes cambiar de personaje en cualquier momento." },
+    };
     container.innerHTML = `
       ${backRow(t("title_parametres", lang))}
       <div class="settings-tabs">
@@ -191,14 +197,14 @@ export function renderSettings(container, onChange) {
         </div>
 
         <div class="card" style="padding:16px;margin:12px 0;border-radius:18px">
-          <strong>Mon personnage pédagogique</strong>
-          <p style="font-size:12px;color:var(--ink-soft);margin:6px 0 12px">Choisis une fille ou un garçon, puis un personnage. Ton choix est conservé pour les leçons.</p>
+          <strong>${(AV[lang]||AV.fr).t}</strong>
+          <p style="font-size:12px;color:var(--ink-soft);margin:6px 0 12px">${(AV[lang]||AV.fr).d}</p>
           <div style="display:flex;gap:8px;margin-bottom:12px">
-            <button type="button" class="btn btn-ghost" data-avatar-gender="girl" aria-pressed="${(settings.avatarGender||'girl')==='girl'}">Fille</button>
-            <button type="button" class="btn btn-ghost" data-avatar-gender="boy" aria-pressed="${settings.avatarGender==='boy'}">Garçon</button>
+            <button type="button" class="btn btn-ghost" data-avatar-gender="girl" aria-pressed="${(settings.avatarGender||'girl')==='girl'}">${(AV[lang]||AV.fr).g}</button>
+            <button type="button" class="btn btn-ghost" data-avatar-gender="boy" aria-pressed="${settings.avatarGender==='boy'}">${(AV[lang]||AV.fr).b}</button>
           </div>
           <div id="rootsAvatarGrid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px"></div>
-          <p style="font-size:11px;color:var(--ink-soft)">Tu pourras changer de personnage à tout moment.</p>
+          <p style="font-size:11px;color:var(--ink-soft)">${(AV[lang]||AV.fr).n}</p>
         </div>
         <div class="card settings-tab">
           <div><strong>${t("set_interface_lang", lang)}</strong><div style="font-size:12px;color:var(--ink-soft)">${t("set_interface_lang_desc", lang)}</div></div>
@@ -265,8 +271,9 @@ export function renderSettings(container, onChange) {
       // juste une trace de l'onglet ouvert (ici "Paramètres") pour y revenir
       // directement après le rechargement, plutôt que de retomber sur
       // l'Accueil à chaque changement de langue.
-      try { sessionStorage.setItem("the_roots_last_tab", "parametres"); } catch (err) { /* stockage indisponible */ }
-      window.location.reload();
+      window.__rootsLangHandled = false;
+      window.dispatchEvent(new CustomEvent("roots-lang-change", { detail: { tab: "parametres" } }));
+      if (!window.__rootsLangHandled) { try { sessionStorage.setItem("the_roots_last_tab", "parametres"); } catch (err) { /* stockage indisponible */ } window.location.reload(); }
     });
     container.querySelector("#learningLang").addEventListener("change", (e) => {
       store.setPrimaryLearningLang(e.target.value);
