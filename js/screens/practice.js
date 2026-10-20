@@ -1,6 +1,6 @@
 // The Roots — pratique du vocabulaire : 5 séries par page de mots (associer, compléter, remettre en ordre, produire, mini-défi).
 // Tout est généré à partir des mots et des exemples de la page ; l'élève tape, touche et dit — il ne se contente pas de choisir.
-import { createVoice } from "./voice.js?v=20261019g7";
+import { createVoice } from "./voice.js?v=20261019g8";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const norm = (t) => String(t || "").toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:"“”]/g, "").replace(/\s+/g, " ").trim();
@@ -9,6 +9,7 @@ const simple = (w) => !/[\/?…(),.!]/.test(w) && w.trim().split(/\s+/).length <
 const reEsc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // ---------- construction des séries ----------
+import { flagOf } from "../data/flags.js?v=20261019g8";
 export function buildPractice(p, sub = (s) => s) {
   const words = p.words.filter((w) => w[0] && w[1]);
   const exs = (p.examples || []).map(([en, fr]) => [sub(en), sub(fr)]);
@@ -41,6 +42,8 @@ export function buildPractice(p, sub = (s) => s) {
   stages.push({ type: "produce", title: "À toi ! Écris ta phrase", need: two, model: exs[0] ? exs[0][0] : "", modelFr: exs[0] ? exs[0][1] : "" });
 
   // 5 · Mini-défi : QCM mixtes ; les mots ratés avant reviennent en priorité
+  const flagged = words.filter((w) => flagOf(w[0]));
+  if (/^Les (pays|nationalités)$/.test(p.title) && flagged.length >= 4) stages.push({ type: "flag", title: "Trouve le drapeau", words: flagged });
   stages.push({ type: "challenge", title: "Mini-défi", words });
   return stages;
 }
@@ -50,7 +53,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
   const missed = new Set();
   let si = startAt, score = 0, total = 0;
 
-  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261019g7" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
+  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261019g8" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
   const shell = (st, inner, cnt = "") => {
     host.innerHTML = `<div class="pr-top"><span>Pratique ${si + 1}/${stages.length}</span><span>${esc(cnt)}</span></div>
       <div class="pr-bar"><i style="width:${Math.round(((si + 0.5) / stages.length) * 100)}%"></i></div>
@@ -69,7 +72,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
 
   function run() {
     const st = stages[si];
-    ({ match: runMatch, fill: runFill, order: runOrder, produce: runProduce, challenge: runChallenge }[st.type])(st);
+    ({ match: runMatch, fill: runFill, order: runOrder, produce: runProduce, challenge: runChallenge, flag: runFlag }[st.type])(st);
   }
 
   // 1 — associer
@@ -96,6 +99,27 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
       sel = null;
     }));
     host.querySelector("#prGo").onclick = next;
+  }
+
+  // Trouve le drapeau : le drapeau s'affiche, l'apprenti choisit le mot ANGLAIS.
+  function runFlag(st) {
+    const picks = shuffle(st.words).slice(0, 5); let k = 0;
+    const draw = () => {
+      const [en] = picks[k], opts = shuffle([en, ...shuffle(st.words.map((w) => w[0]).filter((x) => x !== en)).slice(0, 3)]); let wrong = false;
+      shell(st, `<p class="hint pr-hint">${k + 1} / ${picks.length} · Choisis le mot en anglais.</p>
+        <div class="pr-card"><b class="pr-fr" style="font-size:64px;line-height:1.1">${flagOf(en)}</b></div>
+        <div class="lc-choices">${opts.map((o) => `<button type="button" class="lc-choice" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+        <p class="lc-fb" id="prFb" aria-live="polite"></p>${goBtn(k + 1 >= picks.length ? "Terminer" : "Suivant")}`, `${k + 1}/${picks.length}`);
+      host.querySelectorAll(".lc-choice").forEach((b) => b.addEventListener("click", () => {
+        if (b.dataset.o === en) {
+          total++; if (!wrong) score++; else missed.add(en);
+          host.querySelectorAll(".lc-choice").forEach((x) => { x.disabled = true; x.classList.toggle("lc-right", x.dataset.o === en); });
+          if (speak) speak(en); say("✔ Bonne réponse !", true); host.querySelector("#prGo").disabled = false;
+        } else { wrong = true; b.classList.add("lc-wrong"); b.disabled = true; say("Pas tout à fait, réessaie.", false); }
+      }));
+      host.querySelector("#prGo").onclick = () => { if (++k >= picks.length) next(); else draw(); };
+    };
+    draw();
   }
 
   // 2 — compléter (l'élève tape)

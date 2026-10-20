@@ -147,6 +147,8 @@ Tapas, siesta et « vosotros » : l'espagnol de la péninsule.¦Tapas, siesta an
 Ton point de départ. Toutes les langues de The Roots s'apprennent depuis le français.¦Your starting point. All The Roots languages are learned from French.¦O teu ponto de partida. Todas as línguas de The Roots se aprendem a partir do francês.¦Tu punto de partida. Todos los idiomas de The Roots se aprenden desde el francés.
 Un espagnol réputé clair et chaleureux — « ¿Qué más? » veut dire « ça va ? ».¦A Spanish known for being clear and warm — "¿Qué más?" means "how are you?".¦Um espanhol conhecido por ser claro e caloroso — «¿Qué más?» quer dizer «como estás?».¦Un español conocido por ser claro y cálido — «¿Qué más?» significa «¿qué tal?».
 Dis ta phrase à voix haute, puis réécoute-toi.¦Say your sentence out loud, then listen to yourself.¦Diz a tua frase em voz alta e depois ouve-te.¦Di tu frase en voz alta y luego escúchate.
+Trouve le drapeau¦Find the flag¦Encontra a bandeira¦Encuentra la bandera
+Choisis le mot en anglais.¦Choose the English word.¦Escolhe a palavra em inglês.¦Elige la palabra en inglés.
 Mini-défi¦Mini challenge¦Mini-desafio¦Mini reto
 Pratique terminée !¦Practice finished!¦Prática concluída!¦¡Práctica terminada!
 Relie chaque mot à son sens¦Match each word to its meaning¦Liga cada palavra ao seu sentido¦Une cada palabra con su significado
