@@ -6,21 +6,21 @@
 export const GRAMMAR_PAGES = [
   {
     title: "Le verbe to be (au présent)", icon: "⚙️",
-    table: [["I", "am", "Je suis"], ["You", "are", "Tu es / Vous êtes"], ["He", "is", "Il est"], ["She", "is", "Elle est"], ["It", "is", "Il/Elle est (objet)"], ["We", "are", "Nous sommes"], ["They", "are", "Ils / Elles sont"]],
-    examples: [["I am {name}.", "Je suis {name}."], ["You are a student.", "Tu es étudiant(e)."], ["He is my friend.", "Il est mon ami."]],
-    qs: [["I ___ French.", ["am", "is", "are"], 0, "Avec I, on utilise am."]],
+    table: [["I", "am", "Je suis"], ["You", "are", "Tu es / Vous êtes"], ["He", "is", "Il est"], ["She", "is", "Elle est"], ["It", "is", "Il/Elle est (objet)"], ["We", "are", "Nous sommes"], ["They", "are", "Ils / Elles sont"], ["My name", "is", "Mon nom est…"], ["The students", "are", "Les étudiants sont…"]],
+    examples: [["I am {name}.", "Je suis {name}."], ["You are a student.", "Tu es étudiant(e)."], ["He is my friend.", "Il est mon ami."], ["We are from France.", "Nous sommes de France."], ["It is a book.", "C’est un livre."]],
+    qs: [["I ___ French.", ["am", "is", "are"], 0, "Avec I, on utilise am."], ["She ___ a teacher.", ["is", "are", "am"], 0, "She + is."], ["We ___ friends.", ["are", "is", "am"], 0, "We + are."], ["They ___ from Brazil.", ["is", "are", "am"], 1, "They + are."], ["It ___ a book.", ["are", "is", "am"], 1, "It + is."], ["You ___ a student.", ["are", "is", "am"], 0, "You + are."], ["He ___ my brother.", ["is", "are", "am"], 0, "He + is."]],
   },
   {
     title: "Les formes courtes et la négation", icon: "✂️",
-    table: [["I", "I’m / I am not", "Je suis / Je ne suis pas"], ["You", "you’re / aren’t", "Tu es / Tu n’es pas"], ["He", "he’s / isn’t", "Il est / Il n’est pas"], ["She", "she’s / isn’t", "Elle est / Elle n’est pas"], ["We", "we’re / aren’t", "Nous sommes / ne sommes pas"], ["They", "they’re / aren’t", "Ils sont / ne sont pas"]],
-    examples: [["I’m not a teacher.", "Je ne suis pas enseignant(e)."], ["She isn’t from Spain.", "Elle n’est pas d’Espagne."]],
-    qs: [["He ___ a doctor. (négatif)", ["isn’t", "aren’t", "am not"], 0, "He + isn’t."]],
+    table: [["I", "I’m / I am not", "Je suis / Je ne suis pas"], ["You", "you’re / aren’t", "Tu es / Tu n’es pas"], ["He", "he’s / isn’t", "Il est / Il n’est pas"], ["She", "she’s / isn’t", "Elle est / Elle n’est pas"], ["We", "we’re / aren’t", "Nous sommes / ne sommes pas"], ["They", "they’re / aren’t", "Ils sont / ne sont pas"], ["It", "it’s / isn’t", "C’est / Ce n’est pas"], ["My name", "my name’s / isn’t", "Mon nom est / n’est pas"], ["That", "that’s / isn’t", "C’est / Ce n’est pas"]],
+    examples: [["I’m not a teacher.", "Je ne suis pas enseignant(e)."], ["She isn’t from Spain.", "Elle n’est pas d’Espagne."], ["We aren’t tired.", "Nous ne sommes pas fatigués."], ["They’re my friends.", "Ce sont mes amis."], ["He’s not at home.", "Il n’est pas à la maison."]],
+    qs: [["He ___ a doctor. (négatif)", ["isn’t", "aren’t", "am not"], 0, "He + isn’t."], ["We ___ students. (négatif)", ["aren’t", "isn’t", "am not"], 0, "We + aren’t."], ["I ___ a teacher. (négatif)", ["am not", "isn’t", "aren’t"], 0, "I + am not."], ["She’s = She ___", ["is", "are", "am"], 0, "’s = is."], ["They’re = They ___", ["are", "is", "am"], 0, "’re = are."], ["It ___ a dog. (négatif)", ["isn’t", "aren’t", "am not"], 0, "It + isn’t."], ["You ___ late. (négatif)", ["aren’t", "isn’t", "am not"], 0, "You + aren’t."]],
   },
   {
     title: "Poser une question avec be", icon: "❓",
-    table: [["Am", "I?", "Suis-je… ?"], ["Are", "you?", "Es-tu… ?"], ["Is", "she?", "Est-elle… ?"], ["Is", "he?", "Est-il… ?"], ["Are", "we / they?", "Sommes-nous / Sont-ils… ?"]],
-    examples: [["Are you a student? — Yes, I am.", "Es-tu étudiant(e) ? — Oui."], ["Is she French? — No, she isn’t.", "Est-elle française ? — Non."]],
-    qs: [["___ you from Spain?", ["Is", "Are", "Am"], 1, "Avec you : Are you… ?"], ["What ___ your name?", ["are", "am", "is"], 2, "What is your name ?"]],
+    table: [["Am", "I?", "Suis-je… ?"], ["Are", "you?", "Es-tu… ?"], ["Is", "she?", "Est-elle… ?"], ["Is", "he?", "Est-il… ?"], ["Are", "we / they?", "Sommes-nous / Sont-ils… ?"], ["Is", "it?", "Est-ce… ?"], ["Am", "I late?", "Suis-je en retard ?"], ["Are", "they teachers?", "Sont-ils enseignants ?"], ["Where", "are you from?", "D’où viens-tu ?"]],
+    examples: [["Are you a student? — Yes, I am.", "Es-tu étudiant(e) ? — Oui."], ["Is she French? — No, she isn’t.", "Est-elle française ? — Non."], ["Are they teachers? — Yes, they are.", "Sont-ils enseignants ? — Oui."], ["Is it a book? — No, it isn’t.", "Est-ce un livre ? — Non."], ["Where are you from? — I’m from Spain.", "D’où viens-tu ? — Je viens d’Espagne."]],
+    qs: [["___ you from Spain?", ["Is", "Are", "Am"], 1, "Avec you : Are you… ?"], ["What ___ your name?", ["are", "am", "is"], 2, "What is your name ?"], ["___ she a doctor?", ["Is", "Are", "Am"], 0, "Avec she : Is she… ?"], ["___ they friends?", ["Is", "Are", "Am"], 1, "Avec they : Are they… ?"], ["___ I late?", ["Am", "Is", "Are"], 0, "Avec I : Am I… ?"], ["Where ___ you from?", ["is", "are", "am"], 1, "Where are you from ?"], ["___ he your brother?", ["Is", "Are", "Am"], 0, "Avec he : Is he… ?"]],
   },
   {
     title: "Le verbe to have", icon: "🎒",
