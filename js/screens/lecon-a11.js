@@ -448,11 +448,11 @@ export function renderLesson(root, B, { onExit } = {}) {
         const sc = hasScene(B.vocab[pi]);
         const chk = (i) => { page = i; B._over = false; showVocab(); return B._over; };
         let fixed = false;
-        if (idx.length === 1) { if (chk(idx[0])) { const f = C.f || (sc ? 11 : 16), l = C.l || (sc ? 10 : 12); if (f >= l && f > 2) C.f = f - 1; else if (l > 2) C.l = l - 1; else break; fixed = true; } }
+        if (idx.length === 1) { if (chk(idx[0])) { const f = C.f || (sc ? 11 : 16), l = C.l || (sc ? 10 : 12); if (f >= l && f > (sc ? 5 : 7)) C.f = f - 1; else if (l > 4) C.l = l - 1; else break; fixed = true; } }
         else {
-          if (chk(idx[0])) { const f = C.f || (sc ? 11 : 16); if (f > 2) { C.f = f - 1; fixed = true; } }
-          else if (idx.length > 2 && chk(idx[1])) { const m = C.m || 16; if (m > 2) { C.m = m - 1; fixed = true; } }
-          else if (chk(idx[idx.length - 1])) { const l = C.l || (sc ? 10 : 12); if (l > 2) { C.l = l - 1; fixed = true; } }
+          if (chk(idx[0])) { const f = C.f || (sc ? 11 : 16); if (f > (sc ? 5 : 7)) { C.f = f - 1; fixed = true; } }
+          else if (idx.length > 2 && chk(idx[1])) { const m = C.m || 16; if (m > 6) { C.m = m - 1; fixed = true; } }
+          else if (chk(idx[idx.length - 1])) { const l = C.l || (sc ? 10 : 12); if (l > 4) { C.l = l - 1; fixed = true; } }
         }
         if (!fixed) break;
       }

@@ -37,10 +37,10 @@ if (window.speechSynthesis) {
 // chaque vraie réouverture, sans pour autant déconnecter le compte.
 const UNLOCK_KEY = "the_roots_unlocked_session";
 function markUnlockedThisSession() {
-  try { sessionStorage.setItem(UNLOCK_KEY, "1"); } catch (e) { /* stockage indisponible */ }
+  try { localStorage.setItem(UNLOCK_KEY, "1"); } catch (e) { /* stockage indisponible */ }
 }
 function isUnlockedThisSession() {
-  try { return sessionStorage.getItem(UNLOCK_KEY) === "1"; } catch (e) { return false; }
+  try { return localStorage.getItem(UNLOCK_KEY) === "1"; } catch (e) { return false; }
 }
 
 // Point d'entrée dans l'appli une fois déverrouillée (après connexion,
