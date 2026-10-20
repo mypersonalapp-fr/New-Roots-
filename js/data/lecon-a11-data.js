@@ -19,7 +19,7 @@ export const GRAMMAR_PAGES = [
   {
     title: "Poser une question avec be", icon: "❓",
     table: [["Am", "I?", "Suis-je… ?"], ["Are", "you?", "Es-tu… ?"], ["Is", "she?", "Est-elle… ?"], ["Is", "he?", "Est-il… ?"], ["Are", "we / they?", "Sommes-nous / Sont-ils… ?"], ["Is", "it?", "Est-ce… ?"], ["Am", "I late?", "Suis-je en retard ?"], ["Are", "they teachers?", "Sont-ils enseignants ?"], ["Where", "are you from?", "D’où viens-tu ?"]],
-    examples: [["Are you a student? — Yes, I am.", "Es-tu étudiant(e) ? — Oui."], ["Is she French? — No, she isn’t.", "Est-elle française ? — Non."], ["Are they teachers? — Yes, they are.", "Sont-ils enseignants ? — Oui."], ["Is it a book? — No, it isn’t.", "Est-ce un livre ? — Non."], ["Where are you from? — I’m from Spain.", "D’où viens-tu ? — Je viens d’Espagne."]],
+    examples: [["Are you a student? — Yes, I am.", "Es-tu étudiant(e) ? — Oui."], ["Is she French? — No, she isn’t.", "Est-elle française ? — Non."], ["Are they teachers? — Yes, they are.", "Sont-ils enseignants ? — Oui."], ["Is it a book? — No, it isn’t.", "Est-ce un livre ? — Non."]],
     qs: [["___ you from Spain?", ["Is", "Are", "Am"], 1, "Avec you : Are you… ?"], ["What ___ your name?", ["are", "am", "is"], 2, "What is your name ?"], ["___ she a doctor?", ["Is", "Are", "Am"], 0, "Avec she : Is she… ?"], ["___ they friends?", ["Is", "Are", "Am"], 1, "Avec they : Are they… ?"], ["___ I late?", ["Am", "Is", "Are"], 0, "Avec I : Am I… ?"], ["Where ___ you from?", ["is", "are", "am"], 1, "Where are you from ?"], ["___ he your brother?", ["Is", "Are", "Am"], 0, "Avec he : Is he… ?"]],
   },
   {
