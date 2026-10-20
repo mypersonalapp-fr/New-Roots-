@@ -26,7 +26,7 @@ export const GRAMMAR_PAGES = [
     title: "Le verbe to have", icon: "🎒",
     table: [["I", "have", "J’ai"], ["You", "have", "Tu as / Vous avez"], ["He / She", "has", "Il / Elle a"], ["We", "have", "Nous avons"], ["They", "have", "Ils / Elles ont"]],
     examples: [["I have brown eyes.", "J’ai les yeux marron."], ["She has a brother.", "Elle a un frère."], ["Do you have a sister? — Yes, I do.", "As-tu une sœur ? — Oui."]],
-    qs: [["He ___ a car.", ["have", "has", "am"], 1, "He / she → has."]],
+    qs: [["He ___ a car.", ["have", "has", "am"], 1, "He / she → has."], ["I ___ two brothers.", ["have", "has", "am"], 0, "I + have."], ["She ___ a sister.", ["has", "have", "is"], 0, "She + has."], ["We ___ a car.", ["have", "has", "are"], 0, "We + have."], ["They ___ brown eyes.", ["have", "has", "is"], 0, "They + have."], ["You ___ a big family.", ["have", "has", "am"], 0, "You + have."]],
   },
   {
     title: "Questions et possessifs", icon: "💬",
@@ -1002,7 +1002,7 @@ GRAMMAR_PAGES.push(
     title: "This / that / these / those", icon: "👉",
     table: [["this", "ce / cet / cette (proche, 1)", "This is my book."], ["that", "ce… là (loin, 1)", "That is her car."], ["these", "ces (proches, plusieurs)", "These are my friends."], ["those", "ces… là (loin, plusieurs)", "Those are his shoes."]],
     examples: [["This is my passport.", "Voici mon passeport."], ["Those are my sisters.", "Ce sont mes sœurs (là-bas)."], ["What is that? — It’s a bag.", "C’est quoi, ça ? — C’est un sac."]],
-    qs: [["___ are my shoes. (plusieurs, proches)", ["This", "These", "That"], 1, "Plusieurs + proche → these."], ["___ is my teacher. (un, loin)", ["That", "These", "Those"], 0, "Un seul + loin → that."]],
+    qs: [["___ are my shoes. (plusieurs, proches)", ["This", "These", "That"], 1, "Plusieurs + proche → these."], ["___ is my teacher. (un, loin)", ["That", "These", "Those"], 0, "Un seul + loin → that."], ["___ is my phone. (un, proche)", ["This", "These", "Those"], 0, "Un seul + proche → this."], ["___ are his keys. (plusieurs, loin)", ["Those", "That", "This"], 0, "Plusieurs + loin → those."], ["___ is a nice car. (un, loin)", ["That", "These", "This"], 0, "Un seul + loin → that."], ["___ are my friends. (plusieurs, proches)", ["These", "That", "Those"], 0, "Plusieurs + proche → these."]],
   },
   {
     title: "To do : questions et réponses courtes", icon: "↩️",
