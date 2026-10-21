@@ -671,3 +671,9 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 /* iPhone : une saisie < 16 px fait zoomer et décaler la page ; on bloque aussi tout défilement latéral */
 .lc-ta, .lc-main textarea, .lc-main input{ font-size:16px !important; }
 .lc-screen, .lc-wrap, .lc-main{ overflow-x:hidden; max-width:100%; }
+
+/* Contrôle : écran de 2 questions de grammaire → cases plus grandes pour remplir la page */
+.lc-bigq .lc-q{ font-size:18px; margin-bottom:8px; }
+.lc-bigq .lc-choices{ gap:9px; }
+.lc-bigq .lc-choice{ min-height:54px; font-size:17px; }
+.lc-bigq .lc-prac{ padding:18px 14px; }

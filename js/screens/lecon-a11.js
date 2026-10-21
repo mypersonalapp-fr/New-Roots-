@@ -6,32 +6,32 @@
 // personnage choisi dans Paramètres (settings.avatarGender / avatarIndex).
 
 import { store } from "../data/store.js?v=20260930a";
-import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261021m";
-import { withExtraQs } from "../data/extra-qs.js?v=20261021m";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261021m";
-import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261021m";
-import { runRattrapage } from "./rattrapage.js?v=20261021m";
+import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261021n";
+import { withExtraQs } from "../data/extra-qs.js?v=20261021n";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261021n";
+import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261021n";
+import { runRattrapage } from "./rattrapage.js?v=20261021n";
 import { AI_RELAY_URL } from "../data/ai-config.js?v=20260930a";
-import { createCity } from "./roots-city.js?v=20261021m";
-import { createGames } from "./jeux-a11.js?v=20261021m";
-import { balanceAll } from "../data/balance.js?v=20261021m";
-import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261021m";
-import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261021m";
-import { plusPages } from "../data/vocab-plus-a1.js?v=20261021m";
-import { buildPractice, mountPractice } from "./practice.js?v=20261021m";
-import { createVoice } from "./voice.js?v=20261021m";
-import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261021m";
-import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261021m";
-import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261021m";
-import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261021m";
-import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261021m";
-import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261021m";
-import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261021m";
-import { flagOf } from "../data/flags.js?v=20261021m";
-import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261021m";
-import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261021m";
-import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261021m";
-import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261021m";
+import { createCity } from "./roots-city.js?v=20261021n";
+import { createGames } from "./jeux-a11.js?v=20261021n";
+import { balanceAll } from "../data/balance.js?v=20261021n";
+import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261021n";
+import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261021n";
+import { plusPages } from "../data/vocab-plus-a1.js?v=20261021n";
+import { buildPractice, mountPractice } from "./practice.js?v=20261021n";
+import { createVoice } from "./voice.js?v=20261021n";
+import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261021n";
+import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261021n";
+import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261021n";
+import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261021n";
+import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261021n";
+import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261021n";
+import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261021n";
+import { flagOf } from "../data/flags.js?v=20261021n";
+import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261021n";
+import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261021n";
+import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261021n";
+import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261021n";
 
 let PROGRESS_KEY = "the_roots_a11_lesson_v1"; // fixé à chaque ouverture de leçon (renderLesson)
 const GIRLS = 9;
@@ -50,7 +50,7 @@ const GREETINGS = [
 // Pages 2 à 5 : mots d'identité du cahier des charges A1.1.
 // q = [question, choix, index de la bonne réponse]
 const IC_IMG = { vocab:1, grammar:1, reading:1, listening:1, speaking:1, exercises:1, transversal:1, test:1 };
-const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261021m" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
+const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261021n" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
 const SCENES = [["scene-greeting","Hello! Nice to meet you."],["scene-friends","Hi! How are you?"],["scene-goodbye","Goodbye! See you tomorrow!"]];
 
 const rxTest = (re, txt) => new RegExp(re, "i").test(String(txt || "").replace(/[’‘`´]/g, "'").replace(/\s+/g, " "));
@@ -530,7 +530,7 @@ export function renderLesson(root, B, { onExit } = {}) {
               <div class="lc-bb ${i % 2 ? "me" : "npc"}"><span class="lc-bt">${esc(en)}<small>${esc(fr)}</small></span>${spk(en)}</div>`).join("")}</div>
           </div>
           ${B.scenes ? `<h3 class="lc-h3">En situation</h3>
-          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261021m" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
+          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261021n" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
           <div class="lc-tip"><span>💡</span><div><b>Astuce</b><p>${esc(p.tip)}</p></div></div>
         </section>`;
 
@@ -564,7 +564,7 @@ export function renderLesson(root, B, { onExit } = {}) {
         </section>` : `
         <section class="lc-card">
           ${head}
-          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261021m" alt="" loading="lazy" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
+          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261021n" alt="" loading="lazy" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
           <ul class="lc-list lc-vl">${st.words.map(([en, fr]) => `
             <li><span class="lc-w"><b>${/^Les (pays|nationalités)$/.test(p.title) ? flagOf(en) + " " : ""}${esc(en)}</b><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
           ${st.last ? ctxHtml : ""}
@@ -873,7 +873,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       <button type="button" class="lc-cta lc-trad-ok">Valider</button>
       <p class="lc-trad-msg" aria-live="polite">${trDone(pt) ? "Série réussie : bravo !" : `${trCount(pt)}/${pt.rows.length} phrases justes. Objectif : ${Math.ceil(pt.rows.length * 0.8)}.`}</p></section>`; };
     const body = p.trad ? trBody() : `<section class="lc-card"><h2 class="lc-h2">${p.icon} ${esc(p.title)}</h2>
-      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261021m" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
+      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261021n" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
       <div class="lc-tabs" role="tablist">
         ${`<button type="button" class="lc-tab ${tab === "speak" ? "on" : ""}" data-tab="speak" role="tab" aria-selected="${tab === "speak"}">🎤 Parler</button>`}
         <button type="button" class="lc-tab ${tab === "write" ? "on" : ""}" data-tab="write" role="tab" aria-selected="${tab === "write"}">✍️ Écrire</button></div>
@@ -967,7 +967,7 @@ export function renderLesson(root, B, { onExit } = {}) {
 
   /* ----- Conversation : le personnage parle, l'élève répond en anglais ----- */
   const dlgState = { done: {} };
-  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261021m" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261021n" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
   function showDialogueList() {
     screen = "dialogue";
     const done = prog.dialogues || {};
@@ -1150,7 +1150,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       ? dictSentences().map((t) => ({ kind, text: t, model: t }))
       : SIT.map((x) => Object.assign({ kind }, x));
     let i = 0, tries = 0, first = 0, shown = false;
-    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261021m" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261021n" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
     function draw(msg) {
       if (i >= items.length) {
         prog.writes = Object.assign({}, prog.writes, { [kind]: true });
@@ -1261,7 +1261,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     const pickIdx = (len, from, k) => { const a = seenAll(k), l = seenLast(k); for (const bad of [a, l, new Set()]) for (let d = 0; d < len; d++) { const i = (from + d) % len; if (!bad.has(i)) return i; } return from % len; };
     const ti = pickIdx(B.testTexts.length, attempt, "t"), ai = pickIdx(B.testAudios.length, attempt + 1, "a");
     const ga = seenAll("g"), gl = seenLast("g");
-    const gram = [...ids.filter((i) => !ga.has(i)), ...ids.filter((i) => ga.has(i) && !gl.has(i)), ...ids.filter((i) => gl.has(i))].slice(0, 10);
+    const gram = [...ids.filter((i) => !ga.has(i)), ...ids.filter((i) => ga.has(i) && !gl.has(i)), ...ids.filter((i) => gl.has(i))].slice(0, 12);
     // Sujets d'expression écrite et orale : eux aussi changent (on prend des pages d'expression pas encore utilisées).
     const ea = seenAll("e"), el2 = seenLast("e"), fresh = (bad, not) => { for (let d = 0; d < POOL.length; d++) { const i = (attempt * 2 + d) % POOL.length; if (!bad.has(i) && i !== not) return i; } return -1; };
     let wi = POOL.indexOf(DEFW), oi = POOL.indexOf(DEFO);
@@ -1286,7 +1286,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     T.plan = T.plan || {};
     const Q = (key, q, n) => `<div class="lc-qb"><p class="lc-q">${n}. ${esc(q[0])}</p><div class="lc-choices" role="group">${q[1].map((o, i) => `<button type="button" class="lc-choice ${T.ans[key] === i ? "lc-sel" : ""}" data-k="${key}" data-i="${i}">${esc(o)}</button>`).join("")}</div></div>`;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261021m" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
+    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261021n" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
     // la page est découpée en blocs ; on remplit chaque écran au maximum, sans défilement
     const bl = []; let head = "", hero = "";
     if (p === 0) {
@@ -1299,14 +1299,14 @@ export function renderLesson(root, B, { onExit } = {}) {
       T.audio.q.forEach((q, i) => bl.push({ k: "q", h: Q("l" + i, q, i + 1), keys: ["l" + i] }));
     } else if (p === 2 || p === 3) {
       head = "Grammaire, verbes, vocabulaire · 10 pts";
-      T.gram.slice((p - 2) * 5, (p - 2) * 5 + 5).forEach((id, i) => bl.push({ k: "q", h: Q("g" + id, B.testGrammar[id], (p - 2) * 5 + i + 1), keys: ["g" + id] }));
+      T.gram.slice((p - 2) * 6, (p - 2) * 6 + 6).forEach((id, i) => bl.push({ k: "q", h: Q("g" + id, B.testGrammar[id], (p - 2) * 6 + i + 1), keys: ["g" + id] }));
     } else if (p === 4) {
       head = "Expression écrite · 7,5 pts"; hero = exImg("writing");
-      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261021m" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="5" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
+      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261021n" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="5" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
     } else {
       head = "Expression orale · 7,5 pts"; hero = exImg("speaking");
       bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">🎤 ${esc(T.ot)}</h2><p class="lc-lead">${esc(T.ol)} Puis coche ce que tu as réellement dit (auto-évaluation).</p>
-        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261021m" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
+        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261021n" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
       EO.checks.forEach(([l], i) => bl.push({ k: "c", h: `<li><label><input type="checkbox" data-o="${i}" ${T.oral[i] ? "checked" : ""}/> ${esc(l)}</label></li>` }));
     }
     const last = p === total - 1;
@@ -1325,14 +1325,14 @@ export function renderLesson(root, B, { onExit } = {}) {
       return html;
     };
     const ttl = B.exam ? "Grand contrôle A1" : "Test de fin de leçon";
-    const draw = (a, z, tight, meas) => frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot);
+    const draw = (a, z, tight, meas) => { frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot); if (p <= 3 && z - a >= 3) { const mm = el.querySelector(".lc-main"); mm.classList.add("lc-listen", "lc-g3", "lc-ex"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight"); } else if (p === 2 || p === 3) el.querySelector(".lc-main").classList.add("lc-bigq"); };
     const fits = () => { const m = el.querySelector(".lc-main"); return m.scrollHeight <= m.clientHeight + 2; };
     if (!T.plan[p]) {
       const plan = []; let a = 0;
       while (a < bl.length) {
         let best = null;
         for (const tier of (a === 0 && hero) || bl.some((x) => x.ta) ? [0, 1, 2] : [0]) {
-          let z = bl.length;
+          let z = (p === 2 || p === 3) && a === 0 && bl.length > 3 ? Math.ceil(bl.length / 2) : bl.length; // grammaire : 3 + 3 questions, jamais 4 + 1
           for (;;) { draw(a, z, tier, true); if (fits() || z - a <= 1) break; z--; }
           const ok = fits();
           if (!best || (ok && (!best.ok || z > best.z))) best = { z, tier, ok };
@@ -1346,6 +1346,17 @@ export function renderLesson(root, B, { onExit } = {}) {
     T.s = s;
     const [pa, pz, ptight] = plan[s];
     draw(pa, pz, ptight);
+    if (p <= 3) { // les cases s'agrandissent pour remplir la page (sans défilement)
+      const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"), chs = [...m.querySelectorAll(".lc-choice")], cards = m.querySelectorAll(":scope > .lc-card"), lastC = cards[cards.length - 1];
+      if (chs.length && lastC && f) {
+        const L = Math.floor(f.getBoundingClientRect().top - lastC.getBoundingClientRect().bottom - 16), base = chs.map((x) => parseFloat(getComputedStyle(x).paddingTop));
+        for (let q = Math.min(20, Math.floor(L / (2 * chs.length))); q > 0; q--) {
+          chs.forEach((x, i) => { x.style.paddingTop = x.style.paddingBottom = (base[i] + q) + "px"; });
+          if (m.scrollHeight <= m.clientHeight + 2 && lastC.getBoundingClientRect().bottom <= f.getBoundingClientRect().top - 12) break;
+          chs.forEach((x) => { x.style.paddingTop = x.style.paddingBottom = ""; });
+        }
+      }
+    }
     const keys = bl.slice(pa, pz).flatMap((x) => x.keys || []);
     el.querySelector(".lc-main").scrollTop = 0;
     const next = el.querySelector("#lcNext");
@@ -1384,7 +1395,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     screen = "test-result";
     const cnt = (list, pre) => list.reduce((n, q, i) => n + (T.ans[pre + i] === q[2] ? 1 : 0), 0);
     const r = cnt(T.text.q, "r"), l = cnt(T.audio.q, "l");
-    const g = T.gram.reduce((n, id) => n + (T.ans["g" + id] === B.testGrammar[id][2] ? 1 : 0), 0);
+    const g = T.gram.reduce((n, id) => n + (T.ans["g" + id] === B.testGrammar[id][2] ? 1 : 0), 0) * 10 / Math.max(1, T.gram.length);
     const w = EW.checks.filter(([, re]) => rxTest(re, T.written)).length / EW.checks.length * 7.5;
     const o = T.oral.filter(Boolean).length / EO.checks.length * 7.5;
     const pts = [r / Math.max(1, T.text.q.length) * 7.5, l / Math.max(1, T.audio.q.length) * 7.5, g, w, o];
