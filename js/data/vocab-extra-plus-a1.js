@@ -150,3 +150,4 @@ export function withVocabExtraPlus(p) {
   const seen = new Set(p.words.map((w) => String(w[0]).toLowerCase().trim()));
   p.words = [...p.words, ...x.filter((w) => w[0] && w[1] && !seen.has(w[0].toLowerCase()))]; p._vp = 1; return p;
 }
+A("La maison familiale", "door=porte; window=fenêtre; roof=toit");

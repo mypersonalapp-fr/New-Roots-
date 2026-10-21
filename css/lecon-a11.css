@@ -748,3 +748,7 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-main.lc-kbp .pr-card small{ font-size:9.5px; }
 .lc-main.lc-kbp .pr-fr{ font-size:14px; }
 .lc-main.lc-kbp input.pr-in{ font-size:13px !important; }
+/* fiches vocabulaire avec image : mots plus petits pour laisser la place à un mot de plus */
+.lc-card:has(.lc-scene-voc) .lc-w b{ font-size:15.5px; }
+.lc-card:has(.lc-scene-voc) .lc-w small{ font-size:11.5px; }
+.lc-card:has(.lc-scene-voc) .lc-list li{ min-height:0; }
