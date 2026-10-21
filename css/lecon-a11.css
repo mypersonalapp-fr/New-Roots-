@@ -656,3 +656,14 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-ex .lc-lead{ font-size:12.5px; line-height:1.3; margin:2px 0 4px; }
 .lc-ex .lc-actions{ margin-top:4px; }
 .lc-ex .lc-actions .lc-chip{ padding:4px 10px; font-size:12.5px; }
+
+/* Dictée / Dis-le en anglais : pas d'ouverture auto du clavier ; clavier ouvert = image masquée, tout reste visible */
+.lc-main.lc-kb .lc-exhero figure{ margin:0 0 5px; }
+.lc-main.lc-kb .lc-exhero img{ aspect-ratio:auto; height:var(--kbimg,78px) !important; object-fit:cover !important; object-position:center 30%; }
+.lc-main.lc-kb .lc-ta{ min-height:50px !important; max-height:92px; overflow-y:auto; }
+.lc-main.lc-kb .lc-card{ padding-top:8px; padding-bottom:8px; }
+.lc-main.lc-kb .lc-ask{ margin:0 0 4px; }
+.lc-main:has(#wrIn) .lc-h2{ font-size:16px; margin:0 0 4px; }
+.lc-main:has(#wrIn) .lc-ask{ font-size:14px; line-height:1.35; margin:2px 0 6px; }
+.lc-main:has(#wrIn) .lc-ta{ font-size:15px; min-height:72px; padding:9px 11px; }
+.lc-main:has(#wrIn) .lc-chip{ padding:5px 11px; font-size:13px; }
