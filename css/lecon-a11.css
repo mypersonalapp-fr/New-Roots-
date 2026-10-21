@@ -665,5 +665,9 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-main.lc-kb .lc-ask{ margin:0 0 4px; }
 .lc-main:has(#wrIn) .lc-h2{ font-size:16px; margin:0 0 4px; }
 .lc-main:has(#wrIn) .lc-ask{ font-size:14px; line-height:1.35; margin:2px 0 6px; }
-.lc-main:has(#wrIn) .lc-ta{ font-size:15px; min-height:72px; padding:9px 11px; }
+.lc-main:has(#wrIn) .lc-ta{ font-size:16px; min-height:72px; padding:9px 11px; }
 .lc-main:has(#wrIn) .lc-chip{ padding:5px 11px; font-size:13px; }
+
+/* iPhone : une saisie < 16 px fait zoomer et décaler la page ; on bloque aussi tout défilement latéral */
+.lc-ta, .lc-main textarea, .lc-main input{ font-size:16px !important; }
+.lc-screen, .lc-wrap, .lc-main{ overflow-x:hidden; max-width:100%; }
