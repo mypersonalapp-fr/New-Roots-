@@ -53,17 +53,23 @@ export const READING_PAGES = [
 
 export const LISTENING_PAGES = [
   { title: "At school", text: "Hello! What's your name? My name is Anna. How old are you? I'm twelve. Where are you from? I'm from Spain.",
+    kw: [["How old are you?", "Quel âge as-tu ?"], ["Where are you from?", "D’où viens-tu ?"], ["Hello!", "Bonjour !"]],
     qs: [["What is her name?", ["Anna", "Emma", "Lila"], 0, "My name is Anna."], ["How old is she?", ["10", "12", "20"], 1, "Twelve = 12."], ["Where is she from?", ["Spain", "France", "Italy"], 0, "I'm from Spain."]] },
   { title: "At work", text: "Good morning. Are you a teacher? No, I'm not. I'm a doctor. Do you live here? Yes, I do.",
+    kw: [["Good morning.", "Bonjour."], ["Are you a teacher?", "Es-tu enseignant(e) ?"], ["Do you live here?", "Habites-tu ici ?"]],
     qs: [["Is the speaker a teacher?", ["Yes", "No", "We don't know"], 1, "No, I'm not."], ["What is the speaker’s job?", ["Teacher", "Doctor", "Student"], 1, "I'm a doctor."], ["Does the speaker live here?", ["Yes", "No", "We don't know"], 0, "Yes, I do."]] },
   { title: "New friends", text: "Hi, I'm James. What's your nationality? I'm British. Do you have brothers or sisters? Yes, I have one brother.",
-    qs: [["What is James's nationality?", ["British", "Canadian", "Spanish"], 0, "I'm British."], ["How many brothers does he have?", ["None", "One", "Two"], 1, "One brother."]] },
+    kw: [["What’s your nationality?", "Quelle est ta nationalité ?"], ["Do you have brothers or sisters?", "As-tu des frères ou sœurs ?"], ["Hi, I’m James.", "Salut, je suis James."]],
+    qs: [["What is James's nationality?", ["British", "Canadian", "Spanish"], 0, "I'm British."], ["How many brothers does he have?", ["None", "One", "Two"], 1, "One brother."], ["« Do you have ___ or sisters? »", ["brothers", "parents", "cousins"], 0, "Do you have brothers or sisters?"]] },
   { title: "Sam", text: "Hello! I am Sam. I am twenty. I am British. I live in London.",
+    kw: [["Hello!", "Bonjour !"], ["I am Sam.", "Je suis Sam."], ["I live in…", "J’habite à…"]],
     qs: [["How old is Sam?", ["10", "20", "30"], 1, "Twenty = 20."], ["Where does Sam live?", ["Paris", "London", "Rome"], 1, "He lives in London."], ["Is Sam British?", ["Yes", "No", "Unknown"], 0, "I am British."]] },
   { title: "Anna", text: "Hi! My name is Anna. I am from Spain. I live in Madrid. I am a student.",
+    kw: [["Hi!", "Salut !"], ["My name is…", "Je m’appelle…"], ["I am from…", "Je viens de…"], ["I live in…", "J’habite à…"]],
     qs: [["Where is Anna from?", ["Spain", "France", "Italy"], 0, "I am from Spain."], ["Where does Anna live?", ["London", "Madrid", "Porto"], 1, "She lives in Madrid."], ["Is Anna a student?", ["Yes", "No", "Unknown"], 0, "I am a student."]] },
   { title: "David", text: "Good morning. I am David. I am thirty years old. I am Canadian. I live in Toronto.",
-    qs: [["How old is David?", ["20", "30", "40"], 1, "Thirty = 30."], ["What is his nationality?", ["British", "Canadian", "Spanish"], 1, "I am Canadian."]] },
+    kw: [["Good morning.", "Bonjour."], ["I am David.", "Je suis David."], ["…years old", "…ans"], ["I live in…", "J’habite à…"]],
+    qs: [["How old is David?", ["20", "30", "40"], 1, "Thirty = 30."], ["What is his nationality?", ["British", "Canadian", "Spanish"], 1, "I am Canadian."], ["« I am thirty ___ old. »", ["years", "days", "hours"], 0, "I am thirty years old."]] },
 ];
 
 // Exercices : séries corrigées (js/a11-drills.js) — la correction s'affiche à chaque réponse, rattrapage possible.
@@ -1020,9 +1026,11 @@ READING_PAGES.push(
 
 LISTENING_PAGES.push(
   { title: "Phone number and age", text: "Hello, my name is Sophie. I am twenty-eight years old. My phone number is oh seven, one two, three four. My birthday is in July.",
-    qs: [["How old is Sophie?", ["18", "28", "38"], 1, "Twenty-eight = 28."], ["When is her birthday?", ["June", "July", "August"], 1, "In July."]] },
+    kw: [["Hello, my name is…", "Bonjour, je m’appelle…"], ["…years old", "…ans"], ["My phone number is…", "Mon numéro est…"], ["My birthday is in…", "Mon anniversaire est en…"]],
+    qs: [["How old is Sophie?", ["18", "28", "38"], 1, "Twenty-eight = 28."], ["When is her birthday?", ["June", "July", "August"], 1, "In July."], ["« ___, my name is Sophie. »", ["Hello", "Goodbye", "Thanks"], 0, "Hello, my name is Sophie."]] },
   { title: "What does she look like?", text: "This is my friend Mia. She is tall. She has long brown hair and green eyes. Her shoes are red.",
-    qs: [["What colour are her eyes?", ["Green", "Blue", "Brown"], 0, "Green eyes."], ["What colour are her shoes?", ["Red", "Pink", "Black"], 0, "Her shoes are red."]] },
+    kw: [["This is my friend…", "Voici mon amie…"], ["She is tall.", "Elle est grande."], ["She has long hair.", "Elle a les cheveux longs."]],
+    qs: [["What colour are her eyes?", ["Green", "Blue", "Brown"], 0, "Green eyes."], ["What colour are her shoes?", ["Red", "Pink", "Black"], 0, "Her shoes are red."], ["« This is my ___ Mia. »", ["friend", "sister", "teacher"], 0, "This is my friend Mia."]] },
 );
 
 EXERCISE_PAGES.push(

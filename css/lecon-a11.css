@@ -610,3 +610,21 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 /* Textes sur fond blanc : toujours foncés (illisibles en mode sombre sinon) */
 .lc-guide .lc-gbub{ color:#1b1d22; }
 .lc-nexthint{ color:#1b1d22; }
+
+/* Écoute (A1.1) : carte audio et questions plus compactes, la place libre est remplie par « Phrases de l’audio » (voir fillRows). */
+.lc-listen .lc-card{ padding:12px; margin-bottom:10px; }
+.lc-listen .lc-h2{ margin-bottom:8px; font-size:17px; }
+.lc-listen .lc-guide{ margin-bottom:6px; }
+.lc-listen .lc-player{ padding:6px 10px; gap:10px; }
+.lc-listen .lc-play{ width:40px; height:40px; font-size:16px; }
+.lc-listen .lc-wave{ height:22px; }
+.lc-listen .lc-speed{ min-height:34px; padding:4px 10px; font-size:12px; }
+.lc-listen .lc-chip{ min-height:36px; padding:6px 14px; font-size:13px; }
+.lc-listen .lc-actions{ margin-top:8px; }
+.lc-listen .lc-q{ font-size:15px; margin-bottom:6px; }
+.lc-listen .lc-choices{ gap:5px; }
+.lc-listen .lc-choice{ min-height:38px; padding:6px 12px; font-size:15px; }
+.lc-listen .lc-kw{ padding:12px; }
+.lc-listen .lc-kw .lc-h2{ margin:0 0 6px; font-size:15px; }
+.lc-listen .lc-fb{ min-height:18px; margin-top:4px; font-size:13px; line-height:18px; }
+.lc-listen .lc-fb:empty{ display:block; }
