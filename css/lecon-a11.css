@@ -628,3 +628,19 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-listen .lc-kw .lc-h2{ margin:0 0 6px; font-size:15px; }
 .lc-listen .lc-fb{ min-height:18px; margin-top:4px; font-size:13px; line-height:18px; }
 .lc-listen .lc-fb:empty{ display:block; }
+.lc-kw .lc-tipt{ margin:0; font-weight:700; font-size:15px; line-height:1.35; }
+
+/* Grammaire A1.1 : exemples plus compacts (bulles réduites) et 3 questions par écran */
+.lc-gex{ padding:12px; }
+.lc-gex .lc-h2{ margin:0 0 8px; font-size:17px; }
+.lc-gex .lc-list.lc-bub{ gap:5px; }
+.lc-gex .lc-list.lc-bub .lc-w{ padding:5px 11px; }
+.lc-gex .lc-list.lc-bub .lc-w b{ font-size:14.5px; line-height:1.25; }
+.lc-gex .lc-list.lc-bub .lc-w small{ font-size:11px; margin-top:0; }
+.lc-gex .lc-list.lc-bub .lc-spk{ width:26px; height:26px; min-width:26px; font-size:13px; }
+.lc-listen.lc-g3 .lc-card{ padding:10px 12px; }
+.lc-listen.lc-g3 .lc-h2{ margin-bottom:5px; font-size:16px; }
+.lc-listen.lc-g3 .lc-q{ font-size:14.5px; margin-bottom:4px; }
+.lc-listen.lc-g3 .lc-choices{ gap:4px; }
+.lc-listen.lc-g3 .lc-choice{ min-height:34px; padding:4px 12px; font-size:14.5px; }
+.lc-listen.lc-g3 .lc-fb{ min-height:16px; margin-top:2px; font-size:12.5px; line-height:16px; }
