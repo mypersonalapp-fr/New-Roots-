@@ -752,3 +752,21 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-card:has(.lc-scene-voc) .lc-w b{ font-size:15.5px; }
 .lc-card:has(.lc-scene-voc) .lc-w small{ font-size:11.5px; }
 .lc-card:has(.lc-scene-voc) .lc-list li{ min-height:0; }
+.lc-gex-s{ padding:9px 11px; }
+.lc-gex-s .lc-h2{ margin:0 0 5px; font-size:15px; }
+.lc-gex-s .lc-list.lc-bub{ gap:3px; }
+.lc-gex-s .lc-list.lc-bub .lc-w{ padding:3px 9px; }
+.lc-gex-s .lc-list.lc-bub .lc-w b{ font-size:13px; line-height:1.2; }
+.lc-gex-s .lc-list.lc-bub .lc-w small{ font-size:10.5px; }
+.lc-gex-s .lc-list.lc-bub .lc-spk{ width:22px; height:22px; min-width:22px; font-size:11px; }
+.lc-rules li{ padding-top:3px; padding-bottom:3px; }
+.lc-rules .lc-w b,.lc-rules .lc-w .lc-form{ font-size:15px; }
+.lc-rules .lc-w small{ font-size:11px; }
+.lc-rules .lc-w{ line-height:1.15; }
+.lc-rules .lc-w small{ display:inline; margin-left:8px; opacity:.7; }
+/* A1.2 grammaire : exemples réduits pour libérer de la place aux règles */
+.lc-gex .lc-list.lc-bub .lc-w{ padding:4px 10px; }
+.lc-gex .lc-list.lc-bub .lc-w b{ font-size:13.5px; line-height:1.2; }
+.lc-gex .lc-list.lc-bub .lc-w small{ font-size:10.5px; }
+.lc-gex .lc-list.lc-bub .lc-spk{ width:24px; height:24px; min-width:24px; font-size:12px; }
+.lc-gex .lc-list.lc-bub{ gap:4px; }
