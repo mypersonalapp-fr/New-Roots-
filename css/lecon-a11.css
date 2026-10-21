@@ -644,3 +644,10 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-listen.lc-g3 .lc-choices{ gap:4px; }
 .lc-listen.lc-g3 .lc-choice{ min-height:34px; padding:4px 12px; font-size:14.5px; }
 .lc-listen.lc-g3 .lc-fb{ min-height:16px; margin-top:2px; font-size:12.5px; line-height:16px; }
+
+.lc-listen.lc-g3.lc-tight .lc-card{ padding:8px 11px; }
+.lc-listen.lc-g3.lc-tight .lc-h2{ margin-bottom:3px; font-size:15px; }
+.lc-listen.lc-g3.lc-tight .lc-q{ font-size:14px; margin-bottom:3px; line-height:1.25; }
+.lc-listen.lc-g3.lc-tight .lc-choices{ gap:3px; }
+.lc-listen.lc-g3.lc-tight .lc-choice{ min-height:30px; padding:3px 10px; font-size:14px; }
+.lc-listen.lc-g3.lc-tight .lc-fb{ min-height:14px; margin-top:1px; font-size:12px; line-height:14px; }
