@@ -770,3 +770,7 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-gex .lc-list.lc-bub .lc-w small{ font-size:10.5px; }
 .lc-gex .lc-list.lc-bub .lc-spk{ width:24px; height:24px; min-width:24px; font-size:12px; }
 .lc-gex .lc-list.lc-bub{ gap:4px; }
+/* Vocabulaire : écriture plus petite pour mettre plus de mots par page */
+.lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-w b{ font-size:15px; line-height:1.2; }
+.lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-w small{ font-size:11px; }
+.lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-spk{ width:30px; height:30px; min-width:30px; flex-basis:30px; font-size:14px; }
