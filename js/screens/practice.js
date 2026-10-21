@@ -1,6 +1,6 @@
 // The Roots — pratique du vocabulaire : 5 séries par page de mots (associer, compléter, remettre en ordre, produire, mini-défi).
 // Tout est généré à partir des mots et des exemples de la page ; l'élève tape, touche et dit — il ne se contente pas de choisir.
-import { createVoice } from "./voice.js?v=20261021y";
+import { createVoice } from "./voice.js?v=20261022g";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const norm = (t) => String(t || "").toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:"“”]/g, "").replace(/\s+/g, " ").trim();
@@ -9,7 +9,7 @@ const simple = (w) => !/[\/?…(),.!]/.test(w) && w.trim().split(/\s+/).length <
 const reEsc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // ---------- construction des séries ----------
-import { flagOf } from "../data/flags.js?v=20261021y";
+import { flagOf } from "../data/flags.js?v=20261022g";
 export function buildPractice(p, sub = (s) => s) {
   const words = p.words.filter((w) => w[0] && w[1]);
   const exs = (p.examples || []).map(([en, fr]) => [sub(en), sub(fr)]);
@@ -53,7 +53,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
   const missed = new Set();
   let si = startAt, score = 0, total = 0;
 
-  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261021y" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
+  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261022g" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
   const shell = (st, inner, cnt = "") => {
     host.innerHTML = `<div class="pr-top"><span>Pratique ${si + 1}/${stages.length}</span><span>${esc(cnt)}</span></div>
       <div class="pr-bar"><i style="width:${Math.round(((si + 0.5) / stages.length) * 100)}%"></i></div>
@@ -80,6 +80,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
     const L = shuffle(st.pairs.map((p, i) => ({ t: p[0], i, side: "en" }))), R = shuffle(st.pairs.map((p, i) => ({ t: p[1], i, side: "fr" })));
     const cell = (c) => `<button type="button" class="lc-choice pr-cell" data-i="${c.i}" data-s="${c.side}">${esc(c.t)}</button>`;
     shell(st, `<p class="hint pr-hint">${esc(st.hint)}</p><div class="pr-pairs"><div>${L.map(cell).join("")}</div><div>${R.map(cell).join("")}</div></div><p class="lc-fb" id="prFb" aria-live="polite"></p>${goBtn()}`, `0/${st.pairs.length}`);
+    const prFit = () => { const m = document.querySelector(".lc-main"), pp = document.querySelector(".pr-pairs"); if (!m || !pp) return; pp.querySelectorAll(".pr-cell").forEach((b) => { b.style.minHeight = ""; }); const ft0 = document.querySelector(".lc-foot"); if (ft0 && m.lastElementChild.getBoundingClientRect().bottom > ft0.getBoundingClientRect().top - 6) { pp.querySelectorAll(".pr-cell").forEach((b) => { b.style.minHeight = "34px"; b.style.padding = "3px 9px"; b.style.fontSize = "13px"; b.style.lineHeight = "1.18"; }); pp.querySelectorAll(":scope > div").forEach((d) => { d.style.gap = "5px"; }); } else { const ft = document.querySelector(".lc-foot"), cs = pp.querySelectorAll(".pr-cell"), rows = Math.max(1, Math.ceil(cs.length / 2)); if (ft) { const spare = Math.floor(ft.getBoundingClientRect().top - m.lastElementChild.getBoundingClientRect().bottom - 22), ex = Math.min(16, Math.floor(spare / rows)); if (ex > 2) { cs.forEach((b) => { b.style.minHeight = (40 + ex) + "px"; }); if (m.lastElementChild.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 8) cs.forEach((b) => { b.style.minHeight = ""; }); } } } }; setTimeout(prFit, 120); setTimeout(prFit, 420);
     let sel = null, found = 0;
     host.querySelectorAll(".pr-cell").forEach((b) => b.addEventListener("click", () => {
       if (b.disabled) return;
