@@ -14,7 +14,7 @@ A("Les mois et les dates", "birthday=anniversaire; date=date; year=année");
 A("Décrire son visage", "lips=lèvres; chin=menton; eyebrows=sourcils");
 A("Les adjectifs de personnalité", "polite=poli(e); brave=courageux(se); calm=calme");
 A("Les questions de base", "how=comment; which=lequel; whose=à qui");
-A("Neveux, nièces et plus", "grandchild=petit-enfant; step-sister=demi-sœur; step-brother=demi-frère; guardian=tuteur(trice)");
+A("Neveux, nièces et plus", "cousin=cousin(e); step-sister=demi-sœur; step-brother=demi-frère; grandchild=petit-enfant");
 A("La famille proche (suite)", "stepmother=belle-mère; twins=jumeaux; only child=enfant unique");
 A("Les liens par alliance", "brother-in-law=beau-frère; sister-in-law=belle-sœur; stepmother=belle-mère");
 A("Les âges de la vie", "child=enfant; adult=adulte; pensioner=retraité(e)");
