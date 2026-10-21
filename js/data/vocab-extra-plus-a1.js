@@ -1,7 +1,7 @@
 // The Roots — 3 à 4 mots en plus pour chaque fiche du vocabulaire complémentaire A1 (pages pleines, sans vide). Fusion par titre, sans doublon.
 // À relire par un anglophone natif (fin de projet).
 const S = {};
-const A = (t, s) => { S[t] = s.split(";").map((x) => x.split("=").map((y) => y.trim())); };
+const A = (t, s) => { S[t] = (S[t] || []).concat(s.split(";").map((x) => x.split("=").map((y) => y.trim()))); };
 A("Origine et résidence", "birthplace=lieu de naissance; hometown=ville natale; to move=déménager");
 A("Les formulaires", "signature=signature; postcode=code postal; date of birth=date de naissance");
 A("Les documents", "birth certificate=acte de naissance; visa=visa; residence permit=titre de séjour");
@@ -151,3 +151,48 @@ export function withVocabExtraPlus(p) {
   p.words = [...p.words, ...x.filter((w) => w[0] && w[1] && !seen.has(w[0].toLowerCase()))]; p._vp = 1; return p;
 }
 A("La maison familiale", "door=porte; window=fenêtre; roof=toit");
+// Fiches à image : 8 mots pour que chaque page (image + mots) soit pleine.
+A("Les amis et les voisins", "mate=copain / copine; group=groupe");
+A("Décrire un ami", "funny=drôle");
+A("Les moyens de transport", "metro=métro; ferry=ferry");
+A("Au guichet", "ticket office=guichet");
+A("Les boissons", "hot chocolate=chocolat chaud; orange juice=jus d’orange");
+A("Les repas", "meal=repas; dessert=dessert");
+A("Goûts et saveurs", "bitter=amer; sour=acide");
+A("Les vêtements", "skirt=jupe");
+A("Payer", "price=prix");
+A("Les magasins", "bookshop=librairie");
+A("Guider un touriste", "guide=guide; map=plan");
+A("À l'aéroport", "customs=douane");
+A("Les bagages", "bag=sac");
+A("Les destinations et les horaires", "journey=voyage");
+A("Les métiers", "farmer=agriculteur(rice)");
+A("Les lieux de travail", "bank=banque; school=école");
+A("Les matières", "geography=géographie; music=musique");
+A("La météo", "storm=orage; sunshine=soleil");
+A("La température", "mild=doux; chilly=frais");
+A("Les moments de la journée", "dawn=aube");
+A("Hier, aujourd'hui, demain", "last week=la semaine dernière; tonight=ce soir");
+A("Les saisons et les mois", "February=février; July=juillet");
+A("Dire l'heure", "past=après / et; to=moins");
+A("Saluer selon le moment", "Hello=bonjour; Hi=salut");
+A("Les connecteurs", "then=puis; however=cependant");
+A("Les véhicules", "plane=avion");
+// Fiches sans image : 10 mots = 2 pages de 5 (jamais 8 mots seuls sur une page avec contexte).
+A("Les sentiments familiaux", "proud=fier(ère); angry=en colère");
+A("Les loisirs entre amis", "go to the cinema=aller au cinéma; play football=jouer au football");
+A("Les remises", "reduction=réduction");
+A("À la montagne", "lake=lac");
+A("En ville : tourisme", "statue=statue");
+A("Les documents de voyage", "visa=visa; ticket=billet");
+A("Les souvenirs de voyage", "funny=drôle; amazing=incroyable");
+A("Le bureau", "calculator=calculatrice; notebook=carnet");
+A("Les tâches professionnelles", "send=envoyer; finish=finir");
+A("Les consignes de classe", "close=fermer");
+A("Les lieux d'études", "playground=cour de récréation");
+A("La vie d'entreprise", "meeting=réunion");
+A("Les unités de temps", "year=année; hour=heure");
+A("Les fêtes et les vacances", "party=fête");
+A("Les points du calendrier", "month=mois");
+A("Au téléphone", "ring=sonner");
+A("Demander de l'aide", "repeat=répéter");

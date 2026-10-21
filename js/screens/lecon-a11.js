@@ -439,8 +439,7 @@ export function renderLesson(root, B, { onExit } = {}) {
         for (let k = 0; rest0 > 0; k = (k + 1) % sizes.length) { sizes[k]++; rest0--; }
         for (let k = 0; rest0 < 0; k = (k + 1) % sizes.length) { if (sizes[k] > 1) { sizes[k]--; rest0++; } }
       }
-      if (sc && L >= 6 && L <= 7 && sizes.length === 2) sizes = [L - 2, 2]; // fiche à image : 4 mots sous l'image, le reste avec le contexte
-      if (!sc && L <= 8 && !(B._S && B._S[pi] && false)) sizes = [L]; // pas d'image : jusqu'à 8 mots sur une seule page (jamais 4 + 3)
+      if (!sc && L <= 7 && !(B._S && B._S[pi] && false)) sizes = [L]; // pas d'image : jusqu'à 8 mots sur une seule page (jamais 4 + 3)
       while (sizes.length > 1 && sizes[sizes.length - 1] < 4 && sizes[sizes.length - 2] > 4) { sizes[sizes.length - 1]++; sizes[sizes.length - 2]--; }
       for (let i = 0, k = 0; k < sizes.length; k++) { if (sizes[k]) ch.push(p.words.slice(i, i + sizes[k])); i += sizes[k]; }
       const hasCtx = false, nTot = ch.length;
