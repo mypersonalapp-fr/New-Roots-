@@ -651,3 +651,8 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-listen.lc-g3.lc-tight .lc-choices{ gap:3px; }
 .lc-listen.lc-g3.lc-tight .lc-choice{ min-height:30px; padding:3px 10px; font-size:14px; }
 .lc-listen.lc-g3.lc-tight .lc-fb{ min-height:14px; margin-top:1px; font-size:12px; line-height:14px; }
+
+.lc-ex .lc-text{ font-size:15px; line-height:1.38; margin:4px 0; }
+.lc-ex .lc-lead{ font-size:12.5px; line-height:1.3; margin:2px 0 4px; }
+.lc-ex .lc-actions{ margin-top:4px; }
+.lc-ex .lc-actions .lc-chip{ padding:4px 10px; font-size:12.5px; }

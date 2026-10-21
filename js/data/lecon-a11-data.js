@@ -1074,3 +1074,16 @@ TEST_GRAMMAR.push(
   ["“Last name” =", ["prénom", "nom de famille", "surnom"], 1], ["What is ___ nationality?", ["you", "your", "yours"], 1], ["___ do you live? — In Lyon.", ["Where", "What", "Who"], 0], ["I'm from Spain. I'm ___.", ["Spanish", "Spain", "Spaniard"], 0],
   ["Mia is Brazilian. ___ is from Brazil.", ["She", "He", "It"], 0], ["Is he British? — Yes, he ___.", ["is", "does", "has"], 0], ["The third month is ___.", ["March", "May", "June"], 0], ["“Winter” =", ["été", "hiver", "automne"], 1],
 );
+
+// Exercices : une question de plus par fiche à 5 ou 8 questions, pour que chaque page en ait 3.
+EXERCISE_PAGES[0].qs.push(["Thank you", ["Merci", "Pardon", "S’il vous plaît"], 0, "Thank you = merci."]);
+EXERCISE_PAGES[1].qs.push(["She ___ two brothers.", ["have", "has", "is"], 1, "she → has."]);
+EXERCISE_PAGES[2].qs.push(["Is Sofia a student?", ["Yes, she is.", "No, she isn’t.", "She is a teacher."], 0, "I am a student."]);
+EXERCISE_PAGES[3].qs.push(["What is his nationality?", ["Canadian", "French", "Spanish"], 0, "I am Canadian."]);
+EXERCISE_PAGES[6].qs.push(["___ you like tea?", ["Do", "Does", "Are"], 0, "you → Do."]);
+EXERCISE_PAGES[2].qs.push(["Does Sofia have a sister?", ["No, she has a brother.", "Yes, she does.", "She has two sisters."], 0, "I have a brother called Pablo."]);
+EXERCISE_PAGES[3].qs.push(["Is Daniel a teacher?", ["No, he is a doctor.", "Yes, he is.", "No, he is a student."], 0, "I am a doctor."]);
+EXERCISE_PAGES[1].qs.push(["My brother ___ twelve years old.", ["is", "has", "are"], 0, "L’âge se dit avec be."]);
+EXERCISE_PAGES[1].qs.push(["___ you a student?", ["Are", "Do", "Is"], 0, "be + nom : Are you…?"]);
+EXERCISE_PAGES[3].qs.push(["Does Daniel have green eyes?", ["No, brown eyes.", "Yes, he does.", "No, blue eyes."], 0, "I have brown eyes."]);
+EXERCISE_PAGES[2].qs.push(["Is Sofia from France?", ["No, she is Spanish.", "Yes, she is.", "No, she is Italian."], 0, "I am Spanish, but I live in Lyon."]);
