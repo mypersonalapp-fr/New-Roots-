@@ -1,6 +1,6 @@
 // The Roots — A1 : sujets d'expression supplémentaires (parler / écrire), pour arriver à 6 sujets par leçon.
 // T(titre, icône, modèle, [[consigne FR, libellé court, mots-clés EN séparés par |], …×4])
-import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261021p";
+import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261021q";
 const T = (title, icon, model, rows, img) => ({
   title, icon, model, img,
   prompts: rows.map((r) => r[0]),
@@ -140,6 +140,40 @@ export const EXPRESSION_PLUS_A1 = {
       ["Dis ce que fait la famille.", "Ce qu'ils font", "is (waiting|looking|sitting|carrying|holding)|are (waiting|looking|sitting|carrying|holding)"],
       ["Dis ce que tu vois.", "Ce que tu vois", "plane|suitcases|window|bags|passport|there is|there are|i can see"],
       ["Dis ce qu'ils vont faire.", "Ce qu'ils vont faire", "going to|will|travel|fly|tomorrow|next"]], "describe-a19-airport"),
+    T("Décris l'image : la valise", "🧳", "Two children are packing a suitcase. The girl is folding a pink sweater and the boy is holding a blue T-shirt. There is a straw hat and a map on the bed. They are going to travel tomorrow.", [
+      ["Dis ce que font les enfants.", "Ce qu'ils font", "is (folding|holding|packing)|are (packing|folding|holding)|packing|suitcase"],
+      ["Dis ce que tu vois sur le lit.", "Sur le lit", "hat|shoes|map|clothes|sweater|camera|there is|there are|i can see"],
+      ["Dis où ils vont, à ton avis.", "À ton avis", "going to|travel|holiday|trip|london|tomorrow|think|maybe"]], "describe-a19-bag"),
+    T("Décris l'image : l'arrêt de bus", "🚌", "Two children are at the bus stop. The girl is pointing at the bus, and the boy is carrying a backpack. A blue bus is arriving. It is a sunny day. I think they are going to the city centre.", [
+      ["Dis où sont les enfants.", "Où", "bus stop|street|city|in the|at the|outside"],
+      ["Dis ce que font les enfants.", "Ce qu'ils font", "is (pointing|carrying|waiting|looking)|are (waiting|looking|standing|pointing)"],
+      ["Dis ce qui arrive.", "Ce qui arrive", "bus|arriving|coming|blue|there is|i can see"],
+      ["Dis où ils vont, à ton avis.", "À ton avis", "going|city|centre|think|maybe|school|trip"]], "describe-a19-bus"),
+    T("Décris l'image : l'enregistrement", "🛂", "The children are at the airport. They are showing their passports and their tickets. There are suitcases next to them, and a plane behind the window. They are going to fly to London.", [
+      ["Dis où sont les enfants.", "Où", "airport|check-in|desk|in the|at the"],
+      ["Dis ce qu'ils montrent.", "Ce qu'ils montrent", "passport|passports|ticket|tickets|showing|holding|boarding"],
+      ["Dis ce que tu vois autour.", "Autour", "suitcase|suitcases|plane|window|screen|there is|there are|i can see"],
+      ["Dis ce qu'ils vont faire.", "Ce qu'ils vont faire", "going to|fly|travel|london|flight|will"]], "describe-a19-checkin"),
+    T("Décris l'image : le selfie à Londres", "🤳", "Two friends are taking a selfie in London. They are smiling and making a peace sign. Behind them, there is a river and a big clock tower. There is a red bus on the bridge. It is a beautiful day.", [
+      ["Dis ce que font les amis.", "Ce qu'ils font", "taking|selfie|smiling|photo|picture|making|are (taking|smiling)"],
+      ["Dis ce qu'il y a derrière eux.", "Derrière", "river|clock|tower|bridge|bus|big ben|there is|there are|behind"],
+      ["Dis quel temps il fait.", "Le temps", "sunny|beautiful|nice|blue sky|warm|weather"],
+      ["Dis ce que tu penses de Londres.", "Ton avis", "i think|london|beautiful|nice|great|like|love"]], "describe-a19-selfie"),
+    T("Décris l'image : le garde royal", "💂", "A guard in a red uniform is waving at the children. He is wearing a tall black hat. There is a horse behind him. The children are looking at him and smiling. I think they are happy.", [
+      ["Décris le garde.", "Le garde", "guard|red|uniform|hat|black|tall|wearing|waving"],
+      ["Dis ce que font les enfants.", "Ce qu'ils font", "looking|smiling|pointing|watching|are (looking|smiling|watching)"],
+      ["Dis ce qu'il y a autour.", "Autour", "horse|flag|building|gate|there is|there are|i can see"],
+      ["Dis ce que tu penses.", "À ton avis", "think|happy|excited|fun|great|maybe"]], "describe-a19-guard"),
+    T("Décris l'image : London Eye", "🎡", "The children are in a big wheel. They are looking at the view of London. The girl is pointing at the river. In the distance, there is a famous clock tower. It is a sunny day and the sky is blue.", [
+      ["Dis où sont les enfants.", "Où", "wheel|london eye|cabin|in the|high|up"],
+      ["Dis ce que fait la fille.", "Ce qu'elle fait", "pointing|looking|is (pointing|looking|smiling)|girl"],
+      ["Dis ce que tu vois au loin.", "Au loin", "river|tower|clock|city|buildings|boat|there is|there are|i can see"],
+      ["Dis quel temps il fait.", "Le temps", "sunny|blue|sky|nice|weather|clouds"]], "describe-a19-eye"),
+    T("Décris l'image : le musée", "🦖", "The children are in a museum. There is a big dinosaur skeleton in front of them. The boy is walking and the girl is looking at the dinosaur. There are some people behind them. I think they are excited.", [
+      ["Dis où sont les enfants.", "Où", "museum|in the|inside|building"],
+      ["Dis ce qu'il y a devant eux.", "Devant", "dinosaur|skeleton|big|in front of|there is|there are"],
+      ["Dis ce que font les enfants.", "Ce qu'ils font", "walking|looking|is (walking|looking)|are (walking|looking)|visiting"],
+      ["Dis ce que tu penses.", "À ton avis", "think|excited|happy|interesting|fun|maybe"]], "describe-a19-museum"),
     T("Réserve un billet", "🎫", "I'd like a ticket to London. For Friday. For two people. How much is it?", [
       ["Dis où tu vas.", "Destination", "ticket|to|london|paris|madrid|rome|want|like"], ["Dis quand.", "Quand", "monday|tuesday|wednesday|thursday|friday|saturday|sunday|tomorrow|today|next"],
       ["Dis pour combien de personnes.", "Combien de personnes", "one|two|three|four|people|person|adult|adults"], ["Demande le prix.", "Le prix", "how much|price|cost"]]),
