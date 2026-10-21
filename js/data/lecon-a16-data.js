@@ -210,3 +210,11 @@ export const DATA_A16 = {
 };
 
 balanceAll({ VOCAB_A16, GRAMMAR_A16, READING_A16, LISTENING_A16, EXERCISES_A16, EXPRESSION_A16, TEST_TEXTS_A16, TEST_AUDIOS_A16, TEST_GRAMMAR_A16, MISSIONS_A16, DATA_A16 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A16[1].qs.push(["I eat ___ egg every morning.", ["a", "an", "some"], 1, "Voyelle → an."]);
+EXERCISES_A16[2].qs.push(["Is there ___ butter?", ["any", "an", "a"], 0, "Question + indénombrable → any."]);
+EXERCISES_A16[3].qs.push(["I have ___ eggs. (quelques)", ["a few", "a little", "much"], 0, "A few + dénombrable."]);
+EXERCISES_A16[4].qs.push(["Can I have the ___ , please?", ["menu", "chef", "sweet"], 0, "Menu = carte."]);
+EXERCISES_A16[5].qs.push(["I ___ chocolate. (love)", ["like", "hate", "don’t like"], 0, "love ≈ adorer."]);
+EXERCISES_A16[6].qs.push(["You are thirsty. You say:", ["I’d like some water.", "I’m a water.", "I have thirsty."], 0, "I’d like some + boisson."]);

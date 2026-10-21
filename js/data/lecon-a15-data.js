@@ -205,3 +205,11 @@ export const DATA_A15 = {
 };
 
 balanceAll({ VOCAB_A15, GRAMMAR_A15, READING_A15, LISTENING_A15, EXERCISES_A15, EXPRESSION_A15, TEST_TEXTS_A15, TEST_AUDIOS_A15, TEST_GRAMMAR_A15, MISSIONS_A15, DATA_A15 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A15[1].qs.push(["He loves ___ . (play)", ["playing", "plays", "play"], 0, "love + verbe-ing."]);
+EXERCISES_A15[2].qs.push(["___ he like pizza?", ["Do", "Does", "Is"], 1, "he → Does."]);
+EXERCISES_A15[3].qs.push(["My ___ colour is blue.", ["favourite", "prefer", "like"], 0, "Favourite = préféré."]);
+EXERCISES_A15[4].qs.push(["I think it is ___. (ennuyeux)", ["boring", "exciting", "great"], 0, "Boring = ennuyeux."]);
+EXERCISES_A15[5].qs.push(["I like pizza. — ___ do I!", ["So", "Neither", "Me"], 0, "So do I = moi aussi."]);
+EXERCISES_A15[6].qs.push(["You ask your friend about music:", ["Do you like music?", "You like music?", "Are you music?"], 0, "Do you like… ?"]);

@@ -211,3 +211,11 @@ export const DATA_A13 = {
 };
 
 balanceAll({ VOCAB_A13, GRAMMAR_A13, READING_A13, LISTENING_A13, EXERCISES_A13, EXPRESSION_A13, TEST_TEXTS_A13, TEST_AUDIOS_A13, TEST_GRAMMAR_A13, MISSIONS_A13, DATA_A13 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A13[1].qs.push(["Tom ___ tennis on Sundays.", ["play", "plays", "playing"], 1, "he → play + s."]);
+EXERCISES_A13[2].qs.push(["She ___ like coffee.", ["don’t", "doesn’t", "isn’t"], 1, "she → doesn’t."]);
+EXERCISES_A13[3].qs.push(["I ___ go to the gym on Monday.", ["always", "never", "usually"], 0, "always = toujours (à placer avant le verbe)."]);
+EXERCISES_A13[4].qs.push(["Ben is my friend. I often see ___.", ["he", "him", "his"], 1, "Complément → him."]);
+EXERCISES_A13[5].qs.push(["Would you like ___ come to my party?", ["to", "at", "for"], 0, "Would you like to + verbe."]);
+EXERCISES_A13[6].qs.push(["You and your friend like the same film:", ["Me too!", "Me neither!", "I don’t."], 0, "Me too = moi aussi."]);

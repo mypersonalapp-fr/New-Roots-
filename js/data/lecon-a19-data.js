@@ -209,3 +209,11 @@ export const DATA_A19 = {
 };
 
 balanceAll({ VOCAB_A19, GRAMMAR_A19, READING_A19, LISTENING_A19, EXERCISES_A19, EXPRESSION_A19, TEST_TEXTS_A19, TEST_AUDIOS_A19, TEST_GRAMMAR_A19, DATA_A19 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A19[1].qs.push(["She ___ to leave tomorrow.", ["is going", "goes", "going"], 0, "be going to + verbe."]);
+EXERCISES_A19[2].qs.push(["___ he going to fly?", ["Is", "Are", "Does"], 0, "he → Is."]);
+EXERCISES_A19[3].qs.push(["I’d like ___ room for two nights.", ["a", "an", "some"], 0, "Consonne → a."]);
+EXERCISES_A19[4].qs.push(["What time ___ the train arrive?", ["does", "do", "is"], 0, "Horaire → does."]);
+EXERCISES_A19[5].qs.push(["You use it to fly:", ["a plane", "a key", "a suitcase"], 0, "Plane = avion."]);
+EXERCISES_A19[6].qs.push(["You want to book a room:", ["I’d like to book a room.", "I like book a room.", "I’m booking room."], 0, "I’d like to + verbe."]);

@@ -209,3 +209,11 @@ export const DATA_A110 = {
 };
 
 balanceAll({ VOCAB_A110, GRAMMAR_A110, READING_A110, LISTENING_A110, EXERCISES_A110, EXPRESSION_A110, TEST_TEXTS_A110, TEST_AUDIOS_A110, TEST_GRAMMAR_A110, DATA_A110 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A110[1].qs.push(["I ___ in a hospital.", ["work", "works", "am work"], 0, "I → verbe sans s."]);
+EXERCISES_A110[2].qs.push(["She ___ at eight.", ["start", "starts", "starting"], 1, "she → starts."]);
+EXERCISES_A110[3].qs.push(["___ time do you finish?", ["What", "Where", "Who"], 0, "What time = à quelle heure."]);
+EXERCISES_A110[4].qs.push(["He ___ work on Saturday.", ["doesn’t", "don’t", "isn’t"], 0, "he → doesn’t."]);
+EXERCISES_A110[5].qs.push(["The class is ___ Tuesday.", ["on", "at", "in"], 0, "On + jour."]);
+EXERCISES_A110[6].qs.push(["You ask someone’s job:", ["What do you do?", "Who are you do?", "What you do?"], 0, "What do you do ?"]);

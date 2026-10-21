@@ -209,3 +209,11 @@ export const DATA_A14 = {
 };
 
 balanceAll({ VOCAB_A14, GRAMMAR_A14, READING_A14, LISTENING_A14, EXERCISES_A14, EXPRESSION_A14, TEST_TEXTS_A14, TEST_AUDIOS_A14, TEST_GRAMMAR_A14, MISSIONS_A14, DATA_A14 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A14[1].qs.push(["« Tournez à droite »", ["Turn left", "Turn right", "Go straight on"], 1, "Right = droite."]);
+EXERCISES_A14[2].qs.push(["The park is ___ the library. (en face)", ["opposite", "between", "behind"], 0, "Opposite = en face de."]);
+EXERCISES_A14[3].qs.push(["___ is the post office?", ["Where", "Who", "When"], 0, "Where = où."]);
+EXERCISES_A14[4].qs.push(["We go to work ___ car.", ["on", "by", "with"], 1, "by + transport."]);
+EXERCISES_A14[5].qs.push(["Go straight on. ___ turn right.", ["Then", "Because", "Or"], 0, "Then = ensuite."]);
+EXERCISES_A14[6].qs.push(["You want a ticket to go only:", ["a single ticket", "a return ticket", "a platform"], 0, "Single = aller simple."]);

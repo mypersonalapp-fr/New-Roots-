@@ -164,3 +164,11 @@ export const TEST_GRAMMAR_A12 = [
 ];
 
 balanceAll({ VOCAB_A12, GRAMMAR_A12, READING_A12, LISTENING_A12, EXERCISES_A12, EXPRESSION_A12, TEST_TEXTS_A12, TEST_AUDIOS_A12, TEST_GRAMMAR_A12 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A12[1].qs.push(["Mum and Dad are my parents. ___ house is big.", ["Their", "Our", "Her"], 1, "Nous (ma famille) → our. Ici : « Our house »."]);
+EXERCISES_A12[2].qs.push(["Two ___ (woman)", ["womans", "womens", "women"], 2, "woman → women."]);
+EXERCISES_A12[3].qs.push(["There ___ a lot of people in the house.", ["is", "are", "has"], 1, "Pluriel → are."]);
+EXERCISES_A12[4].qs.push(["___ is your brother’s name?", ["Who", "What", "Where"], 1, "What + name = quel nom."]);
+EXERCISES_A12[5].qs.push(["Her sister is ___ nurse.", ["a", "an", "the"], 0, "Consonne → a nurse."]);
+EXERCISES_A12[6].qs.push(["Your father’s brother is your…", ["uncle", "cousin", "nephew"], 0, "Father’s brother = uncle."]);

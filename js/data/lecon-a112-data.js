@@ -209,3 +209,11 @@ export const DATA_A112 = {
 };
 
 balanceAll({ VOCAB_A112, GRAMMAR_A112, READING_A112, LISTENING_A112, EXERCISES_A112, EXPRESSION_A112, TEST_TEXTS_A112, TEST_AUDIOS_A112, TEST_GRAMMAR_A112, DATA_A112 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A112[1].qs.push(["10h00 du matin :", ["Good morning", "Good evening", "Good night"], 0, "Good morning = bonjour (matin)."]);
+EXERCISES_A112[2].qs.push(["___ I open the window?", ["May", "Are", "Do"], 0, "May I… ? = puis-je ?"]);
+EXERCISES_A112[3].qs.push(["I’m hungry, ___ I eat.", ["so", "because", "but"], 0, "So = donc."]);
+EXERCISES_A112[4].qs.push(["Tu demandes comment va quelqu’un :", ["How are you?", "Who are you?", "Where are you?"], 0, "How are you ?"]);
+EXERCISES_A112[5].qs.push(["He ___ a book now.", ["is reading", "reads", "read"], 0, "Now = présent continu."]);
+EXERCISES_A112[6].qs.push(["Tu remercies quelqu’un :", ["Thank you very much!", "You’re welcome!", "I’m sorry!"], 0, "Thank you = merci."]);

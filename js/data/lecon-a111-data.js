@@ -209,3 +209,11 @@ export const DATA_A111 = {
 };
 
 balanceAll({ VOCAB_A111, GRAMMAR_A111, READING_A111, LISTENING_A111, EXERCISES_A111, EXPRESSION_A111, TEST_TEXTS_A111, TEST_AUDIOS_A111, TEST_GRAMMAR_A111, DATA_A111 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A111[1].qs.push(["8:30", ["half past eight", "quarter past eight", "eight o’clock"], 0, "Half past = et demie."]);
+EXERCISES_A111[2].qs.push(["It’s ___ today. (soleil)", ["sunny", "rainy", "cold"], 0, "Sunny = ensoleillé."]);
+EXERCISES_A111[3].qs.push(["My lesson is ___ Wednesday.", ["on", "at", "in"], 0, "On + jour."]);
+EXERCISES_A111[4].qs.push(["Look! The children ___ in the garden.", ["are playing", "play", "plays"], 0, "Look ! = action en cours."]);
+EXERCISES_A111[5].qs.push(["The day after today:", ["tomorrow", "yesterday", "tonight"], 0, "Tomorrow = demain."]);
+EXERCISES_A111[6].qs.push(["You ask the time:", ["What time is it?", "How time is it?", "Which hour is it?"], 0, "What time is it ?"]);

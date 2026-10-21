@@ -209,3 +209,11 @@ export const DATA_A17 = {
 };
 
 balanceAll({ VOCAB_A17, GRAMMAR_A17, READING_A17, LISTENING_A17, EXERCISES_A17, EXPRESSION_A17, TEST_TEXTS_A17, TEST_AUDIOS_A17, TEST_GRAMMAR_A17, DATA_A17 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A17[1].qs.push(["___ is my coat. (près, un seul)", ["This", "These", "Those"], 0, "Près + un seul : This."]);
+EXERCISES_A17[2].qs.push(["This shirt is ___ than that shirt. (cheap)", ["cheaper", "more cheap", "cheapest"], 0, "cheap → cheaper."]);
+EXERCISES_A17[3].qs.push(["How much ___ this coat?", ["is", "are", "do"], 0, "Singulier → is."]);
+EXERCISES_A17[4].qs.push(["___ I try it on?", ["Can", "Do", "Are"], 0, "Can I… ? = puis-je ?"]);
+EXERCISES_A17[5].qs.push(["The shoes are ___ big for me.", ["too", "enough", "very"], 0, "Too = trop."]);
+EXERCISES_A17[6].qs.push(["You ask the price:", ["How much is it?", "How many is it?", "What is it?"], 0, "How much = combien (prix)."]);

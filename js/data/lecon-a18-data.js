@@ -209,3 +209,11 @@ export const DATA_A18 = {
 };
 
 balanceAll({ VOCAB_A18, GRAMMAR_A18, READING_A18, LISTENING_A18, EXERCISES_A18, EXPRESSION_A18, TEST_TEXTS_A18, TEST_AUDIOS_A18, TEST_GRAMMAR_A18, DATA_A18 });
+
+// Exercices : une question de plus par fiche à 5 questions (3 par page).
+EXERCISES_A18[1].qs.push(["He ___ for the station. (look)", ["is looking", "looks", "look"], 0, "Maintenant : be + verbe-ing."]);
+EXERCISES_A18[2].qs.push(["___ you waiting for the bus?", ["Are", "Do", "Is"], 0, "you → Are."]);
+EXERCISES_A18[3].qs.push(["Look! The tourists ___ a photo.", ["take", "are taking", "takes"], 1, "Look ! = action en cours."]);
+EXERCISES_A18[4].qs.push(["Turn left, ___ turn right.", ["then", "but", "if"], 0, "Then = ensuite."]);
+EXERCISES_A18[5].qs.push(["I don’t understand. ___ you speak slowly?", ["Could", "Do", "Are"], 0, "Could you… ? = poli."]);
+EXERCISES_A18[6].qs.push(["You are lost. You say:", ["I’m lost.", "I lost.", "I’m losing."], 0, "I’m lost = je suis perdu(e)."]);
