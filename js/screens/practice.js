@@ -1,6 +1,6 @@
 // The Roots — pratique du vocabulaire : 5 séries par page de mots (associer, compléter, remettre en ordre, produire, mini-défi).
 // Tout est généré à partir des mots et des exemples de la page ; l'élève tape, touche et dit — il ne se contente pas de choisir.
-import { createVoice } from "./voice.js?v=20261021n";
+import { createVoice } from "./voice.js?v=20261021o";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const norm = (t) => String(t || "").toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:"“”]/g, "").replace(/\s+/g, " ").trim();
@@ -9,7 +9,7 @@ const simple = (w) => !/[\/?…(),.!]/.test(w) && w.trim().split(/\s+/).length <
 const reEsc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // ---------- construction des séries ----------
-import { flagOf } from "../data/flags.js?v=20261021n";
+import { flagOf } from "../data/flags.js?v=20261021o";
 export function buildPractice(p, sub = (s) => s) {
   const words = p.words.filter((w) => w[0] && w[1]);
   const exs = (p.examples || []).map(([en, fr]) => [sub(en), sub(fr)]);
@@ -53,7 +53,7 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
   const missed = new Set();
   let si = startAt, score = 0, total = 0;
 
-  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261021n" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
+  const sceneBox = (st) => !(st.type === "fill" || st.type === "produce") ? "" : `<div class="pr-scene"><span>${esc(icon)}</span>${scene ? `<img src="assets/img/lesson/${esc(scene)}.webp?v=20261021o" alt="" loading="lazy" onerror="this.remove()"/>` : ""}</div>`;
   const shell = (st, inner, cnt = "") => {
     host.innerHTML = `<div class="pr-top"><span>Pratique ${si + 1}/${stages.length}</span><span>${esc(cnt)}</span></div>
       <div class="pr-bar"><i style="width:${Math.round(((si + 0.5) / stages.length) * 100)}%"></i></div>
@@ -122,34 +122,45 @@ export function mountPractice(host, stages, { speak, onDone, startAt = 0, scene 
     draw();
   }
 
-  // 2 — compléter (l'élève tape)
+  // 2 — compléter (l'élève tape) : trois phrases par écran
   function runFill(st) {
     let k = 0;
     const draw = () => {
-      const it = st.items[k]; let tries = 0, done = false;
-      const q = it.kind === "sentence"
+      const grp = st.items.slice(k, k + 3).map((it, g) => ({ it, g, tries: 0, done: false }));
+      const card = (it) => it.kind === "sentence"
         ? `<div class="pr-card">${esc(it.en).replace(new RegExp(esc(reEsc(it.answer)), "i"), '<span class="pr-gap">＿＿＿＿</span>')}<small>${esc(it.fr)}</small></div>`
         : `<div class="pr-card"><small>Comment dit-on en anglais ?</small><b class="pr-fr">${esc(it.fr)}</b></div>`;
-      shell(st, `<p class="hint pr-hint">Tape le mot en anglais.</p>${q}
-        <input class="pr-in" id="prIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Écris ici…"/>
-        <p class="lc-fb" id="prFb" aria-live="polite"></p><div class="pr-row"><button type="button" class="lc-sec-btn" id="prHint">Indice</button><button type="button" class="lc-cta pr-go" id="prGo">Valider</button></div>`, `${k + 1}/${st.items.length}`);
-      const inp = host.querySelector("#prIn"); inp.focus();
-      host.querySelector("#prHint").onclick = () => { say(`Commence par « ${it.answer[0]} » · ${it.answer.length} lettres`, false); };
-      host.querySelector("#prGo").onclick = () => {
-        if (done) { if (++k >= st.items.length) next(); else draw(); return; }
-        if (!inp.value.trim()) return;
-        tries++;
-        if (norm(inp.value) === norm(it.answer)) {
-          done = true; total++; if (tries === 1) score++; else missed.add(it.base);
-          inp.disabled = true; inp.classList.add("pr-ok"); say(`✔ Bien ! « ${it.answer} » = ${it.fr && it.kind === "cue" ? it.fr : "le mot manquant"}`, true);
-          if (speak) speak(it.kind === "sentence" ? it.en : it.answer);
-          host.querySelector("#prGo").textContent = k + 1 >= st.items.length ? "Continuer" : "Suivant";
-        } else if (tries >= 3) {
-          done = true; total++; missed.add(it.base); inp.disabled = true; inp.value = it.answer; inp.classList.add("pr-ko");
-          say(`La réponse : « ${it.answer} ». Tu le reverras au mini-défi.`, false); host.querySelector("#prGo").textContent = k + 1 >= st.items.length ? "Continuer" : "Suivant";
-        } else { inp.classList.add("pr-ko"); setTimeout(() => inp.classList.remove("pr-ko"), 400); say("Pas tout à fait, réessaie.", false); }
+      const blocks = grp.map((x) => `${card(x.it)}<input class="pr-in" data-g="${x.g}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Écris ici…"/>`).join("");
+      shell(st, `<p class="hint pr-hint">Tape le mot en anglais.</p>${blocks}
+        <p class="lc-fb" id="prFb" aria-live="polite"></p><div class="pr-row"><button type="button" class="lc-sec-btn" id="prHint">Indice</button><button type="button" class="lc-cta pr-go" id="prGo">Valider</button></div>`, `${Math.min(k + grp.length, st.items.length)}/${st.items.length}`);
+      const ins = [...host.querySelectorAll(".pr-in")], go = host.querySelector("#prGo");
+      const mainEl = host.closest(".lc-main") || document.querySelector(".lc-main");
+      const vp = document.querySelector('meta[name="viewport"]'), vp0 = vp ? vp.content : "";
+      const zoomLock = (on) => { if (vp) vp.content = on ? vp0.replace(/,?\s*maximum-scale=[^,]*/, "") + ", maximum-scale=1" : vp0; };
+      const kbOn = () => { zoomLock(true); if (mainEl) { mainEl.classList.add("lc-kb", "lc-kbp"); setTimeout(() => { window.scrollTo(0, 0); mainEl.scrollTop = 0; }, 60); } };
+      ins.forEach((i) => { i.addEventListener("focus", kbOn); i.addEventListener("blur", () => setTimeout(() => { if (!ins.includes(document.activeElement)) { zoomLock(false); if (mainEl) mainEl.classList.remove("lc-kb", "lc-kbp"); } }, 80)); });
+      ins[0].focus(); kbOn();
+      const allDone = () => grp.every((x) => x.done);
+      const label = () => (k + grp.length >= st.items.length ? "Continuer" : "Suivant");
+      host.querySelector("#prHint").onclick = () => { const x = grp.find((y) => !y.done) || grp[0]; say(`Commence par « ${x.it.answer[0]} » · ${x.it.answer.length} lettres`, false); };
+      go.onclick = () => {
+        if (allDone()) { k += grp.length; if (k >= st.items.length) next(); else draw(); return; }
+        let wrongN = 0, rightN = 0, any = false;
+        grp.forEach((x) => {
+          if (x.done) return; const inp = ins[x.g]; if (!inp.value.trim()) return; any = true; x.tries++;
+          if (norm(inp.value) === norm(x.it.answer)) {
+            x.done = true; total++; if (x.tries === 1) score++; else missed.add(x.it.base);
+            inp.disabled = true; inp.classList.add("pr-ok"); rightN++; if (speak) speak(x.it.kind === "sentence" ? x.it.en : x.it.answer);
+          } else if (x.tries >= 3) {
+            x.done = true; total++; missed.add(x.it.base); inp.disabled = true; inp.value = x.it.answer; inp.classList.add("pr-ko"); wrongN++;
+          } else { inp.classList.add("pr-ko"); setTimeout(() => inp.classList.remove("pr-ko"), 400); wrongN++; }
+        });
+        if (!any) return;
+        if (allDone()) { say(rightN && !wrongN ? "✔ Bien !" : "Voilà les réponses. Tu les reverras au mini-défi.", rightN && !wrongN); go.textContent = label(); }
+        else say(wrongN ? "Pas tout à fait, réessaie." : "✔ Bien ! Complète l'autre phrase.", !wrongN);
+        const nx = ins.find((i, n) => !grp[n].done); if (nx) nx.focus();
       };
-      inp.onkeydown = (e) => { if (e.key === "Enter") host.querySelector("#prGo").click(); };
+      ins.forEach((inp, n) => { inp.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); const nx = ins[n + 1]; if (nx && !nx.disabled && !nx.value.trim()) nx.focus(); else go.click(); } }; });
     };
     if (!st.items.length) return next(); draw();
   }
