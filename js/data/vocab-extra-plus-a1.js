@@ -17,6 +17,7 @@ A("Les questions de base", "how=comment; which=lequel; whose=à qui");
 A("Neveux, nièces et plus", "cousin=cousin(e); step-sister=demi-sœur; step-brother=demi-frère; grandchild=petit-enfant");
 A("La famille proche", "family=famille; boy=garçon; girl=petite fille; kid=gamin(e); siblings=frères et sœurs; relative=parent (famille); big brother=grand frère; little sister=petite sœur; older sister=sœur aînée; younger brother=frère cadet");
 A("Les âges et les métiers", "chef=chef cuisinier; student=étudiant(e); builder=ouvrier du bâtiment; farmer=agriculteur(trice); waiter=serveur(se); dentist=dentiste; pilot=pilote; mechanic=mécanicien(ne); shop assistant=vendeur(se); police officer=policier(ère); lawyer=avocat(e)");
+A("Les activités ensemble", "to dance=danser; to swim=nager; to sing=chanter; to ride a bike=faire du vélo; board game=jeu de société; to run=courir; to watch a film=regarder un film; to go shopping=faire du shopping; to take photos=prendre des photos; to listen to music=écouter de la musique; to play cards=jouer aux cartes; to play video games=jouer aux jeux vidéo; to go for a walk=aller se promener; to have a picnic=pique-niquer; to go to a concert=aller à un concert; to visit a museum=visiter un musée; to play chess=jouer aux échecs");
 A("La famille proche (suite)", "stepmother=belle-mère; twins=jumeaux; only child=enfant unique");
 A("Les liens par alliance", "brother-in-law=beau-frère; sister-in-law=belle-sœur; stepmother=belle-mère");
 A("Les âges de la vie", "child=enfant; adult=adulte; pensioner=retraité(e)");

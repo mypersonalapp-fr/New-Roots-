@@ -774,3 +774,7 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-w b{ font-size:15px; line-height:1.2; }
 .lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-w small{ font-size:11px; }
 .lc-card > ul.lc-vl:not(.lc-bub):not(.lc-rules) .lc-spk{ width:30px; height:30px; min-width:30px; flex-basis:30px; font-size:14px; }
+.lc-scene-voc figure{ aspect-ratio:16/9; background:rgba(255,255,255,.04); border-radius:14px; overflow:hidden; }
+.lc-scene-voc figure img{ width:100%; height:100%; display:block; }
+.lc-card:has(.lc-scene-voc) .lc-w b{ font-size:14.5px !important; }
+.lc-card:has(.lc-scene-voc) .lc-w small{ font-size:10.5px !important; }
