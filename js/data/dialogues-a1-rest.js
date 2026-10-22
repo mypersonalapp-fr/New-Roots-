@@ -129,6 +129,14 @@ export const DIALOGUES_A1_REST = {
      "hint": "Réponds par oui ou non."
     },
     {
+     "npc": "What is your favourite film?",
+     "ok": [
+      "\\b(my favourite|i like|i love|favourite)\\b"
+     ],
+     "model": "My favourite film is a comedy.",
+     "hint": "Dis quel est ton film préféré."
+    },
+    {
      "npc": "See you later!",
      "ok": [
       "\\b(see you|bye|goodbye)\\b"
