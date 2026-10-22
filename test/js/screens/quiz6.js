@@ -31,7 +31,7 @@ export function gramItems(pool, redo = []) {
   return [...first, ...rest].slice(0, N).map((q) => ({ q: q[0], opts: q[1], a: q[2], key: q[0], expl: Array.isArray(q[3]) ? q[3][q[2]] : q[3] }));
 }
 
-export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
+export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
 
 // build(redoKeys) -> items. onPass() débloque « Suivant ». Retourne rien ; tout est dans host.
 export function mountQuiz(host, key, build, { speak, onPass, btn }) {
@@ -52,7 +52,7 @@ export function mountQuiz(host, key, build, { speak, onPass, btn }) {
     const r = room(); if (r > 6) l.style.gap = Math.min(5 + r / (N + 1), 16) + "px";
   };
   const go = () => document.querySelector("#lcNext");
-  const upd = () => { const b = host.querySelector("#q6c"); if (b) b.disabled = picked.filter((x) => x !== undefined).length < items.length; };
+  const upd = () => { const b = host.querySelector("#q6c"), n = picked.filter((x) => x !== undefined).length; if (b && !checked) { b.disabled = n < items.length; b.textContent = n < items.length ? `Vérifier (${n}/${items.length} répondues)` : "Vérifier ✓"; } };
   const bar = () => host.querySelector("#q6c");
   const start = () => {
     paint(); const b = bar(); b.style.display = ""; b.textContent = "Vérifier"; b.disabled = true; checked = false; upd();
