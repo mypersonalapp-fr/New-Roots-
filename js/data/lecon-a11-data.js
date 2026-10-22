@@ -1010,7 +1010,7 @@ export const TRANSV_DAYS = [
 GRAMMAR_PAGES.push(
   {
     title: "This / that / these / those", icon: "👉",
-    table: [["this", "ce / cet / cette (proche, 1)", "This is my book."], ["that", "ce… là (loin, 1)", "That is her car."], ["these", "ces (proches, plusieurs)", "These are my friends."], ["those", "ces… là (loin, plusieurs)", "Those are his shoes."], ["What’s this?", "Qu’est-ce que c’est ?", "It’s a pen."]],
+    table: [["this", "ce / cet / cette (proche, 1)", "This is my book."], ["that", "ce… là (loin, 1)", "That is her car."], ["these", "ces (proches, plusieurs)", "These are my friends."], ["those", "ces… là (loin, plusieurs)", "Those are his shoes."], ["What’s this?", "Qu’est-ce que c’est ?", "It’s a pen."], ["these + nom", "These shoes are red.", "ces chaussures-ci"], ["those + nom", "Those cars are blue.", "ces voitures-là"], ["Is this…?", "Is this your bag?", "C’est ton sac ?"]],
     examples: [["This is my passport.", "Voici mon passeport."], ["Those are my sisters.", "Ce sont mes sœurs (là-bas)."], ["What is that? — It’s a bag.", "C’est quoi, ça ? — C’est un sac."]],
     qs: [["___ are my shoes. (plusieurs, proches)", ["This", "These", "That"], 1, "Plusieurs + proche → these."], ["___ is my teacher. (un, loin)", ["That", "These", "Those"], 0, "Un seul + loin → that."], ["___ is my phone. (un, proche)", ["This", "These", "Those"], 0, "Un seul + proche → this."], ["___ are his keys. (plusieurs, loin)", ["Those", "That", "This"], 0, "Plusieurs + loin → those."], ["___ is a nice car. (un, loin)", ["That", "These", "This"], 0, "Un seul + loin → that."], ["___ are my friends. (plusieurs, proches)", ["These", "That", "Those"], 0, "Plusieurs + proche → these."]],
   },
