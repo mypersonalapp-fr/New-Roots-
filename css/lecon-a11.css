@@ -800,3 +800,19 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 /* règle à 8 lignes ou plus : texte plus petit pour que la case « piège fréquent » reste visible */
 .lc-card:has(ul > li:nth-child(8)) .lc-w b,.lc-card:has(ul > li:nth-child(8)) .lc-w .lc-form{ font-size:14px !important; }
 .lc-card:has(ul > li:nth-child(8)) .lc-w small{ font-size:11px !important; }
+
+/* Contrôle, expression orale : tout tient sur une page (texte, micro et cases à cocher) */
+.lc-main:has(.lc-micbtn) .lc-lead{ font-size:13.5px; line-height:1.3; margin:0 0 4px; }
+.lc-main:has(.lc-micbtn) .lc-micbtn{ width:50px; height:50px; font-size:22px; }
+.lc-main:has(.lc-micbtn) .lc-card{ padding:10px 12px; }
+.lc-main:has(.lc-micbtn) .lc-heard{ margin:2px 0; min-height:0; font-size:12px; }
+.lc-main:has(.lc-micbtn) .lc-checks-in label,.lc-main:has(.lc-checks-in) .lc-checks-in label{ min-height:32px; font-size:14.5px; }
+.lc-main:has(.lc-micbtn) .lc-vocab-head h1{ font-size:20px; margin:0; }
+.lc-main:has(.lc-micbtn) .lc-vocab-head{ margin:0 0 4px; }
+.lc-main:has(.lc-micbtn) .lc-vocab-head .lc-vh-ic{ font-size:26px; }
+
+/* Contrôle : questions et cases plus petites */
+.lc-bigq .lc-q{ font-size:15px; margin-bottom:5px; }
+.lc-bigq .lc-choices{ gap:6px; }
+.lc-bigq .lc-choice{ min-height:40px; font-size:15px; }
+.lc-bigq .lc-prac{ padding:12px 12px; }
