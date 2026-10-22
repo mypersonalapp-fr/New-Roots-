@@ -796,3 +796,7 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-rules .lc-w small{ font-size:12px; }
 .lc-gex-s .lc-list.lc-bub .lc-w b{ font-size:12.5px; }
 .lc-gex-s .lc-list.lc-bub .lc-w small{ font-size:10.5px; }
+
+/* règle à 8 lignes ou plus : texte plus petit pour que la case « piège fréquent » reste visible */
+.lc-card:has(ul > li:nth-child(8)) .lc-w b,.lc-card:has(ul > li:nth-child(8)) .lc-w .lc-form{ font-size:14px !important; }
+.lc-card:has(ul > li:nth-child(8)) .lc-w small{ font-size:11px !important; }
