@@ -181,6 +181,8 @@ A("Finir une conversation", "Enjoy your weekend=bon week-end; Goodbye=au revoir"
 A("Exprimer son accord ou son doute", "of course=bien sûr; maybe=peut-être; I doubt it=j'en doute");
 A("Les pronoms et les mots courts", "anywhere=n'importe où; everywhere=partout; none=aucun");
 A("Donner son opinion", "wonderful=merveilleux; awful=affreux; scary=effrayant; relaxing=reposant");
+A("Les relations", "single=célibataire; married=marié(e); to date=sortir avec");
+A("Parler de la fréquence", "once a week=une fois par semaine; most days=presque tous les jours; hardly ever=presque jamais");
 export function withVocabExtraPlus(p) {
   const x = S[p.title]; if (!x || p._vp || !p.words) return p;
   const seen = new Set(p.words.map((w) => String(w[0]).toLowerCase().trim()));
