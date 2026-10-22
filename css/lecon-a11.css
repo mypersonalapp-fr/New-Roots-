@@ -782,3 +782,17 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 /* page image avec 6 mots : image plus basse (2:1) */
 .lc-sc6 figure{ aspect-ratio:2.3/1 !important; } .lc-sc6 figure img{ object-fit:cover !important; }
 .lc-card:has(.lc-sc6) .lc-w b{ font-size:14px !important; } .lc-card:has(.lc-sc6) .lc-w small{ font-size:10px !important; }
+
+/* 3 questions qui ne tiennent pas : niveau de compactage supplémentaire (évite de passer à 2 questions + gros vide) */
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-card{ padding:8px 11px; }
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-h2{ margin-bottom:3px; font-size:15px; }
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-q{ font-size:13.5px; margin:0 0 3px; line-height:1.22; }
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-choices{ gap:2px; margin-bottom:1px; }
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-choice{ min-height:25px; padding:1px 10px; font-size:13px; line-height:1.2; }
+.lc-main.lc-g3.lc-tight2.lc-tight2 .lc-fb{ min-height:10px; margin-top:0; font-size:12px; line-height:12px; }
+
+/* grammaire : règle + exemples plus petits */
+.lc-rules .lc-w b,.lc-rules .lc-w .lc-form{ font-size:15px; }
+.lc-rules .lc-w small{ font-size:12px; }
+.lc-gex-s .lc-list.lc-bub .lc-w b{ font-size:12.5px; }
+.lc-gex-s .lc-list.lc-bub .lc-w small{ font-size:10.5px; }
