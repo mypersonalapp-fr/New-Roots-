@@ -879,24 +879,3 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-main:has(#lcTa) .lc-exs2 img{ height:76px; max-height:76px; }
 .lc-main:has(#lcTa) #lcTa{ min-height:122px; }
 .lc-main:has(#lcTa) .lc-exhero, .lc-main:has(#lcTa) .lc-exhero figure{ background:transparent; box-shadow:none; }
-/* Règles : haut-parleur compact, posé à droite sans prendre de place (les lignes gardent leur hauteur) */
-.lc-rules li{ position:relative; }
-.lc-rules .lc-w{ padding-right:30px; }
-.lc-rules .lc-spk{ position:absolute; right:4px; top:50%; transform:translateY(-50%); width:26px; height:26px; min-width:26px; font-size:12px; display:inline-flex; align-items:center; justify-content:center; margin:0; }
-
-/* Page de test : 6 questions sur une page */
-.lc-q6 .q6{display:flex;flex-direction:column;padding:10px 12px;gap:6px}
-.q6-top{display:flex;justify-content:space-between;align-items:center;font-size:14px}
-.q6-top span{font-size:12px;opacity:.75;font-weight:700}
-.q6-list{display:flex;flex-direction:column;gap:6px}
-.q6-q{display:flex;flex-direction:column;gap:4px}
-.q6-p{margin:0;font-size:13px;font-weight:700;line-height:1.25;display:flex;align-items:center;gap:6px}
-.q6-p>span{flex:none;width:18px;height:18px;border-radius:50%;background:var(--lc-accent,#6c5ce7);color:#fff;font-size:11px;display:grid;place-items:center}
-.q6-spk{border:0;background:none;font-size:14px;padding:0 2px;cursor:pointer}
-.q6-o{display:flex;gap:5px}
-.q6-c{flex:1 1 0;min-width:0;padding:6px 4px;font-size:12px;line-height:1.15;min-height:34px;overflow-wrap:anywhere}
-.q6-fb{min-height:0;margin:2px 0 0;font-size:13px;text-align:center}
-.lc-q6 .lc-foot .lc-cta{flex:1}
-.q6-go{width:100%;min-height:40px;padding:8px;font-size:14px;margin-top:2px}
-.q6-t1{padding:8px 10px;gap:4px}.q6-t1 .q6-list{gap:4px}.q6-t1 .q6-q{gap:3px}.q6-t1 .q6-c{min-height:30px;padding:4px 3px}.q6-t1 .q6-go{min-height:34px;padding:5px}
-.q6-t2 .q6-top{display:none}.q6-t2 .q6-p{font-size:12px}.q6-t2 .q6-c{font-size:11.5px;min-height:28px}
