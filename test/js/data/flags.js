@@ -1,7 +1,0 @@
-// Drapeaux affichés à côté des pays et des nationalités (mot anglais → drapeau).
-const C = { France: "🇫🇷", Spain: "🇪🇸", Italy: "🇮🇹", Germany: "🇩🇪", Portugal: "🇵🇹", Brazil: "🇧🇷", Morocco: "🇲🇦", Senegal: "🇸🇳", Canada: "🇨🇦", Japan: "🇯🇵", England: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", Belgium: "🇧🇪", Switzerland: "🇨🇭", Algeria: "🇩🇿", Tunisia: "🇹🇳", Mexico: "🇲🇽", Cameroon: "🇨🇲", "Ivory Coast": "🇨🇮", Congo: "🇨🇬", Ireland: "🇮🇪", Poland: "🇵🇱", "United Kingdom": "🇬🇧", "United States": "🇺🇸", USA: "🇺🇸", China: "🇨🇳", India: "🇮🇳", Russia: "🇷🇺", Turkey: "🇹🇷", Netherlands: "🇳🇱", Greece: "🇬🇷", Sweden: "🇸🇪", Korea: "🇰🇷" };
-const N = { French: "France", Spanish: "Spain", Italian: "Italy", German: "Germany", Portuguese: "Portugal", Brazilian: "Brazil", Moroccan: "Morocco", Senegalese: "Senegal", Canadian: "Canada", Japanese: "Japan", English: "England", Belgian: "Belgium", Swiss: "Switzerland", Algerian: "Algeria", Tunisian: "Tunisia", Mexican: "Mexico", Cameroonian: "Cameroon", Ivorian: "Ivory Coast", Congolese: "Congo", Irish: "Ireland", American: "United States", Chinese: "China", Indian: "India", Russian: "Russia", Turkish: "Turkey", Dutch: "Netherlands", Greek: "Greece", Swedish: "Sweden", Polish: "Poland", Korean: "Korea" };
-export const FLAG = Object.assign({}, C);
-Object.keys(N).forEach((k) => { if (C[N[k]]) FLAG[k] = C[N[k]]; });
-// « English » est aussi une langue : le drapeau ne s'affiche que sur la page des nationalités / pays (voir flagOf).
-export const flagOf = (en) => FLAG[en] || "";
