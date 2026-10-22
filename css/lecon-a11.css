@@ -832,3 +832,42 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-trad-t{ margin:0 0 2px; font-size:11.5px; }
 .lc-seg{ margin:2px 0 4px; }
 .lc-ph textarea{ min-height:22px; }
+
+/* Expression : page avec image à décrire = image plus basse, textes plus petits pour tout faire tenir */
+.lc-card:has(.lc-pic) .lc-pic{ margin:0 0 6px; max-height:104px; }
+.lc-card:has(.lc-pic) .lc-pic img{ height:104px; object-fit:cover; }
+.lc-card:has(.lc-pic) .lc-prompts{ font-size:12.5px; line-height:1.25; }
+.lc-card:has(.lc-pic) .lc-model{ font-size:12.5px; }
+.lc-card:has(.lc-pic) .lc-model .lc-w b{ font-size:12.5px; line-height:1.25; }
+.lc-card:has(.lc-pic) .lc-tabs{ margin:4px 0; }
+.lc-card:has(.lc-pic) .lc-ta{ min-height:44px; }
+
+.lc-card:has(.lc-pic) .lc-pic{ max-height:76px; }
+.lc-card:has(.lc-pic) .lc-pic img{ height:76px; }
+.lc-card:has(.lc-pic) .lc-prompts{ gap:0; margin:0 0 4px; }
+.lc-card:has(.lc-pic) .lc-ta{ min-height:34px; }
+.lc-card:has(.lc-pic) .lc-model{ margin-bottom:4px; padding:4px 8px; }
+.lc-card:has(.lc-pic) .lc-pic{ max-height:58px; }
+.lc-card:has(.lc-pic) .lc-pic img{ height:58px; }
+#lcTa{ height:60px; }
+
+/* Expression : image entière (non coupée), prompts sur 2 colonnes */
+.lc-card:has(.lc-pic) .lc-pic{ max-height:none; text-align:center; background:transparent; box-shadow:none; }
+.lc-card:has(.lc-pic) .lc-pic img{ display:inline-block; width:auto; max-width:100%; height:112px; object-fit:contain; border-radius:12px; }
+.lc-prompts{ columns:2; column-gap:14px; } .lc-prompts li{ break-inside:avoid; }
+.lc-card:has(.lc-pic) .lc-pic img{ height:92px; }
+.lc-card:has(.lc-pic) .lc-pic{ margin:0 0 3px; }
+.lc-card:has(.lc-pic) #lcTa{ height:40px; min-height:30px; }
+.lc-card:has(.lc-pic) .lc-prompts{ font-size:12px; line-height:1.15; }
+.lc-card:has(.lc-pic) .lc-model{ margin-bottom:2px; }
+.lc-card:has(.lc-pic) .lc-micbtn{ width:44px; height:44px; }
+.lc-prompts li{ margin:0 0 1px; line-height:1.18; }
+.lc-prompts{ display:block; columns:2; column-gap:12px; padding-left:20px; font-size:13px; }
+.lc-prompts li{ break-inside:avoid; margin:0 0 3px; }
+.lc-card:has(.lc-pic) .lc-prompts{ font-size:12px; }
+.lc-card:has(.lc-pic) .lc-pic img{ height:74px; }
+.lc-card:has(.lc-pic) .lc-lead, .lc-card:has(.lc-pic) .lc-h2{ margin-bottom:3px; }
+.lc-prompts{ column-gap:22px; } .lc-prompts li{ padding-right:4px; }
+.lc-card:has(.lc-pic) .lc-h2{ font-size:16px; line-height:1.2; }
+.lc-card:has(.lc-pic) .lc-model .lc-w b{ font-size:12px; line-height:1.2; }
+.lc-card:has(.lc-pic) .lc-tabs{ margin:2px 0; }
