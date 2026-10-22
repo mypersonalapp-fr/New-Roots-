@@ -253,7 +253,7 @@ export const EXERCISE_PAGES = [
  {
   "title": "Lecture — Comprendre une identité",
   "help": "Lis le texte, puis réponds sans regarder les solutions.",
-  "passage": "Hello! My name is Sofia. I am twenty-two years old. I am Spanish, but I live in Lyon, France. I am a student. I have a brother called Pablo. I have green eyes.",
+  "passage": "Hello! My name is Sofia. I am twenty-two years old. I am Spanish, but I live in Lyon, France. I am a student. I have a brother called Pablo. I have green eyes. I speak Spanish, French and English. My phone number is 06 12 34 56 78. I like music and I like football. My favourite colour is blue. I live in a small flat near the station. I study English every day, and I love it. On Saturday, I go to the park with my friends. In the evening, I cook dinner and I watch a film.",
   "qs": [
    [
     "How old is Sofia?",
