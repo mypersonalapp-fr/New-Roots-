@@ -2,9 +2,9 @@
 // Missions/données de A1.1 par défaut ; les autres leçons passent { missions, data } à createCity.
 // Le texte est de vrai texte (pas dans les images) : cliquable, lisible, corrigeable.
 
-import { createVoice } from "./voice.js?v=20261023j";
-import { balanceAll } from "../data/balance.js?v=20261023j";
-const V = "20261023j";
+import { createVoice } from "./voice.js?v=20261023k";
+import { balanceAll } from "../data/balance.js?v=20261023k";
+const V = "20261023k";
 const img = (p) => `assets/img/${p}.webp?v=${V}`;
 
 const DEF_MISSIONS = [
@@ -76,6 +76,21 @@ const DEF_DATA = { m1: M1, m2: M2, m4: M4, m5: M5, m3: M3, m6: M6 };
 balanceAll(DEF_DATA);
 
 export function createCity({ el, frame, esc, speak, toast, back, getStars, setStar, missions, data }) {
+  const frame0 = frame;
+  // Remplit l'écran : l'image puis les boutons / mots grandissent tant que ça ne déborde pas (vide cible ≈ 40 px).
+  const rcFill = () => {
+    const m = el.querySelector(".lc-main"), c = m && m.querySelector(".rc-card"); if (!m || !c || c.classList.contains("rc-end")) return;
+    const bot = () => m.getBoundingClientRect().bottom - 10, gap = () => Math.floor(bot() - m.lastElementChild.getBoundingClientRect().bottom - 18);
+    const bad = () => m.scrollHeight > m.clientHeight + 2 || m.lastElementChild.getBoundingClientRect().bottom > bot();
+    let L = gap(); if (L < 20) return;
+    const im = m.querySelector(".rc-hero img");
+    if (im) { const h0 = im.getBoundingClientRect().height; for (let a = Math.min(Math.floor(L * 0.55), 130); a > 6; a -= 6) { im.style.setProperty("aspect-ratio", "auto", "important"); im.style.setProperty("max-height", "none", "important"); im.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; im.style.removeProperty("height"); im.style.removeProperty("max-height"); im.style.removeProperty("aspect-ratio"); } L = gap(); }
+    const grow = (sel, max) => { const els = [...c.querySelectorAll(sel)]; if (!els.length || L < 12) return; const b0 = els.map((e) => [parseFloat(getComputedStyle(e).paddingTop), parseFloat(getComputedStyle(e).paddingBottom)]); for (let q = Math.min(max, Math.floor(L / (2 * els.length))); q > 0; q--) { els.forEach((e, i) => { e.style.paddingTop = b0[i][0] + q + "px"; e.style.paddingBottom = b0[i][1] + q + "px"; }); if (!bad()) break; els.forEach((e) => { e.style.paddingTop = e.style.paddingBottom = ""; }); } L = gap(); };
+    grow(".rc-tok:not(.in), .rc-tok.in", 12);
+    grow(".rc-opt:not(.rc-tile)", 10);
+    if (L > 12) { const g = c.querySelector(".rc-bank, .rc-opts"); if (g) { for (let q = Math.min(L, 30); q > 2; q -= 2) { c.querySelectorAll(".rc-group, .rc-bank, .rc-slots, .rc-ask").forEach((e) => { e.style.marginBottom = q + "px"; }); if (!bad()) break; c.querySelectorAll(".rc-group, .rc-bank, .rc-slots, .rc-ask").forEach((e) => { e.style.marginBottom = ""; }); } } }
+  };
+  frame = (...a) => { frame0(...a); try { rcFill(); setTimeout(rcFill, 400); } catch (e) {} };
   const MISSIONS = missions || DEF_MISSIONS, DATA = data || DEF_DATA;
   const bindBack = (fn) => { el.querySelector("#lcBack").onclick = fn; };
   const hero = (m) => `<div class="rc-hero ${m.portrait ? "rc-m5" : ""}"><img src="${img(m.hero)}" alt="" onerror="this.parentElement.remove()"/>${m.portrait ? `<span class="rc-chalk">Portrait-robot</span><span class="rc-post">Find<br>the person</span>` : ""}</div>`;
