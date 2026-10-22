@@ -871,3 +871,11 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-card:has(.lc-pic) .lc-h2{ font-size:16px; line-height:1.2; }
 .lc-card:has(.lc-pic) .lc-model .lc-w b{ font-size:12px; line-height:1.2; }
 .lc-card:has(.lc-pic) .lc-tabs{ margin:2px 0; }
+/* Contrôle · Expression écrite : textes plus petits, zone d'écriture d'au moins 6 lignes */
+.lc-main:has(#lcTa) .lc-exhero img{ height:112px; max-height:112px; }
+.lc-main:has(#lcTa) .lc-vocab-head h1{ font-size:22px; } .lc-main:has(#lcTa) .lc-vocab-head p{ font-size:13px; }
+.lc-main:has(#lcTa) .lc-h2{ font-size:16px; } .lc-main:has(#lcTa) .lc-lead{ font-size:13px; line-height:1.3; }
+.lc-main:has(#lcTa) #lcTa{ font-size:14px; line-height:1.4; min-height:130px; }
+.lc-main:has(#lcTa) .lc-exs2 img{ height:76px; max-height:76px; }
+.lc-main:has(#lcTa) #lcTa{ min-height:122px; }
+.lc-main:has(#lcTa) .lc-exhero, .lc-main:has(#lcTa) .lc-exhero figure{ background:transparent; box-shadow:none; }
