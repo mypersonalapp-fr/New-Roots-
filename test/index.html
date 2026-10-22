@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <base href="../"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>[TEST] The Roots — la racine des langues</title>
+  <!-- Nom court affiché sous l'icône quand on l'ajoute à l'écran d'accueil
+       (sinon iOS reprend le <title> ci-dessus en entier et le coupe). -->
+  <meta name="apple-mobile-web-app-title" content="The Roots"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <link rel="icon" type="image/png" href="assets/img/app-icon.png"/>
+  <link rel="apple-touch-icon" href="assets/img/app-icon.png"/>
+  <link rel="manifest" href="manifest.webmanifest"/>
+  <meta name="theme-color" content="#8B5CF6"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Le "?v=..." après chaque fichier force le téléphone/la tablette à
+       retélécharger la vraie dernière version au lieu de garder une copie
+       en mémoire (cache) — sinon un correctif tout juste envoyé peut ne
+       pas apparaître tant qu'on n'a pas forcé un rechargement complet.
+       Depuis le 20/09, ce "?v=..." est AUSSI ajouté à tous les imports
+       internes entre fichiers JS (import ... from "./xxx.js?v=...", à
+       l'intérieur même des fichiers .js) — avant, seuls les fichiers listés
+       ICI dans index.html en bénéficiaient, pas les fichiers qu'ils
+       chargent eux-mêmes en interne (ex. comprehension.js chargé par
+       shell.js) : un fichier interne pouvait donc rester bloqué sur une
+       ancienne version en cache même après un rechargement complet, ce qui
+       a causé plusieurs "rien ne change" alors que le code était pourtant
+       bien à jour sur GitHub. À changer partout (même valeur partout,
+       n'importe quelle nouvelle valeur suffit) à chaque fois qu'un fichier
+       est remplacé. -->
+  <link rel="stylesheet" href="test/css/base.css?v=20260930a"/>
+  <link rel="stylesheet" href="test/css/backgrounds.css?v=20260930a"/>
+  <link rel="stylesheet" href="test/css/screens.css?v=20261023q"/>
+  <link rel="stylesheet" href="test/css/daily.css?v=20261023q"/>
+  <link rel="stylesheet" href="test/css/lecon-a11.css?v=20261023q"/>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- Filet de secours (24/09) : si l'appli n'a rien affiché au bout de
+       6 secondes (écran tout blanc), au lieu de rester blanc on affiche ce
+       qui a bloqué — en particulier la liste des fichiers introuvables sur
+       GitHub (fichier oublié ou déposé dans le mauvais dossier), cause
+       n°1 d'un écran blanc au démarrage. La liste ROOTS_FILES doit être
+       remise à jour à chaque lot qui ajoute/renomme un fichier. -->
+  <script>
+    (function () {
+      var ROOTS_FILES = ["js/app.js", "js/screens/lecon-a11.js", "js/data/lecon-a11-data.js", "css/lecon-a11.css", "js/data/ai-config.js", "js/data/ai-credits.js", "js/data/atelier-en.js", "js/data/atelier-es.js", "js/data/atelier-es-drills.js", "js/data/atelier-es-blocages.js", "js/data/comprehension-ecrite-a2-en.js", "js/data/comprehension-ecrite-en.js", "js/data/comprehension-ecrite-b1-en.js", "js/data/comprehension-ecrite-b2-en.js", "js/data/comprehension-ecrite-a1-es.js", "js/data/comprehension-ecrite-a2-es.js", "js/data/comprehension-ecrite-b1-es.js", "js/data/comprehension-ecrite-b2-es.js", "js/data/comprehension-orale-dialogues-b1-en.js", "js/data/comprehension-orale-dialogues-b2-en.js", "js/data/comprehension-orale-dialogues-a1-es.js", "js/data/comprehension-orale-dialogues-a2-es.js", "js/data/comprehension-orale-dialogues-b1-es.js", "js/data/comprehension-orale-dialogues-b2-es.js", "js/data/expression-ecrite-prompts-a1-es.js", "js/data/expression-orale-prompts-a1-es.js", "js/data/expression-ecrite-prompts-a2-es.js", "js/data/expression-orale-prompts-a2-es.js", "js/data/expression-ecrite-prompts-b1-es.js", "js/data/expression-orale-prompts-b1-es.js", "js/data/expression-ecrite-prompts-b2-es.js", "js/data/expression-orale-prompts-b2-es.js", "js/data/comprehension-orale-a2-en.js", "js/data/comprehension-orale-en.js", "js/data/daily-content.js", "js/data/dev-config.js", "js/data/explore-uk.js", "js/data/expression-ecrite-prompts-a2-en.js", "js/data/expression-ecrite-prompts-en.js", "js/data/expression-orale-prompts-a2-en.js", "js/data/expression-orale-prompts-en.js", "js/data/expression-ecrite-prompts-b1-en.js", "js/data/expression-ecrite-prompts-b2-en.js", "js/data/expression-orale-prompts-b1-en.js", "js/data/expression-orale-prompts-b2-en.js", "js/data/i18n.js", "js/data/lesson-images.js", "js/data/programme-a1-en.js", "js/data/programme-a1-es.js", "js/data/programme-a2-es.js", "js/data/exams-es.js", "js/data/lessons-es-a2.js", "js/data/programme-a2-en.js", "js/data/programme-b1-en.js", "js/data/programme-b2-en.js", "js/data/programme-c1-en.js", "js/data/progress.js", "js/data/bulletin-a1.js", "js/data/store.js", "js/data/webauthn.js", "js/screens/aide-faq.js", "js/screens/atelier-en.js", "js/screens/atelier-es.js", "js/screens/auth-menu.js", "js/screens/bg-flags.js", "js/screens/bg-uk.js", "js/screens/bibliotheque.js", "js/screens/daily.js", "js/data/the-roots-daily-en.js", "css/daily.css", "js/screens/choose-language.js", "js/screens/comprehension.js", "js/screens/contain-frame.js", "js/screens/conversation.js", "js/screens/country.js", "js/screens/dashboard.js", "js/screens/dictionnaire.js", "js/screens/expression.js", "js/screens/faceid-lock.js", "js/screens/forgot-password.js", "js/screens/greeting.js", "js/screens/level-test.js", "js/screens/login.js", "js/screens/mes-arbres.js", "js/screens/mes-cours.js", "js/screens/my-world.js", "js/screens/onboarding.js", "js/screens/placeholders.js", "js/screens/plant.js", "js/screens/settings.js", "js/screens/shell.js", "js/screens/splash.js", "js/screens/traduction.js", "css/base.css", "css/backgrounds.css", "css/screens.css"];
+      var errors = [];
+      window.addEventListener("error", function (e) {
+        var msg = e && e.message ? e.message : (e && e.target && (e.target.src || e.target.href)) ? "Chargement impossible : " + (e.target.src || e.target.href) : "Erreur inconnue";
+        errors.push(msg);
+      }, true);
+      window.addEventListener("unhandledrejection", function (e) {
+        errors.push(String(e && e.reason && (e.reason.message || e.reason)));
+      });
+      setTimeout(function () {
+        var app = document.getElementById("app");
+        if (!app || app.children.length) return;
+        app.innerHTML = '<div style="font-family:system-ui,sans-serif;padding:28px 20px;max-width:520px;margin:0 auto;color:#222">'
+          + '<h2 style="margin:0 0 8px">L\'appli n\'a pas pu démarrer</h2>'
+          + '<p style="font-size:14px;line-height:1.5;margin:0 0 14px">Vérification des fichiers sur GitHub en cours…</p>'
+          + '<div id="rootsDiag" style="font-size:13px;line-height:1.5"></div>'
+          + '<button onclick="location.reload()" style="margin-top:18px;padding:12px 18px;border-radius:10px;border:0;background:#2f5d3a;color:#fff;font-weight:700;font-size:15px">Réessayer</button></div>';
+        var out = document.getElementById("rootsDiag");
+        Promise.all(ROOTS_FILES.map(function (f) {
+          return fetch(f + "?check=" + Date.now(), { cache: "no-store" })
+            .then(function (r) { return r.ok ? null : f; })
+            .catch(function () { return null; });
+        })).then(function (res) {
+          var missing = res.filter(Boolean);
+          var html = "";
+          if (missing.length) {
+            html += "<p style=\"margin:0 0 6px\"><b>Fichiers introuvables sur GitHub (" + missing.length + ")</b> — à redéposer au bon endroit :</p><ul style=\"margin:0 0 12px;padding-left:18px\">"
+              + missing.map(function (m) { return "<li><code>" + m + "</code></li>"; }).join("") + "</ul>";
+          } else {
+            html += "<p style=\"margin:0 0 12px\">Aucun fichier manquant détecté.</p>";
+          }
+          if (errors.length) {
+            html += "<p style=\"margin:0 0 6px\"><b>Message d'erreur :</b></p><ul style=\"margin:0;padding-left:18px;word-break:break-word\">"
+              + errors.slice(0, 5).map(function (m) { return "<li>" + String(m).replace(/</g, "&lt;") + "</li>"; }).join("") + "</ul>";
+          }
+          html += "<p style=\"margin:12px 0 0;color:#666\">Fais une capture de cet écran et envoie-la à Claude.</p>";
+          out.innerHTML = html;
+        });
+      }, 6000);
+    })();
+  </script>
+  <!-- Commande de test temporaire : ne pas fusionner sur la version officielle. -->
+  <div id="preview-reset-wrap" style="position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);right:12px;z-index:99999;max-width:230px">
+    <button id="preview-reset-btn" type="button" style="border:2px solid #123c35;border-radius:12px;background:#fff;color:#123c35;padding:11px 13px;font:700 13px system-ui;box-shadow:0 2px 12px #0003">↻ Refaire le test de niveau</button>
+  </div>
+  <script>
+  (function(){
+    document.getElementById("preview-reset-btn").addEventListener("click",function(){
+      if(!confirm("MODE TEST — Recommencer le test de positionnement anglais ? Ton niveau actuel et la progression de test seront remis à zéro sur ce site. Ton compte sera conservé."))return;
+      try{
+        var key="the_roots_store_v1",st=JSON.parse(localStorage.getItem(key)||"null");
+        if(st&&st.settings&&Array.isArray(st.settings.langs)){
+          st.settings.langs.forEach(function(l){if(l.code==="en"||l.code==="en-gb"||l.code==="en-us"){
+            l.level=null;l.progress=0;l.leveled=false;l.entryLevel=null;l.entryDate=null;l.selectedVariant=null;
+          }});
+          localStorage.setItem(key,JSON.stringify(st));
+        }
+        Object.keys(localStorage).forEach(function(k){
+          if(/^the_roots_lesson_en|^the_roots_lesson_passes|^the_roots_boosts|^the_roots_placement|^the_roots_level_test|^the_roots_test_level/i.test(k)){
+            if(k==="the_roots_lesson_passes_v1"||k==="the_roots_boosts_v1"){
+              try{var v=JSON.parse(localStorage.getItem(k)||"{}");delete v.en;localStorage.setItem(k,JSON.stringify(v));}catch(e){}
+            }else localStorage.removeItem(k);
+          }
+        });
+        alert("Parcours anglais réinitialisé sur ce navigateur. Tu peux refaire le test.");
+        location.reload();
+      }catch(e){alert("Réinitialisation impossible : "+e.message);}
+    });
+  })();
+  </script>
+  <script type="module" src="test/js/app.js?v=20261023q"></script>
+</body>
+</html>

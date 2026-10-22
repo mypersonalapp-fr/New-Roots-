@@ -441,6 +441,8 @@ export function renderLesson(root, B, { onExit } = {}) {
   }
 
   // Une scène dont l'image est absente n'occupe aucune place : la pagination se calcule sans elle (pas de vide).
+  const capW = (x) => { const t = String(x); const i = t.search(/[A-Za-zÀ-ÿ]/); return i < 0 ? t : t.slice(0, i) + t[i].toUpperCase() + t.slice(i + 1); };
+  const capWords = (p) => { if (p && Array.isArray(p.words)) p.words = p.words.map((w) => [capW(w[0]), capW(w[1]), ...w.slice(2)]); return p; };
   const hasScene = (p) => !!p.scene && !(B._noScene && B._noScene[p.scene[0]]);
   // Étapes du vocabulaire : chaque page de mots = écran(s) de 5 mots max, puis UN écran d'exercices. Rien à faire défiler.
   function vocabSteps() {
@@ -448,7 +450,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     B.vocab.forEach((p0, pi) => {
       // La page d'ouverture (salutations / personnes) suit le même format que les autres pages de mots.
       const p = p0.kind === "greetings" ? Object.assign({}, p0, { kind: "words", wasGreet: true, icon: "👥", words: (B.greetings && B.greetings.length ? B.greetings : p0.examples).map((x) => x.slice(0, 2)), examples: p0.examples }) : p0;
-      B.vocab[pi] = p; withVocabExtra(p); withVocabExtraPlus(p);
+      B.vocab[pi] = p; withVocabExtra(p); withVocabExtraPlus(p); capWords(p);
       if (p.wasGreet) return; // phrases clés : elles vivent dans « Conversation »
       // Écrans équilibrés (jamais un mot seul) : 6 mots max par écran, 4 si l'image de la scène est affichée en entier (16:9).
       const L = p.words.length, sc = hasScene(p), capF = sc ? 5 : 8, capM = 8, capL = 5, ch = [];
@@ -739,7 +741,7 @@ export function renderLesson(root, B, { onExit } = {}) {
           S.push({ t: "gex", p, pi });
         }
       } else if (id === "transversal" && p.kind === "words") {
-        const ch = chunkEven(p.words, 6);
+        capWords(p); const ch = chunkEven(p.words, 6);
         ch.forEach((words, ci) => S.push({ t: "twords", p, pi, words, ci, n: ch.length }));
       } else if (p.kind === "write") S.push({ t: "twrite", p, pi });
       const hasText = id === "reading" || id === "listening" || (id === "exercises" && (p.passage || p.audio));
