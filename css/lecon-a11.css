@@ -901,3 +901,14 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .q6-t1{padding:8px 10px;gap:4px}.q6-t1 .q6-list{gap:4px}.q6-t1 .q6-q{gap:3px}.q6-t1 .q6-c{min-height:30px;padding:4px 3px}.q6-t1 .q6-go{min-height:34px;padding:5px}
 .q6-t2 .q6-top{display:none}.q6-t2 .q6-p{font-size:12px}.q6-t2 .q6-c{font-size:11.5px;min-height:28px}
 .q6-help{margin:0;font-size:12px;opacity:.8}.q6-t2 .q6-help{display:none}
+
+/* Conversation A1.3 : 3 questions par écran */
+.lc-dlgb .lc-bl-full{gap:2px;margin:4px 0}
+.lc-brow{display:flex;gap:8px;align-items:center;margin:2px 0 8px}
+.lc-bnum{flex:none;width:24px;height:24px;border-radius:50%;background:#E8A23A;color:#1b1b1b;font:800 13px/24px inherit;font-style:normal;text-align:center}
+.lc-bnum.ok{background:#22A06B;color:#fff}
+.lc-brow .lc-bq{flex:1;min-height:46px;height:46px;padding:10px 12px;resize:none;font-size:15px}
+.lc-brow .lc-bb{flex:1;max-width:none;margin:0}
+.lc-dlgb1 .lc-brow .lc-bq{min-height:40px;height:40px;padding:8px 10px}.lc-dlgb1 .lc-bt{font-size:14px}.lc-dlgb1 .lc-brow{margin-bottom:5px}
+.lc-dlgb2 .lc-goals li:not(.now){display:none}.lc-dlgb2 .lc-bt{font-size:13.5px}
+.lc-dlgb3 .lc-goals{display:none}.lc-dlgb3 .lc-brow .lc-bq{min-height:36px;height:36px;padding:6px 10px}.lc-dlgb3 .lc-bl-full{margin:0}

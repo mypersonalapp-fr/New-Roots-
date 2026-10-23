@@ -6,34 +6,36 @@
 // personnage choisi dans Paramètres (settings.avatarGender / avatarIndex).
 
 import { store } from "../data/store.js?v=20260930a";
-import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261023y";
-import { EXTRA_TURN_A1 } from "../data/dialogues-extra-a1.js?v=20261023y";
-import { withExtraQs } from "../data/extra-qs.js?v=20261023y";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261023y";
-import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261023y";
-import { runRattrapage } from "./rattrapage.js?v=20261023y";
+import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261023z";
+import { EXTRA_TURN_A1 } from "../data/dialogues-extra-a1.js?v=20261023z";
+import { withExtraQs } from "../data/extra-qs.js?v=20261023z";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261023z";
+import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261023z";
+import { runRattrapage } from "./rattrapage.js?v=20261023z";
 import { AI_RELAY_URL } from "../data/ai-config.js?v=20260930a";
-import { createCity } from "./roots-city.js?v=20261023y";
-import { createGames } from "./jeux-a11.js?v=20261023y";
-import { balanceAll } from "../data/balance.js?v=20261023y";
-import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261023y";
-import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261023y";
-import { plusPages } from "../data/vocab-plus-a1.js?v=20261023y";
-import { buildPractice, mountPractice } from "./practice.js?v=20261023y";
-import { createVoice } from "./voice.js?v=20261023y";
-import { mountQuiz, quizHtml, vocabItems, gramItems } from "./quiz6.js?v=20261023y";
-import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261023y";
-import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261023y";
-import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261023y";
-import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261023y";
-import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261023y";
-import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261023y";
-import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261023y";
-import { flagOf } from "../data/flags.js?v=20261023y";
-import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261023y";
-import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261023y";
-import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261023y";
-import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261023y";
+import { createCity } from "./roots-city.js?v=20261023z";
+import { createGames } from "./jeux-a11.js?v=20261023z";
+import { balanceAll } from "../data/balance.js?v=20261023z";
+import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261023z";
+import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261023z";
+import { plusPages } from "../data/vocab-plus-a1.js?v=20261023z";
+import { buildPractice, mountPractice } from "./practice.js?v=20261023z";
+import { createVoice } from "./voice.js?v=20261023z";
+import { mountQuiz, quizHtml, vocabItems, gramItems } from "./quiz6.js?v=20261023z";
+import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261023z";
+import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261023z";
+import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261023z";
+import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261023z";
+import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261023z";
+import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261023z";
+import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261023z";
+import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261023z";
+import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261023z";
+import { flagOf } from "../data/flags.js?v=20261023z";
+import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261023z";
+import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261023z";
+import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261023z";
+import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261023z";
 
 let PROGRESS_KEY = "the_roots_a11_lesson_v1"; // fixé à chaque ouverture de leçon (renderLesson)
 const GIRLS = 9;
@@ -52,7 +54,7 @@ const GREETINGS = [
 // Pages 2 à 5 : mots d'identité du cahier des charges A1.1.
 // q = [question, choix, index de la bonne réponse]
 const IC_IMG = { vocab:1, grammar:1, reading:1, listening:1, speaking:1, exercises:1, transversal:1, test:1 };
-const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261023y" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
+const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261023z" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
 const SCENES = [["scene-greeting","Hello! Nice to meet you."],["scene-friends","Hi! How are you?"],["scene-goodbye","Goodbye! See you tomorrow!"]];
 
 const rxTest = (re, txt) => new RegExp(re, "i").test(String(txt || "").replace(/[’‘`´]/g, "'").replace(/\s+/g, " "));
@@ -611,7 +613,7 @@ export function renderLesson(root, B, { onExit } = {}) {
               <div class="lc-bb ${i % 2 ? "me" : "npc"}"><span class="lc-bt">${esc(en)}<small>${esc(fr)}</small></span>${spk(en)}</div>`).join("")}</div>
           </div>
           ${B.scenes ? `<h3 class="lc-h3">En situation</h3>
-          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261023y" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
+          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261023z" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
           <div class="lc-tip"><span>💡</span><div><b>Astuce</b><p>${esc(p.tip)}</p></div></div>
         </section>`;
 
@@ -645,7 +647,7 @@ export function renderLesson(root, B, { onExit } = {}) {
         </section>` : `
         <section class="lc-card">
           ${head}
-          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261023y" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
+          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261023z" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
           <ul class="lc-list lc-vl">${st.words.map(([en, fr]) => `
             <li><span class="lc-w"><b>${/^Les (pays|nationalités)$/.test(p.title) ? flagOf(en) + " " : ""}${esc(en)}</b><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
           ${st.last ? ctxHtml : `<template class="lc-ctx-t"><div class="lc-ctx-in">${ctxHtml}</div></template>`}
@@ -687,7 +689,7 @@ export function renderLesson(root, B, { onExit } = {}) {
 
     fillRows();
     { const hp = el.querySelector(".lc-nexthint"), ft2 = el.querySelector(".lc-foot"); if (hp && ft2 && hp.getBoundingClientRect().bottom > ft2.getBoundingClientRect().top - 2) hp.remove(); }
-    for (let k = 1; k <= 4; k++) { const ns = steps[page + k]; if (ns && ns.p && ns.t === "words" && ns.ci === 0 && hasScene(ns.p)) { const im = new Image(); im.src = `assets/img/lesson/${ns.p.scene[0]}.webp?v=20261023y`; } }
+    for (let k = 1; k <= 4; k++) { const ns = steps[page + k]; if (ns && ns.p && ns.t === "words" && ns.ci === 0 && hasScene(ns.p)) { const im = new Image(); im.src = `assets/img/lesson/${ns.p.scene[0]}.webp?v=20261023z`; } }
     el.querySelector("#lcBack").onclick = showMenu;
     el.querySelector("#lcPrev").onclick = () => { if (page === 0) showMenu(); else { page--; showVocab(); } };
     el.querySelector("#lcNext").onclick = () => {
@@ -966,7 +968,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       <button type="button" class="lc-cta lc-trad-ok">Valider</button>
       <p class="lc-trad-msg" aria-live="polite">${trDone(pt) ? "Série réussie : bravo !" : `${trCount(pt)}/${pt.rows.length} phrases justes. Objectif : ${Math.ceil(pt.rows.length * 0.8)}.`}</p></section>`; };
     const body = p.trad ? trBody() : `<section class="lc-card"><h2 class="lc-h2">${p.icon} ${esc(p.title)}</h2>
-      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261023y" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
+      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261023z" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
       <div class="lc-tabs" role="tablist">
         ${`<button type="button" class="lc-tab ${tab === "speak" ? "on" : ""}" data-tab="speak" role="tab" aria-selected="${tab === "speak"}">🎤 Parler</button>`}
         <button type="button" class="lc-tab ${tab === "write" ? "on" : ""}" data-tab="write" role="tab" aria-selected="${tab === "write"}">✍️ Écrire</button></div>
@@ -1070,7 +1072,7 @@ export function renderLesson(root, B, { onExit } = {}) {
 
   /* ----- Conversation : le personnage parle, l'élève répond en anglais ----- */
   const dlgState = { done: {} };
-  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261023y" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261023z" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
   function showDialogueList() {
     screen = "dialogue";
     const done = prog.dialogues || {};
@@ -1110,7 +1112,8 @@ export function renderLesson(root, B, { onExit } = {}) {
     const log = [];            // {who:"npc"|"me", text, tag?}
     let turn = 0, tries = 0, helped = false;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let recOn = false, vUrl = null, recTimer = null;
+    let recOn = false, vUrl = null, recTimer = null, activeJ = 0;
+    const curTa = () => el.querySelector(`.lc-bq[data-j="${activeJ}"]`) || el.querySelector("#dlgIn");
     const V = createVoice({
       onState: (st) => {
         recOn = st === "listening"; const m = el.querySelector("#dlgMic"); if (m) m.textContent = recOn ? "⏹ Terminer" : "🎙️ Parler";
@@ -1118,9 +1121,9 @@ export function renderLesson(root, B, { onExit } = {}) {
         if (recOn) { const t0 = Date.now(); const tick = () => { const s = Math.floor((Date.now() - t0) / 1000); if (rb) rb.innerHTML = `<span class="lc-recdot"></span> Enregistrement… ${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")} — parle en anglais, puis appuie sur « ⏹ Terminer »`; }; if (rb) rb.hidden = false; tick(); recTimer = setInterval(tick, 500); }
         else if (rb) { if (vUrl) rb.innerHTML = "✅ Enregistré. Appuie sur « ▶ Me réécouter », puis compare avec « 🔊 Modèle »."; else rb.hidden = true; }
       },
-      onText: (t) => { const ta = el.querySelector("#dlgIn"); if (ta && t) ta.value = t; },
+      onText: (t) => { const ta = curTa(); if (ta && t) ta.value = t; },
       onDone: ({ alts, url }) => {
-        const ta = el.querySelector("#dlgIn"); if (ta && alts && alts[0]) ta.value = alts[0];
+        const ta = curTa(); if (ta && alts && alts[0]) ta.value = alts[0];
         if (url) { vUrl = url; const r = el.querySelector("#dlgReplay"); if (r) r.hidden = false; const md = el.querySelector("#dlgModel"); if (md) md.hidden = false; const rb = el.querySelector("#dlgRec"); if (rb) { rb.hidden = false; rb.innerHTML = "✅ Enregistré. Appuie sur « ▶ Me réécouter », puis compare avec « 🔊 Modèle »." + (alts && alts[0] ? "" : " <small>(Sur iPhone, l’appli ne comprend pas ta voix : écris aussi ta réponse pour être corrigé.)</small>"); } }
         const mm = el.querySelector("#dlgMsg"); if (!(alts && alts[0]) && url && ta) { ta.placeholder = "Tape ta réponse (l’appli ne transcrit pas ta voix ici), puis réécoute-toi."; }
       },
@@ -1187,6 +1190,8 @@ export function renderLesson(root, B, { onExit } = {}) {
       { const mn = el.querySelector(".lc-main"); if (!noReg && mn.scrollHeight > mn.clientHeight + 2) { draw(msg, true); return; } }
       el.querySelector("#lcBack").onclick = showDialogueList;
       fillSpace();
+      { const ft3 = el.querySelector(".lc-foot"), lis = el.querySelectorAll(".lc-goals li"), bb = el.querySelectorAll(".lc-dlg .lc-bb"), ch = el.querySelector(".lc-bl-full"); // 1re réplique : on répartit le vide (liste des objectifs, bulle) au lieu d'ajouter une aide
+        if (ft3 && ch && log.length === 0) { const g = () => Math.floor(ft3.getBoundingClientRect().top - ch.getBoundingClientRect().bottom - 30); let L = g(); if (L > 8) { const per = Math.min(10, Math.floor(L * 0.6 / Math.max(1, lis.length))); lis.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = per + "px"; }); L = g(); } if (L > 8) { bb.forEach((x) => { x.style.padding = Math.min(26, 12 + Math.floor(L / 2)) + "px 16px"; x.style.fontSize = "18px"; }); } } }
       const mn2 = el.querySelector(".lc-main"); if (mn2) mn2.scrollTop = mn2.scrollHeight;
       if (finished) {
         const ab = el.querySelector("#dlgAdv"), ao = el.querySelector("#dlgAdvOut");
@@ -1222,6 +1227,56 @@ export function renderLesson(root, B, { onExit } = {}) {
       ta.addEventListener("focus", () => { root.classList.add("lc-kb"); setTimeout(() => { window.scrollTo(0, 0); root.scrollTop = 0; }, 60); });
       ta.addEventListener("blur", () => root.classList.remove("lc-kb"));
     }
+    // A1.3 : trois questions par écran (le personnage pose 3 questions, l'élève répond à chacune, puis l'écran suivant).
+    let bs = null;
+    function drawBatch(keep) {
+      if (turn >= D.turns.length) { drawEnd(); return; }
+      const n = Math.min(D.batch, D.turns.length - turn), ts = D.turns.slice(turn, turn + n), nb = Math.ceil(D.turns.length / D.batch), bi = Math.floor(turn / D.batch);
+      if (!keep || !bs || bs.turn !== turn) bs = { turn, vals: [], ok: [], tries: [], helped: [], msg: "" };
+      const allOk = () => ts.every((_, j) => bs.ok[j]);
+      const goals = Array.from({ length: nb }, (_, k) => { const a = k * D.batch, z = Math.min(a + D.batch, D.turns.length); return `<li class="${k < bi ? "ok" : k === bi ? "now" : ""}"><i>${k < bi ? "✓" : (z - a > 1 ? (a + 1) + "-" + z : a + 1)}</i>${D.turns.slice(a, z).map((t) => esc(String(t.hint || "").replace(/\.$/, ""))).join(" · ")}</li>`; }).join("");
+      const rows = ts.map((T, j) => `<div class="lc-bb npc"><span class="lc-bt">${esc(T.npc)}</span>${spk(T.npc)}</div>
+        <div class="lc-brow"><i class="lc-bnum ${bs.ok[j] ? "ok" : ""}">${bs.ok[j] ? "✓" : j + 1 + turn}</i>${bs.ok[j] ? `<div class="lc-bb me"><span class="lc-bt">${esc(bs.vals[j])}</span></div>` : `<textarea class="lc-ta lc-bq" data-j="${j}" rows="1" placeholder="Écris ta réponse en anglais…" aria-label="Réponse ${j + 1 + turn}" autocapitalize="sentences" autocomplete="off" spellcheck="false">${esc(bs.vals[j] || "")}</textarea>`}</div>`).join("");
+      const lastB = turn + n >= D.turns.length;
+      const input = `${bs.msg ? `<p class="lc-small" id="dlgMsg" aria-live="polite">${bs.msg}</p>` : ""}<p class="lc-rec" id="dlgRec" aria-live="polite" ${recOn ? "" : "hidden"}></p>
+        <div class="lc-dlg-actions">${(SR || window.MediaRecorder) ? `<button type="button" class="lc-sec-btn" id="dlgMic">${recOn ? "⏹ Terminer" : "🎙️ Parler"}</button>` : ""}<button type="button" class="lc-sec-btn" id="dlgHelp">💡 Aide</button>
+        <button type="button" class="lc-cta" id="dlgSend">${allOk() ? (lastB ? "Voir la correction" : "Suite →") : n > 1 ? `Répondre aux ${n}` : "Répondre"}</button></div>`;
+      frame(HEAD, { cur: bi + 1, total: nb }, `<section class="lc-card lc-card-bare lc-dlg lc-dlgb"><div class="lc-dlg-top"><span>${D.icon}</span><div><b>${esc(D.title)}</b><small>${esc(D.scene)}</small></div></div><ul class="lc-goals">${goals}</ul><div class="lc-bl lc-bl-full">${rows}</div></section>`, `<footer class="lc-foot lc-dlg-foot">${input}</footer>`);
+      el.querySelector("#lcBack").onclick = showDialogueList;
+      { const mn = el.querySelector(".lc-main"), ft = el.querySelector(".lc-foot"), sec0 = el.querySelector(".lc-dlgb"), sec = { classList: sec0.classList, getBoundingClientRect: () => el.querySelector(".lc-brow:last-child").getBoundingClientRect() }; // trop haut ? on resserre
+        const over = () => !!(ft && sec && (sec.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 16 || mn.scrollHeight > mn.clientHeight + 1));
+        if (over()) sec.classList.add("lc-dlgb1"); if (over()) sec.classList.add("lc-dlgb2"); if (over()) sec.classList.add("lc-dlgb3");
+        const L = ft && sec ? Math.floor(ft.getBoundingClientRect().top - sec.getBoundingClientRect().bottom - 14) : 0; // reste du vide : on aère la liste et les bulles
+        if (L > 10) { const lis = el.querySelectorAll(".lc-goals li"), per = Math.min(14, Math.floor(L * 0.4 / Math.max(1, lis.length))); lis.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = per + "px"; }); const L2 = Math.floor(ft.getBoundingClientRect().top - sec.getBoundingClientRect().bottom - 14); if (L2 > 10) el.querySelectorAll(".lc-bq,.lc-brow .lc-bb").forEach((x) => { x.style.marginTop = x.style.marginBottom = Math.min(14, Math.floor(L2 / (2 * n + 2))) + "px"; }); } }
+      { const mn = el.querySelector(".lc-main"), sec = el.querySelector(".lc-dlgb"); // garde-fou : si ça défile encore, on retire l'aération et on resserre
+        for (const c of ["lc-dlgb1", "lc-dlgb2", "lc-dlgb3"]) { if (mn.scrollHeight <= mn.clientHeight + 1) break; el.querySelectorAll(".lc-goals li,.lc-bq,.lc-brow .lc-bb").forEach((x) => { x.style.padding = x.style.margin = ""; }); sec.classList.add(c); } }
+      const tas = [...el.querySelectorAll(".lc-bq")];
+      tas.forEach((ta) => { ta.addEventListener("focus", () => { activeJ = +ta.dataset.j; }); ta.addEventListener("input", () => { bs.vals[+ta.dataset.j] = ta.value; }); });
+      if (tas[0]) { activeJ = +tas[0].dataset.j; }
+      const send = () => {
+        if (allOk()) {
+          ts.forEach((T, j) => { log.push({ who: "npc", text: T.npc }); log.push({ who: "me", text: bs.vals[j], tag: bs.helped[j] ? "avec aide" : "✓", model: T.model, reg: REGISTERS_A1[`${String(B.code).replace("A1.", "")}.${di}.${turn + j}`] }); });
+          turn += n; vUrl = null; bs = null; drawBatch(); return;
+        }
+        const bad = [];
+        ts.forEach((T, j) => {
+          if (bs.ok[j]) return; const v = norm(bs.vals[j] || ""); if (!v) { bad.push(j); return; }
+          const nw = v.split(/\s+/).length;
+          if (T.ok.some((re) => new RegExp(re, "i").test(v)) && (nw >= 2 || /\b(bye|goodbye|yes|no|thanks|thank you|sorry|please)\b/i.test(v))) { bs.ok[j] = true; bs.vals[j] = v; }
+          else { bs.tries[j] = (bs.tries[j] || 0) + 1; bad.push(j); }
+        });
+        const w = bad[0];
+        bs.msg = w === undefined ? "" : (bs.vals[w] && (bs.tries[w] || 0) >= 2) ? `${w + 1 + turn}. Essaie comme ceci : « ${esc(ts[w].model)} »` : (bs.vals[w] ? `${w + 1 + turn}. Pas tout à fait. ${esc(ts[w].hint || "Réessaie.")}` : `Réponds à la question ${w + 1 + turn}.`);
+        drawBatch(true);
+      };
+      el.querySelector("#dlgSend").onclick = send;
+      el.querySelector("#dlgHelp").onclick = () => { const w = ts.findIndex((_, j) => !bs.ok[j]); if (w < 0) return; bs.helped[w] = true; bs.msg = `${w + 1 + turn}. Modèle : « ${esc(ts[w].model)} » — recopie-le ou change des mots.`; drawBatch(true); };
+      const mic = el.querySelector("#dlgMic"); if (mic) mic.onclick = () => (recOn ? V.stop() : (vUrl = null, V.start()));
+      tas.forEach((ta) => ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); const nx = tas[tas.indexOf(ta) + 1]; if (nx && !nx.value.trim()) nx.focus(); else send(); } }));
+      const root = el.querySelector(".lc-main") || el;
+      tas.forEach((ta) => { ta.addEventListener("focus", () => { root.classList.add("lc-kb"); setTimeout(() => { window.scrollTo(0, 0); }, 60); }); ta.addEventListener("blur", () => root.classList.remove("lc-kb")); });
+    }
+    if (D.batch) { drawBatch(); return; }
     draw();
   }
 
@@ -1253,7 +1308,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       ? dictSentences().map((t) => ({ kind, text: t, model: t }))
       : SIT.map((x) => Object.assign({ kind }, x));
     let i = 0, tries = 0, first = 0, shown = false;
-    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261023y" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261023z" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
     function draw(msg) {
       if (i >= items.length) {
         prog.writes = Object.assign({}, prog.writes, { [kind]: true });
@@ -1333,7 +1388,16 @@ export function renderLesson(root, B, { onExit } = {}) {
   let EW = DEFW, EO = DEFO; // sujets d'expression du test en cours (changent à chaque passage, voir startTest)
   const isA2 = String(B.code || "").startsWith("A2.");
   const SIT = (!B.exam && (isA2 ? SITUATIONS_A2[B.code] : SITUATIONS_A1[String(B.code || "").replace("A1.", "")])) || null;
-  const DLG = (!B.exam && (isA2 ? (DIALOGUES_A2[B.code] ? DIALOGUES_A2[B.code].concat(MORE_A2[B.code] || []) : DIALOGUES_A2[B.code]) : (() => { const k = String(B.code || "").replace("A1.", ""), b = Object.assign({}, DIALOGUES_A1_REST, DIALOGUES_A1)[k]; return b ? b.concat(MORE_A1[k] || []).map((d) => { const ex = EXTRA_TURN_A1[k + "|" + d.title]; return ex && !d.turns.some((t) => t.npc === ex.npc) ? Object.assign({}, d, { turns: [...d.turns.slice(0, -1), ex, d.turns[d.turns.length - 1]], _xi: d.turns.length - 1 }) : d; }) : b; })())) || null;
+  const DLG0 = (!B.exam && (isA2 ? (DIALOGUES_A2[B.code] ? DIALOGUES_A2[B.code].concat(MORE_A2[B.code] || []) : DIALOGUES_A2[B.code]) : (() => { const k = String(B.code || "").replace("A1.", ""), b = Object.assign({}, DIALOGUES_A1_REST, DIALOGUES_A1)[k]; return b ? b.concat(MORE_A1[k] || []).map((d) => { const ex = EXTRA_TURN_A1[k + "|" + d.title]; return ex && !d.turns.some((t) => t.npc === ex.npc) ? Object.assign({}, d, { turns: [...d.turns.slice(0, -1), ex, d.turns[d.turns.length - 1]], _xi: d.turns.length - 1 }) : d; }) : b; })())) || null;
+  const STOPW = new Set("the and you for are have its this that with don not yes please thank thanks".split(" "));
+  const mkOk = (m) => { const w = [...new Set(String(m).toLowerCase().replace(/[^a-z' ]/g, " ").split(/\s+/).filter((x) => x.length >= 2 && !STOPW.has(x)))]; return ["\\b(" + (w.length ? w : ["yes"]).map((x) => x.replace(/'/g, "'")).join("|") + ")\\b"]; };
+  const DLG = DLG0 && B.code === "A1.3" ? DLG0.map((d) => (BATCH_A13[d.title] ? Object.assign({}, d, { turns: BATCH_A13[d.title], batch: 3, _xi: undefined }) : d))
+    : DLG0 && !isA2 && EXT_A1[String(B.code).replace("A1.", "")] ? DLG0.map((d) => { // A1.4–A1.12 : 6 répliques, 2 écrans de 3
+      const ex = (EXT_A1[String(B.code).replace("A1.", "")][d.title] || []).filter((e) => !d.turns.some((t) => t.npc === e[0])), need = 6 - d.turns.length;
+      if (need < 0 || need > ex.length) return d;
+      const add = ex.slice(0, need).map((e) => ({ npc: e[0], ok: mkOk(e[1]), model: e[1], hint: e[2] }));
+      return Object.assign({}, d, { turns: [...d.turns.slice(0, -1), ...add, d.turns[d.turns.length - 1]], batch: 3, _xi: undefined });
+    }) : DLG0; // A1.3 : 3 questions par écran
   const leave = () => (B.exam ? (onExit && onExit()) : showMenu());
   const RID = B.exam ? "EXAM-A1" : B.code;
   const retakeBlocked = () => !UNLOCK_ALL_PREVIEW && retakeLocked(prog, RID);
@@ -1394,7 +1458,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     T.plan = T.plan || {};
     const Q = (key, q, n) => `<div class="lc-qb"><p class="lc-q">${n}. ${esc(q[0])}</p><div class="lc-choices" role="group">${q[1].map((o, i) => `<button type="button" class="lc-choice ${T.ans[key] === i ? "lc-sel" : ""}" data-k="${key}" data-i="${i}">${esc(o)}</button>`).join("")}</div></div>`;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261023y" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
+    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261023z" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
     // la page est découpée en blocs ; on remplit chaque écran au maximum, sans défilement
     const bl = []; let head = "", hero = "";
     if (p === 0) {
@@ -1410,11 +1474,11 @@ export function renderLesson(root, B, { onExit } = {}) {
       T.gram.slice((p - 2) * 10, (p - 2) * 10 + 10).forEach((id, i) => bl.push({ k: "q", h: Q("g" + id, B.testGrammar[id], (p - 2) * 10 + i + 1), keys: ["g" + id] }));
     } else if (p === 4) {
       head = "Expression écrite · 7,5 pts"; hero = exImg("writing");
-      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261023y" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="6" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
+      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261023z" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="6" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
     } else {
       head = "Expression orale · 7,5 pts"; hero = exImg("speaking");
       bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">🎤 ${esc(T.ot)}</h2><p class="lc-lead">${esc(T.ol)} Puis coche ce que tu as réellement dit (auto-évaluation).</p>
-        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261023y" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
+        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261023z" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
       EO.checks.forEach(([l], i) => bl.push({ k: "c", h: `<li><label><input type="checkbox" data-o="${i}" ${T.oral[i] ? "checked" : ""}/> ${esc(l)}</label></li>` }));
     }
     const last = p === total - 1;
