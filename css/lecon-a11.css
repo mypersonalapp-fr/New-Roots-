@@ -1012,3 +1012,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .jx-clues .jx-clue,.jx-clues>*{padding-top:6px!important;padding-bottom:6px!important}
 .jx-letters .jx-key{padding:8px 0!important;min-width:34px!important;font-size:16px!important}
 .jx-clues .jx-clue small,.jx-clues small{font-size:11px!important}
+/* photos entières (plus coupées) */
+.rc-item:has(.rc-pic) .rc-pic{ max-height:106px !important; object-fit:contain !important; aspect-ratio:16/9; margin:0 auto 3px !important; width:auto !important; max-width:100% !important; background:rgba(0,0,0,.15); }
+.rc-item:has(.rc-pic) .rc-group{ margin-top:0 !important; } .rc-item:has(.rc-pic) .lc-h3{ margin:0 0 1px !important; }
