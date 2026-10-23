@@ -1488,7 +1488,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     const last = p === total - 1;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" disabled>${last ? "Voir mon résultat" : "Suivant →"}</button></footer>`;
     const build = (a, z, first, tight, meas) => {
-      let html = first ? `${tight === 2 ? (p === 4 ? hero.replace("lc-exhero", "lc-exhero lc-exs lc-exs2") : "") : tight === 1 ? hero.replace("lc-exhero", "lc-exhero lc-exs") : hero}<div class="lc-vocab-head"><span class="lc-vh-ic">🏆</span><div><h1>${B.exam ? "Grand contrôle A1" : "Test de fin"}</h1><p>${esc(head)}</p></div></div>` : "";
+      let html = first ? `${tight === 2 ? (p === 4 ? hero.replace("lc-exhero", "lc-exhero lc-exs lc-exs2") : "") : tight === 1 ? hero.replace("lc-exhero", "lc-exhero lc-exs") : hero}<div class="lc-vocab-head"><span class="lc-vh-ic">🏆</span><div><h1>${B.exam ? "Grand contrôle A1" : "Test de fin"}</h1><p>${esc(head)}</p></div></div>` : (hero && tight < 1 ? hero : "");
       if (!first && p < 2) { const rt = p === 0 ? T.text.text : T.audio.script; html += `<div class="lc-recap-row"><button type="button" class="lc-chip lc-recap" data-recap="${esc(rt)}" data-kind="${p === 0 ? "text" : "audio"}">${p === 0 ? "📖 Revoir le texte" : "🎧 Réécouter"}</button></div>`; }
       for (let i = a; i < z;) {
         const k = bl[i].k;
@@ -1501,13 +1501,13 @@ export function renderLesson(root, B, { onExit } = {}) {
       return html;
     };
     const ttl = B.exam ? "Grand contrôle A1" : "Test de fin de leçon";
-    const draw = (a, z, tight, meas) => { frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot); if (p <= 3 && z - a >= 3) { const mm = el.querySelector(".lc-main"); mm.classList.add("lc-listen", "lc-g3", "lc-ex"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight2"); } else if (p === 2 || p === 3) el.querySelector(".lc-main").classList.add("lc-bigq"); };
+    const draw = (a, z, tight, meas) => { frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot); { const m0 = el.querySelector(".lc-main"); if (m0) m0.classList.add("lc-testp"); } if (p <= 3 && z - a >= 3) { const mm = el.querySelector(".lc-main"); mm.classList.add("lc-listen", "lc-g3", "lc-ex"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight2"); } else if (p === 2 || p === 3) el.querySelector(".lc-main").classList.add("lc-bigq"); };
     const fits = () => { const m = el.querySelector(".lc-main"); return m.scrollHeight <= m.clientHeight + 2; };
     if (!T.plan[p]) {
       const plan = []; let a = 0;
       while (a < bl.length) {
         let best = null;
-        for (const tier of (a === 0 && hero) || bl.some((x) => x.ta) ? [0, 1, 2] : [0]) {
+        for (const tier of bl.some((x) => x.ta) ? [0, 1, 2] : [0]) {
           let z = (p === 2 || p === 3) && a === 0 && bl.length > 3 ? Math.ceil(bl.length / 2) : bl.length; // grammaire : 3 + 3 questions, jamais 4 + 1
           for (;;) { draw(a, z, tier, true); if (fits() || z - a <= 1) break; z--; }
           const ok = fits();
