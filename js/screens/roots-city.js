@@ -85,6 +85,8 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
     let L = gap(); if (L < 20) return;
     const im = m.querySelector(".rc-hero img");
     if (im) { const h0 = im.getBoundingClientRect().height; for (let a = Math.min(Math.floor(L * 0.55), 130); a > 6; a -= 6) { im.style.setProperty("aspect-ratio", "auto", "important"); im.style.setProperty("max-height", "none", "important"); im.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; im.style.removeProperty("height"); im.style.removeProperty("max-height"); im.style.removeProperty("aspect-ratio"); } L = gap(); }
+    const pic = m.querySelector(".rc-pic");
+    if (pic && L > 16) { const h0 = pic.getBoundingClientRect().height; for (let a = Math.min(Math.floor(L * 0.7), 150); a > 6; a -= 6) { pic.style.setProperty("max-height", Math.round(h0 + a) + "px", "important"); pic.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; pic.style.removeProperty("height"); pic.style.removeProperty("max-height"); } L = gap(); }
     const grow = (sel, max) => { const els = [...c.querySelectorAll(sel)]; if (!els.length || L < 12) return; const b0 = els.map((e) => [parseFloat(getComputedStyle(e).paddingTop), parseFloat(getComputedStyle(e).paddingBottom)]); for (let q = Math.min(max, Math.floor(L / (2 * els.length))); q > 0; q--) { els.forEach((e, i) => { e.style.paddingTop = b0[i][0] + q + "px"; e.style.paddingBottom = b0[i][1] + q + "px"; }); if (!bad()) break; els.forEach((e) => { e.style.paddingTop = e.style.paddingBottom = ""; }); } L = gap(); };
     grow(".rc-tok:not(.in), .rc-tok.in", 12);
     grow(".rc-opt:not(.rc-tile)", 10);

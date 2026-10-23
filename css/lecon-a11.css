@@ -1019,3 +1019,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .rc-hero{ text-align:center; background:transparent !important; }
 .rc-hero img{ width:auto !important; max-width:100% !important; height:auto !important; max-height:118px !important; aspect-ratio:16/9 !important; object-fit:contain !important; margin:0 auto; border-radius:12px; }
 .rc-dense .rc-hero img{ max-height:96px !important; } .rc-dense2 .rc-hero img{ max-height:76px !important; }
+/* construction de phrase : la zone de réponse grandit pour remplir l'écran (grands iPhone) */
+.rc-build .rc-slots{ flex:1 1 auto !important; min-height:84px; max-height:260px; align-content:flex-start; }
+.rc-build .rc-bank{ margin:12px 0 auto !important; }
