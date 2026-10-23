@@ -1027,3 +1027,4 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-sc6 figure,.lc-exhero figure,.lc-pic{ background:transparent !important; }
 .lc-main.lc-kbp .pr-scene img,.lc-main.lc-kbp #lcPrac > .pr-scene img,.pr-scene img{ object-fit:contain !important; }
 .jx-opts.jx-img .jx-opt img{ object-fit:contain !important; }
+.rc-item:has(.rc-pic) .rc-pic{ background:transparent !important; }

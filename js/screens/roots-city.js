@@ -86,7 +86,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
     const im = m.querySelector(".rc-hero img");
     if (im) { const h0 = im.getBoundingClientRect().height; for (let a = Math.min(Math.floor(L * 0.55), 130); a > 6; a -= 6) { im.style.setProperty("aspect-ratio", "auto", "important"); im.style.setProperty("max-height", "none", "important"); im.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; im.style.removeProperty("height"); im.style.removeProperty("max-height"); im.style.removeProperty("aspect-ratio"); } L = gap(); }
     const pic = m.querySelector(".rc-pic");
-    if (pic && L > 16) { const h0 = pic.getBoundingClientRect().height; for (let a = Math.min(Math.floor(L * 0.7), 150); a > 6; a -= 6) { pic.style.setProperty("max-height", Math.round(h0 + a) + "px", "important"); pic.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; pic.style.removeProperty("height"); pic.style.removeProperty("max-height"); } L = gap(); }
+    if (pic && L > 16) { const h0 = pic.getBoundingClientRect().height, hmax = Math.floor(pic.parentElement.getBoundingClientRect().width * 9 / 16); for (let a = Math.min(Math.floor(L * 0.7), 150, hmax - h0); a > 6; a -= 6) { pic.style.setProperty("max-height", Math.round(h0 + a) + "px", "important"); pic.style.setProperty("height", Math.round(h0 + a) + "px", "important"); if (!bad()) break; pic.style.removeProperty("height"); pic.style.removeProperty("max-height"); } L = gap(); }
     const grow = (sel, max) => { const els = [...c.querySelectorAll(sel)]; if (!els.length || L < 12) return; const b0 = els.map((e) => [parseFloat(getComputedStyle(e).paddingTop), parseFloat(getComputedStyle(e).paddingBottom)]); for (let q = Math.min(max, Math.floor(L / (2 * els.length))); q > 0; q--) { els.forEach((e, i) => { e.style.paddingTop = b0[i][0] + q + "px"; e.style.paddingBottom = b0[i][1] + q + "px"; }); if (!bad()) break; els.forEach((e) => { e.style.paddingTop = e.style.paddingBottom = ""; }); } L = gap(); };
     { const ti = [...c.querySelectorAll(".rc-tile img, .rc-tiles .rc-opt img")]; if (ti.length && L > 14) { const h0 = ti.map((e) => e.getBoundingClientRect().height), rows = Math.max(1, Math.ceil(ti.length / 3)); for (let q = Math.min(40, Math.floor(L / rows)); q > 2; q -= 3) { ti.forEach((e, i) => { e.style.setProperty("height", Math.round(h0[i] + q) + "px", "important"); }); if (!bad()) break; ti.forEach((e) => e.style.removeProperty("height")); } L = gap(); } }
     grow(".rc-tok:not(.in), .rc-tok.in", 12);
@@ -124,6 +124,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   /* ---- missions à choix (1, 2, 4, 5) : plusieurs questions par écran, correction immédiate au clic ---- */
   function choose(m, steps, S) {
     const simple = (st) => st.groups.length === 1 && !m.portrait;
+    const paged = (st) => m.portrait || (st.img && st.groups.length > 3);
     S.cap = S.cap || 4; S.pp = S.pp || 0;
     const k = simple(steps[S.n]) ? Math.max(1, Math.min(S.cap, steps.length - S.n)) : 1;
     const items = [];
@@ -138,12 +139,12 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       const groups = step.groups.map((g, gi) => `<div class="rc-group">${step.groups.length > 1 || g.label !== "Temps" ? `<h3 class="lc-h3">${esc(g.label)}</h3>` : ""}<div class="rc-opts ${g.tiles || g.cols ? "rc-tiles" : ""}" style="--c:${g.cols || 3}">${g.opts.map((o) => {
         const sel = it.pick[gi] === o.v, ok = it.checked && o.v === g.answer, ko = it.checked && sel && o.v !== g.answer;
         return `<button type="button" class="rc-opt ${sel ? "sel" : ""} ${ok ? "ok" : ""} ${ko ? "ko" : ""}" data-i="${ii}" data-g="${gi}" data-v="${esc(o.v)}" ${it.checked ? "disabled" : ""}>${o.img ? `<img src="${o.img}" alt="${esc(o.img && o.label ? o.label : "Character " + (Number(o.v) + 1))}"/>` : ""}${o.label && !o.img ? `<span>${esc(o.label)}</span>` : ""}</button>`;
-      }).join("")}</div></div>`).filter((_, gi) => !m.portrait || (S.pp ? gi >= Math.ceil(step.groups.length / 2) : gi < Math.ceil(step.groups.length / 2))).join("");
+      }).join("")}</div></div>`).filter((_, gi) => !paged(step) || (S.pp ? gi >= Math.ceil(step.groups.length / 2) : gi < Math.ceil(step.groups.length / 2))).join("");
       return `<div class="rc-item ${it.checked ? (it.good ? "good" : "bad") : ""}"><div class="rc-lead">${leadOf(step)}</div>${groups}${m.portrait ? sum(it) : ""}<div class="rc-fb" aria-live="polite">${it.checked ? (it.good ? "✅ Bien joué !" : "❌ Pas tout à fait — la bonne réponse est en vert.") : ""}</div></div>`;
     };
     const paint = () => {
       const y0 = first ? 0 : (el.querySelector(".lc-main") || {}).scrollTop || 0;
-      const half = Math.ceil(items[0].step.groups.length / 2), pg0 = m.portrait && !S.pp && !items[0].checked && items[0].step.groups.slice(0, half).every((g, gi) => items[0].pick[gi] != null);
+      const half = Math.ceil(items[0].step.groups.length / 2), pg0 = paged(items[0].step) && !S.pp && !items[0].checked && items[0].step.groups.slice(0, half).every((g, gi) => items[0].pick[gi] != null);
       const done = items.every((it) => it.checked), lastChunk = S.n + items.length >= steps.length;
       frame(`Mission ${S.i + 1}/${MISSIONS.length}`, { cur: S.n + items.length, total: steps.length }, `${hero(m)}<section class="lc-card lc-card-bare rc-card"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${items.map(itemHtml).join("")}
         <button type="button" class="lc-next rc-go" id="rcGo" ${done || pg0 ? "" : "disabled"}>${done ? (lastChunk ? "Terminer" : "Suivant ›") : pg0 ? "Suite ›" : "Choisis ta réponse"}</button></section>`);
