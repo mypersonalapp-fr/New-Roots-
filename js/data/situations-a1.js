@@ -28,7 +28,10 @@ export const SITUATIONS_A1 = {
     "\\bi come from\\s+[a-z]+"
    ],
    "model": "I'm from France."
-  }
+  },
+  {"icon": "🎓", "cue": "Say you are a student.", "hint": "Dis que tu es étudiant(e).", "ok": ["\\b(i'm|i am)\\s+(a\\s+)?student"], "model": "I'm a student."},
+  {"icon": "📞", "cue": "Ask someone: “What is your name?”", "hint": "Demande son nom.", "ok": ["\\bwhat('s| is) your name"], "model": "What is your name?"},
+  {"icon": "🌍", "cue": "Say you speak French and a little English.", "hint": "Dis les langues que tu parles.", "ok": ["\\bi speak\\b.*\\b(french|english)"], "model": "I speak French and a little English."}
  ],
  "2": [
   {
@@ -58,7 +61,10 @@ export const SITUATIONS_A1 = {
     "\\bhe('s| is)\\s+funny"
    ],
    "model": "My grandfather is funny."
-  }
+  },
+  {"icon": "👨‍👩‍👧", "cue": "Say you have two brothers.", "hint": "Dis que tu as deux frères.", "ok": ["\\bi have (two|2) brothers"], "model": "I have two brothers."},
+  {"icon": "🏠", "cue": "Say your kitchen is small.", "hint": "Dis que ta cuisine est petite.", "ok": ["\\b(my )?kitchen is small"], "model": "My kitchen is small."},
+  {"icon": "🐶", "cue": "Say you have a dog and it is big.", "hint": "Dis que tu as un chien grand.", "ok": ["\\bi have a dog\\b"], "model": "I have a dog. It is big."}
  ],
  "3": [
   {
@@ -88,7 +94,10 @@ export const SITUATIONS_A1 = {
     "\\bsaturdays?\\b.+\\bplay\\b"
    ],
    "model": "I often play football on Saturdays."
-  }
+  },
+  {"icon": "🎉", "cue": "Invite a friend to your birthday party.", "hint": "Invite un ami à ta fête.", "ok": ["\\b(come|invite|would you like|do you want)\\b.*\\b(party|birthday)"], "model": "Do you want to come to my birthday party?"},
+  {"icon": "🙏", "cue": "Say sorry: you can't come on Saturday.", "hint": "Refuse poliment samedi.", "ok": ["\\b(sorry|can't|cannot)\\b.*\\b(saturday|come)"], "model": "Sorry, I can't come on Saturday."},
+  {"icon": "👫", "cue": "Say your friend is tall and funny.", "hint": "Décris ton ami(e).", "ok": ["\\b(he|she|my friend) (is|'s)\\b.*\\b(tall|funny)"], "model": "My friend is tall and funny."}
  ],
  "4": [
   {
@@ -117,7 +126,10 @@ export const SITUATIONS_A1 = {
     "\\bit takes\\b.+\\bminutes?\\b"
    ],
    "model": "It takes ten minutes."
-  }
+  },
+  {"icon": "🚉", "cue": "Ask: “Where is the station?”", "hint": "Demande où est la gare.", "ok": ["\\bwhere('s| is) the station"], "model": "Excuse me, where is the station?"},
+  {"icon": "🚲", "cue": "Say you go to work by bike.", "hint": "Dis que tu vas au travail à vélo.", "ok": ["\\bi (go|ride|cycle)\\b.*\\b(bike|bicycle)"], "model": "I go to work by bike."},
+  {"icon": "🎫", "cue": "Ask for a ticket to London.", "hint": "Demande un billet pour Londres.", "ok": ["\\b(ticket|i'd like|i would like|can i have)\\b.*\\blondon"], "model": "I'd like a ticket to London, please."}
  ],
  "5": [
   {
@@ -146,7 +158,10 @@ export const SITUATIONS_A1 = {
     "\\bi prefer\\b.+\\bto\\b.+"
    ],
    "model": "I prefer rice to pasta."
-  }
+  },
+  {"icon": "🎵", "cue": "Say you love music.", "hint": "Dis que tu adores la musique.", "ok": ["\\bi (love|like)\\b.*\\bmusic"], "model": "I love music."},
+  {"icon": "🍕", "cue": "Ask a friend: “Do you like pizza?”", "hint": "Demande s'il aime la pizza.", "ok": ["\\bdo you like pizza"], "model": "Do you like pizza?"},
+  {"icon": "📚", "cue": "Say you hate cleaning.", "hint": "Dis que tu détestes faire le ménage.", "ok": ["\\bi (hate|don't like|can't stand)\\b.*\\bclean"], "model": "I hate cleaning."}
  ],
  "6": [
   {
@@ -175,7 +190,10 @@ export const SITUATIONS_A1 = {
     "\\bi (don't|do not) like fish\\b"
    ],
    "model": "I don't like fish."
-  }
+  },
+  {"icon": "☕", "cue": "Order a coffee and a croissant.", "hint": "Commande un café et un croissant.", "ok": ["\\bcoffee\\b.*\\bcroissant"], "model": "I'd like a coffee and a croissant, please."},
+  {"icon": "💶", "cue": "Ask for the bill.", "hint": "Demande l'addition.", "ok": ["\\b(bill|check)\\b"], "model": "Can I have the bill, please?"},
+  {"icon": "🍎", "cue": "Say you want three apples.", "hint": "Demande trois pommes.", "ok": ["\\b(three|3)\\b.*\\bapples?"], "model": "I'd like three apples, please."}
  ],
  "7": [
   {
@@ -204,7 +222,10 @@ export const SITUATIONS_A1 = {
     "\\bblack\\b.+\\bcheaper than\\b.+\\bwhite\\b"
    ],
    "model": "The black shoes are cheaper than the white shoes."
-  }
+  },
+  {"icon": "👕", "cue": "Say you are looking for a blue T-shirt.", "hint": "Dis ce que tu cherches.", "ok": ["\\b(looking for|i want|i need)\\b.*\\bt-shirt"], "model": "I'm looking for a blue T-shirt."},
+  {"icon": "📏", "cue": "Say the jacket is too small.", "hint": "Dis que la veste est trop petite.", "ok": ["\\btoo small"], "model": "The jacket is too small."},
+  {"icon": "🛍️", "cue": "Ask for a larger size.", "hint": "Demande une taille plus grande.", "ok": ["\\b(larger|bigger|large)\\b"], "model": "Do you have a larger size, please?"}
  ],
  "8": [
   {
@@ -235,7 +256,10 @@ export const SITUATIONS_A1 = {
     "\\bgo straight\\b.+\\bturn left\\b"
    ],
    "model": "Go straight on and turn left."
-  }
+  },
+  {"icon": "🏦", "cue": "Ask where the bank is.", "hint": "Demande où est la banque.", "ok": ["\\bwhere('s| is) the bank"], "model": "Excuse me, where is the bank?"},
+  {"icon": "↩️", "cue": "Tell someone to turn right at the corner.", "hint": "Dis de tourner à droite.", "ok": ["\\bturn right\\b"], "model": "Turn right at the corner."},
+  {"icon": "🗺️", "cue": "Say the museum is near the park.", "hint": "Situe le musée.", "ok": ["\\b(museum)\\b.*\\b(near|next to|opposite)\\b.*\\bpark"], "model": "The museum is near the park."}
  ],
  "9": [
   {
@@ -265,7 +289,10 @@ export const SITUATIONS_A1 = {
     "\\bit('s| is) (very |too )?heavy\\b"
    ],
    "model": "My suitcase is very heavy."
-  }
+  },
+  {"icon": "🧳", "cue": "Say you have one suitcase.", "hint": "Dis que tu as une valise.", "ok": ["\\bi have (one|a|1)\\b.*\\bsuitcase"], "model": "I have one suitcase."},
+  {"icon": "🏨", "cue": "Say you want a room for two nights.", "hint": "Demande une chambre pour deux nuits.", "ok": ["\\b(room)\\b.*\\b(two|2) nights"], "model": "I'd like a room for two nights, please."},
+  {"icon": "📶", "cue": "Ask if there is wifi in the hotel.", "hint": "Demande s'il y a du wifi.", "ok": ["\\b(is there|do you have)\\b.*\\bwi-?fi"], "model": "Is there wifi in the hotel?"}
  ],
  "10": [
   {
@@ -295,7 +322,10 @@ export const SITUATIONS_A1 = {
     "\\bi study\\b.+"
    ],
    "model": "I study history at university."
-  }
+  },
+  {"icon": "🕘", "cue": "Say you finish work at five.", "hint": "Dis à quelle heure tu finis.", "ok": ["\\bi (finish|end|stop)\\b.*\\b(five|5)"], "model": "I finish work at five."},
+  {"icon": "🏥", "cue": "Say your sister is a nurse.", "hint": "Dis le métier de ta sœur.", "ok": ["\\bsister (is|'s) a nurse"], "model": "My sister is a nurse."},
+  {"icon": "📖", "cue": "Say you have homework tonight.", "hint": "Dis que tu as des devoirs ce soir.", "ok": ["\\bi have (some )?homework"], "model": "I have homework tonight."}
  ],
  "11": [
   {
@@ -325,7 +355,10 @@ export const SITUATIONS_A1 = {
     "\\bi (get up|wake up)\\b.+"
    ],
    "model": "I get up at seven."
-  }
+  },
+  {"icon": "🌧️", "cue": "Ask: “What's the weather like today?”", "hint": "Demande le temps.", "ok": ["\\bweather\\b"], "model": "What's the weather like today?"},
+  {"icon": "🕒", "cue": "Ask: “What time is it?”", "hint": "Demande l'heure.", "ok": ["\\bwhat time is it"], "model": "What time is it?"},
+  {"icon": "📅", "cue": "Say your birthday is in April.", "hint": "Dis ton mois d'anniversaire.", "ok": ["\\bmy birthday is (in|on)\\b.*\\bapril"], "model": "My birthday is in April."}
  ],
  "12": [
   {
@@ -355,6 +388,9 @@ export const SITUATIONS_A1 = {
     "\\b(can|could) i sit\\b.+"
    ],
    "model": "Excuse me, can I sit here?"
-  }
+  },
+  {"icon": "🙌", "cue": "Say “Nice to meet you” to a new friend.", "hint": "Dis que tu es heureux de le rencontrer.", "ok": ["\\bnice to meet you"], "model": "Nice to meet you!"},
+  {"icon": "🎁", "cue": "Thank a friend for the gift.", "hint": "Remercie pour le cadeau.", "ok": ["\\bthank(s| you)\\b.*\\bgift"], "model": "Thank you for the gift!"},
+  {"icon": "🤝", "cue": "Say you don't understand and ask to repeat.", "hint": "Dis que tu ne comprends pas.", "ok": ["\\b(don't understand|repeat)\\b"], "model": "Sorry, I don't understand. Can you repeat, please?"}
  ]
 };
