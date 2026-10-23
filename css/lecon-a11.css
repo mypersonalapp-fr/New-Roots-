@@ -1015,3 +1015,7 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 /* photos entières (plus coupées) */
 .rc-item:has(.rc-pic) .rc-pic{ max-height:106px !important; object-fit:contain !important; aspect-ratio:16/9; margin:0 auto 3px !important; width:auto !important; max-width:100% !important; background:rgba(0,0,0,.15); }
 .rc-item:has(.rc-pic) .rc-group{ margin-top:0 !important; } .rc-item:has(.rc-pic) .lc-h3{ margin:0 0 1px !important; }
+/* image d'en-tête des missions : entière (jamais coupée) */
+.rc-hero{ text-align:center; background:transparent !important; }
+.rc-hero img{ width:auto !important; max-width:100% !important; height:auto !important; max-height:118px !important; aspect-ratio:16/9 !important; object-fit:contain !important; margin:0 auto; border-radius:12px; }
+.rc-dense .rc-hero img{ max-height:96px !important; } .rc-dense2 .rc-hero img{ max-height:76px !important; }
