@@ -15,7 +15,7 @@
 // langue choisie plutôt que de renvoyer par défaut des questions d'anglais.
 
 import { store } from "../data/store.js?v=20260930a";
-import { CREATOR_MODE } from "../data/dev-config.js?v=20261023v";
+import { CREATOR_MODE } from "../data/dev-config.js?v=20261023w";
 import { t } from "../data/i18n.js?v=20260930a";
 
 const TEST_MAX_MINUTES = 10;
