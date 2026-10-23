@@ -166,6 +166,7 @@ export const MISSIONS_A112 = [
   { id: "m4", ic: "🔗", title: "Connecteurs", sub: "Choisis and, but, so ou because.", hero: "city/a112-m4" },
   { id: "m5", ic: "🗣️", title: "Conversation", sub: "Choisis la bonne phrase.", hero: "city/a112-m5" },
   { id: "m6", ic: "🏆", title: "Le grand dialogue", sub: "Construis une conversation complète.", hero: "city/a112-m6" },
+  { id: "m7", ic: "🖼️", title: "Regarde l’image", sub: "Réponds aux questions sur la photo.", hero: "city/fam-cafe" },
 ];
 
 const pick = (say, label, a, o) => ({ say, groups: [{ label, answer: a, opts: names(o) }] });
@@ -205,6 +206,11 @@ export const DATA_A112 = {
   m6: [
     { prompt: "Fais un dialogue d'accueil.", card: [["Greeting", "Hello"], ["Need", "help"], ["End", "bye"]], answer: ["Hello!", "Could you help me, please?", "Of course.", "Thank you. Goodbye!"], bank: ["Hello!", "Could you help me, please?", "Of course.", "Thank you. Goodbye!", "Good night!", "I want help now."] },
     { prompt: "Fais un message à un ami.", card: [["Hello", "Zoe"], ["Reason", "exam"], ["Plan", "Sunday"]], answer: ["Hi Zoe!", "I'm sorry, I can't come on Saturday", "because I have an exam.", "Are you free on Sunday?"], bank: ["Hi Zoe!", "I'm sorry, I can't come on Saturday", "because I have an exam.", "Are you free on Sunday?", "so I have a pizza.", "Good evening, Tom!"] },
+  ],
+  m7: [
+    { img: "city/fam-cafe", groups: [{ label: "Where is this?", answer: "at a café", cols: 3, opts: names(["at a café", "at school", "at a station"]) }, { label: "What is in the middle?", answer: "a fountain", cols: 3, opts: names(["a fountain", "a bus", "a plane"]) }, { label: "The awning is…", answer: "red", cols: 3, opts: names(["red", "blue", "green"]) }, { label: "The chairs are…", answer: "black and white", cols: 3, opts: names(["black and white", "pink", "yellow"]) }, { label: "The weather is…", answer: "sunny", cols: 3, opts: names(["sunny", "rainy", "snowy"]) }] },
+    { img: "city/fam-wedding", groups: [{ label: "What is this?", answer: "a wedding", cols: 3, opts: names(["a wedding", "a lesson", "a match"]) }, { label: "The woman wears a… dress", answer: "white", cols: 3, opts: names(["white", "black", "green"]) }, { label: "The man wears a…", answer: "suit", cols: 3, opts: names(["suit", "cap", "scarf"]) }, { label: "What do they hold?", answer: "flowers", cols: 3, opts: names(["flowers", "books", "phones"]) }, { label: "The people are…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }] },
+    { img: "city/fam-meal", groups: [{ label: "Where are they?", answer: "at home", cols: 3, opts: names(["at home", "at school", "in a shop"]) }, { label: "What is on the table?", answer: "chicken", cols: 3, opts: names(["chicken", "pizza", "fish"]) }, { label: "The drink is…", answer: "orange juice", cols: 3, opts: names(["orange juice", "milk", "water"]) }, { label: "The boy on the left wears a… hoodie", answer: "red", cols: 3, opts: names(["red", "blue", "pink"]) }, { label: "How many children?", answer: "four", cols: 3, opts: names(["four", "one", "ten"]) }] }
   ],
 };
 

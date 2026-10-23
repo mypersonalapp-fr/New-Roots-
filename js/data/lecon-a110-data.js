@@ -166,6 +166,7 @@ export const MISSIONS_A110 = [
   { id: "m4", ic: "🔁", title: "Présent simple", sub: "Choisis la bonne forme du verbe.", hero: "city/a110-m4" },
   { id: "m5", ic: "⏰", title: "Mon planning", sub: "Choisis la bonne phrase.", hero: "city/a110-m5" },
   { id: "m6", ic: "🌟", title: "Ma journée type", sub: "Présente ta journée en anglais.", hero: "city/a110-m6" },
+  { id: "m7", ic: "🖼️", title: "Regarde l’image", sub: "Réponds aux questions sur la photo.", hero: "city/fam-jobs" },
 ];
 
 const pick = (say, label, a, o) => ({ say, groups: [{ label, answer: a, opts: names(o) }] });
@@ -205,6 +206,11 @@ export const DATA_A110 = {
   m6: [
     { prompt: "Présente ta journée.", card: [["Job", "teacher"], ["Place", "school"], ["Start", "8"]], answer: ["I'm a teacher.", "I work in a school.", "I start at eight."], bank: ["I'm a teacher.", "I'm a doctor.", "I work in a school.", "I work in a shop.", "I start at eight.", "I start at ten."] },
     { prompt: "Présente son travail.", card: [["Job", "nurse"], ["Place", "hospital"], ["Finish", "3"]], answer: ["She is a nurse.", "She works in a hospital.", "She finishes at three."], bank: ["She is a nurse.", "She is a driver.", "She works in a hospital.", "She works in a bank.", "She finishes at three.", "She finishes at ten."] },
+  ],
+  m7: [
+    { img: "city/fam-jobs", groups: [{ label: "What are the children looking at?", answer: "photos", cols: 3, opts: names(["photos", "a film", "a game"]) }, { label: "The woman in blue is a…", answer: "nurse", cols: 3, opts: names(["nurse", "teacher", "chef"]) }, { label: "The man in white is a…", answer: "doctor", cols: 3, opts: names(["doctor", "pilot", "builder"]) }, { label: "The woman with the books is a…", answer: "teacher", cols: 3, opts: names(["teacher", "nurse", "chef"]) }, { label: "The man with the yellow helmet is a…", answer: "builder", cols: 3, opts: names(["builder", "doctor", "pilot"]) }] },
+    { img: "city/fam-town", groups: [{ label: "Where is this?", answer: "in a town", cols: 3, opts: names(["in a town", "in a kitchen", "at the beach"]) }, { label: "What is on the left?", answer: "a hospital", cols: 3, opts: names(["a hospital", "a bank", "a shop"]) }, { label: "What is in the middle of the road?", answer: "a bus", cols: 3, opts: names(["a bus", "a plane", "a boat"]) }, { label: "What is on the right?", answer: "a building site", cols: 3, opts: names(["a building site", "a beach", "a zoo"]) }, { label: "What is behind the bus?", answer: "a school", cols: 3, opts: names(["a school", "a farm", "a zoo"]) }] },
+    { img: "city/fam-hall", groups: [{ label: "Where is this?", answer: "at the town hall", cols: 3, opts: names(["at the town hall", "at a school", "in a shop"]) }, { label: "What flags are there?", answer: "French and European", cols: 3, opts: names(["French and European", "British", "Spanish"]) }, { label: "The chairs are…", answer: "blue", cols: 3, opts: names(["blue", "red", "green"]) }, { label: "What is on the desk?", answer: "computers", cols: 3, opts: names(["computers", "cats", "cakes"]) }, { label: "The floor is…", answer: "wood", cols: 3, opts: names(["wood", "grass", "water"]) }] }
   ],
 };
 
