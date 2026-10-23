@@ -1007,3 +1007,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 :root[data-theme="light"] .lc-wt3 .lc-choice{background:#fff!important;color:#14213d!important;border-color:#2f6fd1!important}
 .lc-wt3 .lc-qb{margin-bottom:4px!important}
 .lc-wt3 .lc-play{width:34px!important;height:34px!important}.lc-wt3 .lc-card{padding-top:6px!important;padding-bottom:6px!important}
+.jx-word{min-height:0!important;margin:0!important;padding:2px 0!important;font-size:20px!important}
+.jx-row .lc-sec-btn,.jx-row .lc-cta{padding:12px 8px!important;font-size:15px!important;white-space:nowrap}
+.jx-clues .jx-clue,.jx-clues>*{padding-top:6px!important;padding-bottom:6px!important}
