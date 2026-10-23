@@ -2,9 +2,9 @@
 // Missions/données de A1.1 par défaut ; les autres leçons passent { missions, data } à createCity.
 // Le texte est de vrai texte (pas dans les images) : cliquable, lisible, corrigeable.
 
-import { createVoice } from "./voice.js?v=20261023ae";
-import { balanceAll } from "../data/balance.js?v=20261023ae";
-const V = "20261023ae";
+import { createVoice } from "./voice.js?v=20261023af";
+import { balanceAll } from "../data/balance.js?v=20261023af";
+const V = "20261023af";
 const img = (p) => `assets/img/${p}.webp?v=${V}`;
 
 const DEF_MISSIONS = [
@@ -93,7 +93,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   frame = (...a) => { frame0(...a); try { rcFill(); setTimeout(rcFill, 400); } catch (e) {} };
   const MISSIONS = missions || DEF_MISSIONS, DATA = data || DEF_DATA;
   const bindBack = (fn) => { el.querySelector("#lcBack").onclick = fn; };
-  const hero = (m) => `<div class="rc-hero ${m.portrait ? "rc-m5" : ""}"><img src="${img(m.hero)}" alt="" onerror="this.parentElement.remove()"/>${m.portrait ? `<span class="rc-chalk">Portrait-robot</span><span class="rc-post">Find<br>the person</span>` : ""}</div>`;
+  const hero = (m) => "" && `<div class="rc-hero ${m.portrait ? "rc-m5" : ""}"><img src="${img(m.hero)}" alt="" onerror="this.parentElement.remove()"/>${m.portrait ? `<span class="rc-chalk">Portrait-robot</span><span class="rc-post">Find<br>the person</span>` : ""}</div>`;
   const play = (t) => `<button type="button" class="rc-listen" data-say="${esc(t)}">🔊 Écouter</button>`;
   const starsTxt = (n) => "⭐".repeat(n) + "☆".repeat(3 - n);
 
@@ -104,8 +104,8 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       <span class="lc-num">${i + 1}</span><span class="lc-ic rc-ic">${m.ic}</span>
       <span class="lc-txt"><b>${esc(m.title)}</b><small>${esc(m.sub)}</small></span><span class="lc-go${st[m.id] ? " lc-go-stars" : ""}">${st[m.id] ? starsTxt(st[m.id]) : "›"}</span></button>`).join("");
     const tot = MISSIONS.reduce((s, m) => s + (st[m.id] || 0), 0);
-    frame("Roots City", null, `<div class="lc-vocab-head"><span class="lc-vh-ic">🏙️</span><div><h1>Roots City</h1><p>6 missions pour t’entraîner. Non noté : ta note officielle reste celle du test.</p></div></div>
-      <section class="lc-card lc-menu rc-menu">${rows}</section><p class="rc-total">${tot} / 18 ⭐</p>`);
+    frame("Roots City", null, `<div class="lc-vocab-head"><span class="lc-vh-ic">🏙️</span><div><h1>Roots City</h1><p>${MISSIONS.length} missions pour t’entraîner. Non noté : ta note officielle reste celle du test.</p></div></div>
+      <section class="lc-card lc-menu rc-menu">${rows}</section><p class="rc-total">${tot} / ${MISSIONS.length * 3} ⭐</p>`);
     bindBack(back);
     el.querySelectorAll("[data-m]").forEach((b) => b.addEventListener("click", () => run(Number(b.dataset.m))));
   }
@@ -126,7 +126,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
     const items = [];
     for (let j = 0; j < k && S.n + j < steps.length; j++) { if (j > 0 && !simple(steps[S.n + j])) break; items.push({ step: steps[S.n + j], pick: {}, checked: false, good: false }); }
     let first = true;
-    const leadOf = (step) => step.flag
+    const leadOf = (step) => step.img ? `<img class="rc-pic" src="${img(step.img)}" alt=""/>` : step.flag
       ? `<div class="rc-flag">${step.flag}</div><p class="rc-say">“I’m from ${esc(step.country)}.”</p><p class="rc-ask">What is his or her nationality?</p>`
       : `${play(step.say)}`;
     const sum = (it) => `<div class="rc-sum"><h3 class="lc-h3">Portrait</h3>${it.step.groups.map((g, gi) => { const o = g.opts.find((x) => x.v === it.pick[gi]); return `<div class="rc-sumrow">${o ? `<img src="${o.img}" alt=""/><span>${esc(o.label)}</span>` : `<i class="rc-empty"></i><span class="rc-muted">${esc(g.label)} …</span>`}</div>`; }).join("")}</div>`;
@@ -142,7 +142,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       const y0 = first ? 0 : (el.querySelector(".lc-main") || {}).scrollTop || 0;
       const half = Math.ceil(items[0].step.groups.length / 2), pg0 = m.portrait && !S.pp && !items[0].checked && items[0].step.groups.slice(0, half).every((g, gi) => items[0].pick[gi] != null);
       const done = items.every((it) => it.checked), lastChunk = S.n + items.length >= steps.length;
-      frame(`Mission ${S.i + 1}/6`, { cur: S.n + items.length, total: steps.length }, `${hero(m)}<section class="lc-card rc-card"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${items.map(itemHtml).join("")}
+      frame(`Mission ${S.i + 1}/${MISSIONS.length}`, { cur: S.n + items.length, total: steps.length }, `${hero(m)}<section class="lc-card rc-card"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${items.map(itemHtml).join("")}
         <button type="button" class="lc-next rc-go" id="rcGo" ${done || pg0 ? "" : "disabled"}>${done ? (lastChunk ? "Terminer" : "Suivant ›") : pg0 ? "Suite ›" : "Choisis ta réponse"}</button></section>`);
       first = false; { const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = y0; }
       bindBack(start);
@@ -224,7 +224,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       const bank = t.bank.map((w, k) => `<button type="button" class="rc-tok ${used.has(k) ? "used" : ""}" data-k="${k}" ${used.has(k) || checked ? "disabled" : ""}>${esc(w)}</button>`).join("");
       const slots = placed.map((k, p) => `<button type="button" class="rc-tok in" data-p="${p}" ${checked ? "disabled" : ""}>${esc(t.bank[k])}</button>`).join("") || `<span class="rc-ph">Touche les mots dans l’ordre</span>`;
       const card = t.card ? `<div class="rc-sheet">${t.card.map(([a, b]) => `<div><small>${esc(a)}</small><b>${esc(b)}</b></div>`).join("")}</div>` : "";
-      frame(`Mission ${S.i + 1}/6`, head(m, S, steps), `${hero(m)}<section class="lc-card rc-card"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2><p class="rc-ask">${esc(t.prompt)}</p>${card}
+      frame(`Mission ${S.i + 1}/${MISSIONS.length}`, head(m, S, steps), `${hero(m)}<section class="lc-card rc-card rc-build"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${steps[S.n].em ? `<div class="rc-em">${steps[S.n].em}</div>` : ""}<p class="rc-ask">${esc(t.prompt)}</p>${card}
         <div class="rc-slots ${checked ? (good ? "ok" : "ko") : ""}">${slots}</div>${checked ? "" : `<div class="rc-bank">${bank}</div>`}
         <div class="rc-fb" aria-live="polite">${checked ? (good ? "✅ Parfait !" : `Pas tout à fait. Réponse : <b>${esc(t.answer.join(" ").replace(/ ([?.])/g, "$1"))}</b>`) : ""}</div>
         ${checked ? play(target) : ""}${voice()}
@@ -253,7 +253,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   function finish(m, S, steps) {
     const stars = S.errors === 0 ? 3 : S.errors <= Math.ceil(steps.length / 2) ? 2 : 1;
     setStar(m.id, stars);
-    frame(`Mission ${S.i + 1}/6`, null, `${hero(m)}<section class="lc-card rc-card rc-end"><h2 class="lc-h2">🎉 Mission terminée !</h2><p class="rc-stars">${starsTxt(stars)}</p>
+    frame(`Mission ${S.i + 1}/${MISSIONS.length}`, null, `${hero(m)}<section class="lc-card rc-card rc-end"><h2 class="lc-h2">🎉 Mission terminée !</h2><p class="rc-stars">${starsTxt(stars)}</p>
       <p>${S.errors === 0 ? "Sans aucune erreur, bravo !" : `${S.errors} erreur${S.errors > 1 ? "s" : ""}. Recommence pour viser 3 étoiles.`}</p>
       <button type="button" class="lc-next rc-go" id="rcAgain">Rejouer</button><button type="button" class="lc-sec-btn" id="rcMap">Retour à Roots City</button></section>`);
     bindBack(start);

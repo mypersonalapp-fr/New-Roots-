@@ -921,4 +921,18 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .rc-dense2 .rc-item{ position:relative; } .rc-dense2 .rc-item .rc-lead{ position:absolute; right:0; top:0; margin:0; }
 .rc-dense2 .rc-item .rc-listen{ padding:2px 12px !important; min-height:26px !important; font-size:13px !important; }
 .rc-dense2 .rc-item .rc-group:first-of-type .lc-h3{ min-height:26px; margin:0 0 3px; line-height:26px; }
-.rc-menu .lc-row{ min-height:72px; } .rc-menu{ gap:8px; } .rc-total{ margin-top:12px; }
+.rc-menu .lc-row{ min-height:64px; } .rc-menu{ gap:8px; } .rc-total{ margin-top:12px; }
+.lc-main:has(.rc-build){ display:flex; flex-direction:column; }
+.rc-build{ flex:1 1 auto; display:flex; flex-direction:column; margin-bottom:10px; }
+.rc-build .rc-go, .rc-build .lc-next{ margin-top:auto; }
+.rc-build .rc-slots{ min-height:84px; } .rc-build .rc-bank{ margin:12px 0; gap:8px; }
+.rc-em{ font-size:64px; line-height:1.1; text-align:center; margin:10px 0 4px; }
+.rc-build .rc-em{ font-size:64px; margin:8px 0 4px; } .rc-build .rc-ask{ font-size:18px; margin:6px 0 10px; }
+.rc-build .rc-bank button, .rc-build .rc-bank .rc-w{ font-size:18px; padding:10px 14px; }
+.rc-pic{ width:100%; height:auto; max-height:200px; object-fit:cover; border-radius:14px; display:block; margin:0 0 6px; }
+.rc-dense .rc-pic{ max-height:150px; } .rc-dense2 .rc-pic{ max-height:120px; }
+.rc-dense2 .rc-item .rc-lead:has(.rc-pic){ position:static !important; }
+.rc-item:has(.rc-pic) .rc-group{ margin-top:1px; } .rc-item:has(.rc-pic) .lc-h3{ margin:1px 0 2px; font-size:13px; }
+.rc-item:has(.rc-pic) .rc-opt{ min-height:28px; padding:1px 4px; font-size:14px; line-height:1.15; border-width:1.5px; border-radius:10px; }
+.rc-item:has(.rc-pic) .rc-pic{ max-height:92px; margin-bottom:3px; } .rc-item:has(.rc-pic) .rc-opts{ gap:4px; } .rc-item:has(.rc-pic) .rc-fb{ min-height:0; margin:0; }
+.rc-card:has(.rc-pic) .lc-h2{ font-size:16px; margin:0 0 4px; }

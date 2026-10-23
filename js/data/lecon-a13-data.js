@@ -177,6 +177,7 @@ export const MISSIONS_A13 = [
   { id: "m4", ic: "🔁", title: "Toujours ou jamais ?", sub: "Choisis le bon adverbe.", hero: "city/a13-m4" },
   { id: "m5", ic: "👉", title: "Me, him, her, us, them", sub: "Choisis le bon pronom.", hero: "city/a13-m5" },
   { id: "m6", ic: "🎉", title: "La grande fête des amis", sub: "Présente un ami en anglais.", hero: "city/a13-m6" },
+  { id: "m7", ic: "🖼️", title: "Regarde l’image", sub: "Réponds aux questions sur la photo.", hero: "city/a13-p1" },
 ];
 
 const pick = (say, label, a, o) => ({ say, groups: [{ label, answer: a, opts: names(o) }] });
@@ -195,11 +196,16 @@ export const DATA_A13 = {
     pick("See you tomorrow! —", "Answer", "See you later!", ["See you later!", "Nice to meet you!", "Do you want to…?"]),
   ],
   m3: [
-    { prompt: "Dis : « Il joue au football. »", answer: ["He", "plays", "football", "."], bank: ["football", "plays", "He", "."] },
-    { prompt: "Dis : « Elle ne joue pas au tennis. »", answer: ["She", "doesn't", "play", "tennis", "."], bank: ["tennis", "play", "She", "doesn't", "."] },
-    { prompt: "Demande : « Tu veux jouer au football ? »", answer: ["Do", "you", "want", "to", "play", "football", "?"], bank: ["want", "football", "Do", "to", "you", "play", "?"] },
-    { prompt: "Dis : « Je vais souvent au cinéma. »", answer: ["I", "often", "go", "to", "the", "cinema", "."], bank: ["go", "I", "the", "often", "to", "cinema", "."] },
-    { prompt: "Propose : « Retrouvons-nous à six heures. »", answer: ["Let's", "meet", "at", "six", "."], bank: ["six", "meet", "Let's", "at", "."] },
+    { em: "⚽", prompt: "Dis : « Il joue au football. »", answer: ["He", "plays", "football", "."], bank: ["football", "plays", "He", "."] },
+    { em: "🎾🚫", prompt: "Dis : « Elle ne joue pas au tennis. »", answer: ["She", "doesn't", "play", "tennis", "."], bank: ["tennis", "play", "She", "doesn't", "."] },
+    { em: "🙋‍♂️⚽❓", prompt: "Demande : « Tu veux jouer au football ? »", answer: ["Do", "you", "want", "to", "play", "football", "?"], bank: ["want", "football", "Do", "to", "you", "play", "?"] },
+    { em: "🎬🔁", prompt: "Dis : « Je vais souvent au cinéma. »", answer: ["I", "often", "go", "to", "the", "cinema", "."], bank: ["go", "I", "the", "often", "to", "cinema", "."] },
+    { em: "🕕🤝", prompt: "Propose : « Retrouvons-nous à six heures. »", answer: ["Let's", "meet", "at", "six", "."], bank: ["six", "meet", "Let's", "at", "."] },
+    { em: "😊👫", prompt: "Dis : « Mon meilleur ami est gentil. »", answer: ["My", "best", "friend", "is", "kind", "."], bank: ["kind", "friend", "My", "is", "best", "."] },
+    { em: "🤝⚽😄", prompt: "Dis : « Nous jouons souvent ensemble. »", answer: ["We", "often", "play", "together", "."], bank: ["play", "We", "together", "often", "."] },
+    { em: "☕👫", prompt: "Dis : « Nous buvons un café ensemble. »", answer: ["We", "have", "a", "coffee", "together", "."], bank: ["a", "have", "We", "together", "coffee", "."] },
+    { em: "🏠🎉", prompt: "Demande : « Tu viens à ma fête ? »", answer: ["Do", "you", "want", "to", "come", "to", "my", "party", "?"], bank: ["to", "party", "Do", "my", "come", "want", "you", "to", "?"] },
+    { em: "👋😊", prompt: "Dis : « Ravi de te rencontrer ! »", answer: ["Nice", "to", "meet", "you", "!"], bank: ["meet", "Nice", "you", "to", "!"] },
   ],
   m4: [
     pick("I play tennis 7 days a week. → I ___ play tennis.", "Adverb", "always", ["always", "never", "sometimes"]),
@@ -214,9 +220,22 @@ export const DATA_A13 = {
     pick("Come with ___! (nous)", "Pronoun", "us", ["us", "we", "them", "our"]),
     pick("Tom and Max are nice. I like ___.", "Pronoun", "them", ["them", "they", "him", "their"]),
   ],
+  m7: [
+    { img: "city/a13-p1", groups: [{ label: "Where are the friends?", answer: "at school", cols: 3, opts: names(["at school", "at the cinema", "at home"]) }, { label: "Who are they?", answer: "classmates", cols: 3, opts: names(["classmates", "neighbours", "cousins"]) }, { label: "What do they wear?", answer: "a uniform", cols: 3, opts: names(["a uniform", "pyjamas", "a swimsuit"]) }, { label: "How do they feel?", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "The girl's backpack is…", answer: "purple", cols: 3, opts: names(["purple", "black", "green"]) }] },
+    { img: "city/a13-p2", groups: [{ label: "What is it?", answer: "a pie", cols: 3, opts: names(["a pie", "a pizza", "a soup"]) }, { label: "Is it hot or cold?", answer: "hot", cols: 3, opts: names(["hot", "cold", "frozen"]) }, { label: "What is with it?", answer: "salad", cols: 3, opts: names(["salad", "rice", "bread"]) }, { label: "The dish is…", answer: "white", cols: 3, opts: names(["white", "black", "red"]) }, { label: "What is in the pie?", answer: "meat and veg", cols: 3, opts: names(["meat and veg", "fish", "only cheese"]) }] },
+    { img: "city/a13-p3", groups: [{ label: "What do they play?", answer: "football", cols: 3, opts: names(["football", "tennis", "basketball"]) }, { label: "The boy on the left wears…", answer: "blue", cols: 3, opts: names(["blue", "red", "green"]) }, { label: "Where is the ball?", answer: "on the grass", cols: 3, opts: names(["on the grass", "in the net", "in a bag"]) }, { label: "The ball is…", answer: "black & white", cols: 3, opts: names(["black & white", "red", "yellow"]) }, { label: "Who wears gloves?", answer: "goalkeeper", cols: 3, opts: names(["goalkeeper", "the referee", "the girl"]) }] },
+    { img: "city/a13-p4", groups: [{ label: "It's…", answer: "cold", cols: 3, opts: names(["cold", "hot", "rainy"]) }, { label: "The girl wears a ___ coat.", answer: "pink", cols: 3, opts: names(["pink", "blue", "red"]) }, { label: "She smiles at ___.", answer: "him", cols: 3, opts: names(["him", "he", "his"]) }, { label: "Where are they?", answer: "at home", cols: 3, opts: names(["at home", "at school", "in a shop"]) }, { label: "What is on the wall?", answer: "a pink hat", cols: 3, opts: names(["a pink hat", "an umbrella", "a bag"]) }] },
+    { img: "city/a13-p5", groups: [{ label: "Where are they?", answer: "in the park", cols: 3, opts: names(["in the park", "in a café", "at school"]) }, { label: "What is with the family?", answer: "a dog", cols: 3, opts: names(["a dog", "a cat", "a bird"]) }, { label: "What do they eat?", answer: "sandwiches", cols: 3, opts: names(["sandwiches", "pizza", "soup"]) }, { label: "The blanket is…", answer: "red & white", cols: 3, opts: names(["red & white", "blue", "green"]) }, { label: "What is in the sky?", answer: "a kite", cols: 3, opts: names(["a kite", "a plane", "a balloon"]) }] },
+    { img: "city/a13-p6", groups: [{ label: "What animal is it?", answer: "a panda", cols: 3, opts: names(["a panda", "a bear", "a dog"]) }, { label: "Who holds the baby?", answer: "a woman", cols: 3, opts: names(["a woman", "a man", "a boy"]) }, { label: "The baby is…", answer: "sleeping", cols: 3, opts: names(["sleeping", "eating", "running"]) }, { label: "What does the panda eat?", answer: "bamboo", cols: 3, opts: names(["bamboo", "fish", "meat"]) }, { label: "The gloves are…", answer: "blue", cols: 3, opts: names(["blue", "white", "red"]) }] },
+    { img: "city/a13-p7", groups: [{ label: "What do they drink?", answer: "tea", cols: 3, opts: names(["tea", "coffee", "milk"]) }, { label: "What is in the window?", answer: "Big Ben", cols: 3, opts: names(["Big Ben", "Eiffel Tower", "Colosseum"]) }, { label: "Which city is it?", answer: "London", cols: 3, opts: names(["London", "Paris", "Rome"]) }, { label: "What is on the scone?", answer: "jam & cream", cols: 3, opts: names(["jam & cream", "cheese", "only butter"]) }, { label: "What is on the bridge?", answer: "a red bus", cols: 3, opts: names(["a red bus", "a train", "a taxi"]) }] },
+  ],
   m6: [
-    { prompt: "Présente ton ami.", card: [["Name", "Sam"], ["Relation", "classmate"], ["Activity", "football"]], answer: ["This is", "Sam.", "He is", "my classmate.", "We play", "football."], bank: ["football.", "She is", "This is", "He is", "my classmate.", "Sam.", "We play", "We go"] },
-    { prompt: "Présente ton amie.", card: [["Name", "Lily"], ["Relation", "neighbour"], ["Activity", "coffee"]], answer: ["This is", "Lily.", "She is", "my neighbour.", "We have", "a coffee."], bank: ["a coffee.", "He is", "This is", "She is", "my neighbour.", "Lily.", "We have", "We play"] },
+    { em: "🧑‍🎓⚽", prompt: "Présente ton ami.", card: [["Name", "Sam"], ["Relation", "classmate"], ["Activity", "football"]], answer: ["This is", "Sam.", "He is", "my classmate.", "We play", "football."], bank: ["football.", "She is", "This is", "He is", "my classmate.", "Sam.", "We play", "We go"] },
+    { em: "👩☕", prompt: "Présente ton amie.", card: [["Name", "Lily"], ["Relation", "neighbour"], ["Activity", "coffee"]], answer: ["This is", "Lily.", "She is", "my neighbour.", "We have", "a coffee."], bank: ["a coffee.", "He is", "This is", "She is", "my neighbour.", "Lily.", "We have", "We play"] },
+    { em: "🧑🎬", prompt: "Présente ton ami.", card: [["Name", "Tom"], ["Relation", "cousin"], ["Activity", "cinema"]], answer: ["This is", "Tom.", "He is", "my cousin.", "We go to", "the cinema."], bank: ["the cinema.", "She is", "This is", "He is", "my cousin.", "Tom.", "We go to", "We play"] },
+    { em: "👩🎾", prompt: "Présente ton amie.", card: [["Name", "Emma"], ["Relation", "colleague"], ["Activity", "tennis"]], answer: ["This is", "Emma.", "She is", "my colleague.", "We play", "tennis."], bank: ["tennis.", "He is", "This is", "She is", "my colleague.", "Emma.", "We play", "We have"] },
+    { em: "👨‍🏫🚶", prompt: "Présente ton ami.", card: [["Name", "Paul"], ["Relation", "neighbour"], ["Activity", "tennis"]], answer: ["This is", "Paul.", "He is", "my neighbour.", "We play", "tennis."], bank: ["tennis.", "She is", "This is", "He is", "my neighbour.", "Paul.", "We play", "We have"] },
+    { em: "👩🎵", prompt: "Présente ton amie.", card: [["Name", "Anna"], ["Relation", "classmate"], ["Activity", "music"]], answer: ["This is", "Anna.", "She is", "my classmate.", "We like", "music."], bank: ["music.", "He is", "This is", "She is", "my classmate.", "Anna.", "We like", "We play"] },
   ],
 };
 
