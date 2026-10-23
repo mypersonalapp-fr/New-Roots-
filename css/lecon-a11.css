@@ -1022,3 +1022,8 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 /* construction de phrase : la zone de réponse grandit pour remplir l'écran (grands iPhone) */
 .rc-build .rc-slots{ flex:1 1 auto !important; min-height:84px; max-height:260px; align-content:flex-start; }
 .rc-build .rc-bank{ margin:12px 0 auto !important; }
+/* images de leçon : entières (jamais coupées), centrées */
+.lc-exs img,.lc-main.lc-kb .lc-exhero img,.lc-card:has(.lc-pic) .lc-pic img,.lc-sc6 figure img,.lc-exhero img,.lc-scene-sm img{ object-fit:contain !important; object-position:center !important; }
+.lc-sc6 figure,.lc-exhero figure,.lc-pic{ background:transparent !important; }
+.lc-main.lc-kbp .pr-scene img,.lc-main.lc-kbp #lcPrac > .pr-scene img,.pr-scene img{ object-fit:contain !important; }
+.jx-opts.jx-img .jx-opt img{ object-fit:contain !important; }
