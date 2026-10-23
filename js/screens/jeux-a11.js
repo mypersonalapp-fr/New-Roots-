@@ -109,7 +109,7 @@ export function createGames(ctx) {
     cand.forEach((b) => {
       const L = b.en.toLowerCase().split(""), has = (w) => { const pool = L.slice(); for (const ch of w) { const i = pool.indexOf(ch); if (i < 0) return false; pool.splice(i, 1); } return true; };
       const found = singles.filter((w) => w.en.length >= 3 && has(w.en.toLowerCase()));
-      if (found.length >= 3 && (!best || found.length > best.found.length)) best = { base: b, found, letters: L };
+      if (found.length >= 3 && (!best || found.length > best.found.length)) best = { base: b, found: found.slice(0, L.length >= 8 ? 4 : 5), letters: L };
     });
     return best;
   }
