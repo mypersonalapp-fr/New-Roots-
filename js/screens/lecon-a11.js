@@ -481,7 +481,7 @@ export function renderLesson(root, B, { onExit } = {}) {
   function fillRows() {
     const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
     const cards0 = m.querySelectorAll(":scope > .lc-card"), c0x = cards0[cards0.length - 1];
-    const reset = () => { if (!c0x) return; c0x.style.minHeight = c0x.style.display = c0x.style.flexDirection = c0x.style.justifyContent = ""; c0x.querySelectorAll(":scope > ul.lc-list").forEach((u) => { u.style.flex = u.style.alignContent = ""; }); c0x.querySelectorAll("li, .lc-choice").forEach((x) => { x.style.paddingTop = x.style.paddingBottom = ""; }); };
+    const reset = () => { if (!c0x) return; c0x.style.minHeight = c0x.style.display = c0x.style.flexDirection = c0x.style.justifyContent = ""; c0x.querySelectorAll(":scope > ul.lc-list").forEach((u) => { u.style.flex = u.style.alignContent = ""; }); c0x.querySelectorAll("li, .lc-choice").forEach((x) => { x.style.paddingTop = x.style.paddingBottom = ""; }); c0x.querySelectorAll(".lc-qb").forEach((x) => { x.style.removeProperty("margin-bottom"); }); };
     reset();
     if (m.classList.contains("lc-listen")) { // Écoute : cases à taille normale ; le reste de la place est réparti dans les lignes des phrases clés
       const kw = m.querySelector(".lc-kw"), rows = kw ? kw.querySelectorAll("li") : [];
@@ -490,6 +490,11 @@ export function renderLesson(root, B, { onExit } = {}) {
         const L = Math.floor(f.getBoundingClientRect().top - kw.getBoundingClientRect().bottom - 18), pad = Math.min(14, Math.floor(L / (2 * rows.length)));
         if (pad > 0) rows.forEach((li) => { li.style.paddingTop = (parseFloat(getComputedStyle(li).paddingTop) + pad) + "px"; li.style.paddingBottom = (parseFloat(getComputedStyle(li).paddingBottom) + pad) + "px"; });
         if (m.scrollHeight > m.clientHeight + 2) rows.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = ""; });
+      } else if (m.querySelectorAll(".lc-qb").length > 1) { // pages de questions d'écoute : le reste de la place est réparti entre les questions (on garde ~34px pour le retour vert/rouge)
+        const qbs = m.querySelectorAll(".lc-qb"), cards = m.querySelectorAll(":scope > .lc-card"), last = cards[cards.length - 1] || m.lastElementChild;
+        const L = Math.floor(f.getBoundingClientRect().top - last.getBoundingClientRect().bottom - 34), mg = Math.min(24, Math.floor(L / (qbs.length - 1)));
+        if (mg > 1) qbs.forEach((x, i) => { if (i < qbs.length - 1) x.style.setProperty("margin-bottom", (parseFloat(getComputedStyle(x).marginBottom) + mg) + "px", "important"); });
+        if (m.scrollHeight > m.clientHeight + 2) qbs.forEach((x) => { x.style.removeProperty("margin-bottom"); });
       } else if (m.classList.contains("lc-g3")) { // grammaire : le reste de la place agrandit très légèrement les cases (max +4 px de chaque côté)
         const chs = m.querySelectorAll(".lc-choice"), cards = m.querySelectorAll(":scope > .lc-card"), last = cards[cards.length - 1];
         if (chs.length && last) {
@@ -535,6 +540,12 @@ export function renderLesson(root, B, { onExit } = {}) {
       for (let q = Math.min(24, Math.floor((L - 14) / (2 * rl.length))); q > 0; q--) { rl.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = (5 + q) + "px"; }); if (!tb()) break; rl.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = ""; }); }
       L = gap();
     }
+    const tx = screen !== "vocab" ? c.querySelector(":scope > p.lc-text") : null; // page de texte : le reste de la place agrandit un peu le texte
+    if (tx && L > 24) {
+      const fs0 = parseFloat(getComputedStyle(tx).fontSize), tb3 = () => m.scrollHeight > m.clientHeight + 2 || m.lastElementChild.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6;
+      for (let q = 5; q >= 1; q--) { tx.style.fontSize = (fs0 + q) + "px"; tx.style.lineHeight = "1.45"; if (!tb3() && gap() >= 0) break; tx.style.fontSize = tx.style.lineHeight = ""; }
+      L = gap();
+    }
     const lis = c.querySelectorAll(":scope > ul:not(.lc-bub) > li, :scope ul.lc-words > li"); 
     if (lis.length && (screen === "vocab" || !c.querySelector(".lc-words, .lc-scene-voc, .lc-vl"))) {
       const pad0 = Math.min(screen === "vocab" ? (lis.length <= 4 ? (m.querySelector(".lc-scenes") ? 14 : 16) : lis.length <= 6 ? 10 : 12) : 26, Math.floor(L / (2 * lis.length))), base = [...lis].map((li) => [parseFloat(getComputedStyle(li).paddingTop), parseFloat(getComputedStyle(li).paddingBottom)]);
@@ -544,7 +555,9 @@ export function renderLesson(root, B, { onExit } = {}) {
     }
     const chs = c.querySelectorAll(".lc-choice");
     if (chs.length && L > 16) { const pad = Math.min(10, Math.floor(L / (2 * chs.length))); if (pad > 1) chs.forEach((b) => { b.style.paddingTop = (parseFloat(getComputedStyle(b).paddingTop) + pad) + "px"; b.style.paddingBottom = (parseFloat(getComputedStyle(b).paddingBottom) + pad) + "px"; }); L = gap(); }
-    if (m.scrollHeight > m.clientHeight + 2 || m.lastElementChild.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6) reset();
+    const qbs = c.querySelectorAll(".lc-qb"); // pages de questions : le reste de la place est réparti entre les questions
+    if (qbs.length > 1 && L > 12) { const mg = Math.min(22, Math.floor(L / (qbs.length - 1))); if (mg > 1) qbs.forEach((x, i) => { if (i < qbs.length - 1) x.style.marginBottom = (parseFloat(getComputedStyle(x).marginBottom) + mg) + "px"; }); L = gap(); }
+    if (m.scrollHeight > m.clientHeight + 2 || m.lastElementChild.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6) { reset(); c.querySelectorAll(".lc-qb").forEach((x) => { x.style.marginBottom = ""; }); }
   }
   // Fixe le nombre de mots par écran AVANT l'affichage : on mesure en secret le 1er et le dernier écran de la section,
   // pour que le compteur (1/3, 2/3, 3/3) soit juste dès le premier écran et qu'aucune page ne soit redécoupée ensuite.
@@ -991,7 +1004,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       <ol class="lc-prompts">${p.prompts.concat(p.trad ? [] : ["Ajoute un détail.", "Pose une question.", "Dis ce que tu aimes.", "Dis pourquoi.", "Dis où et quand.", "Dis avec qui.", "Dis ce que tu veux."].slice(0, EXN)).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
       <div class="lc-model"><span class="lc-w"><small>Modèle</small><b>${esc(sub(p.model))}</b></span>${spk(sub(p.model))}</div>
       ${tab === "write"
-        ? `<textarea id="lcTa" class="lc-ta" rows="4" placeholder="Écris en anglais…" aria-label="Ta réponse en anglais">${esc(txt)}</textarea>`
+        ? `<textarea id="lcTa" class="lc-ta" rows="${p.img ? 2 : 4}" placeholder="Écris en anglais…" aria-label="Ta réponse en anglais">${esc(txt)}</textarea>`
         : `<div class="lc-mic">${(SR || window.MediaRecorder) ? `<button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-small">Appuie, parle en anglais, puis appuie sur ⏹ pour terminer.</p>` : `<p class="lc-small">La reconnaissance vocale n’est pas disponible sur cet appareil : dis ta réponse à voix haute, puis coche la case.</p>`}
             <p class="lc-heard" id="lcHeard">${esc(txt)}</p>
             <button type="button" class="lc-sec-btn" id="lcReplay" ${spkState.url && spkState.url[page] ? "" : "hidden"}>▶ Me réécouter</button>
@@ -1041,7 +1054,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       const mn = el.querySelector(".lc-main"), ft = el.querySelector(".lc-foot"), le = mn && mn.lastElementChild;
       const over = le && ft ? le.getBoundingClientRect().bottom - (ft.getBoundingClientRect().top - 6) : 0;
       if (over > -2 && EXN > 0 && !p.trad) { spkState.exn[tab + ":" + page] = EXN - 1; showSpeak(); }
-      else if (over > 0) { const ta = el.querySelector("#lcTa"); if (ta) { ta.style.minHeight = "60px"; ta.style.height = Math.max(60, Math.round(ta.getBoundingClientRect().height - over - 2)) + "px"; } }
+      else if (over > -22) { const ta = el.querySelector("#lcTa"); if (ta) { ta.style.minHeight = "60px"; ta.style.height = Math.max(60, Math.round(ta.getBoundingClientRect().height - over - 22)) + "px"; } }
     };
     const PG0 = page;
     setTimeout(fillSpace, 400); setTimeout(ovfFix, 100); setTimeout(ovfFix, 260);
@@ -1466,6 +1479,12 @@ export function renderLesson(root, B, { onExit } = {}) {
     let L = gap(); if (L < 24) return;
     const im = el.querySelector(".lc-exhero img");
     if (im) { const h0 = im.getBoundingClientRect().height, add = Math.min(L * 0.6, 110); im.style.aspectRatio = "auto"; im.style.objectFit = "contain"; im.style.height = Math.round(Math.min(h0 + add, im.getBoundingClientRect().width * 9 / 16)) + "px"; L = gap(); }
+    const pim = el.querySelector(".lc-card > .lc-pic img"); // « Décris l'image » : l'image prend la place restante (jamais rognée)
+    if (pim && L >= 6) {
+      const pf = pim.closest(".lc-pic"), h0 = pim.getBoundingClientRect().height, add = Math.min(L, Math.max(0, Math.round(pim.getBoundingClientRect().width * 9 / 16) - h0));
+      pf.style.maxHeight = "none"; pim.style.height = Math.round(h0 + add) + "px"; L = gap();
+      if (L < 0) { pim.style.height = Math.round(h0 + add + L) + "px"; L = gap(); }
+    }
     const mic0 = el.querySelector(".lc-micbtn"); if (mic0 && L >= 24) { const s0 = mic0.getBoundingClientRect().width, sz = Math.round(Math.min(104, s0 + L * 0.6)); mic0.style.width = mic0.style.height = sz + "px"; mic0.style.fontSize = Math.round(sz * 0.4) + "px"; L = gap(); if (L < 0) { mic0.style.width = mic0.style.height = ""; mic0.style.fontSize = ""; L = gap(); } }
     const cks = el.querySelector(".lc-card .lc-checks.lc-chips"); if (cks && L >= 24) { cks.style.marginTop = Math.min(18, Math.round(L / 3)) + "px"; L = gap(); }
     const tx = el.querySelector("#lcTa, #wrIn"); if (tx && L > 8) { tx.style.height = Math.round(tx.getBoundingClientRect().height + (tx.id === "wrIn" ? Math.min(L, 140) : Math.max(0, L - 34))) + "px"; L = gap(); }

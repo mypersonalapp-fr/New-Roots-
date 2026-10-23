@@ -1043,3 +1043,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-vq-b.ok{ background:#12392a; border-color:#2fbf71; } .lc-vq-b.ko{ background:#431a1a; border-color:#e05555; }
 :root:not([data-theme="dark"]) .lc-vq-b{ background:#fff; color:#14213d; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lc-vq-b{ color:#fff; } }
+/* « Décris l'image » : l'image grandit selon la place restante (réglé en JS, fillRows) */
+.lc-card:has(.lc-pic) .lc-pic{background:transparent !important}
+.lc-card:has(.lc-pic) .lc-pic img{object-fit:contain !important}
