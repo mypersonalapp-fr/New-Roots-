@@ -95,7 +95,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   frame = (...a) => { frame0(...a); try { rcFill(); setTimeout(rcFill, 400); } catch (e) {} };
   const MISSIONS = missions || DEF_MISSIONS, DATA = data || DEF_DATA;
   const bindBack = (fn) => { el.querySelector("#lcBack").onclick = fn; };
-  const hero = (m) => `<div class="rc-hero ${m.portrait ? "rc-m5" : ""}"><img src="${img(m.hero)}" alt="" onerror="this.parentElement.remove()"/>${m.portrait ? `<span class="rc-chalk">Portrait-robot</span><span class="rc-post">Find<br>the person</span>` : ""}</div>`;
+  const hero = (m) => m.id === "m7" ? "" : `<div class="rc-hero ${m.portrait ? "rc-m5" : ""}"><img src="${img(m.hero)}" alt="" onerror="this.parentElement.remove()"/>${m.portrait ? `<span class="rc-chalk">Portrait-robot</span><span class="rc-post">Find<br>the person</span>` : ""}</div>`;
   const play = (t) => `<button type="button" class="rc-listen" data-say="${esc(t)}">🔊 Écouter</button>`;
   const starsTxt = (n) => "⭐".repeat(n) + "☆".repeat(3 - n);
 
