@@ -2,9 +2,9 @@
 // Missions/données de A1.1 par défaut ; les autres leçons passent { missions, data } à createCity.
 // Le texte est de vrai texte (pas dans les images) : cliquable, lisible, corrigeable.
 
-import { createVoice } from "./voice.js?v=20261023u";
-import { balanceAll } from "../data/balance.js?v=20261023u";
-const V = "20261023u";
+import { createVoice } from "./voice.js?v=20261023v";
+import { balanceAll } from "../data/balance.js?v=20261023v";
+const V = "20261023v";
 const img = (p) => `assets/img/${p}.webp?v=${V}`;
 
 const DEF_MISSIONS = [

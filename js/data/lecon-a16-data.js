@@ -62,7 +62,7 @@ export const GRAMMAR_A16 = [
     examples: [["I like drinking tea.", "J'aime boire du thé."], ["He doesn't like spicy food.", "Il n'aime pas la nourriture épicée."]],
     qs: [["He ___ fish. (hate)", ["hate", "hates", "hating"], 1, "he → hates."], ["I love ___ tea. (drink)", ["drinking", "drink", "to drinks"], 0, "love + -ing."]] },
   { title: "Commander", icon: "🧾",
-    table: [["I'd like…, please.", "Je voudrais…, s'il vous plaît.", "commander"], ["Can I have…?", "Puis-je avoir… ?", "demander"], ["That's all, thanks.", "C'est tout, merci.", "terminer"], ["The bill, please.", "L'addition, s'il vous plaît.", "payer"], ["I'll have the soup.", "Je prendrai la soupe.", "I'll have…"],["What would you like?", "Que souhaitez-vous ?", "le serveur demande"],["Anything else?", "Autre chose ?", "le serveur demande"],["Is it free?", "C'est gratuit ?", "Is it…?"]],
+    table: [["I'd like…, please.", "Je voudrais…, s'il vous plaît.", "commander"], ["Can I have…?", "Puis-je avoir… ?", "demander"], ["That's all, thanks.", "C'est tout, merci.", "terminer"], ["The bill, please.", "L'addition, s'il vous plaît.", "payer"], ["I'll have the soup.", "Je prendrai la soupe.", "I'll have…"],["What would you like?", "Que souhaitez-vous ?", "le serveur demande"],["Anything else?", "Autre chose ?", "le serveur demande"],["Table for two, please.","Une table pour deux, s'il vous plaît.","réserver"]],
     examples: [["Can I have a coffee, please?", "Puis-je avoir un café, s'il vous plaît ?"], ["That's all, thank you.", "C'est tout, merci."]],
     qs: [["___ I have a glass of water?", ["Can", "Do", "Am"], 0, "Can I have…?"], ["The ___, please. (l'addition)", ["bill", "menu", "table"], 0, "The bill, please."]] },
 ];
