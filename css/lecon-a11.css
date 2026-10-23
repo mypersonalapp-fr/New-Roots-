@@ -959,3 +959,33 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .jx-sea{ min-height:290px; }
 .jx-mem .jx-card{ font-size:14px; padding:2px; }
 .jx-grid.jx-mem{ max-width:none; }
+
+/* Conversation : liste 2 colonnes + correction compacte */
+.lc-menu2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lc-menu2 .lc-row{flex-direction:column;justify-content:center;text-align:center;gap:4px;padding:8px;min-height:84px;position:relative}
+.lc-menu2 .lc-row .lc-ic{font-size:28px}.lc-menu2 .lc-row .lc-txt b{font-size:13.5px}.lc-menu2 .lc-row .lc-txt small{display:none}
+.lc-menu2 .lc-row .lc-num{position:absolute;left:6px;top:6px}.lc-menu2 .lc-row .lc-go{position:absolute;right:8px;top:6px}
+details.lc-alt summary{cursor:pointer;font-size:12.5px;font-weight:700;list-style:none;padding:4px 0}
+details.lc-alt summary::-webkit-details-marker{display:none}
+.lc-sub2{margin:0 0 6px;font-size:14px;opacity:.9}
+.lc-menu2{padding:8px!important}.lc-menu2 .lc-row{min-height:0!important;height:auto;padding:6px 4px!important;margin:0!important}
+.lc-menu2 .lc-row .lc-ic{font-size:26px}.lc-menu2 .lc-row .lc-num,.lc-menu2 .lc-row .lc-go{transform:scale(.75);transform-origin:top left}
+.lc-menu2 .lc-row .lc-go{transform-origin:top right}
+.lc-endv .lc-bl{gap:4px!important}
+.lc-endv .lc-bb{margin:0!important}
+.lc-endv .lc-bt{padding:6px 11px!important;font-size:14px!important;line-height:1.25!important}
+.lc-endv .lc-corr{margin:2px 0 8px!important;padding:5px 10px!important;gap:2px!important;font-size:13px!important;line-height:1.25!important}
+.lc-endv .lc-corr b{display:inline;margin-right:6px}
+.lc-endv .lc-corr>span{display:inline}
+.lc-endv details.lc-alt{margin:0}
+.lc-endv .lc-corr .lc-spk,.lc-endv .lc-corr button{transform:scale(.8)}
+.lc-endv .lc-bt{min-height:0!important;padding:4px 10px!important;display:inline-block}
+.lc-endv .lc-bb{min-height:0!important;padding:0!important}
+.lc-endv .lc-corr{display:flex!important;flex-wrap:wrap;align-items:center;column-gap:6px;row-gap:0;margin:2px 0 6px!important;padding:4px 10px!important}
+.lc-endv .lc-corr>span{flex:1 1 0;min-width:0}
+.lc-endv .lc-corr button,.lc-endv .lc-corr .lc-spk{margin:-6px -4px!important;flex:none}
+.lc-endv details.lc-alt{flex:1 0 100%}
+.lc-endv .lc-corr summary{padding:0!important}
+.lc-endv .lc-bb .lc-spk,.lc-endv .lc-bb button{transform:scale(.7);margin:-8px -6px -8px 0!important}
+.lc-endv .lc-bt{padding:7px 12px!important;font-size:15px!important}
+.lc-endv .lc-corr{padding:7px 12px!important;font-size:14px!important;margin:3px 0 10px!important}
