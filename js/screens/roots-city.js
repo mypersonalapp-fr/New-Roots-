@@ -124,7 +124,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   /* ---- missions à choix (1, 2, 4, 5) : plusieurs questions par écran, correction immédiate au clic ---- */
   function choose(m, steps, S) {
     const simple = (st) => st.groups.length === 1 && !m.portrait;
-    const paged = (st) => m.portrait || (st.img && st.groups.length > 3);
+    const paged = (st) => m.portrait || (st.img && st.groups.length > 3 && S.split);
     S.cap = S.cap || 4; S.pp = S.pp || 0;
     const k = simple(steps[S.n]) ? Math.max(1, Math.min(S.cap, steps.length - S.n)) : 1;
     const items = [];
@@ -161,6 +161,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       if (items.length === 1 && mn2 && items.every((it) => !it.checked)) {
         const dense = () => { if (mn2.scrollHeight > mn2.clientHeight + 2) { const c = el.querySelector(".rc-card"); if (c) c.classList.add("rc-dense"); } };
         setTimeout(dense, 0); dense();
+        if (items[0].step.img && !S.split && !S.pp && mn2.scrollHeight > mn2.clientHeight + 2) { const c = el.querySelector(".rc-card"); if (c) c.classList.add("rc-dense2"); if (mn2.scrollHeight > mn2.clientHeight + 2) { S.split = true; paint(); return; } }
         const hh = el.querySelector(".rc-hero");
         if (hh && mn2.scrollHeight > mn2.clientHeight + 2) { hh.classList.add("rc-hero-s"); }
         if (hh && mn2.scrollHeight > mn2.clientHeight + 2) { hh.remove(); }
@@ -190,7 +191,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       }));
       el.querySelector("#rcGo").onclick = () => {
         if (pg0) { S.pp = 1; paint(); return; }
-        S.pp = 0;
+        S.pp = 0; S.split = false;
         if (S.n + items.length >= steps.length) finish(m, S, steps);
         else { S.n += items.length; choose(m, steps, S); }
       };
