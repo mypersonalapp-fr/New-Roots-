@@ -140,9 +140,9 @@ export function createGames(ctx) {
 
   /* ---------- 3. Memory ---------- */
   function memory() {
-    const n = [6, 8, 8][LV]; const pairs = pick(W, n); let cards = shuffle(pairs.flatMap((p, i) => [{ k: i, t: p.en, en: 1 }, { k: i, t: M(p) }]));
+    const n = Math.min(10, W.length); const pairs = pick(W, n); let cards = shuffle(pairs.flatMap((p, i) => [{ k: i, t: p.en, en: 1 }, { k: i, t: M(p) }]));
     let open = [], found = 0, moves = 0, lock = false;
-    const cols = n === 6 ? 3 : 4;
+    const cols = 4;
     function draw() {
       shell("Memory", "#EF476F", `<section class="lc-card"><div class="jx-grid jx-mem" style="grid-template-columns:repeat(${cols},1fr)">${cards.map((c, i) => `<button type="button" class="jx-card ${c.up || c.ok ? "up" : ""} ${c.ok ? "ok" : ""}" data-i="${i}"><span>${c.up || c.ok ? esc(c.t) : "?"}</span></button>`).join("")}</div></section>
         <section class="lc-card jx-stat">${L("Moves", "Coups")}: <b>${moves}</b> · ${L("Pairs", "Paires")}: <b>${found}/${n}</b></section>`);
