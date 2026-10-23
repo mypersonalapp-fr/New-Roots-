@@ -1000,3 +1000,10 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-wt3 .lc-choices{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px}
 .lc-wt3 .lc-choice{text-align:center!important;padding:8px 4px!important;min-height:0!important;font-size:13.5px!important;margin:0!important}
 .lc-wt3 .lc-qb{margin-bottom:6px!important}.lc-wt3 .lc-fb{display:none}
+
+/* Écoute A1.5 : plus compact, moins gris */
+.lc-wt3 .lc-q{font-size:13.5px!important;margin:2px 0 3px!important}
+.lc-wt3 .lc-choice{padding:6px 3px!important;font-size:13px!important;border:1.5px solid rgba(255,255,255,.28)!important;background:rgba(70,120,200,.5)!important;color:#fff!important}
+:root[data-theme="light"] .lc-wt3 .lc-choice{background:#fff!important;color:#14213d!important;border-color:#2f6fd1!important}
+.lc-wt3 .lc-qb{margin-bottom:4px!important}
+.lc-wt3 .lc-play{width:34px!important;height:34px!important}.lc-wt3 .lc-card{padding-top:6px!important;padding-bottom:6px!important}
