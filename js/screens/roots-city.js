@@ -14,6 +14,7 @@ const DEF_MISSIONS = [
   { id: "m4", ic: "🛂", title: "Passeport international", sub: "Associe chaque pays à sa nationalité.", hero: "city/m4" },
   { id: "m5", ic: "🕵️", portrait: true, title: "Portrait-robot", sub: "Find the person : cheveux, yeux, vêtements.", hero: "city/m5" },
   { id: "m6", ic: "🎉", title: "Le grand rassemblement", sub: "Présente un personnage en anglais.", hero: "city/m6" },
+  { id: "m7", ic: "🖼️", title: "Regarde l’image", sub: "Réponds aux questions sur la photo.", hero: "city/fam-wedding" },
 ];
 
 const TILE = (i) => ({ v: String(i), img: img(`city/t${i}`) });
@@ -72,7 +73,13 @@ const M6 = [
   { prompt: "Présente ce personnage.", card: [["Name", "Maya"], ["Nationality", "British"], ["Eyes", "Green"]], answer: ["This is", "Maya.", "She is", "British.", "She has", "green eyes."], bank: ["green eyes.", "He is", "This is", "She has", "Maya.", "British.", "She is", "He has"] },
 ];
 
-const DEF_DATA = { m1: M1, m2: M2, m4: M4, m5: M5, m3: M3, m6: M6 };
+const M7 = [
+  { img: "city/fam-wedding", groups: [{ label: "Is this a wedding?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The woman is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Her dress is…", answer: "white", cols: 3, opts: names(["white", "black", "green"]) }, { label: "The man is…", answer: "tall", cols: 3, opts: names(["tall", "small", "a baby"]) }, { label: "The flowers are…", answer: "white and pink", cols: 3, opts: names(["white and pink", "black", "blue"]) }] },
+  { img: "city/fam-trio", groups: [{ label: "The man on the left is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "The boy is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "His hoodie is…", answer: "green", cols: 3, opts: names(["green", "red", "pink"]) }, { label: "The man on the right is…", answer: "the father", cols: 3, opts: names(["the father", "the baby", "a dog"]) }, { label: "The grandfather is…", answer: "old", cols: 3, opts: names(["old", "young", "small"]) }] },
+  { img: "city/fam-living", groups: [{ label: "Is this a living room?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The grandfather is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "The dog is…", answer: "brown", cols: 3, opts: names(["brown", "black", "blue"]) }, { label: "The girl in pink is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Are they a family?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }] },
+  { img: "city/fam-bigmeal", groups: [{ label: "The family is…", answer: "at home", cols: 3, opts: names(["at home", "at school", "at the beach"]) }, { label: "The table is…", answer: "big", cols: 3, opts: names(["big", "small", "broken"]) }, { label: "The food is…", answer: "hot", cols: 3, opts: names(["hot", "cold", "green"]) }, { label: "The people are…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "The drink is…", answer: "orange juice", cols: 3, opts: names(["orange juice", "milk", "water"]) }] }
+];
+const DEF_DATA = { m1: M1, m2: M2, m4: M4, m5: M5, m3: M3, m6: M6, m7: M7 };
 balanceAll(DEF_DATA);
 
 export function createCity({ el, frame, esc, speak, toast, back, getStars, setStar, missions, data }) {
