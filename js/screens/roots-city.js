@@ -2,9 +2,9 @@
 // Missions/données de A1.1 par défaut ; les autres leçons passent { missions, data } à createCity.
 // Le texte est de vrai texte (pas dans les images) : cliquable, lisible, corrigeable.
 
-import { createVoice } from "./voice.js?v=20261023ar";
-import { balanceAll } from "../data/balance.js?v=20261023ar";
-const V = "20261023ar";
+import { createVoice } from "./voice.js?v=20261023as";
+import { balanceAll } from "../data/balance.js?v=20261023as";
+const V = "20261023as";
 const img = (p) => `assets/img/${p}.webp?v=${V}`;
 
 const DEF_MISSIONS = [
@@ -74,10 +74,10 @@ const M6 = [
 ];
 
 const M7 = [
-  { img: "city/fam-wedding", groups: [{ label: "Is this a wedding?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The woman is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Her dress is…", answer: "white", cols: 3, opts: names(["white", "black", "green"]) }, { label: "The man is…", answer: "tall", cols: 3, opts: names(["tall", "small", "a baby"]) }, { label: "The flowers are…", answer: "white and pink", cols: 3, opts: names(["white and pink", "black", "blue"]) }] },
-  { img: "city/fam-trio", groups: [{ label: "The man on the left is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "The boy is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "His hoodie is…", answer: "green", cols: 3, opts: names(["green", "red", "pink"]) }, { label: "The man on the right is…", answer: "the father", cols: 3, opts: names(["the father", "the baby", "a dog"]) }, { label: "The grandfather is…", answer: "old", cols: 3, opts: names(["old", "young", "small"]) }] },
-  { img: "city/fam-living", groups: [{ label: "Is this a living room?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The grandfather is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "The dog is…", answer: "brown", cols: 3, opts: names(["brown", "black", "blue"]) }, { label: "The girl in pink is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Are they a family?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }] },
-  { img: "city/fam-bigmeal", groups: [{ label: "The family is…", answer: "at home", cols: 3, opts: names(["at home", "at school", "at the beach"]) }, { label: "The table is…", answer: "big", cols: 3, opts: names(["big", "small", "broken"]) }, { label: "The food is…", answer: "hot", cols: 3, opts: names(["hot", "cold", "green"]) }, { label: "The people are…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "The drink is…", answer: "orange juice", cols: 3, opts: names(["orange juice", "milk", "water"]) }] }
+  { img: "city/fam-wedding", groups: [{ label: "Is this a wedding?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The woman is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Her dress is…", answer: "white", cols: 3, opts: names(["white", "black", "green"]) }, { label: "The man wears a…", answer: "suit", cols: 3, opts: names(["suit", "cap", "scarf"]) }, { label: "The flowers are…", answer: "white and pink", cols: 3, opts: names(["white and pink", "black", "blue"]) }] },
+  { img: "city/fam-trio", groups: [{ label: "The man on the left is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "The boy is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "His hoodie is…", answer: "green", cols: 3, opts: names(["green", "red", "pink"]) }, { label: "The man on the right is…", answer: "the father", cols: 3, opts: names(["the father", "the baby", "a dog"]) }, { label: "The grandfather has a…", answer: "stick", cols: 3, opts: names(["stick", "hat", "bike"]) }] },
+  { img: "city/fam-living", groups: [{ label: "Is this a living room?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }, { label: "The grandfather is…", answer: "old", cols: 3, opts: names(["old", "young", "a baby"]) }, { label: "What animal is there?", answer: "a dog", cols: 3, opts: names(["a dog", "a cat", "a bird"]) }, { label: "The girl in pink is…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "Are they a family?", answer: "yes", cols: 3, opts: names(["yes", "no", "maybe"]) }] },
+  { img: "city/fam-bigmeal", groups: [{ label: "The family is…", answer: "at home", cols: 3, opts: names(["at home", "at school", "at the beach"]) }, { label: "The table is…", answer: "big", cols: 3, opts: names(["big", "small", "broken"]) }, { label: "What is on the table?", answer: "chicken", cols: 3, opts: names(["chicken", "pizza", "fish"]) }, { label: "The people are…", answer: "happy", cols: 3, opts: names(["happy", "sad", "angry"]) }, { label: "The drink is…", answer: "orange juice", cols: 3, opts: names(["orange juice", "milk", "water"]) }] }
 ];
 const DEF_DATA = { m1: M1, m2: M2, m4: M4, m5: M5, m3: M3, m6: M6, m7: M7 };
 balanceAll(DEF_DATA);
