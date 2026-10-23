@@ -912,3 +912,12 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .lc-dlgb1 .lc-brow .lc-bq{min-height:40px;height:40px;padding:8px 10px}.lc-dlgb1 .lc-bt{font-size:14px}.lc-dlgb1 .lc-brow{margin-bottom:5px}
 .lc-dlgb2 .lc-goals li:not(.now){display:none}.lc-dlgb2 .lc-bt{font-size:13.5px}
 .lc-dlgb3 .lc-goals{display:none}.lc-dlgb3 .lc-brow .lc-bq{min-height:36px;height:36px;padding:6px 10px}.lc-dlgb3 .lc-bl-full{margin:0}
+/* Roots City : écrans resserrés pour 3 questions */
+.rc-dense2 .rc-listen{ padding:4px 14px !important; min-height:30px !important; font-size:14px !important; margin:0 0 2px !important; }
+.rc-dense2 .rc-group{ margin-top:2px; } .rc-dense2 .lc-h3{ margin:2px 0 3px; font-size:13px; }
+.rc-dense2 .rc-opt{ min-height:30px; padding:3px 6px; font-size:14px; } .rc-dense2 .rc-opts{ gap:5px; }
+.rc-dense2 .lc-h2{ margin:0 0 4px; font-size:17px; }
+.rc-dense2 .rc-item + .rc-item{ margin-top:3px; padding-top:3px; } .rc-dense2 .rc-item .rc-fb{ min-height:14px; margin:1px 0 0; font-size:13px; } .rc-dense2 .rc-lead{ margin:0 0 2px; }
+.rc-dense2 .rc-item{ position:relative; } .rc-dense2 .rc-item .rc-lead{ position:absolute; right:0; top:0; margin:0; }
+.rc-dense2 .rc-item .rc-listen{ padding:2px 12px !important; min-height:26px !important; font-size:13px !important; }
+.rc-dense2 .rc-item .rc-group:first-of-type .lc-h3{ min-height:26px; margin:0 0 3px; line-height:26px; }

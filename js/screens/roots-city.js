@@ -2,9 +2,9 @@
 // Missions/données de A1.1 par défaut ; les autres leçons passent { missions, data } à createCity.
 // Le texte est de vrai texte (pas dans les images) : cliquable, lisible, corrigeable.
 
-import { createVoice } from "./voice.js?v=20261023ac";
-import { balanceAll } from "../data/balance.js?v=20261023ac";
-const V = "20261023ac";
+import { createVoice } from "./voice.js?v=20261023ad";
+import { balanceAll } from "../data/balance.js?v=20261023ad";
+const V = "20261023ad";
 const img = (p) => `assets/img/${p}.webp?v=${V}`;
 
 const DEF_MISSIONS = [
@@ -121,7 +121,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   /* ---- missions à choix (1, 2, 4, 5) : plusieurs questions par écran, correction immédiate au clic ---- */
   function choose(m, steps, S) {
     const simple = (st) => st.groups.length === 1 && !m.portrait;
-    S.cap = S.cap || 3; S.pp = S.pp || 0;
+    S.cap = S.cap || 4; S.pp = S.pp || 0;
     const k = simple(steps[S.n]) ? Math.max(1, Math.min(S.cap, steps.length - S.n)) : 1;
     const items = [];
     for (let j = 0; j < k && S.n + j < steps.length; j++) { if (j > 0 && !simple(steps[S.n + j])) break; items.push({ step: steps[S.n + j], pick: {}, checked: false, good: false }); }
@@ -149,6 +149,10 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
       // trop haut pour l'écran : on réduit le nombre de questions par écran
       const mn2 = el.querySelector(".lc-main");
       { const hh0 = el.querySelector(".rc-hero"), ov = () => mn2 && mn2.scrollHeight > mn2.clientHeight + 2; if (hh0 && ov() && items.every((it) => !it.checked)) hh0.classList.add("rc-hero-s"); }
+      if (items.length > 1 && mn2 && items.every((it) => !it.checked)) { // on resserre (image, boutons) avant de retirer une question
+        const ov = () => mn2.scrollHeight > mn2.clientHeight + 2, c = el.querySelector(".rc-card"), hh = el.querySelector(".rc-hero");
+        if (ov() && c) c.classList.add("rc-dense"); if (ov() && c) c.classList.add("rc-dense2"); if (ov() && hh) hh.remove();
+      }
       if (items.length > 1 && mn2 && mn2.scrollHeight > mn2.clientHeight + 2 && items.every((it) => !it.checked)) { S.cap = items.length - 1; choose(m, steps, S); return; }
       if (items.length === 1 && mn2 && items.every((it) => !it.checked)) {
         const dense = () => { if (mn2.scrollHeight > mn2.clientHeight + 2) { const c = el.querySelector(".rc-card"); if (c) c.classList.add("rc-dense"); } };
@@ -163,6 +167,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
           const mn = el.querySelector(".lc-main"); if (!mn || items.some((it) => it.checked)) return;
           const ov = () => mn.scrollHeight > mn.clientHeight + 2, c = el.querySelector(".rc-card"), hh = el.querySelector(".rc-hero");
           if (ov() && hh) hh.classList.add("rc-hero-s");
+          if (ov() && items.length > 1 && c) { c.classList.add("rc-dense"); c.classList.add("rc-dense2"); if (hh) hh.remove(); }
           if (ov() && items.length > 1) { S.cap = items.length - 1; choose(m, steps, S); return; }
           if (ov() && c) c.classList.add("rc-dense");
           if (ov() && c) c.classList.add("rc-dense2");
