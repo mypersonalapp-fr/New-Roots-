@@ -1015,3 +1015,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 /* photos entières (plus coupées) */
 .rc-item:has(.rc-pic) .rc-pic{ max-height:106px !important; object-fit:contain !important; aspect-ratio:16/9; margin:0 auto 3px !important; width:auto !important; max-width:100% !important; background:rgba(0,0,0,.15); }
 .rc-item:has(.rc-pic) .rc-group{ margin-top:0 !important; } .rc-item:has(.rc-pic) .lc-h3{ margin:0 0 1px !important; }
+/* construction de phrase : la zone de réponse grandit pour remplir l'écran (grands iPhone) */
+.rc-build .rc-slots{ flex:1 1 auto !important; min-height:84px; max-height:260px; align-content:flex-start; }
+.rc-build .rc-bank{ margin:12px 0 auto !important; }
