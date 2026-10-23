@@ -921,3 +921,4 @@ body:has(.lc-screen) #preview-reset-wrap{ display:none !important; }
 .rc-dense2 .rc-item{ position:relative; } .rc-dense2 .rc-item .rc-lead{ position:absolute; right:0; top:0; margin:0; }
 .rc-dense2 .rc-item .rc-listen{ padding:2px 12px !important; min-height:26px !important; font-size:13px !important; }
 .rc-dense2 .rc-item .rc-group:first-of-type .lc-h3{ min-height:26px; margin:0 0 3px; line-height:26px; }
+.rc-menu .lc-row{ min-height:72px; } .rc-menu{ gap:8px; } .rc-total{ margin-top:12px; }
