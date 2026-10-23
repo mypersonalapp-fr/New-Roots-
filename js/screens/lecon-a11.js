@@ -579,6 +579,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = next;
     mountQuiz(el.querySelector(".q6"), key, build, { speak });
   }
+  let vsub = 0, vsubPage = -1; // sous-page (3 mots + 2 questions) des pages à 6 mots
   function showVocab() {
     screen = "vocab";
     let steps = B._steps || (B._steps = vocabSteps());
@@ -600,6 +601,14 @@ export function renderLesson(root, B, { onExit } = {}) {
       return quizScreen({ total, key: "v:" + B.code + ":" + st.pi + ":" + st.ci, bubble: "Teste-toi !", btn: lastStep ? "Terminer ✓" : "Suivant →", back: showMenu,
         build: (miss) => vocabItems(ww, pw, allW, allW.filter((w) => miss.includes(w[0]))),
         prev: () => { page--; showVocab(); }, next: () => { page++; showVocab(); } });
+    }
+    if (vsubPage !== page) { vsub = 0; vsubPage = page; }
+    const vSplit = st.t === "words" && st.ci === 0 && !B._probing && hasScene(st.p) && st.words.length >= 6, vHalf = vSplit ? Math.ceil(st.words.length / 2) : 0;
+    const vWords = vSplit ? (vsub ? st.words.slice(vHalf) : st.words.slice(0, vHalf)) : (st.words || []);
+    let vqHtml = "";
+    if (vSplit) {
+      const frAll = [...new Set(st.words.map((w) => sub(w[1])))], qs = vWords.slice(0, 2).map(([en, fr]) => { const ans = sub(fr), others = frAll.filter((x) => x !== ans), pick = [ans]; others.sort((x, y) => x.length - y.length + (Math.random() - 0.5) * 4); for (let k = 0; k < 2 && others.length; k++) pick.push(others.shift()); pick.sort(() => Math.random() - 0.5); return { en: sub(en), ans, pick }; });
+      vqHtml = `<div class="lc-vq">${qs.map((q, i) => `<div class="lc-vq-i" data-a="${esc(q.ans)}"><p class="lc-vq-q">${i + 1}. « ${esc(q.en)} » veut dire ?</p><div class="lc-vq-o">${q.pick.map((o) => `<button type="button" class="lc-vq-b" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div></div>`).join("")}</div>`;
     }
     let body = "", btn = lastStep ? "Terminer ✓" : "Suivant →", hint = "", bubble = "Écoute et répète !", stationNow = 0;
 
@@ -647,9 +656,10 @@ export function renderLesson(root, B, { onExit } = {}) {
         </section>` : `
         <section class="lc-card">
           ${head}
-          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261023as" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
-          <ul class="lc-list lc-vl">${st.words.map(([en, fr]) => `
+          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 && !vSplit ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261023as" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
+          <ul class="lc-list lc-vl">${vWords.map(([en, fr]) => `
             <li><span class="lc-w"><b>${/^Les (pays|nationalités)$/.test(p.title) ? flagOf(en) + " " : ""}${esc(en)}</b><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
+          ${vSplit ? vqHtml : ""}
           ${st.last ? ctxHtml : `<template class="lc-ctx-t"><div class="lc-ctx-in">${ctxHtml}</div></template>`}
         </section>`;
     } else {
@@ -677,7 +687,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       const im = el.querySelector(".lc-scene-sm img"), myPage = page;
       if (im) im.addEventListener("error", () => { (B._noScene || (B._noScene = {}))[p.scene[0]] = 1; if (B._S) delete B._S[st.pi]; if (B._probed) delete B._probed[st.pi]; B._steps = null; if (page === myPage) showVocab(); }, { once: true });
     }
-    if (st.t === "words") { // ça dépasse ? on réduit le nombre de mots de cette page et on redessine
+    if (st.t === "words" && !vSplit) { // ça dépasse ? on réduit le nombre de mots de cette page et on redessine
       const mn = el.querySelector(".lc-main"), ft = el.querySelector(".lc-foot"), le = mn.lastElementChild;
       const over = !!(le && ft && (le.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 6 || mn.scrollHeight > mn.clientHeight + 2));
       if (B._probing) { B._over = over; B._waste = (le && ft) ? Math.round(ft.getBoundingClientRect().top - le.getBoundingClientRect().bottom) : 0; return; }
@@ -687,12 +697,16 @@ export function renderLesson(root, B, { onExit } = {}) {
       }
     }
 
+    if (vSplit) { const hp0 = el.querySelector(".lc-nexthint"); if (hp0) hp0.remove(); }
+    if (vSplit) { const mn = el.querySelector(".lc-main"), ft = el.querySelector(".lc-foot"), ov = () => { const cd = mn.querySelector(":scope > .lc-card"); return cd && ft && cd.getBoundingClientRect().bottom > ft.getBoundingClientRect().top + 14; }; if (ov()) { const its = el.querySelectorAll(".lc-vq-i"); if (its.length > 1) its[1].remove(); } }
     fillRows();
     { const hp = el.querySelector(".lc-nexthint"), ft2 = el.querySelector(".lc-foot"); if (hp && ft2 && hp.getBoundingClientRect().bottom > ft2.getBoundingClientRect().top - 2) hp.remove(); }
     for (let k = 1; k <= 4; k++) { const ns = steps[page + k]; if (ns && ns.p && ns.t === "words" && ns.ci === 0 && hasScene(ns.p)) { const im = new Image(); im.src = `assets/img/lesson/${ns.p.scene[0]}.webp?v=20261023as`; } }
     el.querySelector("#lcBack").onclick = showMenu;
-    el.querySelector("#lcPrev").onclick = () => { if (page === 0) showMenu(); else { page--; showVocab(); } };
+    el.querySelectorAll(".lc-vq-b").forEach((bt) => bt.addEventListener("click", () => { const it = bt.closest(".lc-vq-i"); if (it.dataset.done) return; it.dataset.done = "1"; const ok = bt.dataset.v === it.dataset.a; it.querySelectorAll(".lc-vq-b").forEach((x) => { x.disabled = true; if (x.dataset.v === it.dataset.a) x.classList.add("ok"); }); if (!ok) bt.classList.add("ko"); }));
+    el.querySelector("#lcPrev").onclick = () => { if (vSplit && vsub) { vsub = 0; showVocab(); return; } if (page === 0) showMenu(); else { page--; showVocab(); } };
     el.querySelector("#lcNext").onclick = () => {
+      if (vSplit && !vsub) { vsub = 1; showVocab(); return; }
       if (!lastStep) { page++; showVocab(); return; }
       prog.done = Object.assign({}, prog.done, { vocab: true });
       saveProgress(prog);

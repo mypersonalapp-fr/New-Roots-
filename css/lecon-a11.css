@@ -1034,3 +1034,12 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-testp .lc-vocab-head .lc-vh-ic{ font-size:22px !important; } .lc-testp .lc-vocab-head .lc-ic-img{ width:24px !important; height:24px !important; }
 .lc-testp .lc-vocab-head>div{ display:flex; flex-wrap:wrap; gap:2px 8px; align-items:baseline; }
 .lc-testp .lc-vocab-head h1{ font-size:17px !important; } .lc-testp .lc-vocab-head p{ font-size:13px !important; margin:0 !important; }
+
+/* pages de vocabulaire à 6 mots : 3 mots + 2 questions par sous-page */
+.lc-vq{ margin-top:6px; display:grid; gap:5px; }
+.lc-vq-q{ margin:0 0 4px; font-weight:700; font-size:15px; }
+.lc-vq-o{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.lc-vq-b{ border:1.5px solid #2f6fd1; background:rgba(47,111,209,.55); color:#fff; border-radius:10px; padding:7px 4px; font:600 14px/1.15 inherit; font-family:inherit; cursor:pointer; }
+.lc-vq-b.ok{ background:#12392a; border-color:#2fbf71; } .lc-vq-b.ko{ background:#431a1a; border-color:#e05555; }
+:root:not([data-theme="dark"]) .lc-vq-b{ background:#fff; color:#14213d; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lc-vq-b{ color:#fff; } }
