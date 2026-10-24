@@ -34,12 +34,23 @@ export function gramItems(pool, redo = []) {
 export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
 
 // build(redoKeys) -> items. onPass() débloque « Suivant ». Retourne rien ; tout est dans host.
-export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck }) {
-  let items = build([]), picked = [], checked = false;
+const nrm = (x) => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
+const typable = (it) => !it.say && (/___/.test(it.q) || /veut dire/.test(it.q));
+const maskHint = (it) => { const a = it.opts[it.a], e = String(it.expl || "").trim(); if (!e) return "Relis la règle."; const m = a ? e.split(a).join("…") : e; return m.replace(/\s+/g, " "); };
+// think = true : l’élève écrit d’abord sa réponse (les choix sont derrière « Indice »), puis, s’il se trompe, il reçoit un indice et un 2ᵉ essai avant la correction.
+export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think }) {
+  let items = build([]), picked = [], checked = false, txt = [], shown = [], locked = [], hints = [], attempt = 0;
+  const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return nrm(txt[i]) === nrm(it.opts[it.a]) ? it.a : -2; return picked[i]; };
   const paint = () => {
-    host.querySelector("#q6l").innerHTML = items.map((it, i) => `<div class="q6-q" data-i="${i}"><p class="q6-p"><span>${i + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p>
-      <div class="q6-o">${it.opts.map((o, k) => `<button type="button" class="lc-choice q6-c${picked[i] === k ? " lc-sel" : ""}" data-i="${i}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>`).join("");
-    host.querySelectorAll(".q6-c").forEach((b) => b.onclick = () => { if (checked) return; picked[+b.dataset.i] = +b.dataset.k; paint(); upd(); });
+    host.querySelector("#q6l").innerHTML = items.map((it, i) => { const ty = think && typable(it);
+      return `<div class="q6-q" data-i="${i}"><p class="q6-p"><span>${i + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p>
+      ${ty ? `<div class="q6-w"><input class="lc-ta q6-in" data-i="${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…" value="${esc(txt[i] || "")}"${locked[i] ? " disabled" : ""}>${shown[i] || locked[i] ? "" : `<button type="button" class="q6-hintb" data-i="${i}">💡 Indice</button>`}</div>` : ""}
+      <div class="q6-o"${ty && !shown[i] ? " hidden" : ""}>${it.opts.map((o, k) => `<button type="button" class="lc-choice q6-c${picked[i] === k && !(txt[i] || "").trim() ? " lc-sel" : ""}" data-i="${i}" data-k="${k}"${locked[i] ? " disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+      ${hints[i] ? `<p class="q6-hint">💡 ${esc(hints[i])}</p>` : ""}</div>`; }).join("");
+    host.querySelectorAll(".q6-c").forEach((b) => b.onclick = () => { if (checked) return; const i = +b.dataset.i; picked[i] = +b.dataset.k; txt[i] = ""; paint(); upd(); });
+    host.querySelectorAll(".q6-in").forEach((x) => x.oninput = () => { txt[+x.dataset.i] = x.value; upd(); });
+    host.querySelectorAll(".q6-hintb").forEach((b) => b.onclick = () => { shown[+b.dataset.i] = true; paint(); });
+    const hp = host.querySelector(".q6-help"); if (think && hp) hp.textContent = "✍️ Écris ta réponse. Bloqué ? Touche « 💡 Indice » pour voir les choix.";
     host.querySelectorAll(".q6-spk").forEach((b) => b.onclick = (e) => { e.stopPropagation(); speak && speak(b.dataset.say); });
     fit();
   };
@@ -52,18 +63,27 @@ export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck }) {
     const r = room(); if (r > 6) l.style.gap = Math.min(5 + r / (N + 1), 16) + "px";
   };
   const go = () => document.querySelector("#lcNext");
-  const upd = () => { const b = host.querySelector("#q6c"), n = picked.filter((x) => x !== undefined).length; if (b && !checked) { b.disabled = n < items.length; b.textContent = n < items.length ? `Vérifier (${n}/${items.length} répondues)` : "Vérifier ✓"; } };
+  const upd = () => { const b = host.querySelector("#q6c"), n = items.filter((_, i) => val(i) !== undefined).length; if (b && !checked) { b.disabled = n < items.length; b.textContent = n < items.length ? `Vérifier (${n}/${items.length} répondues)` : "Vérifier ✓"; } };
   const bar = () => host.querySelector("#q6c");
   const start = () => {
-    paint(); const b = bar(); b.style.display = ""; b.textContent = "Vérifier"; b.disabled = true; checked = false; upd();
+    attempt = 0; paint(); const b = bar(); b.style.display = ""; b.textContent = "Vérifier"; b.disabled = true; checked = false; upd();
     b.onclick = () => {
       if (checked) { // échec : on repart avec les questions ratées + de nouvelles
-        const miss = items.filter((it, i) => picked[i] !== it.a).map((it) => it.key);
-        items = build(miss); picked = []; host.querySelector("#q6f").textContent = ""; start(); return;
+        const miss = items.filter((it, i) => val(i) !== it.a).map((it) => it.key);
+        items = build(miss); picked = []; txt = []; shown = []; locked = []; hints = []; attempt = 0; host.querySelector("#q6f").textContent = ""; start(); return;
+      }
+      if (think && attempt === 0) { // 1ʳᵉ vérification : les erreurs reçoivent un indice (sans la réponse) et un 2ᵉ essai
+        const wrong = items.map((it, i) => (val(i) !== it.a ? i : -1)).filter((i) => i >= 0);
+        if (wrong.length) {
+          attempt = 1; locked = items.map((_, i) => !wrong.includes(i));
+          wrong.forEach((i) => { hints[i] = maskHint(items[i]); txt[i] = ""; picked[i] = undefined; shown[i] = false; });
+          paint(); const f = host.querySelector("#q6f"); f.className = "lc-fb q6-fb lc-fb-ko"; f.textContent = `${wrong.length} à corriger — lis l’indice et réessaie une fois.`;
+          const b2 = bar(); b2.disabled = true; upd(); return;
+        }
       }
       checked = true;
-      const good = items.filter((it, i) => picked[i] === it.a).length;
-      host.querySelectorAll(".q6-q").forEach((bx, i) => bx.querySelectorAll(".q6-c").forEach((c) => { c.disabled = true; c.classList.remove("lc-sel"); if (+c.dataset.k === items[i].a) c.classList.add("lc-right"); else if (+c.dataset.k === picked[i]) c.classList.add("lc-wrong"); }));
+      const good = items.filter((it, i) => val(i) === it.a).length;
+      host.querySelectorAll(".q6-q").forEach((bx, i) => { const o = bx.querySelector(".q6-o"); if (o) o.hidden = false; const hb = bx.querySelector(".q6-hintb"); if (hb) hb.remove(); const inp = bx.querySelector(".q6-in"); if (inp) inp.disabled = true; bx.querySelectorAll(".q6-c").forEach((c) => { c.disabled = true; c.classList.remove("lc-sel"); if (+c.dataset.k === items[i].a) c.classList.add("lc-right"); else if (+c.dataset.k === picked[i] && !(txt[i] || "").trim()) c.classList.add("lc-wrong"); }); });
       const fb = host.querySelector("#q6f"), ok = good >= PASS;
       onCheck && onCheck(good, N);
       host.querySelector("#q6s").textContent = `${good}/${N}`;

@@ -591,14 +591,14 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     } finally { B._probing = 0; B._steps = null; page = keep; }
   }
   // Page de test : 6 questions, 4 bonnes réponses pour passer (les erreurs reviennent).
-  function quizScreen({ total, key, build, back, prev, next, btn, bubble, onCheck }) {
+  function quizScreen({ total, key, build, back, prev, next, btn, bubble, onCheck, think }) {
     const c = currentCharacter();
     const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${bubble}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" disabled>${btn}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + quizHtml(), foot);
     const m = el.querySelector(".lc-main"); m.scrollTop = 0; m.classList.add("lc-q6");
     el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = next;
-    mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck });
+    mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck, think });
   }
   // Conjugaison : 6 verbes nouveaux par leçon (une page par verbe, 3 onglets) puis un test de 6 questions.
   let cjTab = 0;
@@ -731,7 +731,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       return;
     }
     const ex = rstep === 1;
-    quizScreen({ total: 3, key: key + (ex ? ":ex" : ":mini"), bubble: ex ? "Exercices !" : "Mini-test !", btn: ex ? "Mini-test 🏁" : "Terminer ✓", back: showRemise,
+    quizScreen({ think: true, total: 3, key: key + (ex ? ":ex" : ":mini"), bubble: ex ? "Exercices !" : "Mini-test !", btn: ex ? "Mini-test 🏁" : "Terminer ✓", back: showRemise,
       build: (miss) => mkItems(ex ? th.ex : th.mini, miss, 6), prev: () => { rstep--; showRemiseStep(); },
       next: () => { if (ex) { rstep = 2; showRemiseStep(); return; }
         const rm = Object.assign({}, prog.remise), dn = Object.assign({}, rm.done, { [rtheme]: true }), weak = (prog.bilan.rows || []).filter((r) => r.pct < BILAN_PASS);
