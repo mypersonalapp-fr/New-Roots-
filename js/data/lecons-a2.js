@@ -1,6 +1,7 @@
 // The Roots — registre des leçons du niveau A2 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js). Même principe que lecons-a1.js.
 // Leçons construites : A2.0 à A2.10 (voir A2_BUILT). Les autres paliers viendront un par un.
+import { CONJ_A2 } from "./conjugation-a1.js";
 import { A2_EN_PALIERS } from "./programme-a2-en.js";
 import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261024ba";
 
@@ -18,10 +19,14 @@ export const A2_LIST = [{ n: 0, code: "A2.0", titleEn: "Bridge A1 to A2", titleF
 export function lessonStatusA2(n) {
   try {
     const p = JSON.parse(localStorage.getItem(KEYS(n)) || "{}");
-    return { started: Object.keys(p.done || {}).length > 0 || !!p.scores, passed: !!(p.done && p.done.test), score: (p.scores || {}).test || null };
+    const dn = p.done || {};
+    return { started: Object.keys(dn).length > 0 || !!p.scores, passed: n === 0 ? A20_DONE.every((k) => dn[k] || (k === "write" && p.dict)) : !!dn.test, score: (p.scores || {}).test || null };
   } catch (e) { return { started: false, passed: false, score: null }; }
 }
 
+// A2.0 « Passerelle » : petit parcours (pas de Roots City, Exercices, Jeux, ni Contrôle). Il est validé quand toutes ces matières sont faites.
+export const A20_MENU = ["vocab", "grammar", "dialogue", "trad", "listening", "reading", "ewrite", "eoral", "write", "conj"];
+const A20_DONE = ["vocab", "grammar", "dialogue", "listening", "reading", "speaking", "write", "conj"];
 const V = "20261024ba";
 export async function loadBundleA2(n) {
   if (!A2_BUILT.includes(n)) throw new Error("A2." + n + " pas encore construit");
@@ -33,7 +38,8 @@ export async function loadBundleA2(n) {
     code: base.code, head: `${base.code} – ${titleFr}`, titleFr, progressKey: KEYS(n),
     goals: shortGoals(base),
     vocab, grammar: m[`GRAMMAR_${s}`], grammarSub: "Les règles de la leçon, avec des exemples.",
-    reading: m[`READING_${s}`], listening: m[`LISTENING_${s}`], exercises: m[`EXERCISES_${s}`], expression: exprs, transv: null,
+    reading: m[`READING_${s}`], listening: m[`LISTENING_${s}`], exercises: m[`EXERCISES_${s}`], expression: exprs, transv: null, conj: CONJ_A2[n] || null,
+    menu: n === 0 ? A20_MENU : null,
     testTexts: m[`TEST_TEXTS_${s}`], testAudios: m[`TEST_AUDIOS_${s}`], testGrammar: m[`TEST_GRAMMAR_${s}`], testW: 0, testO: exprs0[1] ? 1 : 0,
     testWriteTitle: w.title, testWriteLead: `Écris 4 phrases : ${w.prompts.join(" ")}`,
     testOralTitle: o.title, testOralLead: o.prompts.join(" "),

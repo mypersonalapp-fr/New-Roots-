@@ -14,6 +14,10 @@ export const CONJ_A1 = {
   11: [["sleep", "dormir", "dors|dors|dort|dormons|dorment", "well"], ["enjoy", "apprécier", "apprécie|apprécies|apprécie|apprécions|apprécient", "the sun"], ["bring", "apporter", "apporte|apportes|apporte|apportons|apportent", "an umbrella"], ["carry", "porter", "porte|portes|porte|portons|portent", "a coat"], ["check", "vérifier", "vérifie|vérifies|vérifie|vérifions|vérifient", "the weather"], ["plan", "planifier", "planifie|planifies|planifie|planifions|planifient", "a picnic"]],
   12: [["say", "dire", "dis|dis|dit|disons|disent", "hello"], ["tell", "raconter", "raconte|racontes|raconte|racontons|racontent", "a story"], ["know", "connaître", "connais|connais|connaît|connaissons|connaissent", "this city"], ["think", "penser", "pense|penses|pense|pensons|pensent", "about it"], ["remember", "retenir", "retiens|retiens|retient|retenons|retiennent", "new words"], ["decide", "décider", "décide|décides|décide|décidons|décident", "today"]],
 };
+// A2.0 (passerelle) : 6 nouveaux verbes, jamais vus dans les leçons A1.
+export const CONJ_A2 = {
+  0: [["wash", "laver", "lave|laves|lave|lavons|lavent", "the dishes"], ["clean", "nettoyer", "nettoie|nettoies|nettoie|nettoyons|nettoient", "the kitchen"], ["send", "envoyer", "envoie|envoies|envoie|envoyons|envoient", "an email"], ["take", "prendre", "prends|prends|prend|prenons|prennent", "the bus"], ["make", "préparer", "prépare|prépares|prépare|préparons|préparent", "a cake"], ["hear", "entendre", "entends|entends|entend|entendons|entendent", "a noise"]],
+};
 const PRON = [["I", 0], ["You", 1], ["He", 2], ["She", 2], ["It", 2], ["We", 3], ["They", 4]];
 const third = (v) => (/[^aeiou]y$/.test(v) ? v.slice(0, -1) + "ies" : /(s|sh|ch|x|z|o)$/.test(v) ? v + "es" : v + "s");
 const vow = (s) => /^[aeiouhéèêâîôùàAEIOUH]/.test(s);
@@ -32,7 +36,7 @@ export function conjRows(verb, mode) {
 }
 // 18 questions de test pour un niveau : [énoncé, choix, bonne réponse, explication]
 export function conjQuiz(level) {
-  const list = CONJ_A1[level] || [], out = [], subj = [["She", 1], ["He", 1], ["My friend", 1], ["We", 0], ["They", 0], ["You", 0], ["I", 0]];
+  const list = Array.isArray(level) ? level : CONJ_A1[level] || [], out = [], subj = [["She", 1], ["He", 1], ["My friend", 1], ["We", 0], ["They", 0], ["You", 0], ["I", 0]];
   const shuf = (a) => a.slice().sort(() => Math.random() - 0.5);
   list.forEach((verb, n) => {
     const [v, , , cx] = verb, t = third(v), s3 = subj[n % 3], sp = subj[3 + (n % 4)];

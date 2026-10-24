@@ -415,7 +415,8 @@ export function renderLesson(root, B, { onExit } = {}) {
     screen = "menu";
     const done = prog.done || {};
     const ok = (m) => (m.need === "dlg" ? !!DLG : m.need === "sit" ? !!SIT : m.need === "transv" ? !!B.transv : m.need === "conj" ? !!conjList() : true);
-    const ALL = MAT.filter((m) => m.go !== "trad" || (B.expression || []).some((x) => x.trad)).concat(EXTRA.filter(ok)); // Traduction : seulement à partir de A1.6
+    const inMenu = (m) => !B.menu || B.menu.includes(m.go); // parcours réduit (ex. A2.0 passerelle) : seulement les matières listées
+    const ALL = MAT.filter((m) => inMenu(m) && (m.go !== "trad" || (B.expression || []).some((x) => x.trad))).concat(EXTRA.filter((m) => ok(m) && inMenu(m))); // Traduction : seulement à partir de A1.6
     const tiles = ALL.map((m, i) => {
       const off = m.soon || !ok(m);
       const isDone = m.d && done[m.d] && !off;
@@ -604,7 +605,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     const exit = showMenu;
     if (page === L.length) {
       return quizScreen({ total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
-        build: (miss) => gramItems(conjQuiz(lvl), miss), prev: () => { page--; cjTab = 0; showConj(); },
+        build: (miss) => gramItems(conjQuiz(L), miss), prev: () => { page--; cjTab = 0; showConj(); },
         onCheck: (good, tot) => { const o = prog.conj || {}; prog.conj = { best: Math.max(o.best || 0, good), tot, tries: (o.tries || 0) + 1, last: good }; saveProgress(prog); },
         next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
     }

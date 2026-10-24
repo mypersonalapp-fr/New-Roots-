@@ -6,7 +6,7 @@ export const PASS = 32;
 export const SK = [["Compréhension écrite", 7.5], ["Compréhension orale", 7.5], ["Grammaire", 10], ["Expression écrite", 7.5], ["Expression orale", 7.5]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 export function bulletinA1(level = "A1") {
-  const LIST = level === "A2" ? A2_LIST.filter((L) => A2_BUILT.includes(L.n)) : A1_LIST;
+  const LIST = level === "A2" ? A2_LIST.filter((L) => A2_BUILT.includes(L.n) && L.n !== 0) : A1_LIST;
   const tests = LIST.map((L) => {
     const p = read(L.key), sc = parseInt(((p.scores || {}).test || "").split("/")[0], 10);
     // Mise à jour : un test noté avant l'enregistrement du détail (testHist) entre dans la même norme, marqué « ancien » jusqu'à ce qu'il soit repassé.
