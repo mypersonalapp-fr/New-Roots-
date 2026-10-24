@@ -3,7 +3,7 @@
 // Format d'une ligne : « phrase source ¦ traduction modèle ¦ mots-clés ».
 // Mots-clés : groupes séparés par « & » (tous obligatoires) ; dans un groupe, variantes séparées par « / » (une suffit).
 // Comparaison sans accents ni majuscules ni ponctuation (donc « mustn't » = « mustn t »). Textes inventés. À relire par un natif.
-const parse = (lines) => lines.slice(0, 6).map((l) => {
+const parse = (lines) => lines.slice(0, 10).map((l) => {
   const [src, model, keys] = l.split(" ¦ ").map((x) => x.trim());
   return { src, model, keys: keys.split(" & ").map((g) => g.split("/").map((a) => a.trim()).filter(Boolean)) };
 });

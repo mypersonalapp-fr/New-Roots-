@@ -56,3 +56,29 @@ export const SYN = [
   ["sofa", "couch"], ["flat", "apartment"], ["lorry", "truck"], ["film", "movie"], ["holiday", "vacation"], ["toilets", "restroom", "bathroom", "toilet"],
   ["luggage", "baggage"], ["autumn", "fall"], ["cheap", "inexpensive"], ["jacket", "coat"], ["boring", "dull"],
 ];
+
+// Traduction de phrases : équivalents acceptés dans les mots-clés (français et anglais). Chaque groupe = interchangeable dans une phrase.
+export const SYN_TR = [
+  // français
+  ["bonne", "excellente", "delicieuse", "super", "very good"], ["gentil", "aimable", "sympa", "gentille"], ["pas cher", "abordable", "bon marche", "raisonnable"],
+  ["adore", "aime", "aime beaucoup", "j adore"], ["voudrais", "aimerais", "souhaite", "desire", "veux"], ["magasin", "boutique", "commerce"],
+  ["voiture", "auto", "bagnole"], ["maison", "domicile", "chez"], ["travail", "boulot", "emploi", "metier"], 
+  ["content", "heureux", "ravi", "contente", "heureuse"], ["beau", "joli", "magnifique", "belle"],
+  ["rapide", "vite", "rapidement"], ["commence", "debute", "demarre"], ["finit", "termine", "fini"], ["demain", "le lendemain"], ["ce soir", "cette nuit", "ce soir la"],
+  ["parler", "discuter", "bavarder"], 
+  ["velo", "bicyclette"], ["facile", "simple"], ["difficile", "dur", "complique"], ["fatigue", "epuise", "fatiguee"], ["important", "essentiel"],
+  ["beaucoup", "enormement", "tres"], ["souvent", "frequemment"], ["toujours", "tout le temps"], ["desole", "navre", "pardon", "excuse"],
+  ["reserver", "retenir", "booker"], ["annuler", "supprimer"], ["invitation", "invite"], ["hate", "impatient"], ["super", "genial", "formidable", "excellent", "top"],
+  // anglais
+  ["like", "love", "enjoy", "fancy"], ["want", "would like", "d like", "wish"], ["buy", "get", "purchase"], ["shop", "store"], ["car", "vehicle", "auto"], ["house", "home", "flat", "apartment"],
+  ["job", "work", "profession", "occupation"], ["big", "large", "huge"], ["small", "little", "tiny"], ["beautiful", "pretty", "lovely", "nice", "gorgeous"], ["happy", "glad", "pleased", "cheerful"],
+  ["tired", "exhausted", "sleepy"], ["fast", "quick", "quickly", "rapid"], ["start", "begin", "starts", "begins", "started", "began"], ["finish", "end", "ends", "finishes"],
+  ["film", "movie"], ["cinema", "movies", "movie theatre", "movie theater"], ["holiday", "vacation", "trip"], ["phone", "mobile", "cell", "telephone", "call"], ["bike", "bicycle", "cycle"],
+  ["hard", "difficult", "tough"], ["easy", "simple"], ["sorry", "afraid", "apologise", "apologize"], ["great", "good", "fantastic", "wonderful", "excellent", "awesome", "super"],
+  ["cheap", "inexpensive", "affordable", "not expensive"], ["expensive", "costly", "pricey"], ["kind", "nice", "friendly", "gentle"], ["speak", "talk", "chat"], ["look at", "watch", "see"],
+  ["bill", "check"], ["lunch", "midday meal"], ["children", "kids"], ["child", "kid"], ["mum", "mom", "mother"], ["dad", "father"], ["flat", "apartment"], ["autumn", "fall"],
+  ["pavement", "sidewalk"], ["queue", "line"], ["lift", "elevator"], ["trousers", "pants"], ["shall we", "let s", "how about", "what about", "why don t we", "let us"],
+  ["go back", "return", "come back"], ["arrive", "get to", "reach"], ["need", "have to", "must"], ["can", "be able to", "could"],
+  ["often", "frequently"], ["always", "all the time"], ["very", "really", "so"], ["a lot", "lots", "much", "many"], ["maybe", "perhaps", "possibly"], ["quite", "fairly", "rather"],
+  ["free", "available"], ["tomorrow", "the next day"], ["tonight", "this evening"], ["together", "with each other"],
+];

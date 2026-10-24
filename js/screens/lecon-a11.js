@@ -23,6 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261024bb";
 import { createVoice } from "./voice.js?v=20261024bb";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
+import { SYN_TR } from "../data/syn-fr.js?v=20261024bb";
 import { XQ } from "../data/a1-extra-q.js?v=20261024bb";
 import { XQ2 } from "../data/a2-extra-q.js?v=20261024bb";
 import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc, setStrict } from "./quiz6.js?v=20261024bb";
@@ -1160,7 +1161,11 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const TRS = (spkState.trad = spkState.trad || {});
     // Page « Traduction » : une phrase = une carte, chaque phrase est vérifiée séparément (mots-clés, sans accents).
     const normT = (t) => String(t || "").toLowerCase().replace(/œ/g, "oe").replace(/æ/g, "ae").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
-    const rowOk = (r, txt) => { const n = " " + normT(txt) + " "; return normT(txt).length >= Math.max(4, normT(r.model).length * 0.5) && r.keys.every((g) => g.some((x) => n.includes(normT(x)))); };
+    // Contractions : don't = do not, I'm = I am, I'd like = I would like… (des deux côtés) ; synonymes : SYN_TR (une variante d'un groupe en vaut une autre).
+    const ctr = (n) => " " + n.replace(/\bcannot\b/g, "can not").replace(/\bwon t\b/g, "will not").replace(/\bcan t\b/g, "can not").replace(/\b(\w+)n t\b/g, "$1 not").replace(/\bi m\b/g, "i am").replace(/\b(you|we|they) re\b/g, "$1 are").replace(/\b(he|she|it|that|there|what|who|where|here) s\b/g, "$1 is").replace(/\blet s\b/g, "let us").replace(/\b(i|you|he|she|it|we|they) d\b/g, "$1 would").replace(/\b(i|you|he|she|it|we|they) ll\b/g, "$1 will").replace(/\b(i|you|we|they|would|could|should) ve\b/g, "$1 have").replace(/\s+/g, " ").trim() + " ";
+    const SI = (globalThis.__synTr = globalThis.__synTr || (() => { const m = new Map(); SYN_TR.forEach((g) => g.forEach((w) => { const k = normT(w); if (!m.has(k)) m.set(k, new Set()); g.forEach((v) => m.get(k).add(normT(v))); })); return m; })());
+    const hitK = (n, x) => { const k0 = normT(x), k = k0 === "n t" ? "not" : k0, alts = new Set([k]); (SI.get(k) || []).forEach((v) => alts.add(v)); return [...alts].some((a) => n.includes(ctr(a)) || n.includes(" " + a + " ") || n.includes(a)); };
+    const rowOk = (r, txt) => { const n = ctr(normT(txt)); return normT(txt).length >= Math.max(4, normT(r.model).length * 0.5) && r.keys.every((g) => g.some((x) => hitK(n, x))); };
     const trSt = (d) => (TRS[page + d] = TRS[page + d] || { text: {}, res: {}, tries: {}, rev: {} });
     const trCount = (pt) => { const st = trSt(pt.dir); return pt.rows.filter((_, i) => st.res[i] || st.rev[i]).length; };
     const trDone = (pt) => trCount(pt) >= Math.ceil(pt.rows.length * 0.8);
@@ -1672,6 +1677,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   }
   function showTest() {
     screen = "test";
+    if (globalThis.__ROOTS_TEST) globalThis.__T = () => ({ T, B });
     const total = 6, p = T.p;
     T.plan = T.plan || {};
     const Q = (key, q, n) => `<div class="lc-qb"><p class="lc-q">${n}. ${esc(q[0])}</p><div class="lc-choices" role="group">${q[1].map((o, i) => `<button type="button" class="lc-choice ${T.ans[key] === i ? "lc-sel" : ""}" data-k="${key}" data-i="${i}">${esc(o)}</button>`).join("")}</div></div>`;
@@ -1799,6 +1805,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     });
     const ta = el.querySelector("#lcTa"); if (ta) { ta.addEventListener("input", () => { T.written = ta.value; refresh(); }); mountAdvice(() => ta.value); }
     fillSpace();
+    if (p === 4) { const mm = el.querySelector(".lc-main"), hh = mm && mm.querySelector(".lc-exhero"); if (hh && mm.scrollHeight > mm.clientHeight + 2) { hh.style.display = "none"; fillSpace(); } } // petit écran : on retire l'image pour que tout tienne sans défiler
     el.querySelectorAll("[data-o]").forEach((b) => b.addEventListener("change", () => { T.oral[Number(b.dataset.o)] = b.checked; refresh(); }));
     const sp = el.querySelector("#lcSpeed"); if (sp) sp.onclick = () => { speedMul = speedMul === 1 ? 0.75 : 1; sp.textContent = speedMul === 1 ? "1x" : "0.75x"; };
     const mic = el.querySelector("#lcMic");
