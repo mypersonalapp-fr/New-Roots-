@@ -1,3 +1,4 @@
+import { SYN } from "../data/syn-fr.js?v=20261024bb";
 // The Roots — page de test : 6 questions sur une page, 4 bonnes réponses minimum pour passer. Les erreurs reviennent.
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
@@ -40,7 +41,18 @@ const lev1 = (a, b) => { if (a === b) return true; if (Math.abs(a.length - b.len
 let strict = false; // A2 : zéro tolérance (orthographe, accents) ; A1 : seule une faute de frappe d’une lettre est tolérée, et seulement en vocabulaire
 export const setStrict = (v) => { strict = !!v; };
 const nrmS = (x) => String(x || "").toLowerCase().normalize("NFC").replace(/\([^)]*\)/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
-const same = (t, o, voc) => (strict ? nrmS(t) === nrmS(o) : nrm(t) === nrm(o) || (voc && lev1(art(t), art(o)))); // faute de frappe tolérée seulement en vocabulaire (jamais en grammaire : -s, -ing comptent)
+const oe = (x) => String(x).replace(/œ/g, "oe").replace(/Œ/g, "oe");
+const ck = (x) => (strict ? nrmS(oe(x)) : nrm(oe(x))).replace(/[\s-]+/g, ""); // clé de comparaison : tirets, espaces et apostrophes ne comptent pas
+let synIdx = null, synMode = null;
+const synOf = (k) => { if (!synIdx || synMode !== strict) { synMode = strict; synIdx = new Map(); SYN.forEach((g) => g.forEach((w) => { const c = ck(w); if (!synIdx.has(c)) synIdx.set(c, []); synIdx.get(c).push(g); })); } return synIdx.get(k) || []; };
+// Réponses acceptées : la bonne réponse, ses variantes (« grand / nombreux »), ses synonymes (syn-fr.js) sauf si c'est l'une des autres propositions.
+const same = (t, o, voc, opts) => {
+  const T = ck(t), cand = new Set();
+  String(o).split(/\s*\/\s*/).forEach((p) => { cand.add(ck(p)); if (!strict) cand.add(ck(art(p))); if (voc) synOf(ck(p)).forEach((g) => g.forEach((w) => cand.add(ck(w)))); });
+  if (voc && opts) opts.forEach((x) => { if (x !== o && ck(x) !== ck(o)) cand.delete(ck(x)); });
+  if (cand.has(T) || (!strict && cand.has(ck(art(t))))) return true;
+  return !strict && voc && lev1(art(t), art(o)); // faute de frappe tolérée seulement en vocabulaire (jamais en grammaire : -s, -ing comptent)
+};
 export const isVoc = (q) => /veut dire|en anglais|means/i.test(q);
 export { same, maskHint };
 const typable = (it) => !/^Écoute/.test(it.q) && (/___/.test(it.q) || /veut dire|en anglais/.test(it.q));
@@ -48,7 +60,7 @@ const maskHint = (it) => { const e = String(it.expl || "").trim(), a = String(it
 // think = true : l’élève écrit d’abord sa réponse (les choix sont derrière « Indice »), puis, s’il se trompe, il reçoit un indice et un 2ᵉ essai avant la correction.
 export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think }) {
   let items = build([]), picked = [], checked = false, txt = [], shown = [], locked = [], hints = [], attempt = 0;
-  const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return same(txt[i], it.opts[it.a], /veut dire|en anglais/.test(it.q)) ? it.a : -2; return picked[i]; };
+  const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return same(txt[i], it.opts[it.a], /veut dire|en anglais/.test(it.q), it.opts) ? it.a : -2; return picked[i]; };
   const paint = () => {
     host.querySelector("#q6l").innerHTML = items.map((it, i) => { const ty = think && typable(it);
       return `<div class="q6-q" data-i="${i}"><p class="q6-p"><span>${i + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p>

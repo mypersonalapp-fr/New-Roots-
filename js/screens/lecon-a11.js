@@ -1132,7 +1132,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       const inp = w.querySelector("input");
       const submit = () => {
         const v = inp.value.trim(); if (!v) return;
-        if (same(v, q[1][q[2]], isVoc(q[0]))) { ch.hidden = false; ch.style.removeProperty("display"); w.remove(); ch.querySelector(`.lc-choice[data-i="${q[2]}"]`).click(); }
+        if (same(v, q[1][q[2]], isVoc(q[0]), q[1])) { ch.hidden = false; ch.style.removeProperty("display"); w.remove(); ch.querySelector(`.lc-choice[data-i="${q[2]}"]`).click(); }
         else { firstTry[`${key}:${qi}`] = false; fb.className = "lc-fb lc-fb-ko"; fb.textContent = "Pas tout à fait — 💡 " + maskHint({ opts: q[1], a: q[2], expl: xp(q, q[2]) }) + " Réessaie."; }
       };
       w.querySelector(".q6-okb").onclick = submit; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
