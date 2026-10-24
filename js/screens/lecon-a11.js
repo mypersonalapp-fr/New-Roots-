@@ -249,7 +249,7 @@ const dlgBubbles = (turns, withSpk) => `<div class="lc-bl lc-bl-full">${turns.ma
 
 /* ---------- rendu ---------- */
 export function renderLesson(root, B, { onExit, start } = {}) {
-  if (!B._xq) { B._xq = 1; const xn = /^A([12])\.(\d+)$/.exec(String(B.code || "")), xs = xn && (xn[1] === "1" ? XQ : XQ2)[Number(xn[2])]; if (xs) [["reading", "r"], ["listening", "l"]].forEach(([k, c]) => (B[k] || []).forEach((pg, i) => { const ex = xs[c] && xs[c][i]; if (ex && pg.qs) pg.qs = [...pg.qs, ...ex]; })); } // plus de questions par texte
+  if (!B._xq) { B._xq = 1; const xn = /^A([12])\.(\d+)$/.exec(String(B.code || "")), xs = xn && (xn[1] === "1" ? XQ : XQ2)[Number(xn[2])]; if (xs) [["reading", "r"], ["listening", "l"]].forEach(([k, c]) => (B[k] || []).forEach((pg, i) => { const ex = xs[c] && xs[c][i]; if (ex && pg.qs) { const nz = (t) => String(t).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(), seen = new Set(pg.qs.map((q) => nz(q[0]))); pg.qs = [...pg.qs, ...ex.filter((q) => !seen.has(nz(q[0])) && seen.add(nz(q[0])))]; } })); } // plus de questions par texte
   PROGRESS_KEY = B.progressKey; setStrict(/^A2/.test(String(B.code || "")));
   const HEAD = B.head;
   const prog = loadProgress();
@@ -494,7 +494,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   function fillTyped() {
     const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
     const qs = [...m.querySelectorAll(".lc-qb")].filter((b) => b.querySelector(".q6-w")); if (!qs.length) return;
-    ["--qh", "--qf", "--qp"].forEach((v) => m.style.removeProperty(v)); m.classList.remove("q6-tight");
+    ["--qh", "--qf", "--qp"].forEach((v) => m.style.removeProperty(v)); m.classList.remove("q6-tight"); m.classList.add("q6-fill");
     const card = qs[qs.length - 1].closest(".lc-card") || m.lastElementChild;
     const fits = () => m.scrollHeight <= m.clientHeight + 2 && card.getBoundingClientRect().bottom <= f.getBoundingClientRect().top - 40;
     if (!fits()) { m.classList.add("q6-tight"); return; }
@@ -944,7 +944,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       if (p.qsPool) { // nombre de questions choisi pour que chaque écran soit plein (pas de question seule)
         let n = Math.max(p.qs.length, 3); const pool = p.qsPool;
         if (id === "grammar") n = pool.length >= 9 ? 9 : pool.length >= 6 ? 6 : Math.min(3, pool.length); // grammaire : 3 questions par écran
-        else if ((id === "reading" || id === "listening")) { const m = mergeT ? (id === "listening" && p.hand >= 6 ? [Math.min(pool.length, [9, 7, 5][cLvl[id + ":" + pi] || 0])] : [8, 5, 2]) : [9, 6, 5, 3]; n = m.find((x) => x <= pool.length) || pool.length; }
+        else if ((id === "reading" || id === "listening")) { const m = mergeT ? (id === "listening" && p.hand >= 6 ? [Math.min(pool.length, [9, 7, 5][cLvl[id + ":" + pi] || 0])] : [10, 8, 5, 2]) : [12, 9, 6, 5, 3]; n = m.find((x) => x <= pool.length) || pool.length; }
         else { if (special ? n % 2 === 0 : n % 2 === 1) n += 1;
         n = Math.min(n, pool.length); if (special ? n % 2 === 0 : n % 2 === 1) n = Math.max(n - 1, 1); }
         p = Object.assign({}, p, { qs: pool.slice(0, Math.max(n, 1)) });
@@ -952,7 +952,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       if (p.qs.length) {
         const all = p.qs.map((_, i) => i), wt = hasText && mergeT;
         const qc0 = id === "listening" && p.hand >= 6 ? 5 : id === "grammar" || id === "exercises" || (id === "reading" || id === "listening") ? 3 : 2;
-        const tyR = p.qs.filter(typableAct).length / p.qs.length, qc = qCap[id + ":" + pi] || (id === "grammar" || qc0 > 3 ? qc0 : qc0 + (tyR >= 0.99 ? 2 : tyR >= 0.6 ? 1 : 0)); // réponses à écrire = lignes plus courtes : plus de questions par écran
+        const tyR = p.qs.filter(typableAct).length / p.qs.length, qc = qCap[id + ":" + pi] || (id === "grammar" || qc0 > 3 ? qc0 : qc0 + (tyR >= 0.99 ? 2 : tyR >= 0.6 || id === "reading" ? 1 : 0)); // réponses à écrire = lignes plus courtes : plus de questions par écran
         const wex = id === "grammar" && (gLvl[id + ":g" + pi] || 0) === 1;
         const qf = id === "exercises" ? qFirst[id + ":" + pi] : undefined;
         const fs = (id === "exercises" || (id === "reading" || id === "listening")) && wt ? (id === "listening" && p.hand >= 6 ? [4, 3, 2][cLvl[id + ":" + pi] || 0] : 2) : 1;

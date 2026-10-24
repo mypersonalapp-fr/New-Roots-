@@ -1128,6 +1128,7 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .q6-tight .q6-w{margin:2px 0}
 .q6-tight .q6-hintb,.q6-tight .q6-okb{padding:5px 8px;font-size:12px}
 .lc-main .q6-in{height:var(--qh,38px);font-size:var(--qf,15px)}
-.lc-main .lc-qb:has(.q6-w){padding-block:var(--qp,0px)}
-.lc-main .lc-qb:has(.q6-w) .lc-q{font-size:var(--qf,15px)}
+.lc-main.q6-fill .lc-qb{padding-block:var(--qp,0px)}
+.lc-main.q6-fill .lc-qb .lc-q{font-size:var(--qf,15px)}
+.lc-main.q6-fill .lc-qb .lc-choice{font-size:calc(var(--qf,15px) - 1px)}
 .q6-tight .q6-in{height:32px}
