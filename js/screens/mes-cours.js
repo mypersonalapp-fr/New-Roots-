@@ -30,6 +30,7 @@ import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
 import { currentCharacter } from "./lecon-a11.js?v=20261024ay";
 import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2 } from "../data/lecons-a2.js?v=20261024ay";
 import { runRattrapage } from "./rattrapage.js?v=20261024ay";
+import { LEVELS, lessonsOf, lessonSheet, BONUS_MAX } from "../data/livret-niveaux.js?v=20261024ay";
 import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261024ay";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 
@@ -309,7 +310,7 @@ export function renderMesCours(container, shellRoot) {
       cardEl.addEventListener("click", () => { openCode = cardEl.dataset.code; paint(); });
     });
     const livretBtn = container.querySelector("#mcOpenLivret");
-    if (livretBtn) livretBtn.addEventListener("click", () => { openLivret = true; paint(); });
+    if (livretBtn) livretBtn.addEventListener("click", () => { openLivret = true; lvView = "home"; paint(); });
   }
 
   // --- "Mon livret" : vue d'ensemble façon livret scolaire — le résultat du
@@ -346,12 +347,39 @@ export function renderMesCours(container, shellRoot) {
     const top = B.dictAvg === null ? `<p class="bl-soft">Fais la « Dictée » d'une leçon (Écrire en anglais) : tes scores apparaîtront ici.</p>` : `<div class="bl-sk-top"><b>🎧 Dictée</b><b>${f1(B.dictAvg / 10)} <span class="bl-soft">/ 10</span></b></div><div class="bl-bar"><i style="width:${B.dictAvg}%;background:${B.dictAvg >= 80 ? "#2fa35e" : "#e2a13d"}"></i></div>`;
     return `<div class="card bl-card">${top}${B.dict.length ? `<div class="bl-trs">${B.dict.map((x) => `<div class="bl-tr bl-tr2"><b>${x.code}</b><span class="${x.d.ok >= Math.ceil(x.d.tot * 0.8) ? "ok" : ""}">${x.d.ok}/${x.d.tot} phrases justes du 1er coup</span></div>`).join("")}</div>` : ""}<p class="bl-soft">Elle ne compte pas dans les 40 points du test.</p></div>`;
   }
+  let lvView = "home", lvLesson = null;
+  const nf = (n) => String(n).replace(".", ",");
+  const gauge = (p) => `<div class="lv-g"><i style="width:${p}%;background:${p ? gaugeColor(p) : "transparent"}"></i></div>`;
+  function livretHome() {
+    const cases = LEVELS.map(([c, n, on]) => { const Ls = lessonsOf(c).filter((x) => x.built), av = Ls.length ? Math.round(Ls.reduce((a, L) => a + lessonSheet(c, L).avg, 0) / Ls.length) : 0;
+      return `<button type="button" class="lv-case${on ? "" : " off"}" data-view="level" data-lv="${c}"><b>${c}</b><small>${n}</small>${gauge(av)}<span>${on ? av + " %" : "bientôt"}</span></button>`; }).join("");
+    return `<div class="lv-sub">Choisis ton niveau</div><div class="lv-cases">${cases}</div><div class="lv-later"><b>🗂️ On verra ça plus tard</b><small>Cette zone est réservée.</small></div>`;
+  }
+  function livretLevel() {
+    const Ls = lessonsOf(lvLevel), nav = `<button type="button" class="bl-back" data-view="home">← Tous les niveaux</button>`;
+    if (!Ls.length) return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="card bl-card"><p class="bl-soft">Ce livret est prêt. Les leçons arrivent bientôt : les notes s'afficheront ici.</p></div>`;
+    const t = Ls.map((L) => { const sh = lessonSheet(lvLevel, L); return `<button type="button" class="lv-ls${L.built ? "" : " off"}" ${L.built ? `data-view="lesson" data-ls="${L.n}"` : "disabled"}><b>${L.code}</b><small>${L.title}</small>${gauge(sh.avg)}<span>${L.built ? sh.avg + " %" : "bientôt"}</span></button>`; }).join("");
+    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div><button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`;
+  }
+  function livretLesson() {
+    const L = lessonsOf(lvLevel).find((x) => x.n === lvLesson); if (!L) return livretLevel();
+    const sh = lessonSheet(lvLevel, L), k = sh.conj;
+    const rows = sh.rows.map((r) => `<div class="lv-row"><span class="lv-e">${r.e}</span><div class="lv-rb"><div class="lv-rt"><b>${r.name}</b><b>${r.has ? (r.note || r.pct + " %") : "—"}</b></div>${gauge(r.pct)}</div></div>`).join("");
+    return `<button type="button" class="bl-back" data-view="level">← ${lvLevel}</button><div class="lv-title">${L.code} · ${L.title}</div>
+      <div class="card bl-card lv-c"><div class="bl-sp"><h3 class="bl-h">Mes matières</h3><b class="lv-avg">${sh.avg} %</b></div>${rows}<div class="lv-note">Note de la leçon : <b>${nf(sh.note20)} / 20</b></div></div>
+      <div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
+        <p class="bl-soft">Noté à part. Ajoute jusqu'à +${BONUS_MAX} point au total (plafonné à 20). ${k.done ? `Test : ${k.best}/${k.tot}.` : "Pas encore passé."}</p></div>
+      <div class="lv-total"><span>Total final</span><b>${nf(sh.total)} / 20</b><small>${nf(sh.note20)} + ${nf(k.bonus)} bonus</small></div>`;
+  }
   function hubHtml(l) {
     const back = (to, label) => `<button type="button" class="bl-back" data-tab="${to}">← ${label}</button>`;
     if (l.code !== "en") {
       return `<div class="dash-box"><h3>Mon profil</h3><div class="card">${profileHtml(l.code)}</div></div><div class="dash-box"><h3>Mes contrôles</h3><div class="card">${controlsHtml(l.code)}</div></div><div class="dash-box"><h3>Mes missions</h3><div class="card">${missionsHtml(l.code)}</div></div>`;
     }
     if (!lvLevel) lvLevel = currentOf(l).level === "A1" ? "A1" : "A2";
+    if (lvView === "home") return livretHome();
+    if (lvView === "level") return livretLevel();
+    if (lvView === "lesson") return livretLesson();
     const style = getStyle(), P = bulletinParts(lvLevel), B = P.B, nG = B.gaps.length;
     const empty = `<div class="card bl-card"><p class="bl-soft">Passe ton premier test de fin de leçon : tes notes apparaîtront ici.</p></div>`;
     let body = "";
@@ -368,7 +396,7 @@ export function renderMesCours(container, shellRoot) {
     const tabs = style === "radar"
       ? `<div class="bl-tabs">${TABS.map(([id, , n]) => `<button type="button" class="${id === main ? "on" : ""}" data-tab="${id}">${n}${id === "gaps" && nG ? `<span class="bl-bdg">${nG}</span>` : ""}</button>`).join("")}</div>`
       : `<div class="bl-tb">${TABS.map(([id, e, n]) => `<button type="button" class="${id === main ? "on" : ""}" data-tab="${id}"><i>${e}</i>${n}${id === "gaps" && nG ? `<span class="bl-bdg">${nG}</span>` : ""}</button>`).join("")}</div>`;
-    return `${P.empty ? "" : P.head}
+    return `<button type="button" class="bl-back" data-view="level">← Leçons ${lvLevel}</button>${P.empty ? "" : P.head}
       <div class="bl-bar-top"><div class="bl-chips">${["A1", "A2"].map((v) => `<button type="button" class="${v === lvLevel ? "on" : ""}" data-lvl="${v}">${v}</button>`).join("")}</div>
         <button type="button" class="bl-style" data-style="${style === "radar" ? "bar" : "radar"}" aria-label="Changer la présentation">${style === "radar" ? "📋 Vue liste" : "🕸️ Vue radar"}</button></div>
       ${style === "radar" ? tabs : ""}${body}${style === "bar" ? tabs : ""}`;
@@ -410,6 +438,7 @@ export function renderMesCours(container, shellRoot) {
       </div>
     `;
     container.querySelector("#mcLivretBack").addEventListener("click", () => { openLivret = false; paint(); });
+    container.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { lvView = b.dataset.view; if (b.dataset.lv) lvLevel = b.dataset.lv; if (b.dataset.ls) lvLesson = Number(b.dataset.ls); if (lvView === "tabs") lvTab = "notes"; paint(); }));
     container.querySelectorAll("[data-lvl]").forEach((b) => b.addEventListener("click", () => { lvLevel = b.dataset.lvl; paint(); }));
     container.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => { lvTab = b.dataset.tab; paint(); }));
     container.querySelectorAll("[data-style]").forEach((b) => b.addEventListener("click", () => { try { localStorage.setItem(ST_KEY, b.dataset.style); } catch (e) { /* stockage indisponible */ } paint(); }));

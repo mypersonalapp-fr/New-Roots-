@@ -585,14 +585,14 @@ export function renderLesson(root, B, { onExit } = {}) {
     } finally { B._probing = 0; B._steps = null; page = keep; }
   }
   // Page de test : 6 questions, 4 bonnes réponses pour passer (les erreurs reviennent).
-  function quizScreen({ total, key, build, back, prev, next, btn, bubble }) {
+  function quizScreen({ total, key, build, back, prev, next, btn, bubble, onCheck }) {
     const c = currentCharacter();
     const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${bubble}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" disabled>${btn}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + quizHtml(), foot);
     const m = el.querySelector(".lc-main"); m.scrollTop = 0; m.classList.add("lc-q6");
     el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = next;
-    mountQuiz(el.querySelector(".q6"), key, build, { speak });
+    mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck });
   }
   // Conjugaison : 6 verbes nouveaux par leçon (une page par verbe, 3 onglets) puis un test de 6 questions.
   let cjTab = 0;
@@ -605,6 +605,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     if (page === L.length) {
       return quizScreen({ total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
         build: (miss) => gramItems(conjQuiz(lvl), miss), prev: () => { page--; cjTab = 0; showConj(); },
+        onCheck: (good, tot) => { const o = prog.conj || {}; prog.conj = { best: Math.max(o.best || 0, good), tot, tries: (o.tries || 0) + 1, last: good }; saveProgress(prog); },
         next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
     }
     const verb = L[page], c = currentCharacter();

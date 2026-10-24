@@ -34,7 +34,7 @@ export function gramItems(pool, redo = []) {
 export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
 
 // build(redoKeys) -> items. onPass() débloque « Suivant ». Retourne rien ; tout est dans host.
-export function mountQuiz(host, key, build, { speak, onPass, btn }) {
+export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck }) {
   let items = build([]), picked = [], checked = false;
   const paint = () => {
     host.querySelector("#q6l").innerHTML = items.map((it, i) => `<div class="q6-q" data-i="${i}"><p class="q6-p"><span>${i + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p>
@@ -65,6 +65,7 @@ export function mountQuiz(host, key, build, { speak, onPass, btn }) {
       const good = items.filter((it, i) => picked[i] === it.a).length;
       host.querySelectorAll(".q6-q").forEach((bx, i) => bx.querySelectorAll(".q6-c").forEach((c) => { c.disabled = true; c.classList.remove("lc-sel"); if (+c.dataset.k === items[i].a) c.classList.add("lc-right"); else if (+c.dataset.k === picked[i]) c.classList.add("lc-wrong"); }));
       const fb = host.querySelector("#q6f"), ok = good >= PASS;
+      onCheck && onCheck(good, N);
       host.querySelector("#q6s").textContent = `${good}/${N}`;
       fb.className = "lc-fb q6-fb " + (ok ? "lc-fb-ok" : "lc-fb-ko");
       fb.textContent = ok ? `✔ ${good}/${N} — bravo, tu passes !` : `${good}/${N} — il faut ${PASS}. Les erreurs reviennent.`;
