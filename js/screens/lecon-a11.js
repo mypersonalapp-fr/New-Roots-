@@ -1714,7 +1714,19 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       return html;
     };
     const ttl = B.exam ? "Grand contrôle A1" : "Test de fin de leçon";
-    const draw = (a, z, tight, meas) => { frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot); { const m0 = el.querySelector(".lc-main"); if (m0) m0.classList.add("lc-testp"); } if (p <= 3 && z - a >= 3) { const mm = el.querySelector(".lc-main"); mm.classList.add("lc-listen", "lc-g3", "lc-ex"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight2"); } else if (p === 2 || p === 3) el.querySelector(".lc-main").classList.add("lc-bigq"); };
+    T.typed = T.typed || {};
+    const qOf = (k) => (k[0] === "r" ? T.text.q[+k.slice(1)] : k[0] === "l" ? T.audio.q[+k.slice(1)] : B.testGrammar[+k.slice(1)]);
+    const typifyDom = () => el.querySelectorAll(".lc-qb").forEach((box) => { // on écrit d'abord : champ de réponse, propositions derrière « Indice »
+      const c1 = box.querySelector(".lc-choice"); if (!c1 || box.querySelector(".q6-w")) return;
+      const key = c1.dataset.k, q = qOf(key); if (!q || !typableAct(q)) return;
+      const ch = box.querySelector(".lc-choices"), w = document.createElement("div"), used = T.ans[key] !== undefined && !T.typed[key];
+      w.className = "q6-w"; w.innerHTML = `<input class="lc-ta q6-in" data-key="${key}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…">${used ? "" : `<button type="button" class="q6-hintb">💡 Indice</button>`}`;
+      w.querySelector("input").value = T.typed[key] || "";
+      if (!used) { ch.hidden = true; ch.style.setProperty("display", "none", "important"); }
+      ch.before(w);
+    });
+    const draw0 = (a, z, tight, meas) => { frame(ttl, { cur: p + 1, total }, build(a, z, a === 0, tight, meas), foot); { const m0 = el.querySelector(".lc-main"); if (m0) m0.classList.add("lc-testp"); } typifyDom(); if (p <= 3 && z - a >= 3) { const mm = el.querySelector(".lc-main"); mm.classList.add("lc-listen", "lc-g3", "lc-ex"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight"); if (mm.scrollHeight > mm.clientHeight + 2) mm.classList.add("lc-tight2"); } else if (p === 2 || p === 3) el.querySelector(".lc-main").classList.add("lc-bigq"); };
+    const draw = (a, z, tight, meas) => { draw0(a, z, tight, meas); typifyDom(); };
     const fits = () => { const m = el.querySelector(".lc-main"); return m.scrollHeight <= m.clientHeight + 2; };
     if (!T.plan[p]) {
       const plan = []; let a = 0;
@@ -1742,7 +1754,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const [pa, pz, ptight] = plan[s];
     draw(pa, pz, ptight);
     if (p <= 3) { // les cases s'agrandissent pour remplir la page (sans défilement)
-      const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"), chs = [...m.querySelectorAll(".lc-choice")], cards = m.querySelectorAll(":scope > .lc-card"), lastC = cards[cards.length - 1];
+      const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"), chs = [...m.querySelectorAll(".lc-choice")].filter((x) => x.offsetParent), cards = m.querySelectorAll(":scope > .lc-card"), lastC = cards[cards.length - 1];
       if (chs.length && lastC && f) {
         const L = Math.floor(f.getBoundingClientRect().top - lastC.getBoundingClientRect().bottom - 16), base = chs.map((x) => parseFloat(getComputedStyle(x).paddingTop));
         for (let q = Math.min(20, Math.floor(L / (2 * chs.length))); q > 0; q--) {
@@ -1752,6 +1764,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
         }
       }
     }
+    if (p <= 3 && el.querySelector(".q6-in[data-key]")) fillTyped();
     if (p === 5) { // expression orale : les cases à cocher s'étirent pour remplir la page
       const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"), lbs = [...m.querySelectorAll(".lc-checks-in label")], cards = m.querySelectorAll(":scope > .lc-card"), lastC = cards[cards.length - 1];
       if (lbs.length && lastC && f) {
@@ -1777,6 +1790,12 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       el.querySelectorAll(`.lc-choice[data-k="${b.dataset.k}"]`).forEach((x) => x.classList.toggle("lc-sel", x === b));
       refresh();
     }));
+    // Contrôle noté : champs créés par typifyDom() ; réponse juste = point, erreur = pas de point (pas de 2e essai) ; « Indice » montre les propositions.
+    el.querySelectorAll(".q6-in[data-key]").forEach((inp) => {
+      const key = inp.dataset.key, q = qOf(key), w = inp.closest(".q6-w"), ch = w.parentElement.querySelector(".lc-choices"), hb = w.querySelector(".q6-hintb");
+      if (hb) hb.onclick = () => { ch.hidden = false; ch.style.removeProperty("display"); hb.remove(); fillTyped(); };
+      inp.addEventListener("input", () => { const v = inp.value.trim(); if (v) { T.typed[key] = v; T.ans[key] = same(v, q[1][q[2]], isVoc(q[0]), q[1]) ? q[2] : -1; } else { delete T.typed[key]; delete T.ans[key]; } refresh(); });
+    });
     const ta = el.querySelector("#lcTa"); if (ta) { ta.addEventListener("input", () => { T.written = ta.value; refresh(); }); mountAdvice(() => ta.value); }
     fillSpace();
     el.querySelectorAll("[data-o]").forEach((b) => b.addEventListener("change", () => { T.oral[Number(b.dataset.o)] = b.checked; refresh(); }));
@@ -1820,7 +1839,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     saveProgress(prog);
     const wrong = [
       ...T.text.q.map((q, i) => ["r" + i, q]), ...T.audio.q.map((q, i) => ["l" + i, q]), ...T.gram.map((id) => ["g" + id, B.testGrammar[id]]),
-    ].filter(([k, q]) => T.ans[k] !== q[2]).map(([k, q]) => `<li><b>${esc(q[0])}</b><small>Ta réponse : ${esc(q[1][T.ans[k]] ?? "—")} · Bonne réponse : ${esc(q[1][q[2]])}</small></li>`).join("");
+    ].filter(([k, q]) => T.ans[k] !== q[2]).map(([k, q]) => `<li><b>${esc(q[0])}</b><small>Ta réponse : ${esc((T.typed && T.typed[k]) || q[1][T.ans[k]] || "—")} · Bonne réponse : ${esc(q[1][q[2]])}</small></li>`).join("");
     frame(B.exam ? "Grand contrôle A1" : "Test de fin de leçon", null, `
       <section class="lc-hero">${c0().win ? `<img class="lc-hero-full" src="${c0().win}" alt=""/>` : `<img class="lc-hero-img lc-hero-sm" src="${c0().src}" alt=""/>`}</section>
       <section class="lc-card lc-intro"><h1>${passed ? (B.exam ? "Niveau A1 validé !" : "Leçon terminée !") : (prog.done || {}).test ? "Déjà validée" : "Presque !"}</h1>
