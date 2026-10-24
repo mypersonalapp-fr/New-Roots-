@@ -1,3 +1,4 @@
+import { CONJ_A1 } from "./conjugation-a1.js";
 // The Roots — registre des 12 leçons du niveau A1 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js).
 import { A1_EN_PALIERS } from "./programme-a1-en.js?v=20260930a";
@@ -41,7 +42,7 @@ export async function loadBundle(n) {
     code: base.code, head: `${base.code} – ${A1_TITLES_FR[n - 1]}`, titleFr: A1_TITLES_FR[n - 1], progressKey: KEYS(n),
     goals: shortGoals(base),
     vocab, grammar: m[`GRAMMAR_${s}`], grammarSub: "Les règles de la leçon, avec des exemples.",
-    reading: m[`READING_${s}`], listening: m[`LISTENING_${s}`], exercises: m[`EXERCISES_${s}`], expression: exprs, transv: null,
+    reading: m[`READING_${s}`], listening: m[`LISTENING_${s}`], exercises: m[`EXERCISES_${s}`], expression: exprs, transv: null, conj: CONJ_A1[n] || null,
     testTexts: [...m[`TEST_TEXTS_${s}`], ...TEST_PLUS_A1[n].texts], testAudios: [...m[`TEST_AUDIOS_${s}`], ...TEST_PLUS_A1[n].audios], testGrammar: [...m[`TEST_GRAMMAR_${s}`], ...TEST_PLUS_A1[n].gram], testW: 0, testO: exprs0[1] ? 1 : 0,
     testWriteTitle: w.title, testWriteLead: `Écris 4 phrases : ${w.prompts.join(" ")}`,
     testOralTitle: o.title, testOralLead: o.prompts.join(" "),
@@ -63,7 +64,7 @@ export async function loadExamBundle() {
   const base = all[0];
   return {
     exam: true, code: "A1", head: "le Grand contrôle A1", titleFr: "Grand contrôle de fin de A1", progressKey: EXAM_KEY,
-    goals: [], vocab: [], grammar: [], reading: [], listening: [], exercises: [], expression: base.expression, transv: null,
+    goals: [], vocab: [], grammar: [], reading: [], listening: [], exercises: [], expression: base.expression, transv: null, conj: null,
     testTexts: all.map((b) => b.testTexts[0]), testAudios: all.map((b) => b.testAudios[0]),
     testGrammar: all.flatMap((b) => b.testGrammar.slice(0, 5)), testW: 0, testO: 1, testPool: all.flatMap((b) => b.expression),
     testWriteTitle: "Présente-toi et parle de ta vie", testWriteLead: "Écris 4 phrases : ton nom et ton âge, ta famille, ce que tu aimes, où tu vas aujourd’hui.",

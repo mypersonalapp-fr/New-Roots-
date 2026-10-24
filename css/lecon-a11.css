@@ -1077,3 +1077,14 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .rc-bgrp.rc-tight .rc-slots{ padding:5px !important; margin:2px 0 !important; min-height:0 !important; }
 .rc-bgrp.rc-tight .rc-bank{ gap:4px !important; margin:2px 0 !important; }
 .rc-bgrp .rc-gb{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+/* Conjugaison : onglets Affirmative / Négative / Question */
+.cj-tabs{ display:flex; gap:6px; margin:2px 0 8px; }
+.cj-tab{ flex:1; border:0; border-radius:12px; min-height:42px; padding:6px 4px; font:800 14px var(--font-main); background:rgba(130,140,170,.28); color:var(--ink); cursor:pointer; }
+.cj-tab.on{ background:#EF476F; color:#fff; }
+.cj-cx{ font-weight:600; opacity:.85; margin-left:4px; }
+.lc-main:has(.cj-tabs) .lc-form{ text-transform:none; }
+.lc-main:has(.cj-tabs) .lc-w{ flex-wrap:wrap; row-gap:0; }
+.lc-main:has(.cj-tabs) .cj-fr{ display:block; flex-basis:100%; width:100%; margin:1px 0 0; }
+.lc-main:has(.cj-tabs) .cj-cx{ margin-left:0; }
+.cj-hl{ font-weight:600; font-size:16px; color:#c8680c; margin-left:8px; } :root[data-theme="dark"] .cj-hl{ color:#f3b36a; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cj-hl{ color:#f3b36a; } }

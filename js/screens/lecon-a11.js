@@ -21,6 +21,7 @@ import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261024ax";
 import { plusPages } from "../data/vocab-plus-a1.js?v=20261024ax";
 import { buildPractice, mountPractice } from "./practice.js?v=20261024ax";
 import { createVoice } from "./voice.js?v=20261024ax";
+import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { mountQuiz, quizHtml, vocabItems, gramItems } from "./quiz6.js?v=20261024ax";
 import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261024ax";
 import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261024ax";
@@ -384,7 +385,7 @@ export function renderLesson(root, B, { onExit } = {}) {
     { go: "vocab", t: "Vocabulaire", s: "Mots Illustrés", c: "#F59E0B", img: "vocab", em: "📖", d: "vocab" },
     { go: "games", t: "Jeux", s: "8 Jeux", c: "#8B5CF6", img: "exercises", em: "🎮", d: "games" },
     { go: "grammar", t: "Grammaire", s: "Les Règles", c: "#22A06B", img: "grammar", em: "⚙️", d: "grammar" },
-    { go: "conj", t: "Conjugaison", s: "Les Verbes", c: "#EF476F", em: "🔁", soon: 1 },
+    { go: "conj", t: "Conjugaison", s: "Les Verbes", c: "#EF476F", em: "🔁", d: "conj", need: "conj" },
     { go: "listening", t: "Compréhension Orale", s: "Écouter", c: "#2F80ED", img: "listening", em: "🎧", d: "listening" },
     { go: "reading", t: "Compréhension Écrite", s: "Lire", c: "#0FA3A3", img: "reading", em: "📰", d: "reading" },
     { go: "ewrite", t: "Expression Écrite", s: "Écrire", c: "#5B5BD6", em: "✍️", d: "speaking" },
@@ -413,7 +414,7 @@ export function renderLesson(root, B, { onExit } = {}) {
   function showMenu() {
     screen = "menu";
     const done = prog.done || {};
-    const ok = (m) => (m.need === "dlg" ? !!DLG : m.need === "sit" ? !!SIT : m.need === "transv" ? !!B.transv : true);
+    const ok = (m) => (m.need === "dlg" ? !!DLG : m.need === "sit" ? !!SIT : m.need === "transv" ? !!B.transv : m.need === "conj" ? !!conjList() : true);
     const ALL = MAT.filter((m) => m.go !== "trad" || (B.expression || []).some((x) => x.trad)).concat(EXTRA.filter(ok)); // Traduction : seulement à partir de A1.6
     const tiles = ALL.map((m, i) => {
       const off = m.soon || !ok(m);
@@ -434,6 +435,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       else if (g === "trad") { spkState.tab = "write"; const k = B.expression.findIndex((x) => x.trad); page = Math.max(0, k); showSpeak(); }
       else if (g === "dialogue") { if (DLG) showDialogueList(); else toast("Cette matière arrive bientôt"); }
       else if (g === "write") { if (SIT) showWriteList(); else toast("Cette matière arrive bientôt"); }
+      else if (g === "conj") { page = 0; cjTab = 0; showConj(); }
       else if (g === "city") { city.start(); }
       else if (g === "transversal") { showTransvList(); }
       else if (g === "test") { startTest(); }
@@ -591,6 +593,39 @@ export function renderLesson(root, B, { onExit } = {}) {
     const m = el.querySelector(".lc-main"); m.scrollTop = 0; m.classList.add("lc-q6");
     el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = next;
     mountQuiz(el.querySelector(".q6"), key, build, { speak });
+  }
+  // Conjugaison : 6 verbes nouveaux par leçon (une page par verbe, 3 onglets) puis un test de 6 questions.
+  let cjTab = 0;
+  const conjList = () => B.conj || ((B.code && /^A1\.\d+$/.test(B.code)) ? CONJ_A1[Number(B.code.split(".")[1])] : null) || null;
+  function showConj() {
+    screen = "conj";
+    const L = conjList() || [], total = L.length + 1, lvl = Number(String(B.code || "").split(".")[1]) || 1;
+    if (page >= total) page = total - 1;
+    const exit = showMenu;
+    if (page === L.length) {
+      return quizScreen({ total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
+        build: (miss) => gramItems(conjQuiz(lvl), miss), prev: () => { page--; cjTab = 0; showConj(); },
+        next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
+    }
+    const verb = L[page], c = currentCharacter();
+    const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">Conjugue avec moi !</div><div class="lc-path" aria-hidden="true"><i class="c"></i><u></u><i class=""></i></div></div>`;
+    const TABS = ["Affirmative", "Négative", "Question"];
+    const rows = conjRows(verb, cjTab).map(([a, b, cx, fr, say]) => `<li><span class="lc-w"><b>${esc(a)}</b><span class="cj-hl">${esc(b)}</span><span class="cj-cx">${esc(cx)}</span><small class="cj-fr">${esc(fr)}</small></span>${spk(say)}</li>`).join("");
+    const body = `<section class="lc-card"><h2 class="lc-h2">🔁 To ${esc(verb[0])} : ${esc(verb[1])}</h2>
+      <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${t}</button>`).join("")}</div>
+      <ul class="lc-list lc-vl lc-rules">${rows}</ul></section>`;
+    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
+    frame(HEAD, { cur: page + 1, total }, guide + body, foot);
+    const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = 0;
+    el.querySelector("#lcBack").onclick = exit;
+    el.querySelector("#lcPrev").onclick = () => { if (page === 0) { exit(); return; } page--; cjTab = 0; showConj(); };
+    el.querySelector("#lcNext").onclick = () => { page++; cjTab = 0; showConj(); };
+    el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { cjTab = Number(b.dataset.t); showConj(); }));
+    el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); b.classList.add("lc-spk-on"); setTimeout(() => b.classList.remove("lc-spk-on"), 900); }));
+    fillRows();
+    { const mn2 = el.querySelector(".lc-main"), lis = el.querySelectorAll(".lc-rules li"), ft = el.querySelector(".lc-foot"); // ça déborde (phrases longues) : on resserre les lignes
+      const over = () => mn2 && (mn2.scrollHeight > mn2.clientHeight + 2 || mn2.lastElementChild.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 6);
+      for (const q of [6, 4, 2, 0]) { if (!over()) break; lis.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = q + "px"; }); } }
   }
   let vsub = 0, vsubPage = -1; // sous-page (3 mots + 2 questions) des pages à 6 mots
   function showVocab() {
