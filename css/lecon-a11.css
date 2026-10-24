@@ -1115,3 +1115,5 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-main.bl2-fill>.lc-card:last-of-type .lc-ta.sm{flex:none;min-height:0;width:100%}
 .lc-ta.sm{height:58px;min-height:58px!important;resize:none;padding:8px 10px}
 .lc-ta.sm.md{height:84px;min-height:84px!important}.bl2-qq .q6-spk{font:inherit;font-weight:800;color:inherit;background:none;border:0;padding:0}
+.lc-ta.sm:not(.md){height:46px;min-height:46px!important;padding:6px 10px}
+.lc-card .bl2-qq{margin:8px 0 3px}

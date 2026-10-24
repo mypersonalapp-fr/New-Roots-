@@ -645,7 +645,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   function showBilan() {
     screen = "bilan";
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), nT = TH.length, total = nT + TX.length;
-    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map((t) => (t.c ? t.c.qs : t.ds || t.gs).map(() => "")) };
+    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag, [], t.id === "ec" ? 5 : undefined)), pick: TH.map(() => []), txt: TX.map((t) => (t.c ? t.c.qs : t.ds || t.gs).map(() => "")) };
     const i = bl.step, c = currentCharacter();
     let body = "", ready = false;
     const guide = (t) => `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${t}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
