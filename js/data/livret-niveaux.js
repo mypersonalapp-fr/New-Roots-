@@ -1,7 +1,7 @@
 // The Roots — livret : structure complète niveaux → leçons → matières (jauges à 0 tant qu'aucun examen n'est passé).
-import { A1_LIST } from "./lecons-a1.js?v=20261024ba";
-import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261024ba";
-import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261024ba";
+import { A1_LIST } from "./lecons-a1.js?v=20261024bb";
+import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261024bb";
+import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261024bb";
 export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B1", "Intermédiaire", false], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 const SKN = [["Compréhension écrite", 7.5, "📖"], ["Compréhension orale", 7.5, "🎧"], ["Grammaire", 10, "🧩"], ["Expression écrite", 7.5, "✍️"], ["Expression orale", 7.5, "🎤"]];
