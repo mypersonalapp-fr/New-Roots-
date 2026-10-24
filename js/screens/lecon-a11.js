@@ -23,7 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261024bb";
 import { createVoice } from "./voice.js?v=20261024bb";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
-import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc } from "./quiz6.js?v=20261024bb";
+import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc, setStrict } from "./quiz6.js?v=20261024bb";
 import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261024bb";
 import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261024bb";
 import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261024bb";
@@ -247,7 +247,7 @@ const dlgBubbles = (turns, withSpk) => `<div class="lc-bl lc-bl-full">${turns.ma
 
 /* ---------- rendu ---------- */
 export function renderLesson(root, B, { onExit, start } = {}) {
-  PROGRESS_KEY = B.progressKey;
+  PROGRESS_KEY = B.progressKey; setStrict(/^A2/.test(String(B.code || "")));
   const HEAD = B.head;
   const prog = loadProgress();
   let screen = "intro"; // intro | menu | vocab
@@ -900,6 +900,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     return out;
   };
   const cLvl = {}, noMerge = new Set(), gLvl = {}, qCap = {}, noHint = new Set(), kwMax = {}, exMax = {}, qFirst = {}, tight = new Set(), tight2 = new Set(); // écrans qui ne tiennent pas en un seul : on les redécoupe
+  const typableAct = (q) => !/^(Écoute|Which|Quelle|Choisis)/i.test(q[0]) && !q[1].some((o) => /^(yes|no|oui|non|true|false|vrai|faux|nobody|we don)/i.test(String(o).trim())) && (/___/.test(q[0]) || isVoc(q[0]) || q[1].every((o) => String(o).trim().split(/\s+/).length <= 3));
   function actSteps(id, A) {
     const S = [];
     A.pages.forEach((p, pi) => {
@@ -932,7 +933,8 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       }
       if (p.qs.length) {
         const all = p.qs.map((_, i) => i), wt = hasText && mergeT;
-        const qc = qCap[id + ":" + pi] || (id === "listening" && p.hand >= 6 ? 5 : id === "grammar" || id === "exercises" || (id === "reading" || id === "listening") ? 3 : 2);
+        const qc0 = id === "listening" && p.hand >= 6 ? 5 : id === "grammar" || id === "exercises" || (id === "reading" || id === "listening") ? 3 : 2;
+        const tyR = p.qs.filter(typableAct).length / p.qs.length, qc = qCap[id + ":" + pi] || (id === "grammar" || qc0 > 3 ? qc0 : qc0 + (tyR >= 0.99 ? 2 : tyR >= 0.6 ? 1 : 0)); // réponses à écrire = lignes plus courtes : plus de questions par écran
         const wex = id === "grammar" && (gLvl[id + ":g" + pi] || 0) === 1;
         const qf = id === "exercises" ? qFirst[id + ":" + pi] : undefined;
         const fs = (id === "exercises" || (id === "reading" || id === "listening")) && wt ? (id === "listening" && p.hand >= 6 ? [4, 3, 2][cLvl[id + ":" + pi] || 0] : 2) : 1;
@@ -1053,7 +1055,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
         if (st.t === "gall" && (gLvl[gk] || 0) < 2) { delete exMax[id + ":" + st.pi]; gLvl[gk] = (gLvl[gk] || 0) + 1; showAct(id); return; }
         if (st.t === "qs" && st.withEx) { gLvl[id + ":g" + st.pi] = 2; showAct(id); return; }
         if (id === "exercises" && st.t === "qs" && !st.withText && st.ci === 0 && st.ix.length > 1) { qFirst[id + ":" + st.pi] = st.ix.length - 1; showAct(id); return; }
-        if (st.t === "qs" && !st.withText && st.ix.length > 1) { qCap[id + ":" + st.pi] = (qCap[id + ":" + st.pi] || (id === "grammar" || id === "exercises" || (id === "reading" || id === "listening") ? 3 : 2)) > 2 ? 2 : 1; showAct(id); return; }
+        if (st.t === "qs" && !st.withText && st.ix.length > 1) { qCap[id + ":" + st.pi] = Math.max(1, st.ix.length - 1); showAct(id); return; }
         if (st.withText && id === "listening" && p.hand >= 6 && (cLvl[id + ":" + st.pi] || 0) < 2 && st.ix.length > 2) { cLvl[id + ":" + st.pi] = (cLvl[id + ":" + st.pi] || 0) + 1; showAct(id); return; }
         const k = st.withText ? id + ":t" + st.pi : null;
         if (k && !noMerge.has(k)) { noMerge.add(k); showAct(id); return; }
@@ -1104,21 +1106,20 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       else { firstTry[ftKey] = false; b.classList.add("lc-wrong"); const fb = b.closest(".lc-qb").querySelector(".lc-fb"); fb.className = "lc-fb lc-fb-ko"; fb.textContent = Array.isArray(q[3]) ? "Pas tout à fait — " + xp(q, Number(b.dataset.i)) + " Réessaie." : id === "exercises" ? "Pas tout à fait — " + (q[3] || "") + " Réessaie." : "Pas tout à fait, réessaie."; }
     }));
     // « Écrire d'abord » : pour les questions courtes, l'élève tape sa réponse ; les choix sont derrière « Indice ».
-    const typableAct = (q) => !/^(Écoute|Which|Quelle|Choisis)/i.test(q[0]) && (/___/.test(q[0]) || isVoc(q[0]) || q[1].every((o) => String(o).trim().split(/\s+/).length <= 3));
     el.querySelectorAll(".lc-qb[data-qi]").forEach((box) => {
       const qi = Number(box.dataset.qi), q = p.qs[qi];
       if (!q || (okQ[key] || {})[qi] || !typableAct(q)) return;
       const ch = box.querySelector(".lc-choices"), fb = box.querySelector(".lc-fb"), w = document.createElement("div");
       w.className = "q6-w"; w.innerHTML = `<input class="lc-ta q6-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…"><button type="button" class="q6-okb">OK</button><button type="button" class="q6-hintb">💡 Indice</button>`;
-      ch.hidden = true; ch.before(w);
+      ch.hidden = true; ch.style.setProperty("display", "none", "important"); ch.before(w);
       const inp = w.querySelector("input");
       const submit = () => {
         const v = inp.value.trim(); if (!v) return;
-        if (same(v, q[1][q[2]], isVoc(q[0]))) { ch.hidden = false; w.remove(); ch.querySelector(`.lc-choice[data-i="${q[2]}"]`).click(); }
+        if (same(v, q[1][q[2]], isVoc(q[0]))) { ch.hidden = false; ch.style.removeProperty("display"); w.remove(); ch.querySelector(`.lc-choice[data-i="${q[2]}"]`).click(); }
         else { firstTry[`${key}:${qi}`] = false; fb.className = "lc-fb lc-fb-ko"; fb.textContent = "Pas tout à fait — 💡 " + maskHint({ opts: q[1], a: q[2], expl: xp(q, q[2]) }) + " Réessaie."; }
       };
       w.querySelector(".q6-okb").onclick = submit; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
-      w.querySelector(".q6-hintb").onclick = (e) => { ch.hidden = false; e.currentTarget.remove(); };
+      w.querySelector(".q6-hintb").onclick = (e) => { ch.hidden = false; ch.style.removeProperty("display"); e.currentTarget.remove(); };
     });
     const tr = el.querySelector("#lcTr");
     if (tr) tr.onclick = () => { const t = el.querySelector("#lcTrText"); t.hidden = !t.hidden; tr.setAttribute("aria-expanded", String(!t.hidden)); };

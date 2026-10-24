@@ -37,7 +37,10 @@ export function quizHtml() { return `<section class="lc-card q6"><div class="q6-
 const nrm = (x) => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\([^)]*\)/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
 const art = (x) => nrm(x).replace(/^(le|la|les|l|un|une|des|du|the|a|an|to) /, "");
 const lev1 = (a, b) => { if (a === b) return true; if (Math.abs(a.length - b.length) > 1 || Math.min(a.length, b.length) < 5) return false; let i = 0; while (i < a.length && a[i] === b[i]) i++; if (a.length === b.length) return a.slice(i + 1) === b.slice(i + 1); return a.length > b.length ? a.slice(i + 1) === b.slice(i) : b.slice(i + 1) === a.slice(i); };
-const same = (t, o, voc) => nrm(t) === nrm(o) || (voc && lev1(art(t), art(o))); // faute de frappe tolérée seulement en vocabulaire (jamais en grammaire : -s, -ing comptent)
+let strict = false; // A2 : zéro tolérance (orthographe, accents) ; A1 : seule une faute de frappe d’une lettre est tolérée, et seulement en vocabulaire
+export const setStrict = (v) => { strict = !!v; };
+const nrmS = (x) => String(x || "").toLowerCase().normalize("NFC").replace(/\([^)]*\)/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
+const same = (t, o, voc) => (strict ? nrmS(t) === nrmS(o) : nrm(t) === nrm(o) || (voc && lev1(art(t), art(o)))); // faute de frappe tolérée seulement en vocabulaire (jamais en grammaire : -s, -ing comptent)
 export const isVoc = (q) => /veut dire|en anglais|means/i.test(q);
 export { same, maskHint };
 const typable = (it) => !/^Écoute/.test(it.q) && (/___/.test(it.q) || /veut dire|en anglais/.test(it.q));
