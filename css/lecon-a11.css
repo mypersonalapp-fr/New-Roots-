@@ -1088,3 +1088,25 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-main:has(.cj-tabs) .cj-cx{ margin-left:0; }
 .cj-hl{ font-weight:600; font-size:16px; color:#c8680c; margin-left:8px; } :root[data-theme="dark"] .cj-hl{ color:#f3b36a; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cj-hl{ color:#f3b36a; } }
+
+/* A2.0 Bilan et A2.01 Remise à niveau */
+.bl2-g{width:84px;height:10px;border-radius:99px;background:rgba(128,140,150,.3);overflow:visible;position:relative;flex:none}
+.bl2-g i{display:block;height:100%;border-radius:99px}
+.bl2-l{position:absolute;top:-3px;bottom:-3px;left:70%;width:2px;background:var(--ink,#1b1d22)}
+.bl2-r{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:var(--ink,#1b1d22)}
+.bl2-r b{flex:1;font-weight:700;min-width:0}
+.bl2-p{font-weight:800;min-width:40px;text-align:right}
+.bl2-t{font-weight:800;font-size:12px;padding:3px 8px;border-radius:99px;white-space:nowrap;flex:none}
+.bl2-t.ok{background:#1f7a45;color:#fff}.bl2-t.ko{background:#c8382a;color:#fff}
+.bl2-big{font-size:34px;font-weight:800;text-align:center;color:var(--ink,#1b1d22);line-height:1.1}
+.bl2-c{font-size:12.5px;text-align:center;color:var(--ink-soft,#5b6068);margin:4px 0 8px}
+.bl2-step{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:12px;background:rgba(128,140,150,.16);margin-top:8px;font-size:13px;color:var(--ink,#1b1d22)}
+.bl2-step span{font-size:20px}
+.bl2-btn{display:block;width:100%;border:0;border-radius:14px;padding:12px;font:inherit;font-weight:800;background:#F59E0B;color:#1b1d22;margin-top:10px;cursor:pointer}
+.bl2-btn.s{background:rgba(128,140,150,.25);color:var(--ink,#1b1d22)}
+.bl2-rule li{font-size:15px;line-height:1.45;padding:8px 0}
+/* Bilan : la dernière carte remplit la page (pas de vide avant le bouton) */
+.lc-main.bl2-fill{display:flex;flex-direction:column}
+.lc-main.bl2-fill>.lc-card:last-of-type{flex:1 1 auto;display:flex;flex-direction:column}
+.lc-main.bl2-fill>.lc-card:last-of-type .lc-ta{flex:1 1 auto;min-height:110px}
+.lc-main.bl2-fill>.lc-card:last-of-type .q6-list{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-around}

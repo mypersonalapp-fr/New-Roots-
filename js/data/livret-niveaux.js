@@ -22,7 +22,9 @@ export function lessonSheet(level, L, entry = {}) {
   if (level === "A2" && L.n === 0) { // Passerelle : pas de contrôle ; chaque matière est « faite » ou non, la conjugaison reste notée à part
     const dn = p.done || {}, M = [["Vocabulaire", "📖", "vocab"], ["Grammaire", "🧩", "grammar"], ["Conversation", "💬", "dialogue"], ["Compréhension orale", "🎧", "listening"], ["Compréhension écrite", "📖", "reading"], ["Expressions écrite et orale", "✍️", "speaking"], ["Dictée", "🔤", "write"]];
     const rows = M.map(([name, e, k]) => ({ name, e, has: !!(dn[k] || (k === "write" && p.dict)), pct: dn[k] || (k === "write" && p.dict) ? 100 : 0, note: dn[k] || (k === "write" && p.dict) ? "Fait ✓" : "", ent: null, gain: null }));
-    const avg = Math.round((rows.filter((r) => r.has).length / rows.length) * 100), c0 = p.conj || null, cN = c0 ? Math.round((c0.best / c0.tot) * 100) / 10 : 0, b0 = c0 ? Math.round((cN / 10) * BONUS_MAX * 10) / 10 : 0, n20 = Math.round(avg / 5 * 10) / 10;
+    const avg = Math.round((rows.filter((r) => r.has).length / rows.length) * 100);
+    if (p.bilan) rows.push({ name: "Bilan (sans note)", e: "🧭", has: true, pct: p.bilan.pct, note: p.bilan.pct + " %", ent: null, gain: null });
+    const c0 = p.conj || null, cN = c0 ? Math.round((c0.best / c0.tot) * 100) / 10 : 0, b0 = c0 ? Math.round((cN / 10) * BONUS_MAX * 10) / 10 : 0, n20 = Math.round(avg / 5 * 10) / 10;
     return { rows, gain: null, avg, note20: n20, conj: { done: !!c0, note: cN, best: c0 ? c0.best : 0, tot: c0 ? c0.tot : 6, bonus: b0 }, total: Math.min(20, Math.round((n20 + b0) * 10) / 10), any: avg > 0 };
   }
   const h = (p.testHist && p.testHist.length) ? p.testHist : [];

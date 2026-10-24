@@ -22,6 +22,7 @@ import { plusPages } from "../data/vocab-plus-a1.js?v=20261024ba";
 import { buildPractice, mountPractice } from "./practice.js?v=20261024ba";
 import { createVoice } from "./voice.js?v=20261024ba";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
+import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
 import { mountQuiz, quizHtml, vocabItems, gramItems } from "./quiz6.js?v=20261024ba";
 import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261024ba";
 import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261024ba";
@@ -245,7 +246,7 @@ const dlgTurns = (t) => { const a = String(t || "").split(/\s+—\s+/).map((x) =
 const dlgBubbles = (turns, withSpk) => `<div class="lc-bl lc-bl-full">${turns.map((x, i) => `<div class="lc-bb ${i % 2 ? "me" : "npc"}"><span class="lc-bt">${esc(x)}</span>${withSpk ? spk(x) : ""}</div>`).join("")}</div>`;
 
 /* ---------- rendu ---------- */
-export function renderLesson(root, B, { onExit } = {}) {
+export function renderLesson(root, B, { onExit, start } = {}) {
   PROGRESS_KEY = B.progressKey;
   const HEAD = B.head;
   const prog = loadProgress();
@@ -397,6 +398,8 @@ export function renderLesson(root, B, { onExit } = {}) {
   ];
   const EXTRA = [
     { go: "exercises", t: "Exercices", s: "Corrections Et Rattrapage", c: "#16A34A", img: "exercises", em: "🧩", d: "exercises" },
+    { go: "bilan", t: "Bilan", s: "Où J’en Suis · Sans Note", c: "#0EA5E9", em: "🧭", d: "bilan", need: "bilan" },
+    { go: "remise", t: "A2.01", s: "Remise À Niveau", c: "#F59E0B", em: "🔧", d: "remise", need: "remise" },
     { go: "city", t: "Roots City", s: "6 Missions", c: "#0EA5E9", em: "🏙️", d: "city" },
     { go: "transversal", t: "Transversale", s: "Les Bases", c: "#84A016", img: "transversal", em: "🌱", d: "transversal", need: "transv" },
   ];
@@ -414,7 +417,7 @@ export function renderLesson(root, B, { onExit } = {}) {
   function showMenu() {
     screen = "menu";
     const done = prog.done || {};
-    const ok = (m) => (m.need === "dlg" ? !!DLG : m.need === "sit" ? !!SIT : m.need === "transv" ? !!B.transv : m.need === "conj" ? !!conjList() : true);
+    const ok = (m) => (m.need === "dlg" ? !!DLG : m.need === "sit" ? !!SIT : m.need === "transv" ? !!B.transv : m.need === "conj" ? !!conjList() : m.need === "bilan" ? !!B.bilan : m.need === "remise" ? !!(B.bilan && prog.bilan && prog.bilan.pct < BILAN_PASS) : true);
     const inMenu = (m) => !B.menu || B.menu.includes(m.go); // parcours réduit (ex. A2.0 passerelle) : seulement les matières listées
     const ALL = MAT.filter((m) => inMenu(m) && (m.go !== "trad" || (B.expression || []).some((x) => x.trad))).concat(EXTRA.filter((m) => ok(m) && inMenu(m))); // Traduction : seulement à partir de A1.6
     const tiles = ALL.map((m, i) => {
@@ -437,6 +440,8 @@ export function renderLesson(root, B, { onExit } = {}) {
       else if (g === "dialogue") { if (DLG) showDialogueList(); else toast("Cette matière arrive bientôt"); }
       else if (g === "write") { if (SIT) showWriteList(); else toast("Cette matière arrive bientôt"); }
       else if (g === "conj") { page = 0; cjTab = 0; showConj(); }
+      else if (g === "bilan") { bl = null; showBilan(); }
+      else if (g === "remise") { showRemise(); }
       else if (g === "city") { city.start(); }
       else if (g === "transversal") { showTransvList(); }
       else if (g === "test") { startTest(); }
@@ -628,6 +633,103 @@ export function renderLesson(root, B, { onExit } = {}) {
     { const mn2 = el.querySelector(".lc-main"), lis = el.querySelectorAll(".lc-rules li"), ft = el.querySelector(".lc-foot"); // ça déborde (phrases longues) : on resserre les lignes
       const over = () => mn2 && (mn2.scrollHeight > mn2.clientHeight + 2 || mn2.lastElementChild.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 6);
       for (const q of [6, 4, 2, 0]) { if (!over()) break; lis.forEach((li) => { li.style.paddingTop = li.style.paddingBottom = q + "px"; }); } }
+  }
+
+  /* ----- A2.0 : Bilan (non noté) puis A2.01 « Remise à niveau » ----- */
+  let bl = null, rstep = 0, rtheme = null;
+  const BL_STEPS = () => THEMES.filter((t) => t.diag).length + DICTEES.length + GUIDED.length;
+  const blColor = (p) => (p >= 70 ? "#2fa55b" : p >= 50 ? "#caa21b" : "#c8382a");
+  // Pages du bilan après les QCM : réponses écrites après une écoute ou une lecture, dictée, phrases guidées.
+  const bilanTx = () => [...COMP.map((c) => ({ k: c.kind, c })), ...DICTEES.map((d) => ({ k: "dic", d })), ...GUIDED.map((g) => ({ k: "gui", g }))];
+  function showBilan() {
+    screen = "bilan";
+    const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), nT = TH.length, total = nT + TX.length;
+    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map(() => "") };
+    const i = bl.step, c = currentCharacter();
+    let body = "", ready = false;
+    const guide = (t) => `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${t}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
+    const area = (v, ph) => `<textarea class="lc-ta" id="blIn" rows="8" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="${ph}">${esc(v)}</textarea>`;
+    if (i < nT) {
+      const th = TH[i], its = bl.items[i];
+      ready = its.every((_, q) => bl.pick[i][q] !== undefined);
+      body = guide("Bilan : pas de note !") + `<section class="lc-card q6"><div class="q6-top"><b>${th.icon} ${esc(th.label)}</b><span>${i + 1}/${nT}</span></div><p class="q6-help">Touche 1 réponse par question.</p><div class="q6-list">${its.map((it, q) => `<div class="q6-q"><p class="q6-p"><span>${q + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p><div class="q6-o">${it.opts.map((o, k) => `<button type="button" class="lc-choice q6-c${bl.pick[i][q] === k ? " lc-sel" : ""}" data-q="${q}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>`).join("")}</div></section>`;
+    } else {
+      const t = TX[i - nT], v = bl.txt[i - nT]; ready = v.trim().length > 0;
+      if (t.k === "listen") body = guide("Écoute, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">🎧 Écoute et réponds</h2><p class="lc-lead">Écoute, puis réponds en anglais par une phrase complète.</p><button type="button" class="lc-cta" data-say="${esc(t.c.say)}" style="margin:6px 0">🔊 Écouter</button><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">${esc(t.c.q)}</p>${area(v, "Écris ta réponse ici…")}</section>`;
+      else if (t.k === "read") body = guide("Lis, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">📖 Lis et réponds</h2><p class="lc-text" style="font-size:16px;line-height:1.5;margin:6px 0">${esc(t.c.text)}</p><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">${esc(t.c.q)}</p>${area(v, "Réponds par une phrase complète…")}</section>`;
+      else if (t.k === "dic") body = guide("Écris ce que tu entends !") + `<section class="lc-card"><h2 class="lc-h2">✍️ Dictée</h2><p class="lc-lead">Écoute, puis écris la phrase en anglais, avec la ponctuation.</p><button type="button" class="lc-cta" data-say="${esc(t.d.say)}" style="margin:6px 0">🔊 Écouter la phrase</button>${area(v, "Écris la phrase ici…")}</section>`;
+      else body = guide("Écris la phrase en anglais !") + `<section class="lc-card"><h2 class="lc-h2">🧱 Phrase guidée</h2><p class="lc-lead">Traduis en anglais, avec un sujet, un verbe, un complément et la ponctuation :</p><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">« ${esc(t.g.fr)} »</p>${area(v, "Écris ta phrase ici…")}</section>`;
+    }
+    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" ${ready ? "" : "disabled"}>${i === total - 1 ? "Voir mon bilan ✓" : "Suivant →"}</button></footer>`;
+    page = i; frame(HEAD, { cur: i + 1, total }, body, foot);
+    const mn = el.querySelector(".lc-main"); if (mn) { mn.scrollTop = 0; mn.classList.add("lc-q6", "bl2-fill"); }
+    el.querySelector("#lcBack").onclick = showMenu;
+    el.querySelector("#lcPrev").onclick = () => { if (i === 0) showMenu(); else { bl.step--; showBilan(); } };
+    el.querySelector("#lcNext").onclick = () => { if (i === total - 1) finishBilan(); else { bl.step++; showBilan(); } };
+    el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); }));
+    el.querySelectorAll(".q6-c").forEach((b) => b.addEventListener("click", () => { bl.pick[i][+b.dataset.q] = +b.dataset.k; showBilan(); }));
+    const ta = el.querySelector("#blIn");
+    if (ta) ta.addEventListener("input", () => { bl.txt[i - nT] = ta.value; const nx = el.querySelector("#lcNext"); if (nx) nx.disabled = ta.value.trim().length === 0; });
+  }
+  function finishBilan() {
+    const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), rows = [], crit = { orth: [0, 0], punct: [0, 0], ordre: [0, 0], accord: [0, 0] }, cont = { listen: [0, 0], read: [0, 0] };
+    TH.forEach((t, i) => { const ok = bl.items[i].filter((it, q) => bl.pick[i][q] === it.a).length; rows.push({ id: t.id, label: t.label, icon: t.icon, ok, tot: bl.items[i].length }); });
+    TX.forEach((t, j) => {
+      const r = t.k === "dic" ? checkDictee(bl.txt[j], t.d) : checkGuided(bl.txt[j], t.k === "gui" ? t.g : t.c);
+      WRITE_CRITERIA.forEach(([k]) => { crit[k][1]++; if (r[k]) crit[k][0]++; });
+      if (cont[t.k]) { cont[t.k][1]++; if (r.contenu) cont[t.k][0]++; }
+    });
+    const ec = rows.find((r) => r.id === "ec"); if (ec) { ec.ok += cont.listen[0]; ec.tot += cont.listen[1]; }
+    const lt = themeById("lect"); rows.push({ id: "lect", label: lt.label, icon: lt.icon, ok: cont.read[0], tot: cont.read[1] });
+    WRITE_CRITERIA.forEach(([k, label]) => rows.push({ id: k, label, icon: themeById(k).icon, ok: crit[k][0], tot: crit[k][1] }));
+    rows.forEach((r) => { r.pct = Math.round((r.ok / r.tot) * 100); });
+    const pct = Math.round(rows.reduce((a, r) => a + r.pct, 0) / rows.length), weak = rows.filter((r) => r.pct < BILAN_PASS).map((r) => r.id);
+    prog.bilan = { pct, rows: rows.map(({ id, label, icon, pct: p }) => ({ id, label, icon, pct: p })), weak, at: Date.now() };
+    if (pct >= BILAN_PASS) prog.remise = Object.assign({}, prog.remise, { all: true });
+    prog.done = Object.assign({}, prog.done, { bilan: true }); saveProgress(prog);
+    showBilanResult();
+  }
+  function showBilanResult() {
+    screen = "bilanres";
+    const b = prog.bilan; if (!b) { showMenu(); return; }
+    const need = b.pct < BILAN_PASS, weakN = b.rows.filter((r) => r.pct < BILAN_PASS).length;
+    const row = (r) => `<div class="bl2-r"><b>${r.icon} ${esc(r.label)}</b><div class="bl2-g"><i style="width:${r.pct}%;background:${blColor(r.pct)}"></i><span class="bl2-l"></span></div><span class="bl2-p">${r.pct} %</span><span class="bl2-t ${r.pct >= BILAN_PASS ? "ok" : "ko"}">${r.pct >= BILAN_PASS ? "OK" : "À revoir"}</span></div>`;
+    const body = `<section class="lc-card bl2"><h2 class="lc-h2">🧭 Bilan A2.0</h2><div class="bl2-big">${b.pct} %</div><div class="bl2-c">Pas de note : ce bilan repère les points à retravailler. Seuil pour continuer : ${BILAN_PASS} %.</div>${b.rows.map(row).join("")}
+      <div class="bl2-step"><span>${need ? "➡️" : "✅"}</span><div>${need ? `<b>Il te manque ${weakN} thème${weakN > 1 ? "s" : ""}.</b> Une étape en plus s’ouvre : <b>A2.01 Remise à niveau</b>, puis A2.1.` : "Tu passes directement à <b>A2.1</b>."}</div></div>
+      ${need ? `<button type="button" class="bl2-btn" id="blGo">Ouvrir A2.01 · Remise à niveau</button>` : ""}<button type="button" class="bl2-btn ${need ? "s" : ""}" id="blBack">${need ? "Retour au menu" : "Retour au menu de la leçon"}</button></section>`;
+    frame(HEAD, null, body);
+    el.querySelector("#lcBack").onclick = showMenu;
+    const g = el.querySelector("#blGo"); if (g) g.onclick = showRemise;
+    el.querySelector("#blBack").onclick = showMenu;
+  }
+  function showRemise() {
+    screen = "remise";
+    const b = prog.bilan; if (!b || b.pct >= BILAN_PASS) { showMenu(); return; }
+    const done = (prog.remise && prog.remise.done) || {}, weak = b.rows.filter((r) => r.pct < BILAN_PASS), next = weak.find((r) => !done[r.id]);
+    const list = weak.map((r, n) => `<div class="bl2-r"><b>${n + 1} · ${r.icon} ${esc(r.label)}</b><span class="bl2-t ${done[r.id] ? "ok" : "ko"}">${done[r.id] ? "Validé ✓" : "À faire"}</span></div>`).join("");
+    const body = `<section class="lc-card bl2"><h2 class="lc-h2">🔧 A2.01 · Remise à niveau</h2><div class="bl2-c" style="margin-top:0">Seulement les thèmes à revoir. Quand tout est refait, A2.1 s’ouvre.</div>${list}
+      ${next ? `<div class="bl2-step"><span>📘</span><div>Revoir la règle, expliquée simplement</div></div><div class="bl2-step"><span>✏️</span><div>Exercices neufs</div></div><div class="bl2-step"><span>🏁</span><div>Mini-test : 4 bonnes réponses sur 6</div></div><button type="button" class="bl2-btn" id="rmGo">Commencer : ${esc(next.label)}</button>`
+      : `<div class="bl2-step"><span>✅</span><div><b>Remise à niveau terminée.</b> A2.1 est ouvert.</div></div>`}<button type="button" class="bl2-btn s" id="rmBack">Retour au menu</button></section>`;
+    frame(HEAD, null, body);
+    el.querySelector("#lcBack").onclick = showMenu; el.querySelector("#rmBack").onclick = showMenu;
+    const go = el.querySelector("#rmGo"); if (go) go.onclick = () => { rtheme = next.id; rstep = 0; showRemiseStep(); };
+  }
+  function showRemiseStep() {
+    const th = themeById(rtheme), c = currentCharacter(), key = "rm:" + rtheme;
+    page = rstep;
+    if (rstep === 0) {
+      const body = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">On revoit ça ensemble !</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div><section class="lc-card"><h2 class="lc-h2">📘 ${esc(th.label)}</h2><ul class="lc-list lc-rules bl2-rule">${th.rule.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>`;
+      const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">Exercices ✏️</button></footer>`;
+      frame(HEAD, { cur: 1, total: 3 }, body, foot);
+      el.querySelector("#lcBack").onclick = showRemise; el.querySelector("#lcPrev").onclick = showRemise; el.querySelector("#lcNext").onclick = () => { rstep = 1; showRemiseStep(); };
+      return;
+    }
+    const ex = rstep === 1;
+    quizScreen({ total: 3, key: key + (ex ? ":ex" : ":mini"), bubble: ex ? "Exercices !" : "Mini-test !", btn: ex ? "Mini-test 🏁" : "Terminer ✓", back: showRemise,
+      build: (miss) => mkItems(ex ? th.ex : th.mini, miss, 6), prev: () => { rstep--; showRemiseStep(); },
+      next: () => { if (ex) { rstep = 2; showRemiseStep(); return; }
+        const rm = Object.assign({}, prog.remise), dn = Object.assign({}, rm.done, { [rtheme]: true }), weak = (prog.bilan.rows || []).filter((r) => r.pct < BILAN_PASS);
+        prog.remise = Object.assign(rm, { done: dn, all: weak.every((r) => dn[r.id]) }); saveProgress(prog); showRemise(); } });
   }
   let vsub = 0, vsubPage = -1; // sous-page (3 mots + 2 questions) des pages à 6 mots
   function showVocab() {
@@ -1700,7 +1802,7 @@ export function renderLesson(root, B, { onExit } = {}) {
   }
   const c0 = () => currentCharacter();
 
-  if (B.exam) startTest(); else showIntro();
+  if (B.exam) startTest(); else if (start === "remise" && B.bilan) showRemise(); else showIntro();
 }
 
 /* ---------- lot de données de la leçon A1.1 (les autres leçons viennent de js/data/lecons-a1.js) ---------- */

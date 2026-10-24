@@ -28,7 +28,7 @@ import { plantSvg } from "./plant.js?v=20261024ba";
 import { BLOCAGES_ES, BLOCAGES_ES_TITLE, blocageHref, blocagesDone } from "../data/atelier-es-blocages.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
 import { currentCharacter } from "./lecon-a11.js?v=20261024ba";
-import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2 } from "../data/lecons-a2.js?v=20261024ba";
+import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2 } from "../data/lecons-a2.js?v=20261024ba";
 import { runRattrapage } from "./rattrapage.js?v=20261024ba";
 import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261024ba";
 import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261024ba";
@@ -491,14 +491,16 @@ export function renderMesCours(container, shellRoot) {
       const built = A2_LIST.filter((L) => A2_BUILT.includes(L.n));
       const rows = built.map((L) => {
         const st = lessonStatusA2(L.n), open = UNLOCK_ALL_PREVIEW || (L.n === 0 ? a1Done : lessonStatusA2(L.n - 1).passed);
+        const bl = L.n === 0 ? bilanA2() : null;
+        const remRow = bl && bl.need ? `<button class="lt-opt" data-a2="01" style="width:100%;text-align:left;display:flex;align-items:center;gap:8px"><span style="flex-grow:1"><strong>A2.01</strong> — Remise à niveau<span style="display:block;font-size:11.5px;color:var(--ink-soft);margin-top:2px">Revoir les thèmes du bilan (${bl.pct} %)</span></span><span aria-hidden="true">${bl.remiseDone ? "✓" : "›"}</span></button>` : "";
         return `<button class="lt-opt" data-a2="${L.n}" ${open ? "" : "disabled"} style="width:100%;text-align:left;display:flex;align-items:center;gap:8px;${open ? "" : "opacity:.55"}">
           <span style="flex-grow:1"><strong>${L.code}</strong> — ${L.titleFr}<span style="display:block;font-size:11.5px;color:var(--ink-soft);margin-top:2px">${L.titleEn}${st.score && !/^0\//.test(String(st.score)) ? ` · test ${st.score}` : ""}</span></span>
-          <span aria-hidden="true">${st.passed ? "✓" : open ? "›" : "🔒"}</span></button>`;
+          <span aria-hidden="true">${st.passed ? "✓" : open ? "›" : "🔒"}</span></button>${remRow}`;
       }).join("");
       return `<div class="dash-box"><h3>📗 Mon parcours A2</h3><div class="card"><div style="font-size:12px;color:var(--ink-soft)">${built.filter((L) => lessonStatusA2(L.n).passed).length}/${built.length} leçons validées · A2.5 à A2.12 : bientôt${UNLOCK_ALL_PREVIEW ? " · mode vérification : tout est ouvert" : ""}</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">${rows}</div></div></div>`;
     };
-    const openA2 = async (n) => {
-      try { const B = await loadBundleA2(n); renderLesson(shellRoot, B, { onExit: exitToCourses }); }
+    const openA2 = async (n, start) => {
+      try { const B = await loadBundleA2(n); renderLesson(shellRoot, B, { onExit: exitToCourses, start }); }
       catch (e) { console.error(e); alert("Cette leçon n’a pas pu s’ouvrir."); }
     };
     const openA1 = async (n) => {
@@ -533,7 +535,7 @@ export function renderMesCours(container, shellRoot) {
       container.querySelector("#mcBack").addEventListener("click", () => { pathLevel = null; paint(); });
       const exB2 = container.querySelector("#mcExam");
       if (exB2) exB2.addEventListener("click", async () => { try { renderLesson(shellRoot, await loadExamBundle(), { onExit: exitToCourses }); } catch (e) { console.error(e); alert("Le contrôle n’a pas pu s’ouvrir."); } });
-      container.querySelectorAll("[data-a2]").forEach((b) => b.addEventListener("click", () => openA2(Number(b.dataset.a2))));
+      container.querySelectorAll("[data-a2]").forEach((b) => b.addEventListener("click", () => (b.dataset.a2 === "01" ? openA2(0, "remise") : openA2(Number(b.dataset.a2)))));
       container.querySelectorAll("[data-a1]").forEach((b) => b.addEventListener("click", () => openA1(Number(b.dataset.a1))));
       return;
     }

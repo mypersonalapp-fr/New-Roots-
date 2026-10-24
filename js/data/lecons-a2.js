@@ -16,17 +16,18 @@ const KEYS = (n) => `the_roots_a2${n}_lesson_v1`;
 
 export const A2_LIST = [{ n: 0, code: "A2.0", titleEn: "Bridge A1 to A2", titleFr: "Passerelle A1 → A2", key: KEYS(0), built: true }, ...A2_EN_PALIERS.slice(0, 12).map((p, i) => ({ n: i + 1, code: p.code, titleEn: p.title, titleFr: A2_TITLES_FR[i], key: KEYS(i + 1), built: A2_BUILT.includes(i + 1) }))];
 
+export function bilanA2() { try { const p = JSON.parse(localStorage.getItem(KEYS(0)) || "{}"); return p.bilan ? { pct: p.bilan.pct, need: p.bilan.pct < 70, remiseDone: !!(p.remise && p.remise.all) } : null; } catch (e) { return null; } }
 export function lessonStatusA2(n) {
   try {
     const p = JSON.parse(localStorage.getItem(KEYS(n)) || "{}");
     const dn = p.done || {};
-    return { started: Object.keys(dn).length > 0 || !!p.scores, passed: n === 0 ? A20_DONE.every((k) => dn[k] || (k === "write" && p.dict)) : !!dn.test, score: (p.scores || {}).test || null };
+    return { started: Object.keys(dn).length > 0 || !!p.scores, passed: n === 0 ? (A20_DONE.every((k) => dn[k] || (k === "write" && p.dict)) && (!p.bilan || p.bilan.pct >= 70 || !!(p.remise && p.remise.all))) : !!dn.test, score: (p.scores || {}).test || null };
   } catch (e) { return { started: false, passed: false, score: null }; }
 }
 
 // A2.0 « Passerelle » : petit parcours (pas de Roots City, Exercices, Jeux, ni Contrôle). Il est validé quand toutes ces matières sont faites.
-export const A20_MENU = ["vocab", "grammar", "dialogue", "trad", "listening", "reading", "ewrite", "eoral", "write", "conj"];
-const A20_DONE = ["vocab", "grammar", "dialogue", "listening", "reading", "speaking", "write", "conj"];
+export const A20_MENU = ["vocab", "grammar", "dialogue", "trad", "listening", "reading", "ewrite", "eoral", "write", "conj", "bilan", "remise"];
+const A20_DONE = ["vocab", "grammar", "dialogue", "listening", "reading", "speaking", "write", "conj", "bilan"];
 const V = "20261024ba";
 export async function loadBundleA2(n) {
   if (!A2_BUILT.includes(n)) throw new Error("A2." + n + " pas encore construit");
@@ -39,7 +40,7 @@ export async function loadBundleA2(n) {
     goals: shortGoals(base),
     vocab, grammar: m[`GRAMMAR_${s}`], grammarSub: "Les règles de la leçon, avec des exemples.",
     reading: m[`READING_${s}`], listening: m[`LISTENING_${s}`], exercises: m[`EXERCISES_${s}`], expression: exprs, transv: null, conj: CONJ_A2[n] || null,
-    menu: n === 0 ? A20_MENU : null,
+    menu: n === 0 ? A20_MENU : null, bilan: n === 0,
     testTexts: m[`TEST_TEXTS_${s}`], testAudios: m[`TEST_AUDIOS_${s}`], testGrammar: m[`TEST_GRAMMAR_${s}`], testW: 0, testO: exprs0[1] ? 1 : 0,
     testWriteTitle: w.title, testWriteLead: `Écris 4 phrases : ${w.prompts.join(" ")}`,
     testOralTitle: o.title, testOralLead: o.prompts.join(" "),
