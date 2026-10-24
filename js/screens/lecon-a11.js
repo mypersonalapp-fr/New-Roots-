@@ -23,6 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261024bb";
 import { createVoice } from "./voice.js?v=20261024bb";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
+import { XQ } from "../data/a1-extra-q.js?v=20261024bb";
 import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc, setStrict } from "./quiz6.js?v=20261024bb";
 import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261024bb";
 import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261024bb";
@@ -247,6 +248,7 @@ const dlgBubbles = (turns, withSpk) => `<div class="lc-bl lc-bl-full">${turns.ma
 
 /* ---------- rendu ---------- */
 export function renderLesson(root, B, { onExit, start } = {}) {
+  if (!B._xq) { B._xq = 1; const xn = /^A1\.(\d+)$/.exec(String(B.code || "")), xs = xn && XQ[Number(xn[1])]; if (xs) [["reading", "r"], ["listening", "l"]].forEach(([k, c]) => (B[k] || []).forEach((pg, i) => { const ex = xs[c] && xs[c][i]; if (ex && pg.qs) pg.qs = [...pg.qs, ...ex]; })); } // plus de questions par texte
   PROGRESS_KEY = B.progressKey; setStrict(/^A2/.test(String(B.code || "")));
   const HEAD = B.head;
   const prog = loadProgress();
