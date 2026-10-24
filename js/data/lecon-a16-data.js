@@ -190,6 +190,7 @@ export const DATA_A16 = {
     { prompt: "Demande : « Puis-je avoir un café ? »", answer: ["Can", "I", "have", "a", "coffee", "?"], bank: ["have", "coffee", "Can", "I", "a", "?"] },
     { prompt: "Dis : « Je n'ai pas de lait. »", answer: ["I", "don't", "have", "any", "milk", "."], bank: ["milk", "any", "I", "don't", "have", "."] },
     { prompt: "Dis : « Une table pour deux. »", answer: ["A", "table", "for", "two", "."], bank: ["for", "table", "A", "two", "."] },
+    { prompt: "Demande : « L'addition, s'il vous plaît. »", answer: ["Can", "I", "have", "the", "bill", ",", "please", "?"], bank: [",", "please", "?", "the", "have", "I", "bill", "Can"] },
   ],
   m4: [
     pick("I have ___ bread.", "Word", "some", ["some", "any", "an"]),

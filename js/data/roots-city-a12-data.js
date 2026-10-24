@@ -35,6 +35,7 @@ const M3 = [
   { prompt: "Demande : « Combien de frères as-tu ? »", answer: ["How", "many", "brothers", "do", "you", "have", "?"], bank: ["do", "How", "have", "brothers", "?", "many", "you"] },
   { prompt: "Dis : « Mon père est médecin. »", answer: ["My", "father", "is", "a", "doctor", "."], bank: ["doctor", "is", "My", "a", ".", "father"] },
   { prompt: "Dis : « C’est la voiture de Tom. »", answer: ["It", "is", "Tom’s", "car", "."], bank: ["car", "Tom’s", "is", "It", "."] },
+  { prompt: "Présente ton frère.", answer: ["This", "is", "my", "brother", "."], bank: ["my", "brother", "is", ".", "This"] },
 ];
 
 const JOB_Q = [

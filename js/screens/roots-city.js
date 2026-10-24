@@ -42,6 +42,7 @@ const M3 = [
   { prompt: "Demande son prénom.", answer: ["What", "is", "your", "name", "?"], bank: ["name", "is", "are", "What", "your", "?"] },
   { prompt: "Demande son âge.", answer: ["How", "old", "are", "you", "?"], bank: ["are", "How", "you", "?", "old"] },
   { prompt: "Réponds : « J’ai douze ans. »", answer: ["I'm", "twelve", "years", "old", "."], bank: ["old", "I'm", ".", "years", "twelve"] },
+  { prompt: "Dis : « J’habite à Paris. »", answer: ["I", "live", "in", "Paris", "."], bank: [".", "I", "Paris", "live", "in"] },
 ];
 
 const NAT_Q = [
@@ -274,11 +275,15 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
         const bank = t.bank.map((w, k) => `<button type="button" class="rc-tok ${used.has(k) ? "used" : ""}" data-j="${j}" data-k="${k}" ${used.has(k) || done || q.placed.length >= t.answer.length ? "disabled" : ""}>${esc(w)}</button>`).join("");
         const slots = q.placed.map((k, p) => `<button type="button" class="rc-tok in" data-j="${j}" data-p="${p}" ${done ? "disabled" : ""}>${esc(t.bank[k])}</button>`).join("") || `<span class="rc-ph">Touche les mots dans l’ordre</span>`;
         const ans = t.answer.join(" ").replace(/ ([?.])/g, "$1");
-        return `<div class="rc-gb"><p class="rc-ask"><b>${g0 + j + 1}.</b> ${esc(t.prompt)}</p><div class="rc-slots ${done ? (ok ? "ok" : "ko") : ""}">${slots}</div>${done ? `<div class="rc-fb">${ok ? "✅ Parfait !" : `Pas tout à fait. Réponse : <b>${esc(ans)}</b>`} ${play(ans)}</div>` : `<div class="rc-bank">${bank}</div>`}</div>`;
+        return `<div class="rc-gb"><p class="rc-ask"><b>${g0 + j + 1}.</b> ${esc(t.prompt)}</p><div class="rc-slots ${done ? (ok ? "ok" : "ko") : ""}" style="min-height:${(t.answer.length >= 7 ? 2 : 1) * 48 + 12}px">${slots}</div>${done ? `<div class="rc-fb">${ok ? "✅ Parfait !" : `Pas tout à fait. Réponse : <b>${esc(ans)}</b>`} ${play(ans)}</div>` : `<div class="rc-bank">${bank}</div>`}</div>`;
       }).join("");
       const ready = st.every((q, j) => q.placed.length >= grp[j].answer.length);
       frame(`Mission ${S.i + 1}/${MISSIONS.length}`, { cur: Math.min(g0 + per, steps.length), total: steps.length }, `${hero(m)}<section class="lc-card lc-card-bare rc-card rc-build rc-bgrp"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${blocks}
         <button type="button" class="lc-next rc-go" id="rcGo" ${!done && !ready ? "disabled" : ""}>${done ? (g0 + per >= steps.length ? "Terminer" : "Suivant ›") : "Valider"}</button></section>`);
+      { const mn = el.querySelector(".lc-main"), hh = el.querySelector(".rc-hero"), cd = el.querySelector(".rc-bgrp"), ov = () => mn && mn.scrollHeight > mn.clientHeight + 2; // ça déborde : image réduite, puis retirée, puis cases resserrées
+        if (ov() && hh) hh.classList.add("rc-hero-s");
+        if (ov() && cd) cd.classList.add("rc-tight");
+        if (ov() && hh) hh.remove(); }
       first = false; { const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = y0; }
       bindBack(start);
       el.querySelectorAll("[data-k]").forEach((b) => b.addEventListener("click", () => { st[+b.dataset.j].placed.push(+b.dataset.k); paint(); }));

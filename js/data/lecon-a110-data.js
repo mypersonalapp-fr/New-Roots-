@@ -190,6 +190,7 @@ export const DATA_A110 = {
     { prompt: "Demande : « Où travaillez-vous ? »", answer: ["Where", "do", "you", "work", "?"], bank: ["work", "do", "Where", "you", "?"] },
     { prompt: "Dis : « Elle commence à neuf heures. »", answer: ["She", "starts", "at", "nine", "."], bank: ["nine", "at", "She", "starts", "."] },
     { prompt: "Dis : « Il ne travaille pas le dimanche. »", answer: ["He", "doesn't", "work", "on", "Sunday", "."], bank: ["Sunday", "on", "He", "work", "doesn't", "."] },
+    { prompt: "Dis : « Je finis à cinq heures. »", answer: ["I", "finish", "at", "five", "."], bank: ["I", "at", "finish", ".", "five"] },
   ],
   m4: [
     pick("She ___ in a hospital.", "Form", "works", ["works", "work", "working"]),

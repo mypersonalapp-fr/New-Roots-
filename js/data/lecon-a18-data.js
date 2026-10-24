@@ -190,6 +190,7 @@ export const DATA_A18 = {
     { prompt: "Dis : « Je suis perdu. »", answer: ["I'm", "lost", "."], bank: ["lost", "I'm", "."] },
     { prompt: "Demande : « Pouvez-vous répéter ? »", answer: ["Could", "you", "repeat", "that", "?"], bank: ["repeat", "you", "Could", "that", "?"] },
     { prompt: "Dis : « C'est à cinq minutes. »", answer: ["It's", "five", "minutes", "away", "."], bank: ["minutes", "away", "It's", "five", "."] },
+    { prompt: "Demande : « Où sont les toilettes ? »", answer: ["Where", "are", "the", "toilets", "?"], bank: ["are", "toilets", "?", "Where", "the"] },
   ],
   m4: [
     pick("I go to school every day.", "Tense", "present simple", ["present simple", "present continuous"]),

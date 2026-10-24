@@ -1060,3 +1060,9 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-ask{ font-size:19px; }
 .rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-slots{ min-height:70px; }
 .rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-bank button, .rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-slots button{ font-size:19px; padding:11px 15px; min-height:48px; }
+.rc-bgrp.rc-tight .rc-gb{ margin-bottom:4px !important; }
+.rc-bgrp.rc-tight .rc-ask{ font-size:15px !important; margin:2px 0 !important; }
+.rc-bgrp.rc-tight .rc-bank button, .rc-bgrp.rc-tight .rc-slots button{ font-size:15px !important; padding:6px 10px !important; min-height:34px !important; }
+.rc-bgrp.rc-tight .rc-slots{ padding:5px !important; margin:2px 0 !important; min-height:0 !important; }
+.rc-bgrp.rc-tight .rc-bank{ gap:4px !important; margin:2px 0 !important; }
+.rc-bgrp .rc-gb{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }

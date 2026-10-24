@@ -190,6 +190,7 @@ export const DATA_A111 = {
     { prompt: "Dis : « Il pleut aujourd'hui. »", answer: ["It's", "raining", "today", "."], bank: ["today", "raining", "It's", "."] },
     { prompt: "Dis : « Mon anniversaire est en juillet. »", answer: ["My", "birthday", "is", "in", "July", "."], bank: ["July", "in", "My", "is", "birthday", "."] },
     { prompt: "Dis : « Demain il va neiger. »", answer: ["Tomorrow", "it's", "going", "to", "snow", "."], bank: ["snow", "to", "Tomorrow", "going", "it's", "."] },
+    { prompt: "Dis : « Il fait chaud en été. »", answer: ["It's", "hot", "in", "summer", "."], bank: ["It's", "in", "hot", "summer", "."] },
   ],
   m4: [
     pick("My birthday is ___ May.", "Preposition", "in", ["in", "on", "at"]),

@@ -190,6 +190,7 @@ export const DATA_A17 = {
     { prompt: "Demande : « Puis-je l'essayer ? »", answer: ["Can", "I", "try", "it", "on", "?"], bank: ["try", "on", "Can", "it", "I", "?"] },
     { prompt: "Dis : « C'est trop petit. »", answer: ["It's", "too", "small", "."], bank: ["small", "too", "It's", "."] },
     { prompt: "Dis : « Je le prends. »", answer: ["I'll", "take", "it", "."], bank: ["take", "I'll", "it", "."] },
+    { prompt: "Dis : « Je cherche une chemise. »", answer: ["I'm", "looking", "for", "a", "shirt", "."], bank: ["a", ".", "I'm", "looking", "for", "shirt"] },
   ],
   m4: [
     pick("The coat is 100 pounds. The shirt is 20 pounds. The coat is ___ the shirt.", "Comparative", "more expensive than", ["more expensive than", "cheaper than", "smaller than"]),
