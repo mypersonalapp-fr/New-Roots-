@@ -640,12 +640,12 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   const BL_STEPS = () => THEMES.filter((t) => t.diag).length + DICTEES.length + GUIDED.length;
   const blColor = (p) => (p >= 70 ? "#2fa55b" : p >= 50 ? "#caa21b" : "#c8382a");
   // Pages du bilan après les QCM : réponses écrites après une écoute ou une lecture, dictée, phrases guidées.
-  const bilanTx = () => [...COMP.map((c) => ({ k: c.kind, c })), ...DICTEES.map((d) => ({ k: "dic", d })), ...GUIDED.map((g) => ({ k: "gui", g }))];
+  const bilanTx = () => [...COMP.map((c) => ({ k: c.kind, c })), { k: "dic", ds: DICTEES.slice(0, 3) }, { k: "dic", ds: DICTEES.slice(3) }, { k: "gui", gs: GUIDED.slice(0, 3) }, { k: "gui", gs: GUIDED.slice(3) }];
   const compItem = (c, j) => Object.assign({}, c.qs[j], { say: c.say, text: c.text, q2: false });
   function showBilan() {
     screen = "bilan";
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), nT = TH.length, total = nT + TX.length;
-    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map((t) => (t.c ? t.c.qs.map(() => "") : "")) };
+    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map((t) => (t.c ? t.c.qs : t.ds || t.gs).map(() => "")) };
     const i = bl.step, c = currentCharacter();
     let body = "", ready = false;
     const guide = (t) => `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${t}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
@@ -655,12 +655,12 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       ready = its.every((_, q) => bl.pick[i][q] !== undefined);
       body = guide("Bilan : pas de note !") + `<section class="lc-card q6"><div class="q6-top"><b>${th.icon} ${esc(th.label)}</b><span>${i + 1}/${nT}</span></div><p class="q6-help">Touche 1 réponse par question.</p><div class="q6-list">${its.map((it, q) => `<div class="q6-q"><p class="q6-p"><span>${q + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p><div class="q6-o">${it.opts.map((o, k) => `<button type="button" class="lc-choice q6-c${bl.pick[i][q] === k ? " lc-sel" : ""}" data-q="${q}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>`).join("")}</div></section>`;
     } else {
-      const t = TX[i - nT], v = bl.txt[i - nT]; ready = t.c ? v.every((x) => x.trim().length > 0) : v.trim().length > 0;
+      const t = TX[i - nT], v = bl.txt[i - nT]; ready = v.every((x) => x.trim().length > 0);
       const qa = (c) => c.qs.map((qq, j) => `<p class="lc-q bl2-qq"><span>${j + 1}</span>${esc(qq.q)}</p><textarea class="lc-ta sm" data-j="${j}" rows="2" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Ta réponse…">${esc(v[j])}</textarea>`).join("");
       if (t.k === "listen") body = guide("Écoute, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">🎧 Écoute et réponds</h2><button type="button" class="lc-cta" data-say="${esc(t.c.say)}" style="margin:6px 0">🔊 Écouter</button>${qa(t.c)}</section>`;
       else if (t.k === "read") body = guide("Lis, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">📖 Lis et réponds</h2><p class="lc-text" style="font-size:16px;line-height:1.5;margin:6px 0">${esc(t.c.text)}</p>${qa(t.c)}</section>`;
-      else if (t.k === "dic") body = guide("Écris ce que tu entends !") + `<section class="lc-card"><h2 class="lc-h2">✍️ Dictée</h2><p class="lc-lead">Écoute, puis écris la phrase en anglais, avec la ponctuation.</p><button type="button" class="lc-cta" data-say="${esc(t.d.say)}" style="margin:6px 0">🔊 Écouter la phrase</button>${area(v, "Écris la phrase ici…")}</section>`;
-      else body = guide("Écris la phrase en anglais !") + `<section class="lc-card"><h2 class="lc-h2">🧱 Phrase guidée</h2><p class="lc-lead">Traduis en anglais, avec un sujet, un verbe, un complément et la ponctuation :</p><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">« ${esc(t.g.fr)} »</p>${area(v, "Écris ta phrase ici…")}</section>`;
+      else if (t.k === "dic") body = guide("Écris ce que tu entends !") + `<section class="lc-card"><h2 class="lc-h2">✍️ Dictée</h2>${t.ds.map((d, j) => `<p class="lc-q bl2-qq"><span>${j + 1}</span><button type="button" class="q6-spk" data-say="${esc(d.say)}" aria-label="Écouter">🔊 Écouter</button></p><textarea class="lc-ta sm md" data-j="${j}" rows="2" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Écris la phrase…">${esc(v[j])}</textarea>`).join("")}</section>`;
+      else body = guide("Écris les phrases en anglais !") + `<section class="lc-card"><h2 class="lc-h2">🧱 Phrases guidées</h2><p class="lc-lead">Sujet + verbe + complément, avec la ponctuation.</p>${t.gs.map((g, j) => `<p class="lc-q bl2-qq"><span>${j + 1}</span>${esc(g.fr)}</p><textarea class="lc-ta sm md" data-j="${j}" rows="2" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Écris ta phrase…">${esc(v[j])}</textarea>`).join("")}</section>`;
     }
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" ${ready ? "" : "disabled"}>${i === total - 1 ? "Voir mon bilan ✓" : "Suivant →"}</button></footer>`;
     page = i; frame(HEAD, { cur: i + 1, total }, body, foot);
@@ -678,7 +678,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), rows = [], crit = { orth: [0, 0], punct: [0, 0], ordre: [0, 0], accord: [0, 0] }, cont = { listen: [0, 0], read: [0, 0] };
     TH.forEach((t, i) => { const ok = bl.items[i].filter((it, q) => bl.pick[i][q] === it.a).length; rows.push({ id: t.id, label: t.label, icon: t.icon, ok, tot: bl.items[i].length }); });
     TX.forEach((t, j) => {
-      const list = t.c ? t.c.qs.map((_, q) => [bl.txt[j][q], compItem(t.c, q)]) : [[bl.txt[j], t.k === "dic" ? t.d : t.g]];
+      const list = t.c ? t.c.qs.map((_, q) => [bl.txt[j][q], compItem(t.c, q)]) : (t.ds || t.gs).map((it, q) => [bl.txt[j][q], it]);
       list.forEach(([raw, it]) => {
         const r = t.k === "dic" ? checkDictee(raw, it) : checkGuided(raw, it);
         WRITE_CRITERIA.forEach(([k]) => { crit[k][1]++; if (r[k]) crit[k][0]++; });

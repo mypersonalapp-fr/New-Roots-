@@ -69,12 +69,16 @@ export const DICTEES = [
   { say: "She doesn’t work on Saturdays.", verb: 2 },
   { say: "Do they live in London?", verb: 3 },
   { say: "I am going to buy a ticket.", verb: 1 },
+  { say: "They are watching TV now.", verb: 2 },
+  { say: "Does she play tennis?", verb: 2 },
 ];
 export const GUIDED = [
   { fr: "Elle prépare le dîner maintenant.", ans: ["she is cooking dinner now", "she is cooking the dinner now", "she is cooking dinner", "she’s cooking dinner now"], q: false, S: ["she"], V: "is cooking", forms: ["cook", "cooks", "cooking", "cooked"], C: ["dinner"] },
   { fr: "Nous ne travaillons pas le dimanche.", ans: ["we don’t work on sundays", "we do not work on sundays", "we don’t work on sunday", "we don’t work at the weekend"], q: false, S: ["we"], V: "don’t work", forms: ["work", "works", "worked", "working"], C: ["sundays", "sunday"] },
   { fr: "Il n’aime pas le poisson.", ans: ["he doesn’t like fish", "he does not like fish", "he doesn’t like the fish"], q: false, S: ["he"], V: "doesn’t like", forms: ["like", "likes", "liked", "liking"], C: ["fish"] },
   { fr: "Est-ce que tu habites à Paris ?", ans: ["do you live in paris", "do you live in paris now"], q: true, S: ["you"], V: "do live", forms: ["live", "lives", "lived", "living"], C: ["paris"] },
+  { fr: "Ils regardent la télé maintenant.", ans: ["they are watching tv now", "they are watching television now", "they are watching tv", "they’re watching tv now"], q: false, S: ["they"], V: "are watching", forms: ["watch", "watches", "watching", "watched"], C: ["tv", "television"] },
+  { fr: "Est-ce que tu joues au tennis le samedi ?", ans: ["do you play tennis on saturdays", "do you play tennis on saturday"], q: true, S: ["you"], V: "do play", forms: ["play", "plays", "played", "playing"], C: ["tennis"] },
 ];
 const norm = (s) => s.toLowerCase().replace(/[’‘`']/g, "’").replace(/[.?!,;:]/g, " ").replace(/\s+/g, " ").trim();
 const lev = (a, b) => { const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]); for (let j = 1; j <= b.length; j++) d[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[a.length][b.length]; };
