@@ -1046,3 +1046,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 /* « Décris l'image » : l'image grandit selon la place restante (réglé en JS, fillRows) */
 .lc-card:has(.lc-pic) .lc-pic{background:transparent !important}
 .lc-card:has(.lc-pic) .lc-pic img{object-fit:contain !important}
+.lc-card:has(.lc-pic) .lc-ta{min-height:56px !important;height:56px}
+.lc-card:has(.lc-pic) .lc-pic{max-height:none !important;display:flex;justify-content:center}
+.lc-card:has(.lc-pic) .lc-pic img{height:152px !important;width:auto !important;max-width:100% !important}

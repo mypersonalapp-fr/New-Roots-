@@ -1001,7 +1001,7 @@ export function renderLesson(root, B, { onExit } = {}) {
       <div class="lc-tabs" role="tablist">
         ${`<button type="button" class="lc-tab ${tab === "speak" ? "on" : ""}" data-tab="speak" role="tab" aria-selected="${tab === "speak"}">🎤 Parler</button>`}
         <button type="button" class="lc-tab ${tab === "write" ? "on" : ""}" data-tab="write" role="tab" aria-selected="${tab === "write"}">✍️ Écrire</button></div>
-      <ol class="lc-prompts">${p.prompts.concat(p.trad ? [] : ["Ajoute un détail.", "Pose une question.", "Dis ce que tu aimes.", "Dis pourquoi.", "Dis où et quand.", "Dis avec qui.", "Dis ce que tu veux."].slice(0, EXN)).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+      <ol class="lc-prompts">${p.prompts.concat(p.trad || p.img ? [] : ["Ajoute un détail.", "Pose une question.", "Dis ce que tu aimes.", "Dis pourquoi.", "Dis où et quand.", "Dis avec qui.", "Dis ce que tu veux."].slice(0, EXN)).map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
       <div class="lc-model"><span class="lc-w"><small>Modèle</small><b>${esc(sub(p.model))}</b></span>${spk(sub(p.model))}</div>
       ${tab === "write"
         ? `<textarea id="lcTa" class="lc-ta" rows="${p.img ? 2 : 4}" placeholder="Écris en anglais…" aria-label="Ta réponse en anglais">${esc(txt)}</textarea>`
