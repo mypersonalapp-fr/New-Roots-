@@ -479,8 +479,8 @@ export function renderSettings(container, onChange) {
         <p style="font-size:11.5px;color:var(--ink-soft);line-height:1.5;margin:8px 0 0">${t("sec_password_skip_hint", lang)}</p>
 
         <button class="btn btn-ghost" id="logoutBtn" style="width:100%;margin-top:22px;color:var(--pop);border-color:var(--pop)">${t("set_logout", lang)}</button>
-        <button class="btn btn-ghost" id="resetAllBtn" style="width:100%;margin-top:10px;color:var(--pop);border-color:var(--pop)">↺ Tout réinitialiser (repartir de zéro)</button>
-        <p id="resetAllHint" style="display:none;font-size:12px;line-height:1.5;color:var(--ink-soft);margin:8px 0 0">Efface sur cet appareil : compte, niveau, progression, notes du livret, jeux, réglages. Impossible à annuler. Touche encore une fois pour confirmer.</p>
+        <button class="btn btn-ghost" id="resetAllBtn" style="width:100%;margin-top:10px;color:var(--pop);border-color:var(--pop)">↺ Repartir de zéro (tests et niveaux)</button>
+        <p id="resetAllHint" style="display:none;font-size:12px;line-height:1.5;color:var(--ink-soft);margin:8px 0 0">Ton compte reste connecté. Efface sur cet appareil : niveau d'entrée, tests, notes du livret, progression des leçons, jeux. Impossible à annuler. Touche encore une fois pour confirmer.</p>
       </div>
     `;
     container.querySelector("#settingsBack").addEventListener("click", () => { view = "root"; paint(); });
@@ -554,14 +554,16 @@ export function renderSettings(container, onChange) {
     let armed = false, tm = null;
     rb.addEventListener("click", () => {
       if (!armed) {
-        armed = true; rb.textContent = "⚠️ Confirmer : tout effacer"; rb.style.background = "var(--pop)"; rb.style.color = "#fff";
+        armed = true; rb.textContent = "⚠️ Confirmer : repartir de zéro"; rb.style.background = "var(--pop)"; rb.style.color = "#fff";
         container.querySelector("#resetAllHint").style.display = "block";
-        tm = setTimeout(() => { armed = false; rb.textContent = "↺ Tout réinitialiser (repartir de zéro)"; rb.style.background = ""; rb.style.color = "var(--pop)"; container.querySelector("#resetAllHint").style.display = "none"; }, 8000);
+        tm = setTimeout(() => { armed = false; rb.textContent = "↺ Repartir de zéro (tests et niveaux)"; rb.style.background = ""; rb.style.color = "var(--pop)"; container.querySelector("#resetAllHint").style.display = "none"; }, 8000);
         return;
       }
       clearTimeout(tm);
-      try { localStorage.clear(); } catch (e) { /* stockage indisponible */ }
-      try { sessionStorage.clear(); } catch (e) { /* idem */ }
+      // On garde le compte et les préférences d'affichage ; tout le reste (progression, notes, tests, jeux) est supprimé.
+      const KEEP = ["the_roots_store_v1", "the_roots_unlocked_session", "the_roots_onboarding_seen_v1", "the_roots_livret_style_v1", "the_roots_last_tab"];
+      try { Object.keys(localStorage).filter((k) => /^(the_)?roots_/.test(k) && !KEEP.includes(k)).forEach((k) => localStorage.removeItem(k)); } catch (e) { /* stockage indisponible */ }
+      store.resetLearning();
       window.location.href = window.location.pathname;
     });
   }

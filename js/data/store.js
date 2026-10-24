@@ -245,6 +245,14 @@ export const store = {
   // Choix du "cours" suivi une fois le niveau obtenu pour le groupe (ex.
   // britannique ou américain pour l'anglais) — pas besoin de repasser un
   // test, c'est juste la variante de contenu suivie.
+  // Remise à zéro de l'apprentissage (phase de test) : le compte, Face ID, le thème, la langue d'interface et la voix sont gardés ;
+  // niveaux, tests, notes et progression repartent de zéro.
+  resetLearning() {
+    const old = load(), fresh = defaultData();
+    const keepS = ["theme", "interfaceLang", "preferredVoiceURI", "primaryLearningLang"].reduce((o, k) => (old.settings && old.settings[k] !== undefined ? { ...o, [k]: old.settings[k] } : o), {});
+    const langs = fresh.settings.langs.map((l) => { const o = ((old.settings || {}).langs || []).find((x) => x.code === l.code); return o && o.selectedVariant ? { ...l, selectedVariant: o.selectedVariant } : l; });
+    save({ ...fresh, session: old.session, faceId: old.faceId || fresh.faceId, passwordSkip: old.passwordSkip || fresh.passwordSkip, settings: { ...fresh.settings, ...keepS, langs } });
+  },
   selectVariant(groupCode, variantCode) {
     const data = load();
     data.settings.langs = data.settings.langs.map((l) => (
