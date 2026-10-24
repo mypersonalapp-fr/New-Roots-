@@ -30,7 +30,7 @@ import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
 import { currentCharacter } from "./lecon-a11.js?v=20261024ay";
 import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2 } from "../data/lecons-a2.js?v=20261024ay";
 import { runRattrapage } from "./rattrapage.js?v=20261024ay";
-import { LEVELS, lessonsOf, lessonSheet, BONUS_MAX } from "../data/livret-niveaux.js?v=20261024ay";
+import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261024ay";
 import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261024ay";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 
@@ -350,23 +350,37 @@ export function renderMesCours(container, shellRoot) {
   let lvView = "home", lvLesson = null;
   const nf = (n) => String(n).replace(".", ",");
   const gauge = (p) => `<div class="lv-g"><i style="width:${p}%;background:${p ? gaugeColor(p) : "transparent"}"></i></div>`;
+  const enLang = () => store.get().settings.langs.find((x) => x.code === "en") || {};
+  const levelAvg = (c) => { const Ls = lessonsOf(c).filter((x) => x.built); return Ls.length ? Math.round(Ls.reduce((a, L) => a + lessonSheet(c, L).avg, 0) / Ls.length) : 0; };
+  // Bandeau Entrée → Actuel (toutes les pages du livret) : une ligne avec un point à l'entrée et un point aujourd'hui.
+  function entryBand(l) {
+    const cur = currentOf(l), cp = levelAvg(cur.level), ep = l.entryScore != null ? Math.round(l.entryScore) : null, el = l.entryLevel || l.level || cur.level;
+    const dots = (ep !== null ? `<u style="left:calc(${ep}% - 7px)"></u>` : "") + `<u style="left:calc(${cp}% - 7px)"></u>`;
+    return `<div class="cmp-top"><div class="e"><span>ENTRÉE</span><b>${el}</b><span>${ep !== null ? ep + " %" : "—"}</span></div><div class="cmp-line"><i style="width:${cp}%"></i>${dots}</div><div class="a"><span>ACTUEL</span><b>${cur.level}</b><span>${cp} %</span></div></div>`;
+  }
   function livretHome() {
     const cases = LEVELS.map(([c, n, on]) => { const Ls = lessonsOf(c).filter((x) => x.built), av = Ls.length ? Math.round(Ls.reduce((a, L) => a + lessonSheet(c, L).avg, 0) / Ls.length) : 0;
       return `<button type="button" class="lv-case${on ? "" : " off"}" data-view="level" data-lv="${c}"><b>${c}</b><small>${n}</small>${gauge(av)}<span>${on ? av + " %" : "bientôt"}</span></button>`; }).join("");
     return `<div class="lv-sub">Choisis ton niveau</div><div class="lv-cases">${cases}</div><div class="lv-later"><b>🗂️ On verra ça plus tard</b><small>Cette zone est réservée.</small></div>`;
   }
+  function examCard() {
+    const e = bulletinA1("A1").exam, ent = enLang().entryScore, ep = ent != null ? Math.round(ent) : null, fp = e && e.done ? Math.round((e.best / 40) * 100) : 0;
+    const bar = (p, c, ok) => `<div class="cmp-c${c ? " e" : ""}"><div class="fx">${gauge(p)}</div><span>${ok ? p + " %" : "—"}</span></div>`;
+    return `<div class="card bl-card lv-c" style="margin-top:12px"><h3 class="bl-h">🏁 Bilan de fin de A1</h3><div class="cmp-h"><span>Test d'entrée</span><span>Contrôle final A1</span></div><div class="cmp-r">${bar(ep || 0, true, ep !== null)}${bar(fp, false, e && e.done)}</div></div>`;
+  }
   function livretLevel() {
     const Ls = lessonsOf(lvLevel), nav = `<button type="button" class="bl-back" data-view="home">← Tous les niveaux</button>`;
     if (!Ls.length) return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="card bl-card"><p class="bl-soft">Ce livret est prêt. Les leçons arrivent bientôt : les notes s'afficheront ici.</p></div>`;
     const t = Ls.map((L) => { const sh = lessonSheet(lvLevel, L); return `<button type="button" class="lv-ls${L.built ? "" : " off"}" ${L.built ? `data-view="lesson" data-ls="${L.n}"` : "disabled"}><b>${L.code}</b><small>${L.title}</small>${gauge(sh.avg)}<span>${L.built ? sh.avg + " %" : "bientôt"}</span></button>`; }).join("");
-    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div><button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`;
+    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div>${lvLevel === "A1" ? examCard() : ""}<button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`;
   }
   function livretLesson() {
     const L = lessonsOf(lvLevel).find((x) => x.n === lvLesson); if (!L) return livretLevel();
-    const sh = lessonSheet(lvLevel, L), k = sh.conj;
-    const rows = sh.rows.map((r) => `<div class="lv-row"><span class="lv-e">${r.e}</span><div class="lv-rb"><div class="lv-rt"><b>${r.name}</b><b>${r.has ? (r.note || r.pct + " %") : "—"}</b></div>${gauge(r.pct)}</div></div>`).join("");
+    const sh = lessonSheet(lvLevel, L, entryOf(enLang())), k = sh.conj;
+    const bar = (p, e) => `<div class="cmp-c${e ? " e" : ""}"><div class="fx">${gauge(p)}</div><span>${p} %</span></div>`;
+    const rows = sh.rows.map((r) => `<div class="cmp-r"><div class="n"><span>${r.e} ${r.name}</span>${r.gain !== null ? `<em class="${r.gain >= 0 ? "up" : "dn"}">${r.gain >= 0 ? "+" : ""}${r.gain} pts</em>` : ""}</div>${r.ent !== null ? bar(r.ent, true) : `<div class="cmp-c e"><div class="fx">${gauge(0)}</div><span>—</span></div>`}${r.has ? bar(r.pct) : `<div class="cmp-c"><div class="fx">${gauge(0)}</div><span>—</span></div>`}</div>`).join("");
     return `<button type="button" class="bl-back" data-view="level">← ${lvLevel}</button><div class="lv-title">${L.code} · ${L.title}</div>
-      <div class="card bl-card lv-c"><div class="bl-sp"><h3 class="bl-h">Mes matières</h3><b class="lv-avg">${sh.avg} %</b></div>${rows}<div class="lv-note">Note de la leçon : <b>${nf(sh.note20)} / 20</b></div></div>
+      <div class="card bl-card lv-c"><div class="bl-sp"><h3 class="bl-h">Mes matières</h3><b class="lv-avg">${sh.avg} %</b></div><div class="cmp-h"><span>À l'entrée</span><span>Aujourd'hui</span></div>${rows}<div class="lv-note">Note de la leçon : <b>${nf(sh.note20)} / 20</b>${sh.gain !== null ? ` · Progression : <b class="${sh.gain >= 0 ? "up" : "dn"}">${sh.gain >= 0 ? "+" : ""}${sh.gain} pts</b>` : ""}</div></div>
       <div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
         <p class="bl-soft">Noté à part. Ajoute jusqu'à +${BONUS_MAX} point au total (plafonné à 20). ${k.done ? `Test : ${k.best}/${k.tot}.` : "Pas encore passé."}</p></div>
       <div class="lv-total"><span>Total final</span><b>${nf(sh.total)} / 20</b><small>${nf(sh.note20)} + ${nf(k.bonus)} bonus</small></div>`;
@@ -377,9 +391,9 @@ export function renderMesCours(container, shellRoot) {
       return `<div class="dash-box"><h3>Mon profil</h3><div class="card">${profileHtml(l.code)}</div></div><div class="dash-box"><h3>Mes contrôles</h3><div class="card">${controlsHtml(l.code)}</div></div><div class="dash-box"><h3>Mes missions</h3><div class="card">${missionsHtml(l.code)}</div></div>`;
     }
     if (!lvLevel) lvLevel = currentOf(l).level === "A1" ? "A1" : "A2";
-    if (lvView === "home") return livretHome();
-    if (lvView === "level") return livretLevel();
-    if (lvView === "lesson") return livretLesson();
+    if (lvView === "home") return entryBand(l) + livretHome();
+    if (lvView === "level") return entryBand(l) + livretLevel();
+    if (lvView === "lesson") return entryBand(l) + livretLesson();
     const style = getStyle(), P = bulletinParts(lvLevel), B = P.B, nG = B.gaps.length;
     const empty = `<div class="card bl-card"><p class="bl-soft">Passe ton premier test de fin de leçon : tes notes apparaîtront ici.</p></div>`;
     let body = "";
@@ -417,7 +431,7 @@ export function renderMesCours(container, shellRoot) {
         ` : `
           ${leveledLangs.length > 1 ? `<div class="mc-livret-tabs">${leveledLangs.map((l) => `<button class="level-chip${l.code === livretLang ? " active" : ""}" data-livret-lang="${l.code}">${flagFor(l)} ${l.label}</button>`).join("")}</div>` : ""}
           ${shown.map((l) => `
-          <div class="card mc-livret-row">
+          <div class="card mc-livret-row"${l.code === "en" && lvView !== "tabs" ? ' style="display:none"' : ""}>
             <div style="font-weight:800">${flagFor(l)} ${l.label}</div>
             <div class="mc-livret-grid">
               <div class="mc-livret-cell">

@@ -178,6 +178,8 @@ export function renderLevelTest(root, { langCode, langLabel, onDone }) {
   // score (on retire le point si la question annulée était juste).
   let paused = false, pauseUsed = false;
   let tierAnswers = [];
+  // Bilan par matière pour le livret : lecture → Compréhension écrite, écoute → Compréhension orale, le reste (QCM, trous, mots à ordonner) → Grammaire.
+  const skillTally = { ce: [0, 0], co: [0, 0], gr: [0, 0] };
 
   renderIntro();
 
@@ -432,6 +434,7 @@ export function renderLevelTest(root, { langCode, langLabel, onDone }) {
       qIdx++;
       if (qIdx < currentTier().questions.length) { paintQuestion(); return; }
       // fin du palier
+      currentTier().questions.forEach((qq, i) => { const a = tierAnswers[i]; if (!a) return; const k = qq.type === "reading" ? "ce" : qq.type === "listening" ? "co" : "gr"; skillTally[k][1]++; if (a.correct) skillTally[k][0]++; });
       const ratio = tierCorrect / currentTier().questions.length;
       lastTierPct = Math.round(ratio * 100); // dernier palier tenté : gardé avec le niveau
       if (ratio >= PASS_RATIO) {
@@ -469,7 +472,7 @@ export function renderLevelTest(root, { langCode, langLabel, onDone }) {
     const finalLevel = highestLevel || TIERS[0].id; // plancher : Débutant A1
     const maxedOut = finalLevel === TIERS[TIERS.length - 1].id;
 
-    store.setPlacementResult(langCode, { score: lastTierPct, level: finalLevel, entryLevel: finalLevel, entryDate: new Date().toISOString(), resetEntry: CREATOR_MODE });
+    store.setPlacementResult(langCode, { score: lastTierPct, level: finalLevel, entryLevel: finalLevel, entryDate: new Date().toISOString(), resetEntry: CREATOR_MODE, skills: skillTally });
 
     el.innerHTML = `
       <div class="app-topbar"><div class="title">${t("lt_title_result", lang)}</div></div>

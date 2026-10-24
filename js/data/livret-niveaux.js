@@ -12,7 +12,12 @@ export function lessonsOf(level) {
   return [];
 }
 const pc = (a, b) => (b ? Math.round((a / b) * 100) : 0);
-export function lessonSheet(level, L) {
+// entry = { ce, co, gr, glob } en % (ou null) tirés du test d'entrée de l'élève ; la colonne « à l'entrée » du livret.
+export function entryOf(lang) {
+  const k = (lang && lang.entrySkills) || {}, f = (a) => (a && a[1] ? Math.round((a[0] / a[1]) * 100) : null);
+  return { ce: f(k.ce), co: f(k.co), gr: f(k.gr), glob: lang && lang.entryScore != null ? lang.entryScore : null };
+}
+export function lessonSheet(level, L, entry = {}) {
   const p = read(L.key), h = (p.testHist && p.testHist.length) ? p.testHist : [];
   const sc = parseInt(((p.scores || {}).test || "").split("/")[0], 10);
   const bestT = h.reduce((m, x) => (!m || x.total > m.total ? x : m), null);
@@ -22,9 +27,12 @@ export function lessonSheet(level, L) {
   const d = p.dict; rows.push({ name: "Dictée", e: "🔤", has: !!(d && d.tot), pct: d && d.tot ? pc(d.ok, d.tot) : 0 });
   const best = h.length ? h.reduce((m, x) => Math.max(m, x.total), 0) : (Number.isFinite(sc) ? sc : 0), hasT = h.length > 0 || Number.isFinite(sc);
   rows.push({ name: "Contrôle de fin de leçon", e: "🏆", has: hasT, pct: pc(best, 40), note: hasT ? `${best}/40` : "" });
+  const EM = { "Compréhension écrite": entry.ce, "Compréhension orale": entry.co, "Grammaire": entry.gr, "Contrôle de fin de leçon": entry.glob };
+  rows.forEach((r) => { r.ent = EM[r.name] != null ? EM[r.name] : null; r.gain = r.has && r.ent != null ? r.pct - r.ent : null; });
   const got = rows.filter((r) => r.has), avg = got.length ? Math.round(got.reduce((a, r) => a + r.pct, 0) / got.length) : 0;
   const note20 = got.length ? Math.round((avg / 100) * 200) / 10 : 0;
   const c = p.conj || null, cNote = c ? Math.round((c.best / c.tot) * 100) / 10 : 0; // /10
   const bonus = c ? Math.round((cNote / 10) * BONUS_MAX * 10) / 10 : 0;
-  return { rows, avg, note20, conj: { done: !!c, note: cNote, best: c ? c.best : 0, tot: c ? c.tot : 6, bonus }, total: Math.min(20, Math.round((note20 + bonus) * 10) / 10), any: got.length > 0 };
+  const gs = rows.filter((r) => r.gain !== null), gain = gs.length ? Math.round(gs.reduce((a, r) => a + r.gain, 0) / gs.length) : null;
+  return { rows, gain, avg, note20, conj: { done: !!c, note: cNote, best: c ? c.best : 0, tot: c ? c.tot : 6, bonus }, total: Math.min(20, Math.round((note20 + bonus) * 10) / 10), any: got.length > 0 };
 }
