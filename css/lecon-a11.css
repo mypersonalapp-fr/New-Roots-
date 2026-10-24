@@ -1043,7 +1043,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-vq-b.ok{ background:#12392a; border-color:#2fbf71; } .lc-vq-b.ko{ background:#431a1a; border-color:#e05555; }
 :root:not([data-theme="dark"]) .lc-vq-b{ background:#fff; color:#14213d; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lc-vq-b{ color:#fff; } }
-<<<<<<< HEAD
 /* Portrait-robot : le récapitulatif est lisible (fond opaque) et plus grand */
 .rc-sum{ background:#fff !important; color:#14213d; border:2px solid rgba(47,111,209,.35); box-shadow:0 4px 14px rgba(20,20,30,.18); padding:10px 12px !important; }
 :root[data-theme="dark"] .rc-sum{ background:#17233f !important; color:#eef2ff; border-color:rgba(130,170,255,.45); }
@@ -1055,7 +1054,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .rc-opts.rc-tiles{ grid-template-columns:repeat(var(--c,3),minmax(0,1fr)) !important; }
 .rc-opts.rc-tiles .rc-opt{ min-width:0; overflow:hidden; }
 .rc-opts.rc-tiles .rc-opt img{ max-width:100%; }
-=======
 /* « Décris l'image » : l'image grandit selon la place restante (réglé en JS, fillRows) */
 .lc-card:has(.lc-pic) .lc-pic{background:transparent !important}
 .lc-card:has(.lc-pic) .lc-pic img{object-fit:contain !important}
@@ -1079,4 +1077,3 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .rc-bgrp.rc-tight .rc-slots{ padding:5px !important; margin:2px 0 !important; min-height:0 !important; }
 .rc-bgrp.rc-tight .rc-bank{ gap:4px !important; margin:2px 0 !important; }
 .rc-bgrp .rc-gb{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
->>>>>>> origin/main
