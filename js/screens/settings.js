@@ -480,7 +480,7 @@ export function renderSettings(container, onChange) {
 
         <button class="btn btn-ghost" id="logoutBtn" style="width:100%;margin-top:22px;color:var(--pop);border-color:var(--pop)">${t("set_logout", lang)}</button>
         <button class="btn btn-ghost" id="resetAllBtn" style="width:100%;margin-top:10px;color:var(--pop);border-color:var(--pop)">↺ Repartir de zéro (tests et niveaux)</button>
-        <p id="resetAllHint" style="display:none;font-size:12px;line-height:1.5;color:var(--ink-soft);margin:8px 0 0">Ton compte reste connecté. Efface sur cet appareil : niveau d'entrée, tests, notes du livret, progression des leçons, jeux. Impossible à annuler. Touche encore une fois pour confirmer.</p>
+        <p id="resetAllHint" style="font-size:12.5px;line-height:1.55;color:var(--ink-soft);margin:8px 0 0"><b>Que fait ce bouton ?</b> Il remet tous les niveaux et tous les tests déjà passés à zéro, avec les notes du livret et la progression des leçons. Il faudra tout repasser, en commençant par le test d'entrée. Ton compte reste connecté. Impossible d'annuler.<span id="resetAllConfirm" style="display:none"><br><b style="color:var(--pop)">Touche encore une fois le bouton rouge pour confirmer.</b></span></p>
       </div>
     `;
     container.querySelector("#settingsBack").addEventListener("click", () => { view = "root"; paint(); });
@@ -555,8 +555,8 @@ export function renderSettings(container, onChange) {
     rb.addEventListener("click", () => {
       if (!armed) {
         armed = true; rb.textContent = "⚠️ Confirmer : repartir de zéro"; rb.style.background = "var(--pop)"; rb.style.color = "#fff";
-        container.querySelector("#resetAllHint").style.display = "block";
-        tm = setTimeout(() => { armed = false; rb.textContent = "↺ Repartir de zéro (tests et niveaux)"; rb.style.background = ""; rb.style.color = "var(--pop)"; container.querySelector("#resetAllHint").style.display = "none"; }, 8000);
+        container.querySelector("#resetAllConfirm").style.display = "inline";
+        tm = setTimeout(() => { armed = false; rb.textContent = "↺ Repartir de zéro (tests et niveaux)"; rb.style.background = ""; rb.style.color = "var(--pop)"; container.querySelector("#resetAllConfirm").style.display = "none"; }, 8000);
         return;
       }
       clearTimeout(tm);
