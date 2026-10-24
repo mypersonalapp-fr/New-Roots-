@@ -190,6 +190,7 @@ export const DATA_A19 = {
     { prompt: "Demande : « À quelle heure part le vol ? »", answer: ["What", "time", "does", "the", "flight", "leave", "?"], bank: ["leave", "does", "What", "flight", "the", "time", "?"] },
     { prompt: "Demande : « Le petit-déjeuner est-il compris ? »", answer: ["Is", "breakfast", "included", "?"], bank: ["included", "Is", "breakfast", "?"] },
     { prompt: "Dis : « Voici mon passeport. »", answer: ["Here", "is", "my", "passport", "."], bank: ["passport", "my", "Here", "is", "."] },
+    { prompt: "Demande : « Où est l'aéroport ? »", answer: ["Where", "is", "the", "airport", "?"], bank: ["is", "airport", "the", "Where", "?"] },
   ],
   m4: [
     pick("Tomorrow I ___ travel to Rome.", "Form", "am going to", ["am going to", "go to", "going to"]),

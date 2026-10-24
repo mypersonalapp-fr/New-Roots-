@@ -190,6 +190,7 @@ export const DATA_A112 = {
     { prompt: "Dis : « Enchanté de vous rencontrer. »", answer: ["Nice", "to", "meet", "you", "."], bank: ["meet", "to", "Nice", "you", "."] },
     { prompt: "Demande : « Quoi de neuf ? »", answer: ["What's", "new", "?"], bank: ["new", "What's", "?"] },
     { prompt: "Dis : « À demain ! »", answer: ["See", "you", "tomorrow", "!"], bank: ["tomorrow", "you", "See", "!"] },
+    { prompt: "Dis : « Bonne journée ! »", answer: ["Have", "a", "nice", "day", "!"], bank: ["day", "Have", "nice", "!", "a"] },
   ],
   m4: [
     pick("I like tea ___ coffee.", "Connector", "and", ["and", "but", "so"]),

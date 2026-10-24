@@ -203,6 +203,7 @@ export const DATA_A14 = {
     { prompt: "Dis : « Allez tout droit. »", answer: ["Go", "straight", "on", "."], bank: ["on", "Go", "straight", "."] },
     { prompt: "Dis : « La banque est en face de la gare. »", answer: ["The", "bank", "is", "opposite", "the", "station", "."], bank: ["bank", "the", "is", "The", "station", "opposite", "."] },
     { prompt: "Dis : « Ça prend dix minutes à pied. »", answer: ["It", "takes", "ten", "minutes", "on", "foot", "."], bank: ["minutes", "on", "It", "ten", "takes", "foot", "."] },
+    { prompt: "Demande : « Où est la poste ? »", answer: ["Where", "is", "the", "post", "office", "?"], bank: ["is", "the", "post", "?", "office", "Where"] },
   ],
   m4: [
     pick("The bank is ___ the school. (à côté)", "Preposition", "next to", ["next to", "opposite", "between", "behind"]),

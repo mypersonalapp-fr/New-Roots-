@@ -186,6 +186,7 @@ export const DATA_A15 = {
     { prompt: "Demande : « Tu aimes la musique ? »", answer: ["Do", "you", "like", "music", "?"], bank: ["like", "music", "Do", "you", "?"] },
     { prompt: "Demande : « Quelle est ta couleur préférée ? »", answer: ["What's", "your", "favourite", "colour", "?"], bank: ["colour", "your", "What's", "favourite", "?"] },
     { prompt: "Dis : « Je préfère le thé au café. »", answer: ["I", "prefer", "tea", "to", "coffee", "."], bank: ["tea", "to", "I", "coffee", "prefer", "."] },
+    { prompt: "Dis : « Il aime le football. »", answer: ["He", "likes", "football", "."], bank: ["likes", "football", "He", "."] },
   ],
   m4: [
     pick("I like pizza.", "You say", "Me too!", ["Me too!", "Me neither."]),

@@ -206,6 +206,8 @@ export const DATA_A13 = {
     { em: "☕👫", prompt: "Dis : « Nous buvons un café ensemble. »", answer: ["We", "have", "a", "coffee", "together", "."], bank: ["a", "have", "We", "together", "coffee", "."] },
     { em: "🏠🎉", prompt: "Demande : « Tu viens à ma fête ? »", answer: ["Do", "you", "want", "to", "come", "to", "my", "party", "?"], bank: ["to", "party", "Do", "my", "come", "want", "you", "to", "?"] },
     { em: "👋😊", prompt: "Dis : « Ravi de te rencontrer ! »", answer: ["Nice", "to", "meet", "you", "!"], bank: ["meet", "Nice", "you", "to", "!"] },
+    { prompt: "Demande : « Quel sport aimes-tu ? »", answer: ["What", "sport", "do", "you", "like", "?"], bank: ["do", "?", "you", "What", "sport", "like"] },
+    { prompt: "Dis : « Ils regardent un film. »", answer: ["They", "are", "watching", "a", "film", "."], bank: ["watching", ".", "film", "are", "They", "a"] },
   ],
   m4: [
     pick("I play tennis 7 days a week. → I ___ play tennis.", "Adverb", "always", ["always", "never", "sometimes"]),
