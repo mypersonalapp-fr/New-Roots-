@@ -479,6 +479,8 @@ export function renderSettings(container, onChange) {
         <p style="font-size:11.5px;color:var(--ink-soft);line-height:1.5;margin:8px 0 0">${t("sec_password_skip_hint", lang)}</p>
 
         <button class="btn btn-ghost" id="logoutBtn" style="width:100%;margin-top:22px;color:var(--pop);border-color:var(--pop)">${t("set_logout", lang)}</button>
+        <button class="btn btn-ghost" id="resetAllBtn" style="width:100%;margin-top:10px;color:var(--pop);border-color:var(--pop)">↺ Tout réinitialiser (repartir de zéro)</button>
+        <p id="resetAllHint" style="display:none;font-size:12px;line-height:1.5;color:var(--ink-soft);margin:8px 0 0">Efface sur cet appareil : compte, niveau, progression, notes du livret, jeux, réglages. Impossible à annuler. Touche encore une fois pour confirmer.</p>
       </div>
     `;
     container.querySelector("#settingsBack").addEventListener("click", () => { view = "root"; paint(); });
@@ -545,6 +547,22 @@ export function renderSettings(container, onChange) {
     container.querySelector("#logoutBtn").addEventListener("click", () => {
       store.logout();
       window.location.reload();
+    });
+
+    // Réinitialisation complète (phase de test) : double appui, puis tout le stockage local est vidé et l'appli repart du début.
+    const rb = container.querySelector("#resetAllBtn");
+    let armed = false, tm = null;
+    rb.addEventListener("click", () => {
+      if (!armed) {
+        armed = true; rb.textContent = "⚠️ Confirmer : tout effacer"; rb.style.background = "var(--pop)"; rb.style.color = "#fff";
+        container.querySelector("#resetAllHint").style.display = "block";
+        tm = setTimeout(() => { armed = false; rb.textContent = "↺ Tout réinitialiser (repartir de zéro)"; rb.style.background = ""; rb.style.color = "var(--pop)"; container.querySelector("#resetAllHint").style.display = "none"; }, 8000);
+        return;
+      }
+      clearTimeout(tm);
+      try { localStorage.clear(); } catch (e) { /* stockage indisponible */ }
+      try { sessionStorage.clear(); } catch (e) { /* idem */ }
+      window.location.href = window.location.pathname;
     });
   }
 }
