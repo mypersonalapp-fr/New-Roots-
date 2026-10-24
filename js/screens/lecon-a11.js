@@ -486,7 +486,20 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     return S;
   }
   // remplit le vide d'une page de leçon : lignes de mots / réponses plus aérées, puis image
-  function fillRows() {
+  function fillRows() { fillRows0(); fillTyped(); }
+  // pages à réponse écrite : le reste de la place est réparti entre les questions (jamais au point de déborder)
+  function fillTyped() {
+    const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
+    const qs = [...m.querySelectorAll(".lc-qb")].filter((b) => b.querySelector(".q6-w")); if (!qs.length) return;
+    qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = ""; });
+    m.classList.remove("q6-tight"); if (m.scrollHeight > m.clientHeight + 2) m.classList.add("q6-tight");
+    const cards = m.querySelectorAll(":scope > .lc-card, :scope > section"), last = cards[cards.length - 1] || m.lastElementChild;
+    const L = Math.floor(f.getBoundingClientRect().top - last.getBoundingClientRect().bottom - 50), per = Math.min(24, Math.floor(L / (qs.length * 2)));
+    if (per < 2) return;
+    qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = per + "px"; });
+    if (m.scrollHeight > m.clientHeight + 2 || last.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6) qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = ""; });
+  }
+  function fillRows0() {
     const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
     const cards0 = m.querySelectorAll(":scope > .lc-card"), c0x = cards0[cards0.length - 1];
     const reset = () => { if (!c0x) return; c0x.style.minHeight = c0x.style.display = c0x.style.flexDirection = c0x.style.justifyContent = ""; c0x.querySelectorAll(":scope > ul.lc-list").forEach((u) => { u.style.flex = u.style.alignContent = ""; }); c0x.querySelectorAll("li, .lc-choice").forEach((x) => { x.style.paddingTop = x.style.paddingBottom = ""; }); c0x.querySelectorAll(".lc-qb").forEach((x) => { x.style.removeProperty("margin-bottom"); }); };
