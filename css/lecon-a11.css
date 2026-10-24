@@ -1122,3 +1122,5 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .q6-in{flex:1;height:38px;min-height:38px!important;resize:none;padding:6px 10px;font-size:15px}
 .q6-hintb{flex:none;border:0;border-radius:10px;padding:8px 10px;font-weight:800;font-size:13px;background:#F59E0B;color:#1b1200;cursor:pointer}
 .q6-hint{margin:4px 0 0;font-size:13px;font-weight:700;color:#F59E0B}
+.q6-okb{flex:none;border:0;border-radius:10px;padding:8px 14px;font-weight:800;font-size:14px;background:#16A34A;color:#fff;cursor:pointer}
+.lc-choices[hidden]{display:none}

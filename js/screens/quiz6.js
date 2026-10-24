@@ -34,13 +34,18 @@ export function gramItems(pool, redo = []) {
 export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
 
 // build(redoKeys) -> items. onPass() débloque « Suivant ». Retourne rien ; tout est dans host.
-const nrm = (x) => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
-const typable = (it) => !it.say && (/___/.test(it.q) || /veut dire/.test(it.q));
-const maskHint = (it) => { const a = it.opts[it.a], e = String(it.expl || "").trim(); if (!e) return "Relis la règle."; const m = a ? e.split(a).join("…") : e; return m.replace(/\s+/g, " "); };
+const nrm = (x) => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\([^)]*\)/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
+const art = (x) => nrm(x).replace(/^(le|la|les|l|un|une|des|du|the|a|an|to) /, "");
+const lev1 = (a, b) => { if (a === b) return true; if (Math.abs(a.length - b.length) > 1 || Math.min(a.length, b.length) < 5) return false; let i = 0; while (i < a.length && a[i] === b[i]) i++; if (a.length === b.length) return a.slice(i + 1) === b.slice(i + 1); return a.length > b.length ? a.slice(i + 1) === b.slice(i) : b.slice(i + 1) === a.slice(i); };
+const same = (t, o, voc) => nrm(t) === nrm(o) || (voc && lev1(art(t), art(o))); // faute de frappe tolérée seulement en vocabulaire (jamais en grammaire : -s, -ing comptent)
+export const isVoc = (q) => /veut dire|en anglais|means/i.test(q);
+export { same, maskHint };
+const typable = (it) => !/^Écoute/.test(it.q) && (/___/.test(it.q) || /veut dire|en anglais/.test(it.q));
+const maskHint = (it) => { const e = String(it.expl || "").trim(), a = String(it.opts[it.a] || "").replace(/[.?!]+$/, "").trim(); if (!e) return "Relis la règle."; if (!a) return e; const re = new RegExp(a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+"), "gi"); return e.replace(re, "…").replace(/\s+/g, " "); };
 // think = true : l’élève écrit d’abord sa réponse (les choix sont derrière « Indice »), puis, s’il se trompe, il reçoit un indice et un 2ᵉ essai avant la correction.
 export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think }) {
   let items = build([]), picked = [], checked = false, txt = [], shown = [], locked = [], hints = [], attempt = 0;
-  const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return nrm(txt[i]) === nrm(it.opts[it.a]) ? it.a : -2; return picked[i]; };
+  const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return same(txt[i], it.opts[it.a], /veut dire|en anglais/.test(it.q)) ? it.a : -2; return picked[i]; };
   const paint = () => {
     host.querySelector("#q6l").innerHTML = items.map((it, i) => { const ty = think && typable(it);
       return `<div class="q6-q" data-i="${i}"><p class="q6-p"><span>${i + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p>

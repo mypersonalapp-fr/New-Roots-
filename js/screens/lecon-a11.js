@@ -23,7 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261024bb";
 import { createVoice } from "./voice.js?v=20261024bb";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
-import { mountQuiz, quizHtml, vocabItems, gramItems } from "./quiz6.js?v=20261024bb";
+import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc } from "./quiz6.js?v=20261024bb";
 import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261024bb";
 import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261024bb";
 import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261024bb";
@@ -609,7 +609,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     if (page >= total) page = total - 1;
     const exit = showMenu;
     if (page === L.length) {
-      return quizScreen({ total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
+      return quizScreen({ think: true, total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
         build: (miss) => gramItems(conjQuiz(L), miss), prev: () => { page--; cjTab = 0; showConj(); },
         onCheck: (good, tot) => { const o = prog.conj || {}; prog.conj = { best: Math.max(o.best || 0, good), tot, tries: (o.tries || 0) + 1, last: good }; saveProgress(prog); },
         next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
@@ -756,7 +756,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const lastStep = page === total - 1;
     if (st.t === "vtest") {
       const allW = (B.vocab || []).flatMap((v) => v.words || []).map(([a, b]) => [sub(a), sub(b)]), pw = p.words.map(([a, b]) => [sub(a), sub(b)]), ww = st.words.map(([a, b]) => [sub(a), sub(b)]);
-      return quizScreen({ total, key: "v:" + B.code + ":" + st.pi + ":" + st.ci, bubble: "Teste-toi !", btn: lastStep ? "Terminer ✓" : "Suivant →", back: showMenu,
+      return quizScreen({ think: true, total, key: "v:" + B.code + ":" + st.pi + ":" + st.ci, bubble: "Teste-toi !", btn: lastStep ? "Terminer ✓" : "Suivant →", back: showMenu,
         build: (miss) => vocabItems(ww, pw, allW, allW.filter((w) => miss.includes(w[0]))),
         prev: () => { page--; showVocab(); }, next: () => { page++; showVocab(); } });
     }
@@ -952,7 +952,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const li = (en, fr) => `<li><span class="lc-w"><b>${esc(sub(en))}</b><small>${esc(sub(fr))}</small></span>${spk(sub(en))}</li>`;
     let body = "", hint = "", btn = "Suivant →", bubble = "À toi de jouer !", station = 1;
     if (st.t === "gtest") {
-      return quizScreen({ total, key: "g:" + B.code + ":" + st.pi, bubble: "Teste-toi !", btn: "Exercices ✏️", back: exit,
+      return quizScreen({ think: true, total, key: "g:" + B.code + ":" + st.pi, bubble: "Teste-toi !", btn: "Exercices ✏️", back: exit,
         build: (miss) => gramItems(p.qsPool, miss), prev: () => { page--; showAct(id); }, next: () => { page++; showAct(id); } });
     }
     const nxt = steps[page + 1], toQ = st.t !== "qs" && nxt && (nxt.t === "qs" || nxt.t === "gtest") && nxt.pi === st.pi;
@@ -1103,6 +1103,23 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       if (Number(b.dataset.i) === q[2]) { if (firstTry[ftKey] === undefined) firstTry[ftKey] = true; okQ[key] = Object.assign({}, okQ[key], { [qi]: true }); mark(qi, true); refresh(); }
       else { firstTry[ftKey] = false; b.classList.add("lc-wrong"); const fb = b.closest(".lc-qb").querySelector(".lc-fb"); fb.className = "lc-fb lc-fb-ko"; fb.textContent = Array.isArray(q[3]) ? "Pas tout à fait — " + xp(q, Number(b.dataset.i)) + " Réessaie." : id === "exercises" ? "Pas tout à fait — " + (q[3] || "") + " Réessaie." : "Pas tout à fait, réessaie."; }
     }));
+    // « Écrire d'abord » : pour les questions courtes, l'élève tape sa réponse ; les choix sont derrière « Indice ».
+    const typableAct = (q) => !/^(Écoute|Which|Quelle|Choisis)/i.test(q[0]) && (/___/.test(q[0]) || isVoc(q[0]) || q[1].every((o) => String(o).trim().split(/\s+/).length <= 3));
+    el.querySelectorAll(".lc-qb[data-qi]").forEach((box) => {
+      const qi = Number(box.dataset.qi), q = p.qs[qi];
+      if (!q || (okQ[key] || {})[qi] || !typableAct(q)) return;
+      const ch = box.querySelector(".lc-choices"), fb = box.querySelector(".lc-fb"), w = document.createElement("div");
+      w.className = "q6-w"; w.innerHTML = `<input class="lc-ta q6-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…"><button type="button" class="q6-okb">OK</button><button type="button" class="q6-hintb">💡 Indice</button>`;
+      ch.hidden = true; ch.before(w);
+      const inp = w.querySelector("input");
+      const submit = () => {
+        const v = inp.value.trim(); if (!v) return;
+        if (same(v, q[1][q[2]], isVoc(q[0]))) { ch.hidden = false; w.remove(); ch.querySelector(`.lc-choice[data-i="${q[2]}"]`).click(); }
+        else { firstTry[`${key}:${qi}`] = false; fb.className = "lc-fb lc-fb-ko"; fb.textContent = "Pas tout à fait — 💡 " + maskHint({ opts: q[1], a: q[2], expl: xp(q, q[2]) }) + " Réessaie."; }
+      };
+      w.querySelector(".q6-okb").onclick = submit; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
+      w.querySelector(".q6-hintb").onclick = (e) => { ch.hidden = false; e.currentTarget.remove(); };
+    });
     const tr = el.querySelector("#lcTr");
     if (tr) tr.onclick = () => { const t = el.querySelector("#lcTrText"); t.hidden = !t.hidden; tr.setAttribute("aria-expanded", String(!t.hidden)); };
     const sp = el.querySelector("#lcSpeed");
