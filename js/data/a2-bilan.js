@@ -111,9 +111,25 @@ export function checkGuided(raw, item) {
 }
 // Compréhension avec réponse écrite : l’élève écoute ou lit, puis répond par une phrase complète (corrigée comme les phrases guidées).
 export const COMP = [
-  { kind: "listen", say: "Tom is playing football in the park.", q: "What is Tom doing?", ans: ["tom is playing football", "tom is playing football in the park", "he is playing football", "he is playing football in the park"], q2: false, S: ["tom", "he"], V: "is playing", forms: ["play", "plays", "played", "playing"], C: ["football"] },
-  { kind: "listen", say: "Anna doesn’t like coffee. She likes tea.", q: "What does Anna like?", ans: ["she likes tea", "anna likes tea"], q2: false, S: ["she", "anna"], V: "likes", forms: ["like", "likes", "liked", "liking"], C: ["tea"] },
-  { kind: "read", text: "Maria lives in Madrid. She works in a bank. She has got two sons.", q: "Where does Maria work?", ans: ["she works in a bank", "maria works in a bank", "she works in a bank in madrid"], q2: false, S: ["she", "maria"], V: "works", forms: ["work", "works", "worked", "working"], C: ["bank"] },
-  { kind: "read", text: "Ben and Sam are brothers. They play tennis on Saturdays. They don’t play football.", q: "What do Ben and Sam play on Saturdays?", ans: ["they play tennis", "they play tennis on saturdays", "ben and sam play tennis", "ben and sam play tennis on saturdays"], q2: false, S: ["they", "ben", "sam"], V: "play", forms: ["play", "plays", "played", "playing"], C: ["tennis"] },
+  { kind: "listen", say: "Tom is playing football in the park. His sister Anna is reading a book. They are happy.", qs: [
+    { q: "What is Tom doing?", ans: ["tom is playing football", "tom is playing football in the park", "he is playing football", "he is playing football in the park"], S: ["tom", "he"], V: "is playing", forms: ["play", "plays", "played", "playing"], C: ["football"] },
+    { q: "What is Anna doing?", ans: ["anna is reading a book", "she is reading a book", "anna is reading", "she is reading"], S: ["anna", "she"], V: "is reading", forms: ["read", "reads", "reading"], C: ["book", "reading"] },
+    { q: "Where is Tom?", ans: ["tom is in the park", "he is in the park"], S: ["tom", "he"], V: "is", forms: ["is"], C: ["park"] },
+  ] },
+  { kind: "listen", say: "Anna doesn’t like coffee. She likes tea. She drinks tea every morning.", qs: [
+    { q: "What does Anna like?", ans: ["she likes tea", "anna likes tea"], S: ["she", "anna"], V: "likes", forms: ["like", "likes", "liked", "liking"], C: ["tea"] },
+    { q: "What doesn’t Anna like?", ans: ["she doesn’t like coffee", "anna doesn’t like coffee"], S: ["she", "anna"], V: "doesn’t like", forms: ["like", "likes", "liked", "liking"], C: ["coffee"] },
+    { q: "When does Anna drink tea?", ans: ["she drinks tea every morning", "anna drinks tea every morning", "she drinks tea in the morning"], S: ["she", "anna"], V: "drinks", forms: ["drink", "drinks", "drank", "drinking"], C: ["morning", "tea"] },
+  ] },
+  { kind: "read", text: "Maria lives in Madrid. She works in a bank. She has got two sons.", qs: [
+    { q: "Where does Maria live?", ans: ["she lives in madrid", "maria lives in madrid"], S: ["she", "maria"], V: "lives", forms: ["live", "lives", "lived", "living"], C: ["madrid"] },
+    { q: "Where does Maria work?", ans: ["she works in a bank", "maria works in a bank", "she works in a bank in madrid"], S: ["she", "maria"], V: "works", forms: ["work", "works", "worked", "working"], C: ["bank"] },
+    { q: "How many sons has Maria got?", ans: ["she has got two sons", "maria has got two sons", "she has two sons", "maria has two sons"], S: ["she", "maria"], V: "has got", forms: ["have", "has", "got"], C: ["sons", "two"] },
+  ] },
+  { kind: "read", text: "Ben and Sam are brothers. They play tennis on Saturdays. They don’t play football.", qs: [
+    { q: "What do Ben and Sam play on Saturdays?", ans: ["they play tennis", "they play tennis on saturdays", "ben and sam play tennis", "ben and sam play tennis on saturdays"], S: ["they", "ben", "sam"], V: "play", forms: ["play", "plays", "played", "playing"], C: ["tennis"] },
+    { q: "Are Ben and Sam brothers?", ans: ["they are brothers", "yes they are brothers", "ben and sam are brothers"], S: ["they", "ben", "sam"], V: "are", forms: ["are"], C: ["brothers"] },
+    { q: "What don’t they play?", ans: ["they don’t play football", "ben and sam don’t play football"], S: ["they", "ben", "sam"], V: "don’t play", forms: ["play", "plays", "played", "playing"], C: ["football"] },
+  ] },
 ];
 export const WRITE_CRITERIA = [["orth", "Orthographe"], ["punct", "Ponctuation"], ["ordre", "Ordre de la phrase"], ["accord", "Accord du verbe"]];

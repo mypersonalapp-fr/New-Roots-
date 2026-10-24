@@ -1110,3 +1110,7 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-main.bl2-fill>.lc-card:last-of-type{flex:1 1 auto;display:flex;flex-direction:column}
 .lc-main.bl2-fill>.lc-card:last-of-type .lc-ta{flex:1 1 auto;min-height:110px}
 .lc-main.bl2-fill>.lc-card:last-of-type .q6-list{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-around}
+.bl2-qq{font-weight:800;font-size:15px;margin:10px 0 4px;display:flex;gap:8px;align-items:baseline}
+.bl2-qq span{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:50%;background:#6366F1;color:#fff;font-size:12px}
+.lc-main.bl2-fill>.lc-card:last-of-type .lc-ta.sm{flex:none;min-height:0;width:100%}
+.lc-ta.sm{height:58px;min-height:58px!important;resize:none;padding:8px 10px}

@@ -641,10 +641,11 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   const blColor = (p) => (p >= 70 ? "#2fa55b" : p >= 50 ? "#caa21b" : "#c8382a");
   // Pages du bilan après les QCM : réponses écrites après une écoute ou une lecture, dictée, phrases guidées.
   const bilanTx = () => [...COMP.map((c) => ({ k: c.kind, c })), ...DICTEES.map((d) => ({ k: "dic", d })), ...GUIDED.map((g) => ({ k: "gui", g }))];
+  const compItem = (c, j) => Object.assign({}, c.qs[j], { say: c.say, text: c.text, q2: false });
   function showBilan() {
     screen = "bilan";
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), nT = TH.length, total = nT + TX.length;
-    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map(() => "") };
+    if (!bl) bl = { step: 0, items: TH.map((t) => mkItems(t.diag)), pick: TH.map(() => []), txt: TX.map((t) => (t.c ? t.c.qs.map(() => "") : "")) };
     const i = bl.step, c = currentCharacter();
     let body = "", ready = false;
     const guide = (t) => `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${t}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
@@ -654,9 +655,10 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       ready = its.every((_, q) => bl.pick[i][q] !== undefined);
       body = guide("Bilan : pas de note !") + `<section class="lc-card q6"><div class="q6-top"><b>${th.icon} ${esc(th.label)}</b><span>${i + 1}/${nT}</span></div><p class="q6-help">Touche 1 réponse par question.</p><div class="q6-list">${its.map((it, q) => `<div class="q6-q"><p class="q6-p"><span>${q + 1}</span>${esc(it.q)}${it.say ? ` <button type="button" class="q6-spk" data-say="${esc(it.say)}" aria-label="Écouter">🔊</button>` : ""}</p><div class="q6-o">${it.opts.map((o, k) => `<button type="button" class="lc-choice q6-c${bl.pick[i][q] === k ? " lc-sel" : ""}" data-q="${q}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>`).join("")}</div></section>`;
     } else {
-      const t = TX[i - nT], v = bl.txt[i - nT]; ready = v.trim().length > 0;
-      if (t.k === "listen") body = guide("Écoute, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">🎧 Écoute et réponds</h2><p class="lc-lead">Écoute, puis réponds en anglais par une phrase complète.</p><button type="button" class="lc-cta" data-say="${esc(t.c.say)}" style="margin:6px 0">🔊 Écouter</button><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">${esc(t.c.q)}</p>${area(v, "Écris ta réponse ici…")}</section>`;
-      else if (t.k === "read") body = guide("Lis, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">📖 Lis et réponds</h2><p class="lc-text" style="font-size:16px;line-height:1.5;margin:6px 0">${esc(t.c.text)}</p><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">${esc(t.c.q)}</p>${area(v, "Réponds par une phrase complète…")}</section>`;
+      const t = TX[i - nT], v = bl.txt[i - nT]; ready = t.c ? v.every((x) => x.trim().length > 0) : v.trim().length > 0;
+      const qa = (c) => c.qs.map((qq, j) => `<p class="lc-q bl2-qq"><span>${j + 1}</span>${esc(qq.q)}</p><textarea class="lc-ta sm" data-j="${j}" rows="2" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Ta réponse…">${esc(v[j])}</textarea>`).join("");
+      if (t.k === "listen") body = guide("Écoute, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">🎧 Écoute et réponds</h2><button type="button" class="lc-cta" data-say="${esc(t.c.say)}" style="margin:6px 0">🔊 Écouter</button>${qa(t.c)}</section>`;
+      else if (t.k === "read") body = guide("Lis, puis réponds !") + `<section class="lc-card"><h2 class="lc-h2">📖 Lis et réponds</h2><p class="lc-text" style="font-size:16px;line-height:1.5;margin:6px 0">${esc(t.c.text)}</p>${qa(t.c)}</section>`;
       else if (t.k === "dic") body = guide("Écris ce que tu entends !") + `<section class="lc-card"><h2 class="lc-h2">✍️ Dictée</h2><p class="lc-lead">Écoute, puis écris la phrase en anglais, avec la ponctuation.</p><button type="button" class="lc-cta" data-say="${esc(t.d.say)}" style="margin:6px 0">🔊 Écouter la phrase</button>${area(v, "Écris la phrase ici…")}</section>`;
       else body = guide("Écris la phrase en anglais !") + `<section class="lc-card"><h2 class="lc-h2">🧱 Phrase guidée</h2><p class="lc-lead">Traduis en anglais, avec un sujet, un verbe, un complément et la ponctuation :</p><p class="lc-q" style="font-weight:800;font-size:17px;margin:8px 0">« ${esc(t.g.fr)} »</p>${area(v, "Écris ta phrase ici…")}</section>`;
     }
@@ -670,14 +672,18 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     el.querySelectorAll(".q6-c").forEach((b) => b.addEventListener("click", () => { bl.pick[i][+b.dataset.q] = +b.dataset.k; showBilan(); }));
     const ta = el.querySelector("#blIn");
     if (ta) ta.addEventListener("input", () => { bl.txt[i - nT] = ta.value; const nx = el.querySelector("#lcNext"); if (nx) nx.disabled = ta.value.trim().length === 0; });
+    el.querySelectorAll("textarea[data-j]").forEach((x) => x.addEventListener("input", () => { bl.txt[i - nT][+x.dataset.j] = x.value; const nx = el.querySelector("#lcNext"); if (nx) nx.disabled = !bl.txt[i - nT].every((v) => v.trim().length > 0); }));
   }
   function finishBilan() {
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), rows = [], crit = { orth: [0, 0], punct: [0, 0], ordre: [0, 0], accord: [0, 0] }, cont = { listen: [0, 0], read: [0, 0] };
     TH.forEach((t, i) => { const ok = bl.items[i].filter((it, q) => bl.pick[i][q] === it.a).length; rows.push({ id: t.id, label: t.label, icon: t.icon, ok, tot: bl.items[i].length }); });
     TX.forEach((t, j) => {
-      const r = t.k === "dic" ? checkDictee(bl.txt[j], t.d) : checkGuided(bl.txt[j], t.k === "gui" ? t.g : t.c);
-      WRITE_CRITERIA.forEach(([k]) => { crit[k][1]++; if (r[k]) crit[k][0]++; });
-      if (cont[t.k]) { cont[t.k][1]++; if (r.contenu) cont[t.k][0]++; }
+      const list = t.c ? t.c.qs.map((_, q) => [bl.txt[j][q], compItem(t.c, q)]) : [[bl.txt[j], t.k === "dic" ? t.d : t.g]];
+      list.forEach(([raw, it]) => {
+        const r = t.k === "dic" ? checkDictee(raw, it) : checkGuided(raw, it);
+        WRITE_CRITERIA.forEach(([k]) => { crit[k][1]++; if (r[k]) crit[k][0]++; });
+        if (cont[t.k]) { cont[t.k][1]++; if (r.contenu) cont[t.k][0]++; }
+      });
     });
     const ec = rows.find((r) => r.id === "ec"); if (ec) { ec.ok += cont.listen[0]; ec.tot += cont.listen[1]; }
     const lt = themeById("lect"); rows.push({ id: "lect", label: lt.label, icon: lt.icon, ok: cont.read[0], tot: cont.read[1] });
