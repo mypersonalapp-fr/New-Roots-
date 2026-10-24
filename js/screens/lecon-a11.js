@@ -491,13 +491,15 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   function fillTyped() {
     const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
     const qs = [...m.querySelectorAll(".lc-qb")].filter((b) => b.querySelector(".q6-w")); if (!qs.length) return;
-    qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = ""; });
-    m.classList.remove("q6-tight"); if (m.scrollHeight > m.clientHeight + 2) m.classList.add("q6-tight");
-    const cards = m.querySelectorAll(":scope > .lc-card, :scope > section"), last = cards[cards.length - 1] || m.lastElementChild;
-    const L = Math.floor(f.getBoundingClientRect().top - last.getBoundingClientRect().bottom - 50), per = Math.min(24, Math.floor(L / (qs.length * 2)));
-    if (per < 2) return;
-    qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = per + "px"; });
-    if (m.scrollHeight > m.clientHeight + 2 || last.getBoundingClientRect().bottom > f.getBoundingClientRect().top - 6) qs.forEach((b) => { b.style.paddingTop = b.style.paddingBottom = ""; });
+    ["--qh", "--qf", "--qp"].forEach((v) => m.style.removeProperty(v)); m.classList.remove("q6-tight");
+    const card = qs[qs.length - 1].closest(".lc-card") || m.lastElementChild;
+    const fits = () => m.scrollHeight <= m.clientHeight + 2 && card.getBoundingClientRect().bottom <= f.getBoundingClientRect().top - 40;
+    if (!fits()) { m.classList.add("q6-tight"); return; }
+    for (let l = 22; l > 0; l--) { // plus la page est haute, plus les lignes de réponse et les questions grandissent
+      m.style.setProperty("--qh", Math.min(36 + l * 2.5, 68) + "px"); m.style.setProperty("--qf", Math.min(15 + l * 0.4, 20) + "px"); m.style.setProperty("--qp", Math.min(l * 1.2, 22) + "px");
+      if (fits()) return;
+    }
+    ["--qh", "--qf", "--qp"].forEach((v) => m.style.removeProperty(v));
   }
   function fillRows0() {
     const m = el.querySelector(".lc-main"), f = el.querySelector(".lc-foot"); if (!m || !f) return;
