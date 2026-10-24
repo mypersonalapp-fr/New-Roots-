@@ -1049,3 +1049,14 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-card:has(.lc-pic) .lc-ta{min-height:56px !important;height:56px}
 .lc-card:has(.lc-pic) .lc-pic{max-height:none !important;display:flex;justify-content:center}
 .lc-card:has(.lc-pic) .lc-pic img{height:152px !important;width:auto !important;max-width:100% !important}
+/* Mission 3 : 3 phrases par écran, une case chacune */
+.rc-bgrp .rc-gb{ margin:0 0 10px; }
+.rc-bgrp .rc-ask{ font-size:16px; margin:4px 0 4px; }
+.rc-bgrp .rc-slots{ min-height:52px; margin:4px 0; }
+.rc-bgrp .rc-bank{ margin:4px 0 0; gap:6px; }
+.rc-bgrp .rc-bank button, .rc-bgrp .rc-slots button{ font-size:16px; padding:8px 12px; min-height:40px; }
+.rc-bgrp .rc-fb{ font-size:15px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-gb{ margin-bottom:22px; }
+.rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-ask{ font-size:19px; }
+.rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-slots{ min-height:70px; }
+.rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-bank button, .rc-bgrp:has(.rc-gb:nth-of-type(2):last-of-type) .rc-slots button{ font-size:19px; padding:11px 15px; min-height:48px; }

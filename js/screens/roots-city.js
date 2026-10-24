@@ -123,7 +123,7 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
   function run(i) {
     const m = MISSIONS[i], steps = DATA[m.id];
     const S = { i, n: 0, errors: 0 };
-    (steps[0].answer && steps[0].bank ? build : choose)(m, steps, S);
+    (steps[0].answer && steps[0].bank ? (m.id === "m3" ? buildGroup : build) : choose)(m, steps, S);
   }
 
   const head = (m, S, steps) => ({ cur: S.n + 1, total: steps.length });
@@ -257,6 +257,36 @@ export function createCity({ el, frame, esc, speak, toast, back, getStars, setSt
           if (!good) S.errors++; checked = true; paint();
         } else if (S.n + 1 >= steps.length) finish(m, S, steps);
         else { S.n++; build(m, steps, S); }
+      };
+    };
+    paint();
+  }
+
+  /* ---- mission 3 : 3 phrases par écran, chacune devant sa propre case ---- */
+  function buildGroup(m, steps, S) {
+    const per = 3, g0 = S.n, grp = steps.slice(g0, g0 + per);
+    const st = grp.map(() => ({ placed: [], checked: false, good: false }));
+    let done = false, first = true;
+    const paint = () => {
+      const y0 = first ? 0 : (el.querySelector(".lc-main") || {}).scrollTop || 0;
+      const blocks = grp.map((t, j) => {
+        const q = st[j], used = new Set(q.placed), ok = q.checked && q.good;
+        const bank = t.bank.map((w, k) => `<button type="button" class="rc-tok ${used.has(k) ? "used" : ""}" data-j="${j}" data-k="${k}" ${used.has(k) || done || q.placed.length >= t.answer.length ? "disabled" : ""}>${esc(w)}</button>`).join("");
+        const slots = q.placed.map((k, p) => `<button type="button" class="rc-tok in" data-j="${j}" data-p="${p}" ${done ? "disabled" : ""}>${esc(t.bank[k])}</button>`).join("") || `<span class="rc-ph">Touche les mots dans l’ordre</span>`;
+        const ans = t.answer.join(" ").replace(/ ([?.])/g, "$1");
+        return `<div class="rc-gb"><p class="rc-ask"><b>${g0 + j + 1}.</b> ${esc(t.prompt)}</p><div class="rc-slots ${done ? (ok ? "ok" : "ko") : ""}">${slots}</div>${done ? `<div class="rc-fb">${ok ? "✅ Parfait !" : `Pas tout à fait. Réponse : <b>${esc(ans)}</b>`} ${play(ans)}</div>` : `<div class="rc-bank">${bank}</div>`}</div>`;
+      }).join("");
+      const ready = st.every((q, j) => q.placed.length >= grp[j].answer.length);
+      frame(`Mission ${S.i + 1}/${MISSIONS.length}`, { cur: Math.min(g0 + per, steps.length), total: steps.length }, `${hero(m)}<section class="lc-card lc-card-bare rc-card rc-build rc-bgrp"><h2 class="lc-h2">${m.ic} ${esc(m.title)}</h2>${blocks}
+        <button type="button" class="lc-next rc-go" id="rcGo" ${!done && !ready ? "disabled" : ""}>${done ? (g0 + per >= steps.length ? "Terminer" : "Suivant ›") : "Valider"}</button></section>`);
+      first = false; { const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = y0; }
+      bindBack(start);
+      el.querySelectorAll("[data-k]").forEach((b) => b.addEventListener("click", () => { st[+b.dataset.j].placed.push(+b.dataset.k); paint(); }));
+      el.querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => { st[+b.dataset.j].placed.splice(+b.dataset.p, 1); paint(); }));
+      el.querySelector("#rcGo").onclick = () => {
+        if (!done) { st.forEach((q, j) => { q.checked = true; q.good = q.placed.map((k) => grp[j].bank[k]).join("|") === grp[j].answer.join("|"); if (!q.good) S.errors++; }); done = true; paint(); }
+        else if (g0 + per >= steps.length) finish(m, S, steps);
+        else { S.n = g0 + per; buildGroup(m, steps, S); }
       };
     };
     paint();
