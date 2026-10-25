@@ -440,3 +440,14 @@ A(12, "l", 7, Q("Where was the traffic jam?", "On the motorway", "In the town", 
 A(12, "l", 8, Q("What did someone take?", "His wallet", "His phone", "His bag", "took my wallet."), Q("What was in it?", "Money and a bank card", "A passport", "Keys", "Some money and my bank card."), Q("Who will he also call?", "His bank", "His mother", "His boss", "I'll also call my bank."));
 A(12, "l", 9, Q("Who is the speaker talking to?", "Her mum", "Her boss", "A friend", "Hi Mum!"), Q("What did the airline give them?", "A hotel", "Money", "A taxi", "a hotel for the night."), Q("When are the new tickets for?", "Tomorrow morning", "Tonight", "Next week", "tomorrow morning."));
 
+// A2.12 : 2 questions de plus par texte de lecture (8 par texte, 4 par page, réponses courtes).
+A(12, "r", 0, Q("What was Emma worried about?", "The connecting flight", "The hotel", "The food", "What if we miss the connecting flight?"), Q("Where were they going?", "Lisbon", "Madrid", "Rome", "They were going to Lisbon."));
+A(12, "r", 1, Q("What colour was the bag?", "Black", "Blue", "Green", "small and black."), Q("What did the bag have?", "A red label", "A blue ribbon", "A name", "with a red label."));
+A(12, "r", 2, Q("What was missing?", "A suitcase", "A passport", "A phone", "His suitcase was not on the belt."), Q("Where was Paul's suitcase?", "In Paris", "In Rome", "At home", "still in Paris."));
+A(12, "r", 3, Q("What did the thief take?", "A phone", "A bag", "A wallet", "someone stole her phone."), Q("Who did Sara call?", "Her insurance company", "Her mother", "Her boss", "Sara called her insurance company."));
+A(12, "r", 4, Q("What was Ben's problem?", "The reservation", "The key", "The price", "we don't have a record of your reservation."), Q("When was the booking for?", "Next week", "Last week", "Tomorrow", "The booking is for next week."));
+A(12, "r", 5, Q("What did Anna take?", "A coach", "A taxi", "A plane", "She looked for a coach."), Q("Why was the train not running?", "A strike", "The snow", "A fire", "Train strike today."));
+A(12, "r", 6, Q("Who stood up?", "A young woman", "A pilot", "A child", "A young woman stood up."), Q("What did she give the man?", "Some water", "Some food", "A pill", "gave him some water."));
+A(12, "r", 7, Q("What went wrong?", "A wrong turn", "A flat tyre", "No petrol", "we took a wrong turn."), Q("Where were they going?", "To the airport", "To the beach", "To work", "driving to the airport."));
+A(12, "r", 8, Q("What did Leo take?", "A taxi", "A bus", "A train", "Leo took a taxi."), Q("When did he check in?", "Just in time", "Too late", "Early", "just in time."));
+A(12, "r", 9, Q("What was the weather like?", "Rainy", "Sunny", "Snowy", "it rained for three days."), Q("What is their sentence now?", "It's a good story", "Never again", "Let's go home", "Don't worry, it's a good story!"));

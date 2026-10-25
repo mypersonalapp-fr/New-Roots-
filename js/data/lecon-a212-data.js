@@ -3,6 +3,8 @@
 // Images à fournir : lesson/scene-a212-*.webp, city/a212-m1..m6.webp, lesson/describe-a212-*.webp.
 import { balanceAll } from "./balance.js";
 const names = (a) => a.map((n) => ({ v: n, label: n }));
+// Raccourci : [énoncé, bonne réponse, faux 1, faux 2, explication] → [énoncé, [3 choix], 0, explication] (balanceAll mélange ensuite).
+const E = (s, r, a, b, e) => [s, [r, a, b], 0, e];
 
 export const VOCAB_A212 = [
   { kind: "greetings", title: "Demander de l'aide", icon: "🆘",
@@ -84,6 +86,19 @@ export const GRAMMAR_A212 = [
     examples: [["I was waiting at the gate when I heard the announcement.", "J'attendais à la porte quand j'ai entendu l'annonce."], ["After that, we took a taxi to the hotel.", "Après cela, nous avons pris un taxi jusqu'à l'hôtel."]],
     qs: [["___, my bag was missing. (malheureusement)", ["Unfortunately", "Luckily", "Finally"], 0, "Unfortunately."], ["First, I missed the bus. ___, I took a taxi.", ["Then", "Because", "Although"], 0, "Then = puis."], ["___, everything was fine. (finalement)", ["In the end", "At first", "Just in case"], 0, "In the end."]] },
 ];
+// Questions de grammaire supplémentaires : 6 par page (3 ci-dessus + 3 ici), toutes à écrire.
+const GX = [
+  [E("What if the bus ___ late?", "is", "will be", "was", "What if + présent."), E("What if I ___ my keys?", "lose", "will lose", "lost", "What if + présent."), E("What if they ___ the plane?", "miss", "will miss", "missed", "What if + présent.")],
+  [E("If it snows, the flight ___ be late.", "will", "would", "is", "If + présent, will."), E("I'll text you if the train ___ late.", "is", "will be", "was", "if + présent."), E("If we hurry, we ___ catch the bus.", "will", "would", "did", "If + présent, will.")],
+  [E("You ___ wear a seat belt. It's the law.", "must", "should to", "are", "Règle : must."), E("You ___ see a doctor. You look ill.", "should", "have", "must to", "Conseil : should."), E("Passengers ___ leave bags alone.", "must not", "don't have to", "should to", "Interdit : must not.")],
+  [E("I ___ my bag on the train yesterday.", "left", "was leaving", "leave", "Action terminée : past simple."), E("We were walking when it ___ to rain.", "started", "was starting", "starts", "Action courte : past simple."), E("What ___ you doing at ten o'clock?", "were", "did", "are", "Past continuous.")],
+  [E("I think the bus ___ be late.", "will", "is going", "is being", "Prédiction : will."), E("Look! That car ___ crash.", "is going to", "will to", "is going", "Preuve visible : going to."), E("We ___ the guide at nine. (rendez-vous)", "are meeting", "will meeting", "meet to", "Projet organisé : présent continu.")],
+  [E("She said that she ___ tired.", "was", "is", "will be", "said that + passé."), E("He asked me ___ I had a ticket.", "if", "that", "to", "asked if."), E("The agent told us ___ here.", "to wait", "wait", "waiting", "told us to + verbe.")],
+  [E("Could you ___ me, please?", "help", "to help", "helping", "Could you + verbe."), E("___ I ask you a question?", "Could", "Do", "Am", "Could I… ?"), E("Thank you so much ___ your help.", "for", "of", "to", "Thank you for.")],
+  [E("A plane is ___ than a train. (fast)", "faster", "more fast", "fastest", "Fast → faster."), E("It's the ___ seat on the plane. (comfortable)", "most comfortable", "more comfortable", "comfortabler", "the most + adjectif long."), E("This ticket is as ___ as that one. (expensive)", "expensive", "more expensive", "expensiver", "as + adjectif + as.")],
+  [E("___, we found a taxi. (heureusement)", "Luckily", "Unfortunately", "Finally not", "Luckily = heureusement."), E("First I called, ___ I waited. (puis)", "then", "because", "although", "Then = puis."), E("___, everything was fine. (finalement)", "In the end", "At first", "Just in case", "In the end.")],
+];
+GRAMMAR_A212.forEach((g, i) => g.qs.push(...GX[i]));
 
 export const READING_A212 = [
   { who: "A delayed flight", text: "Last Friday, Emma and Tom arrived at the airport at seven o'clock. They were going to Lisbon for a short holiday. While they were standing at the check-in desk, Tom looked at the departures board. Their flight was delayed by two hours. Emma was worried. \"What if we miss the connecting flight?\" she asked. \"Don't worry,\" said Tom. \"Shall we ask at the information desk?\"",
@@ -141,8 +156,6 @@ export const LISTENING_A212 = [
     qs: [["What happened to the flight?", ["It was cancelled", "It was early", "It was full"], 0, "Our flight was cancelled."], ["What did the airline give them?", ["A hotel for the night", "A taxi", "Money"], 0, "A hotel for the night."]] },
 ];
 
-// Raccourci : [énoncé, bonne réponse, faux 1, faux 2, explication] → [énoncé, [3 choix], 0, explication] (balanceAll mélange ensuite).
-const E = (s, r, a, b, e) => [s, [r, a, b], 0, e];
 export const EXERCISES_A212 = [
   { title: "Vocabulaire — Aéroport et voyage", help: "Choisis le sens correct.",
     qs: [E("check-in desk", "comptoir d'enregistrement", "porte", "piste", "Check-in desk = comptoir d'enregistrement."), E("boarding pass", "carte d'embarquement", "passeport", "valise", "Boarding pass = carte d'embarquement."), E("gate", "porte d'embarquement", "terminal", "douane", "Gate = porte d'embarquement."), E("customs", "douane", "sécurité", "bagages", "Customs = douane."), E("delayed", "retardé", "annulé", "ouvert", "Delayed = retardé."), E("cancelled", "annulé", "retardé", "plein", "Cancelled = annulé."), E("connecting flight", "correspondance", "vol direct", "retard", "Connecting flight = vol de correspondance."), E("refund", "remboursement", "reçu", "billet", "Refund = remboursement."), E("departures board", "panneau des départs", "arrivées", "plan", "Departures board = panneau des départs."), E("on time", "à l'heure", "en retard", "trop tôt", "On time = à l'heure."), E("miss", "rater", "attendre", "trouver", "Miss = rater."), E("runway", "piste", "porte", "tapis", "Runway = piste.")] },
