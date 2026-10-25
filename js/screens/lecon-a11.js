@@ -922,7 +922,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     return out;
   };
   const cLvl = {}, noMerge = new Set(), gLvl = {}, qCap = {}, noHint = new Set(), kwMax = {}, exMax = {}, qFirst = {}, tight = new Set(), tight2 = new Set(); // écrans qui ne tiennent pas en un seul : on les redécoupe
-  const typableAct = (q) => !/^(Écoute|Which|Quelle|Choisis)/i.test(q[0]) && !q[1].some((o) => /^(yes|no|oui|non|true|false|vrai|faux|nobody|we don)/i.test(String(o).trim())) && (/___/.test(q[0]) || isVoc(q[0]) || q[1].every((o) => String(o).trim().split(/\s+/).length <= 3));
+  const typableAct = (q) => !/^(Écoute|Which|Quelle|Choisis)/i.test(q[0]) && !q[1].some((o) => /^(yes|no|oui|non|true|false|vrai|faux|nobody|we don)\b/i.test(String(o).trim())) && (/___/.test(q[0]) || isVoc(q[0]) || q[1].every((o) => String(o).trim().split(/\s+/).length <= 3));
   function actSteps(id, A) {
     const S = [];
     A.pages.forEach((p, pi) => {
