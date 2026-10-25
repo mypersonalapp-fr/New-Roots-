@@ -1,6 +1,6 @@
 // The Roots — registre des leçons du niveau A2 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js). Même principe que lecons-a1.js.
-// Leçons construites : A2.0 à A2.10 (voir A2_BUILT). Les autres paliers viendront un par un.
+// Leçons construites : A2.0 à A2.11 (voir A2_BUILT). Les autres paliers viendront un par un.
 import { CONJ_A2 } from "./conjugation-a1.js";
 import { A2_EN_PALIERS } from "./programme-a2-en.js";
 import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261024bb";
@@ -9,7 +9,7 @@ import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261024bb";
 const cut = (t, n = 64) => { let x = String(t).split(/ [—–-] | \(|\.\s/)[0].replace(/^Grammaire : /, ""); x = x.split(" : ")[0]; if (x.length > n) { x = x.slice(0, n); x = x.slice(0, x.lastIndexOf(" ")) + "…"; } return x; };
 export const shortGoals = (base) => [cut(base.objective.split(", ")[0], 70), ...base.grammar.slice(0, 2).map((g) => "Grammaire : " + cut(g, 40))];
 export const A2_TITLES_FR = ["Ma routine au quotidien", "Le passé et « used to »", "Pendant que…", "Mes projets", "Comparer", "Santé et bien-être", "Météo et environnement", "Logement et quartier", "Au téléphone", "Sorties et invitations", "Opinions et sentiments", "Imprévus en voyage"];
-export const A2_BUILT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const A2_BUILT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 // A2.0 « Passerelle A1 → A2 » : leçon transversale placée entre A1 et A2.1 (n = 0).
 const A20_BASE = { code: "A2.0", title: "Bridge A1 to A2", objective: "Réviser les règles des temps vus en A1 et les verbes de base, pour partir sans lacune vers le passé (A2.2).", grammar: ["Présent simple : la règle complète", "Présent continu : la règle complète", "Be et have got : révision"] };
 const KEYS = (n) => `the_roots_a2${n}_lesson_v1`;

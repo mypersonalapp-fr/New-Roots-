@@ -56,4 +56,9 @@ export const SITUATIONS_A2 = {
     S("🙏", "Refuse an invitation politely.", "Utilise « I'm afraid I can't ».", "\\bi.m afraid\\b|\\bi.d love to,? but\\b|\\bsorry\\b", "I'm afraid I can't come."),
     S("🍽️", "Book a table for two at eight.", "Utilise « I'd like to book… ».", "\\b(book|reserve)\\b.*\\btable\\b|\\btable for two\\b", "I'd like to book a table for two at eight."),
   ],
+  "A2.11": [
+    S("💬", "Give your opinion about a film.", "Utilise « I think… » ou « In my opinion… ».", "\\bi think\\b|\\bin my opinion\\b|\\bi believe\\b|\\bpersonally\\b", "In my opinion, the film is great."),
+    S("😞", "Say you are disappointed and why.", "Utilise « I'm disappointed because… ».", "\\bdisappointed\\b|\\bupset\\b|\\bsad\\b", "I'm disappointed because the trip is cancelled."),
+    S("❤️", "Say what you enjoy doing.", "Utilise « I enjoy + -ing ».", "\\bi (enjoy|love|like) \\w+ing\\b", "I enjoy reading in the evening."),
+  ],
 };

@@ -517,6 +517,24 @@ export const EXPRESSION_PLUS_A2 = {
       ["Excuse-toi.", "Excuse", "sorry|apologise|afraid|unfortunately"], ["Dis que tu dois annuler et pourquoi.", "Annulation", "cancel|can.t come|ill|busy|work|because"],
       ["Propose une autre date.", "Alternative", "how about|what about|would .* be better|instead|reschedule|another"], ["Remercie.", "Merci", "thank|thanks"]]),
   ],
+  11: [
+    T("Décris l'image : au cinéma", "🎬", "Two friends are leaving a cinema. One of them is laughing, but the other looks disappointed. I think the film was funny for one and boring for the other. They are probably discussing their opinion.", [
+      ["Dis où sont les personnes.", "Où", "cinema|outside|leaving|entrance|street"],
+      ["Dis ce que ressent chaque personne.", "Émotions", "laughing|smiling|happy|disappointed|bored|upset|looks|feels"],
+      ["Donne ton avis sur leur discussion.", "À ton avis", "think|maybe|probably|opinion|film|movie"],
+      ["Dis ce qu'ils vont faire ensuite.", "Ensuite", "going to|will|talk|discuss|go home|dinner|eat"]], "describe-a211-cinema"),
+    T("Décris l'image : une bonne nouvelle", "🎉", "A young woman is reading a letter and smiling. Her friend is hugging her. They look very excited. I think she has good news, maybe a new job or an exam result.", [
+      ["Dis ce que fait la jeune femme.", "La jeune femme", "is (reading|smiling|holding)|reading|smiling|letter"],
+      ["Dis ce que fait son amie.", "Son amie", "is (hugging|laughing|smiling)|hugging|friend"],
+      ["Dis comment elles se sentent.", "Émotions", "excited|happy|delighted|proud|relieved|pleased|look"],
+      ["Dis ce que tu penses de la lettre.", "À ton avis", "think|maybe|probably|good news|job|exam|result"]], "describe-a211-news"),
+    T("Donner son avis sur un livre", "📖", "I read a novel last week. In my opinion, it's brilliant because the characters are very real. Although the ending is a bit sad, I enjoyed reading it. I recommend it to everybody.", [
+      ["Dis ce que tu as lu.", "Le livre", "novel|book|story|read"], ["Donne ton avis.", "Avis", "i think|in my opinion|i believe|personally|brilliant|great|good|boring"],
+      ["Justifie avec because ou although.", "Justification", "because|although|but|so"], ["Recommande (ou non).", "Recommandation", "recommend|should read|worth|enjoy|love"]]),
+    T("Exprimer un sentiment", "🫶", "Hi Tom, I'm writing because I'm very worried. I have an interview tomorrow, and I feel nervous. I hope to do well. I decided to go to bed early. Thank you for listening!", [
+      ["Dis comment tu te sens.", "Sentiment", "worried|nervous|excited|happy|sad|disappointed|relieved|i feel|i.m"], ["Explique pourquoi.", "Raison", "because|so|interview|exam|trip|job"],
+      ["Utilise hope, decide ou plan + to.", "Intention", "hope to|decided to|plan to|want to"], ["Remercie.", "Merci", "thank|thanks"]]),
+  ],
 };
 
 // Exercices de traduction EN↔FR (A1.6 → A2.7) : ajoutés à la fin des expressions de chaque leçon.

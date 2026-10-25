@@ -134,4 +134,16 @@ export const DIALOGUES_A2 = {
       { npc: "That's OK. Maybe another time?", ok: ["\\b(how about|what about|saturday|sunday|next|another time|instead|maybe|yes)\\b"], model: "How about Saturday instead? I'm free all day.", hint: "Propose un autre jour." },
       { npc: "Saturday is perfect. Let's go!", ok: ["\\b(great|perfect|thank|thanks|see you|sounds good|can.t wait)\\b"], model: "Great, thank you! See you on Saturday.", hint: "Conclus." }] },
   ],
+  "A2.11": [
+    { title: "Donner son avis sur un film", icon: "🎬", scene: "Un ami te demande ce que tu as pensé du film.", turns: [
+      { npc: "Did you see the new film last night? What did you think?", ok: ["\\b(i think|in my opinion|i loved|i liked|i enjoyed|it was|personally|honestly)\\b"], model: "I loved it! In my opinion, it's fantastic.", hint: "Donne ton avis avec I think ou In my opinion." },
+      { npc: "Really? Why did you like it?", ok: ["\\b(because|so|the (story|actors|ending|music)|it was)\\b"], model: "Because the story is exciting and the actors are brilliant.", hint: "Justifie avec because." },
+      { npc: "I thought the ending was a bit disappointing.", ok: ["\\b(i see your point|i agree|i disagree|you.re right|not really|true|but|however)\\b"], model: "I see your point, but I enjoyed it.", hint: "Dis si tu es d'accord ou non." },
+      { npc: "OK. Would you recommend it?", ok: ["\\b(yes|recommend|definitely|of course|i would|i do)\\b"], model: "Yes, I definitely recommend it.", hint: "Recommande le film." }] },
+    { title: "Parler de ses sentiments", icon: "🫶", scene: "Une amie voit que tu as l'air préoccupé.", turns: [
+      { npc: "You look worried. What's wrong?", ok: ["\\b(i.m|i am|i feel|i.ve got|worried|nervous|stressed|tired|exam|interview)\\b"], model: "I'm nervous because I have an interview tomorrow.", hint: "Dis ce que tu ressens et pourquoi." },
+      { npc: "Oh, that's normal. How do you feel about it?", ok: ["\\b(i feel|i.m|i am|a little|a bit|excited|nervous|worried|confident)\\b"], model: "I feel a bit excited, but also nervous.", hint: "Utilise I feel + adjectif." },
+      { npc: "I think you'll do very well.", ok: ["\\b(thank|thanks|i hope|hope so|really|you think)\\b"], model: "Thank you! I hope so.", hint: "Remercie." },
+      { npc: "Call me after the interview!", ok: ["\\b(i will|i.ll|sure|of course|ok|okay|yes|thank)\\b"], model: "I will! Thanks for listening.", hint: "Promets." }] },
+  ],
 };

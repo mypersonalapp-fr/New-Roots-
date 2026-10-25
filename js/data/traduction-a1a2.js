@@ -428,6 +428,29 @@ const A2 = {
       "Samedi serait-il mieux pour toi ? ¦ Would Saturday be better for you? ¦ would/is & saturday & better",
       "Partageons l'addition. ¦ Let's split the bill. ¦ let s/shall we & split/share & bill/check",
       "Le film commence à huit heures. ¦ The film starts at eight o'clock. ¦ film/movie & start/begin & eight"]))],
+  11: [PAIR(
+    PART("fr", "Avis et sentiments", [
+      "I enjoy reading in the evening. ¦ J'aime lire le soir. ¦ aime & lire & soir",
+      "In my opinion, the film is too long. ¦ À mon avis, le film est trop long. ¦ avis & film & trop long",
+      "She decided to stay at home. ¦ Elle a décidé de rester chez elle. ¦ decide & rester & chez elle/maison",
+      "I'm disappointed with the result. ¦ Je suis déçu du résultat. ¦ decu & resultat",
+      "I can't stand waiting in queues. ¦ Je ne supporte pas faire la queue. ¦ supporte & queue/file",
+      "Although it was long, I loved it. ¦ Bien que ce soit long, j'ai adoré. ¦ bien que/meme si & long & adore/aime",
+      "He looks worried about the exam. ¦ Il a l'air inquiet pour l'examen. ¦ air/semble & inquiet & examen",
+      "I agree with you, but I see your point. ¦ Je suis d'accord avec toi, mais je comprends ton point de vue. ¦ accord & comprends/vois & point",
+      "We plan to travel in July. ¦ Nous prévoyons de voyager en juillet. ¦ prevoy/projet/pensons & voyager & juillet",
+      "To be honest, I didn't like the ending. ¦ Pour être honnête, je n'ai pas aimé la fin. ¦ honnete/franchement & pas aime & fin"]),
+    PART("en", "Donner son avis", [
+      "J'adore danser. ¦ I love dancing. ¦ love/like/enjoy & danc",
+      "Je veux voir ce film. ¦ I want to see this film. ¦ want & see/watch & film/movie",
+      "Je ne pense pas que ce soit une bonne idée. ¦ I don't think it's a good idea. ¦ don t think & good idea",
+      "Moi aussi ! ¦ So do I! ¦ so do i/me too",
+      "Elle a l'air contente. ¦ She looks happy. ¦ look/seem & happy/pleased/glad",
+      "J'ai décidé d'apprendre la guitare. ¦ I decided to learn the guitar. ¦ decided & learn & guitar",
+      "Je suis d'accord avec toi. ¦ I agree with you. ¦ agree & you",
+      "Parce que l'histoire est passionnante. ¦ Because the story is exciting. ¦ because & story/plot & exciting/interesting",
+      "Je suis soulagé que ce soit fini. ¦ I'm relieved that it's over. ¦ relieved & over/finished",
+      "Que penses-tu de la fin ? ¦ What do you think about the ending? ¦ what & think & ending/end"]))],
 };
 
 export const TRADUCTION_A1 = A1;
