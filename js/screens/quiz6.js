@@ -32,7 +32,7 @@ export function gramItems(pool, redo = []) {
   return [...first, ...rest].slice(0, N).map((q) => ({ q: q[0], opts: q[1], a: q[2], key: q[0], expl: Array.isArray(q[3]) ? q[3][q[2]] : q[3] }));
 }
 
-export function quizHtml() { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
+export function quizHtml(pass) { return `<section class="lc-card q6"><div class="q6-top"><b>📝 Test</b><span id="q6s">Il faut ${pass || PASS}/${N}</span></div><p class="q6-help">👆 Touche 1 réponse par question, puis « Vérifier ».</p><div class="q6-list" id="q6l"></div><p class="lc-fb q6-fb" id="q6f" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="q6c" disabled>Vérifier</button></section>`; }
 
 // build(redoKeys) -> items. onPass() débloque « Suivant ». Retourne rien ; tout est dans host.
 const nrm = (x) => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\([^)]*\)/g, "").replace(/[’'`.,!?;:«»]/g, "").replace(/\s+/g, " ").trim();
@@ -58,7 +58,8 @@ export { same, maskHint };
 const typable = (it) => !/^Écoute/.test(it.q) && (/___/.test(it.q) || /veut dire|en anglais/.test(it.q));
 const maskHint = (it) => { const e = String(it.expl || "").trim(), a = String(it.opts[it.a] || "").replace(/[.?!]+$/, "").trim(); if (!e) return "Relis la règle."; if (!a) return e; const re = new RegExp(a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+"), "gi"); return e.replace(re, "…").replace(/\s+/g, " "); };
 // think = true : l’élève écrit d’abord sa réponse (les choix sont derrière « Indice »), puis, s’il se trompe, il reçoit un indice et un 2ᵉ essai avant la correction.
-export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think }) {
+export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think, pass }) {
+  const need = pass || PASS;
   let items = build([]), picked = [], checked = false, txt = [], shown = [], locked = [], hints = [], attempt = 0;
   const val = (i) => { const it = items[i]; if (think && typable(it) && (txt[i] || "").trim()) return same(txt[i], it.opts[it.a], /veut dire|en anglais/.test(it.q), it.opts) ? it.a : -2; return picked[i]; };
   const paint = () => {
@@ -104,11 +105,11 @@ export function mountQuiz(host, key, build, { speak, onPass, btn, onCheck, think
       checked = true;
       const good = items.filter((it, i) => val(i) === it.a).length;
       host.querySelectorAll(".q6-q").forEach((bx, i) => { const o = bx.querySelector(".q6-o"); if (o) o.hidden = false; const hb = bx.querySelector(".q6-hintb"); if (hb) hb.remove(); const inp = bx.querySelector(".q6-in"); if (inp) inp.disabled = true; bx.querySelectorAll(".q6-c").forEach((c) => { c.disabled = true; c.classList.remove("lc-sel"); if (+c.dataset.k === items[i].a) c.classList.add("lc-right"); else if (+c.dataset.k === picked[i] && !(txt[i] || "").trim()) c.classList.add("lc-wrong"); }); });
-      const fb = host.querySelector("#q6f"), ok = good >= PASS;
+      const fb = host.querySelector("#q6f"), ok = good >= need;
       onCheck && onCheck(good, N);
       host.querySelector("#q6s").textContent = `${good}/${N}`;
       fb.className = "lc-fb q6-fb " + (ok ? "lc-fb-ok" : "lc-fb-ko");
-      fb.textContent = ok ? `✔ ${good}/${N} — bravo, tu passes !` : `${good}/${N} — il faut ${PASS}. Les erreurs reviennent.`;
+      fb.textContent = ok ? `✔ ${good}/${N} — bravo, tu passes !` : `${good}/${N} — il faut ${need}. Les erreurs reviennent.`;
       if (ok) { done.add(key); b.style.display = "none"; go().disabled = false; onPass && onPass(); }
       else b.textContent = "Réessayer ↻", b.disabled = false;
       fit();

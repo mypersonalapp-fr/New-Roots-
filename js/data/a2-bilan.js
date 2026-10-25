@@ -3,8 +3,9 @@
 export const BILAN_PASS = 70;
 const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
 export function mkItems(list, redo = [], n = list.length) {
-  const first = list.filter((q) => redo.includes(q[0]));
-  const rest = shuffle(list.filter((q) => !redo.includes(q[0])));
+  const isR = (q) => redo.includes(q[0]) || redo.includes(q[0] + "|" + q[1]);
+  const first = list.filter(isR);
+  const rest = shuffle(list.filter((q) => !isR(q)));
   return [...first, ...rest].slice(0, n).map((q) => { const opts = shuffle([q[1], q[2], q[3]]); return { q: q[0], opts, a: opts.indexOf(q[1]), key: q[0] + "|" + q[1], expl: q[4], say: q[5] || null }; });
 }
 const W = "Quelle orthographe est correcte ?", P = "Quelle phrase est bien écrite ?", O = "Quelle phrase est dans le bon ordre ?";

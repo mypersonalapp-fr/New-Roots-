@@ -22,6 +22,7 @@ import { plusPages } from "../data/vocab-plus-a1.js?v=20261025c";
 import { buildPractice, mountPractice } from "./practice.js?v=20261025c";
 import { createVoice } from "./voice.js?v=20261025c";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
+import { REMISE } from "../data/a2-remise.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
 import { SYN_TR } from "../data/syn-fr.js?v=20261025c";
 import { XQ } from "../data/a1-extra-q.js?v=20261025c";
@@ -613,14 +614,14 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     } finally { B._probing = 0; B._steps = null; page = keep; }
   }
   // Page de test : 6 questions, 4 bonnes réponses pour passer (les erreurs reviennent).
-  function quizScreen({ total, key, build, back, prev, next, btn, bubble, onCheck, think }) {
+  function quizScreen({ total, key, build, back, prev, next, btn, bubble, onCheck, think, pre, pass }) {
     const c = currentCharacter();
     const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">${bubble}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" disabled>${btn}</button></footer>`;
-    frame(HEAD, { cur: page + 1, total }, guide + quizHtml(), foot);
+    frame(HEAD, { cur: page + 1, total }, (pre || "") + (pre ? "" : guide) + quizHtml(pass), foot);
     const m = el.querySelector(".lc-main"); m.scrollTop = 0; m.classList.add("lc-q6");
     el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = next;
-    mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck, think });
+    mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck, think, pass });
   }
   // Conjugaison : 6 verbes nouveaux par leçon (une page par verbe, 3 onglets) puis un test de 6 questions.
   let cjTab = 0;
@@ -698,7 +699,9 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   }
   function finishBilan() {
     const TH = THEMES.filter((t) => t.diag), TX = bilanTx(), rows = [], crit = { orth: [0, 0], punct: [0, 0], ordre: [0, 0], accord: [0, 0] }, cont = { listen: [0, 0], read: [0, 0] };
-    TH.forEach((t, i) => { const ok = bl.items[i].filter((it, q) => bl.pick[i][q] === it.a).length; rows.push({ id: t.id, label: t.label, icon: t.icon, ok, tot: bl.items[i].length }); });
+    const errs = {};
+    TH.forEach((t, i) => { const ok = bl.items[i].filter((it, q) => bl.pick[i][q] === it.a).length; rows.push({ id: t.id, label: t.label, icon: t.icon, ok, tot: bl.items[i].length });
+      if (t.id !== "ec") errs[t.id] = bl.items[i].map((it, q) => (bl.pick[i][q] !== it.a && bl.pick[i][q] !== undefined ? { q: it.q, wrong: it.opts[bl.pick[i][q]], right: it.opts[it.a], expl: it.expl || "" } : null)).filter(Boolean).slice(0, 4); });
     TX.forEach((t, j) => {
       const list = t.c ? t.c.qs.map((_, q) => [bl.txt[j][q], compItem(t.c, q)]) : (t.ds || t.gs).map((it, q) => [bl.txt[j][q], it]);
       list.forEach(([raw, it]) => {
@@ -712,7 +715,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     WRITE_CRITERIA.forEach(([k, label]) => rows.push({ id: k, label, icon: themeById(k).icon, ok: crit[k][0], tot: crit[k][1] }));
     rows.forEach((r) => { r.pct = Math.round((r.ok / r.tot) * 100); });
     const pct = Math.round(rows.reduce((a, r) => a + r.pct, 0) / rows.length), weak = rows.filter((r) => r.pct < BILAN_PASS).map((r) => r.id);
-    prog.bilan = { pct, rows: rows.map(({ id, label, icon, pct: p }) => ({ id, label, icon, pct: p })), weak, at: Date.now() };
+    prog.bilan = { pct, rows: rows.map(({ id, label, icon, pct: p }) => ({ id, label, icon, pct: p })), weak, errs, at: Date.now() };
     if (pct >= BILAN_PASS) prog.remise = Object.assign({}, prog.remise, { all: true });
     prog.done = Object.assign({}, prog.done, { bilan: true }); saveProgress(prog);
     showBilanResult();
@@ -742,8 +745,64 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     el.querySelector("#lcBack").onclick = showMenu; el.querySelector("#rmBack").onclick = showMenu;
     const go = el.querySelector("#rmGo"); if (go) go.onclick = () => { rtheme = next.id; rstep = 0; showRemiseStep(); };
   }
+  // A2.01 nouveau parcours (par thème) : 0 tes erreurs · 1 règle autrement · 2 compris ? · 3 texte à trous · 4-5 exercices · 6 mini-test
+  const RM_CHIPS = ["Tes erreurs", "Leçon", "Compris ?", "Texte", "Exo", "Test"], RM_G = [0, 1, 2, 3, 4, 4, 5], RM_TOTAL = 7;
+  function rmPre(th) {
+    const g = RM_G[rstep];
+    return `<div class="rm-st">${RM_CHIPS.map((t, i) => `<b class="${i < g ? "dn" : i === g ? "on" : ""}">${i < g ? "✓" : i === g ? (i + 1) + " " + t : i + 1}</b>`).join("")}</div>`;
+  }
+  const rmBold = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  function rmErrors(th, R) {
+    const real = ((prog.bilan && prog.bilan.errs && prog.bilan.errs[th.id]) || []).map((e, i) => {
+      const fill = (w) => (e.q.includes("___") ? e.q.replace("___", w) : e.q + " " + w);
+      return { w: fill(e.wrong), r: fill(e.right), tag: "ton erreur", why: e.expl };
+    });
+    const seen = new Set(real.map((e) => e.r));
+    const fb = R.fallback.filter((f) => !seen.has(f[1])).map((f) => ({ w: f[0], r: f[1], tag: f[2], why: f[3] }));
+    return { list: real.concat(fb).slice(0, 4), real: real.length };
+  }
+  function showRemiseNew(th, R) {
+    const key = "rm:" + rtheme, c = currentCharacter();
+    page = rstep;
+    const pre = rmPre(th), back = showRemise, prev = () => { if (rstep === 0) showRemise(); else { rstep--; showRemiseStep(); } };
+    const adv = () => { rstep++; showRemiseStep(); };
+    const foot = (lbl) => `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${lbl}</button></footer>`;
+    const wire = () => { el.querySelector("#lcBack").onclick = back; el.querySelector("#lcPrev").onclick = prev; el.querySelector("#lcNext").onclick = adv;
+      el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); })); };
+    if (rstep === 0) {
+      const { list, real } = rmErrors(th, R);
+      const body = pre + `<section class="lc-card rm-card"><h2 class="lc-h2">👀 ${real ? `Tes ${list.length} erreurs du bilan` : "Les erreurs classiques"}</h2><p class="lc-lead">${th.icon} ${esc(th.label)} · ${real ? "on part de ce que TOI tu as écrit." : "on part des pièges les plus fréquents."}</p>
+        ${list.map((e, i) => `<div class="rm-err"><span class="rm-tag">Erreur ${i + 1} · ${esc(e.tag)}</span><div><s>${esc(e.w)}</s> → <b>${esc(e.r)}</b></div>${e.why ? `<p>${esc(e.why)}</p>` : ""}</div>`).join("")}
+        <p class="rm-note">Ces erreurs reviennent dans les exercices, jusqu’à ce qu’elles soient réussies.</p></section>`;
+      frame(HEAD, { cur: 1, total: RM_TOTAL }, body, foot("La règle →")); wire(); return;
+    }
+    if (rstep === 1) {
+      const L = R.lesson, hl = (x) => esc(x).replace(/\|(\w+)/, "<i>$1</i>");
+      const body = pre + `<section class="lc-card rm-card"><h2 class="lc-h2">📘 ${esc(L.title)}</h2>
+        <div class="rm-cmp"><div><b>Pas de s</b>${L.no.map((x) => `<span>${esc(x)}</span>`).join("")}</div><div class="y"><b>Un s ✅ (he / she / it)</b>${L.yes.map((x) => `<span>${hl(x)}</span>`).join("")}</div></div>
+        <div class="rm-tip">💡 <b>Astuce :</b> ${esc(L.tip)}</div>
+        <div class="rm-cmp"><div><b>Négatif</b>${L.neg.map((x) => `<span>${rmBold(x)}</span>`).join("")}</div><div><b>Question</b>${L.qst.map((x) => `<span>${rmBold(x)}</span>`).join("")}</div></div>
+        <div class="rm-tip">⚠️ <b>Règle d’or :</b> ${esc(L.gold)}</div>
+        <div class="rm-ex">${L.say.map((x) => `<button type="button" class="rm-sp" data-say="${esc(x)}">🔊 ${esc(x)}</button>`).join("")}</div></section>`;
+      frame(HEAD, { cur: 2, total: RM_TOTAL }, body, foot("Suivant →")); wire(); return;
+    }
+    const errQ = (((prog.bilan && prog.bilan.errs && prog.bilan.errs[th.id]) || []).map((e) => e.q));
+    const errList = th.diag.filter((q) => errQ.includes(q[0]));
+    const cfg = {
+      2: { k: ":cp", bub: "As-tu compris la règle ?", btn: "Suivant →", b: (m) => mkItems(R.compris, m, 6) },
+      3: { k: ":cz", bub: "Complète la leçon !", btn: "Exercices ✏️", b: (m) => mkItems(R.cloze, m, 6) },
+      4: { k: ":e1", bub: "À toi de pratiquer !", btn: "Suivant →", b: (m) => mkItems(errList.concat(th.ex), m.length ? m : errList.map((q) => q[0]), 6) },
+      5: { k: ":e2", bub: "Encore un peu !", btn: "Mini-test 🏁", b: (m) => mkItems(R.ex2, m, 6) },
+      6: { k: ":mt", bub: "Mini-test : questions neuves !", btn: "Terminer ✓", b: (m) => mkItems(th.mini, m, 6), pass: 5 }
+    }[rstep];
+    quizScreen({ think: true, total: RM_TOTAL, key: key + cfg.k, bubble: cfg.bub, btn: cfg.btn, back, prev, pre, pass: cfg.pass, build: cfg.b,
+      next: () => { if (rstep < 6) { adv(); return; }
+        const rm = Object.assign({}, prog.remise), dn = Object.assign({}, rm.done, { [rtheme]: true }), weak = (prog.bilan.rows || []).filter((r) => r.pct < BILAN_PASS);
+        prog.remise = Object.assign(rm, { done: dn, all: weak.every((r) => dn[r.id]) }); saveProgress(prog); showRemise(); } });
+  }
   function showRemiseStep() {
     const th = themeById(rtheme), c = currentCharacter(), key = "rm:" + rtheme;
+    if (REMISE[rtheme]) { showRemiseNew(th, REMISE[rtheme]); return; }
     page = rstep;
     if (rstep === 0) {
       const body = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">On revoit ça ensemble !</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div><section class="lc-card"><h2 class="lc-h2">📘 ${esc(th.label)}</h2><ul class="lc-list lc-rules bl2-rule">${th.rule.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>`;

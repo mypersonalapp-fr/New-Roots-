@@ -1135,3 +1135,14 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 /* pages à réponse écrite très chargées (6 lignes) : on resserre pour que tout tienne */
 .lc-main.q6-tight .lc-qb{margin-bottom:4px}
 .lc-main.q6-tight .lc-qb .lc-q{margin-bottom:3px;line-height:1.2}
+
+/* A2.01 parcours par thème */
+.rm-st{display:flex;gap:4px;margin:0 0 6px}.rm-st b{flex:1;text-align:center;font-size:11px;font-weight:800;padding:6px 2px;border-radius:9px;background:var(--surface-soft,#e8eef0);color:var(--ink,#1b1d22);white-space:nowrap;overflow:hidden}
+.rm-st b.on{flex:2.2;background:#e2a13d;color:#fff}.rm-st b.dn{color:#22a55b}
+.rm-card{display:flex;flex-direction:column;gap:7px}.rm-card .lc-lead{margin:0;font-size:12.5px}
+.rm-err{border-radius:12px;padding:8px 11px;background:rgba(128,140,150,.16);font-size:13.5px;color:var(--ink,#1b1d22)}.rm-err s{color:#e5484d}.rm-err b{color:#22a55b}.rm-err p{margin:3px 0 0;font-size:12px;opacity:.8}
+.rm-tag{display:inline-block;font-size:10.5px;font-weight:800;color:#e2a13d;background:rgba(226,161,61,.16);border-radius:7px;padding:1px 7px;margin-bottom:3px}
+.rm-note{margin:auto 0 0;font-size:12px;opacity:.75}
+.rm-cmp{display:grid;grid-template-columns:1fr 1fr;gap:7px}.rm-cmp>div{border-radius:12px;padding:8px 10px;background:rgba(128,140,150,.16);font-size:13.5px;line-height:1.5;color:var(--ink,#1b1d22)}.rm-cmp>div.y{background:rgba(226,161,61,.22)}.rm-cmp>div>b:first-child{display:block;font-size:11.5px;margin-bottom:2px}.rm-cmp span{display:block}.rm-cmp i{color:#e2a13d;font-weight:800;font-style:normal}
+.rm-tip{border-left:4px solid #e2a13d;border-radius:8px;background:rgba(128,140,150,.14);padding:7px 10px;font-size:13px;color:var(--ink,#1b1d22)}
+.rm-ex{display:flex;flex-direction:column;gap:5px}.rm-sp{text-align:left;border:0;border-radius:10px;padding:8px 10px;background:rgba(128,140,150,.16);color:var(--ink,#1b1d22);font:inherit;font-size:13px}
