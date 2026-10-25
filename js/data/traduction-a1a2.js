@@ -451,6 +451,29 @@ const A2 = {
       "Parce que l'histoire est passionnante. ¦ Because the story is exciting. ¦ because & story/plot & exciting/interesting",
       "Je suis soulagé que ce soit fini. ¦ I'm relieved that it's over. ¦ relieved & over/finished",
       "Que penses-tu de la fin ? ¦ What do you think about the ending? ¦ what & think & ending/end"]))],
+  12: [PAIR(
+    PART("fr", "Imprévus en voyage", [
+      "What if we miss the flight? ¦ Et si on rate le vol ? ¦ et si & rate/rater/manque & vol",
+      "The flight is delayed by two hours. ¦ Le vol a deux heures de retard. ¦ vol & deux heures & retard",
+      "My suitcase is missing. ¦ Ma valise a disparu. ¦ valise & disparu/manque/introuvable/perdue",
+      "Could you help me, please? ¦ Pourriez-vous m'aider, s'il vous plaît ? ¦ pourriez/pouvez/peux & aider",
+      "I'd like to report a theft. ¦ Je voudrais déclarer un vol. ¦ voudrais/aimerais & declarer/signaler & vol",
+      "If it rains, we'll stay at the hotel. ¦ S'il pleut, nous resterons à l'hôtel. ¦ pleut & resterons/reste & hotel",
+      "He said that he would call back. ¦ Il a dit qu'il rappellerait. ¦ dit & rappell",
+      "Take an umbrella, just in case. ¦ Prends un parapluie, au cas où. ¦ parapluie & au cas ou",
+      "Luckily, my passport was in my bag. ¦ Heureusement, mon passeport était dans mon sac. ¦ heureusement & passeport & sac",
+      "Don't worry, I can help you. ¦ Ne t'inquiète pas, je peux t'aider. ¦ inquiete/inquietez/fais pas & peux/peut/pouvons & aider"]),
+    PART("en", "Demander de l'aide", [
+      "Et si on rate le vol ? ¦ What if we miss the flight? ¦ what if & miss & flight",
+      "Mon vol est annulé. ¦ My flight is cancelled. ¦ flight & cancel",
+      "Pourriez-vous m'aider, s'il vous plaît ? ¦ Could you help me, please? ¦ could/can/would & help & please",
+      "J'ai laissé mon passeport à l'hôtel. ¦ I left my passport at the hotel. ¦ left/forgot & passport & hotel",
+      "Où est le bureau des objets trouvés ? ¦ Where is the lost property office? ¦ where & lost & office/property",
+      "S'il pleut, nous prendrons un taxi. ¦ If it rains, we'll take a taxi. ¦ if & rain & taxi",
+      "Il a dit que le vol était retardé. ¦ He said that the flight was delayed. ¦ said & flight & delayed/late",
+      "Vous devez remplir un formulaire. ¦ You have to fill in a form. ¦ have to/must/need & fill & form",
+      "Que dois-je faire ? ¦ What should I do? ¦ what & should/must/can & do",
+      "Dans ce cas, appelons la compagnie. ¦ In that case, let's call the airline. ¦ in that case & call & airline/company"]))],
 };
 
 export const TRADUCTION_A1 = A1;

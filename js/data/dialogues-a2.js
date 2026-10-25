@@ -146,4 +146,16 @@ export const DIALOGUES_A2 = {
       { npc: "I think you'll do very well.", ok: ["\\b(thank|thanks|i hope|hope so|really|you think)\\b"], model: "Thank you! I hope so.", hint: "Remercie." },
       { npc: "Call me after the interview!", ok: ["\\b(i will|i.ll|sure|of course|ok|okay|yes|thank)\\b"], model: "I will! Thanks for listening.", hint: "Promets." }] },
   ],
+  "A2.12": [
+    { title: "Un vol retardé", icon: "⏰", scene: "À l'aéroport, tu parles à un agent car ton vol est en retard.", turns: [
+      { npc: "Good evening. How can I help you?", ok: ["\\b(my flight|the flight|delayed|late|cancelled|excuse me|could you|problem)\\b"], model: "Excuse me, my flight is delayed. Could you help me, please?", hint: "Explique le problème et demande de l'aide." },
+      { npc: "I'm sorry about that. What is your flight number?", ok: ["\\b(flight|number|it is|it's|b\\.?a|[a-z]{2}\\s?\\d{2,4})\\b"], model: "It's flight BA two four seven to Madrid.", hint: "Donne ton numéro de vol." },
+      { npc: "The flight is delayed by two hours.", ok: ["\\b(what should i do|what if|miss|connecting|can i|could i|should i)\\b"], model: "What if I miss my connecting flight?", hint: "Utilise What if… ?" },
+      { npc: "Don't worry. In that case, we can book you on the next flight.", ok: ["\\b(thank|thanks|great|good|ok|okay|that.s)\\b"], model: "Thank you so much for your help.", hint: "Remercie." }] },
+    { title: "Un objet perdu", icon: "🧳", scene: "Tu as perdu ton sac à la gare et tu vas aux objets trouvés.", turns: [
+      { npc: "Hello. Can I help you?", ok: ["\\b(lost|missing|left|bag|wallet|suitcase|phone|passport|stolen)\\b"], model: "Yes, I lost my bag at the station.", hint: "Dis ce que tu as perdu." },
+      { npc: "I'm sorry to hear that. Can you describe it?", ok: ["\\b(small|big|black|blue|red|brown|large|label|it is|it's|it was)\\b"], model: "It's small and black, with a red label.", hint: "Décris le sac." },
+      { npc: "When did you lose it?", ok: ["\\b(yesterday|this morning|last|ago|today|at|on|when)\\b"], model: "I left it on the train this morning.", hint: "Dis quand (past simple)." },
+      { npc: "Please fill in this form. We'll call you.", ok: ["\\b(thank|thanks|ok|okay|sure|of course|please)\\b"], model: "Thank you. I hope you find it!", hint: "Remercie." }] },
+  ],
 };

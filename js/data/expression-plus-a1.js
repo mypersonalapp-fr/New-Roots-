@@ -535,6 +535,24 @@ export const EXPRESSION_PLUS_A2 = {
       ["Dis comment tu te sens.", "Sentiment", "worried|nervous|excited|happy|sad|disappointed|relieved|i feel|i.m"], ["Explique pourquoi.", "Raison", "because|so|interview|exam|trip|job"],
       ["Utilise hope, decide ou plan + to.", "Intention", "hope to|decided to|plan to|want to"], ["Remercie.", "Merci", "thank|thanks"]]),
   ],
+  12: [
+    T("Décris l'image : à l'aéroport", "✈️", "Many people are standing in a big airport. A woman is looking at the departures board and she looks worried. A man is talking to an agent at a desk. I think the flight is delayed, so they are waiting for information.", [
+      ["Dis où sont les personnes.", "Où", "airport|terminal|desk|hall|departures|board"],
+      ["Dis ce que fait la femme.", "La femme", "is (looking|standing|reading|waiting)|looking|worried|board"],
+      ["Dis ce que fait l'homme.", "L'homme", "is (talking|asking|standing|waiting)|talking|agent|desk"],
+      ["Dis ce qui se passe, à ton avis.", "À ton avis", "think|maybe|probably|delayed|cancelled|late|problem"]], "describe-a212-airport"),
+    T("Décris l'image : un objet perdu", "🧳", "A young man is at the lost property office. He is describing his black bag to an employee. The employee is writing on a form. The young man looks hopeful. I think he lost the bag on the train.", [
+      ["Dis où est le jeune homme.", "Où", "lost property|office|desk|station|counter"],
+      ["Dis ce qu'il fait.", "Ce qu'il fait", "is (describing|talking|explaining|asking)|describing|talking|explaining"],
+      ["Dis ce que fait l'employé.", "L'employé", "is (writing|filling|listening|helping)|writing|form|listening"],
+      ["Dis ce que tu penses de la situation.", "À ton avis", "think|maybe|probably|lost|train|hopeful|bag"]], "describe-a212-lost"),
+    T("Raconter un imprévu", "📖", "Last year, our train was cancelled because of a strike. First, we asked at the information desk. Then we took a coach. Luckily, we arrived at the hotel before dinner. In the end, it was a good story!", [
+      ["Dis ce qui s'est passé.", "Imprévu", "cancelled|delayed|missed|lost|strike|problem|broken|stolen"], ["Dis ce que tu as fait ensuite.", "Action", "asked|went|took|called|waited|found|then|first"],
+      ["Utilise Luckily ou Unfortunately.", "Connecteur", "luckily|unfortunately|fortunately|in the end|finally"], ["Conclus.", "Fin", "in the end|finally|at last|everything|fine|good story"]]),
+    T("Écrire un message d'aide", "✉️", "Hi, I'm writing because my flight is cancelled. Could you help me, please? I would like to take the next flight. What should I do? Thank you so much for your help.", [
+      ["Explique le problème.", "Problème", "cancelled|delayed|missing|lost|stolen|problem|broken"], ["Demande de l'aide poliment.", "Demande", "could you|would you|can you|help|please"],
+      ["Dis ce que tu voudrais.", "Souhait", "would like|i.d like|i want|need"], ["Remercie.", "Merci", "thank|thanks|so much"]]),
+  ],
 };
 
 // Exercices de traduction EN↔FR (A1.6 → A2.7) : ajoutés à la fin des expressions de chaque leçon.

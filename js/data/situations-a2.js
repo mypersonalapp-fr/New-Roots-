@@ -61,4 +61,9 @@ export const SITUATIONS_A2 = {
     S("😞", "Say you are disappointed and why.", "Utilise « I'm disappointed because… ».", "\\bdisappointed\\b|\\bupset\\b|\\bsad\\b", "I'm disappointed because the trip is cancelled."),
     S("❤️", "Say what you enjoy doing.", "Utilise « I enjoy + -ing ».", "\\bi (enjoy|love|like) \\w+ing\\b", "I enjoy reading in the evening."),
   ],
+  "A2.12": [
+    S("🆘", "Ask for help politely.", "Utilise « Could you help me, please? ».", "\\bcould you\\b|\\bwould you\\b|\\bcould i\\b|\\bexcuse me\\b", "Excuse me, could you help me, please?"),
+    S("❓", "Imagine a problem with « What if… ».", "Utilise « What if we miss the flight? ».", "\\bwhat if\\b", "What if we miss the flight?"),
+    S("🧳", "Say your suitcase is missing.", "Utilise « My suitcase is missing ».", "\\bmissing\\b|\\blost\\b|\\bnot on the belt\\b", "My suitcase is missing."),
+  ],
 };
