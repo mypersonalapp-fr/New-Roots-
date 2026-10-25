@@ -23,6 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261025c";
 import { createVoice } from "./voice.js?v=20261025c";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { REMISE } from "../data/a2-remise.js";
+import { WHY_A1 } from "../data/pourquoi-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
 import { SYN_TR } from "../data/syn-fr.js?v=20261025c";
 import { XQ } from "../data/a1-extra-q.js?v=20261025c";
@@ -987,7 +988,8 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     A.pages.forEach((p, pi) => {
       const mergeT = !noMerge.has(id + ":t" + pi);
       if (id === "grammar") {
-        const lv = gLvl[id + ":g" + pi] || 0, R = p.table;
+        const lv = gLvl[id + ":g" + pi] || 0, R = p.table, why = p.why || (WHY_A1[B.code] || {})[p.title];
+        if (why) S.push({ t: "gwhy", p, pi, why }); // page « Pourquoi on l'utilise ? » avant la règle
         if (p.qa) { /* page 100 % questions-réponses : pas de tableau, les règles sont dans les explications */ }
         else if (lv === 0) S.push({ t: "gall", p, pi, rows: R, ex: true });
         else if (lv === 1) S.push({ t: "gall", p, pi, rows: R, ex: false }); // règles seules ; exemples avec la 1re question
@@ -1082,7 +1084,13 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       kwBody = `<section class="lc-card lc-ctx lc-kw"><h2 class="lc-h2 lc-h2-ctx">${id === "listening" ? "🔑 Phrases de l’audio" : "💡 Exemples"}</h2><ul class="lc-list lc-vl">${kw.map(([en, fr]) => li(en, fr)).join("")}</ul></section>`;
     }
     const tipCard = p.tip && !st.ex ? `<section class="lc-card lc-ctx lc-kw"><h2 class="lc-h2 lc-h2-ctx">⚠️ Piège fréquent</h2><p class="lc-tipt">${esc(p.tip)}</p></section>` : "";
-    if (st.t === "gall") {
+    if (st.t === "gwhy") {
+      station = 0; bubble = "Pourquoi ce temps ?";
+      const w = st.why;
+      body = `<section class="lc-card lc-why"><h2 class="lc-h2">🧭 Pourquoi ? <span class="lc-why-t">${p.icon} ${esc(p.title)}</span></h2><p class="lc-why-i">${esc(w.intro)}</p>
+        <ul class="lc-list lc-vl lc-why-u">${w.uses.map(([lab, en, fr]) => `<li><span class="lc-w"><b>${esc(lab)}</b><span class="lc-form">${esc(en)}</span><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
+        <p class="lc-why-m">🔑 ${esc(w.marks)}</p><p class="lc-why-w">⚠️ ${esc(w.watch)}</p></section>`;
+    } else if (st.t === "gall") {
       station = 0; bubble = "Retiens la règle !";
       body = `<section class="lc-card"><h2 class="lc-h2">${p.icon} ${esc(p.title)}${st.n > 1 ? ` <span class="lc-part">${st.ci + 1}/${st.n}</span>` : ""}</h2>
         <ul class="lc-list lc-vl lc-rules">${st.rows.map((r) => { const [a, b, f] = r; return `<li><span class="lc-w"><b>${esc(a)}</b><span class="lc-form">${esc(b)}</span><small>${esc(f)}</small></span>${spk(sayRow(r))}</li>`; }).join("")}</ul></section>${st.ex ? exBody() : ""}${tipCard}`;
