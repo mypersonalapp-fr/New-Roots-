@@ -1132,3 +1132,6 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-main.q6-fill .lc-qb .lc-q{font-size:var(--qf,15px)}
 .lc-main.q6-fill .lc-qb .lc-choice{font-size:calc(var(--qf,15px) - 1px)}
 .q6-tight .q6-in{height:32px}
+/* pages à réponse écrite très chargées (6 lignes) : on resserre pour que tout tienne */
+.lc-main.q6-tight .lc-qb{margin-bottom:4px}
+.lc-main.q6-tight .lc-qb .lc-q{margin-bottom:3px;line-height:1.2}
