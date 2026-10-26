@@ -23,7 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261025c";
 import { createVoice } from "./voice.js?v=20261025c";
 import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
 import { REMISE } from "../data/a2-remise.js";
-import { WHY_A1 } from "../data/pourquoi-a1.js";
+import { WHY_A1, WHY_CONJ_A1 } from "../data/pourquoi-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
 import { SYN_TR } from "../data/syn-fr.js?v=20261025c";
 import { XQ } from "../data/a1-extra-q.js?v=20261025c";
@@ -629,23 +629,34 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   const conjList = () => B.conj || ((B.code && /^A1\.\d+$/.test(B.code)) ? CONJ_A1[Number(B.code.split(".")[1])] : null) || null;
   function showConj() {
     screen = "conj";
-    const L = conjList() || [], total = L.length + 1, lvl = Number(String(B.code || "").split(".")[1]) || 1;
+    const L = conjList() || [], why = WHY_CONJ_A1[B.code], off = why ? 1 : 0, total = L.length + 1 + off, lvl = Number(String(B.code || "").split(".")[1]) || 1;
     if (page >= total) page = total - 1;
     const exit = showMenu;
-    if (page === L.length) {
+    if (why && page === 0) { // 1re page : pourquoi on utilise ce temps
+      const c0 = currentCharacter(), w = why;
+      const guide0 = `<div class="lc-guide">${ico(c0.src, "lc-ava-md")}<div class="lc-gbub">Pourquoi ce temps ?</div><div class="lc-path" aria-hidden="true"><i class="c"></i><u></u><i class=""></i></div></div>`;
+      const body0 = `<section class="lc-card lc-why"><h2 class="lc-h2">🧭 Pourquoi ? <span class="lc-why-t">🔁 ${esc(w.title)}</span></h2><p class="lc-why-i">${esc(w.intro)}</p>
+        <ul class="lc-list lc-vl lc-why-u">${w.uses.map(([lab, en, fr]) => `<li><span class="lc-w"><b>${esc(lab)}</b><span class="lc-form">${esc(en)}</span><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
+        <p class="lc-why-m">🔑 ${esc(w.marks)}</p><p class="lc-why-w">⚠️ ${esc(w.watch)}</p></section>`;
+      frame(HEAD, { cur: 1, total }, guide0 + body0, `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">Suivant →</button></footer>`);
+      el.querySelector("#lcBack").onclick = exit; el.querySelector("#lcPrev").onclick = exit; el.querySelector("#lcNext").onclick = () => { page++; cjTab = 0; showConj(); };
+      el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); }));
+      return;
+    }
+    if (page === L.length + off) {
       return quizScreen({ think: true, total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
         build: (miss) => gramItems(conjQuiz(L), miss), prev: () => { page--; cjTab = 0; showConj(); },
         onCheck: (good, tot) => { const o = prog.conj || {}; prog.conj = { best: Math.max(o.best || 0, good), tot, tries: (o.tries || 0) + 1, last: good }; saveProgress(prog); },
         next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
     }
-    const verb = L[page], c = currentCharacter();
+    const verb = L[page - off], c = currentCharacter();
     const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">Conjugue avec moi !</div><div class="lc-path" aria-hidden="true"><i class="c"></i><u></u><i class=""></i></div></div>`;
     const TABS = ["Affirmative", "Négative", "Question"];
     const rows = conjRows(verb, cjTab).map(([a, b, cx, fr, say]) => `<li><span class="lc-w"><b>${esc(a)}</b><span class="cj-hl">${esc(b)}</span><span class="cj-cx">${esc(cx)}</span><small class="cj-fr">${esc(fr)}</small></span>${spk(say)}</li>`).join("");
     const body = `<section class="lc-card"><h2 class="lc-h2">🔁 To ${esc(verb[0])} : ${esc(verb[1])}</h2>
       <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${t}</button>`).join("")}</div>
       <ul class="lc-list lc-vl lc-rules">${rows}</ul></section>`;
-    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
+    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page - off === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + body, foot);
     const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = 0;
     el.querySelector("#lcBack").onclick = exit;

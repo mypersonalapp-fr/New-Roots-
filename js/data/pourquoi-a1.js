@@ -14,3 +14,18 @@ export const WHY_A1 = {
     }
   }
 };
+
+// Conjugaison : même idée, en 1re page de la conjugaison de la leçon où le présent simple est conjugué pour la première fois.
+export const WHY_CONJ_A1 = {
+  "A1.1": {
+    title: "Le présent simple",
+    intro: "On conjugue au présent simple pour dire ce qui est vrai en général ou ce qui se répète : où tu habites, ce que tu parles, d’où tu viens.",
+    uses: [
+      ["Où tu habites", "I live in Paris.", "J’habite à Paris."],
+      ["Ce que tu parles", "She speaks English.", "Elle parle anglais."],
+      ["D’où tu viens", "We come from Spain.", "Nous venons d’Espagne."]
+    ],
+    marks: "Mots repères : every day, always, usually, never.",
+    watch: "Avec he, she, it, le verbe prend un s : he lives. Négatif : don’t / doesn’t. Question : Do / Does."
+  }
+};
