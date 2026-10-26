@@ -653,9 +653,12 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const guide = `<div class="lc-guide">${ico(c.src, "lc-ava-md")}<div class="lc-gbub">Conjugue avec moi !</div><div class="lc-path" aria-hidden="true"><i class="c"></i><u></u><i class=""></i></div></div>`;
     const TABS = ["Affirmative", "Négative", "Question"];
     const rows = conjRows(verb, cjTab).map(([a, b, cx, fr, say]) => `<li><span class="lc-w"><b>${esc(a)}</b><span class="cj-hl">${esc(b)}</span><span class="cj-cx">${esc(cx)}</span><small class="cj-fr">${esc(fr)}</small></span>${spk(say)}</li>`).join("");
+    // Une ligne d'exercice sous le tableau : même forme que l'onglet affiché (affirmative / négative / question).
+    const cjQ = [[`She ___ ${verb[3]}. (${verb[0]})`, conjRows(verb, 0)[3][1], "she → verbe + s."], [`He ___ ${verb[0]} ${verb[3]}. (non)`, "doesn’t", "he → doesn’t + verbe."], [`___ she ${verb[0]} ${verb[3]}?`, "Does", "she → Does + sujet + verbe."]][cjTab];
+    const cjEx = `<div class="cj-ex"><p class="cj-exq">✍️ À toi : <b>${esc(cjQ[0])}</b></p><div class="cj-exi"><input class="lc-ta q6-in" id="cjIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…"><button type="button" class="cj-ok" id="cjOk">OK</button></div><p class="cj-exf" id="cjFb" aria-live="polite"></p></div>`;
     const body = `<section class="lc-card"><h2 class="lc-h2">🔁 To ${esc(verb[0])} : ${esc(verb[1])}</h2>
       <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${t}</button>`).join("")}</div>
-      <ul class="lc-list lc-vl lc-rules">${rows}</ul></section>`;
+      <ul class="lc-list lc-vl lc-rules">${rows}</ul>${cjEx}</section>`;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page - off === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + body, foot);
     const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = 0;
@@ -664,6 +667,9 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     el.querySelector("#lcNext").onclick = () => { page++; cjTab = 0; showConj(); };
     el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { cjTab = Number(b.dataset.t); showConj(); }));
     el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); b.classList.add("lc-spk-on"); setTimeout(() => b.classList.remove("lc-spk-on"), 900); }));
+    { const inp = el.querySelector("#cjIn"), fb = el.querySelector("#cjFb"); let tries = 0;
+      const check = () => { const v = inp.value.trim(); if (!v) return; if (same(v, cjQ[1], false, null)) { fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); inp.disabled = true; el.querySelector("#cjOk").disabled = true; } else { tries++; fb.className = "cj-exf ko"; fb.textContent = tries < 2 ? "Pas tout à fait. Indice : " + cjQ[2] : "La réponse : " + cjQ[1] + ". " + cjQ[2]; } };
+      el.querySelector("#cjOk").onclick = check; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); }); }
     fillRows();
     { const mn2 = el.querySelector(".lc-main"), lis = el.querySelectorAll(".lc-rules li"), ft = el.querySelector(".lc-foot"); // ça déborde (phrases longues) : on resserre les lignes
       const over = () => mn2 && (mn2.scrollHeight > mn2.clientHeight + 2 || mn2.lastElementChild.getBoundingClientRect().bottom > ft.getBoundingClientRect().top - 6);

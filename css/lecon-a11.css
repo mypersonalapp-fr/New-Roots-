@@ -1152,3 +1152,8 @@ details.lc-alt summary::-webkit-details-marker{display:none}
 .lc-why-i{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink,#1b1d22)}
 .lc-why-m{margin:0;font-size:13px;font-weight:700;color:var(--ink,#1b1d22);background:rgba(226,161,61,.2);border-radius:10px;padding:7px 10px}
 .lc-why-w{margin:0;font-size:13px;line-height:1.4;color:var(--ink,#1b1d22);border-left:4px solid #e2a13d;background:rgba(128,140,150,.14);border-radius:8px;padding:7px 10px}
+
+/* Conjugaison : ligne d'exercice sous le tableau */
+.cj-ex{margin-top:6px;padding-top:8px;border-top:1px dashed rgba(128,140,150,.5)}.cj-exq{margin:0 0 5px;font-size:14px;color:var(--ink,#1b1d22)}
+.cj-exi{display:flex;gap:8px}.cj-exi .q6-in{flex:1;min-width:0}.cj-ok{border:0;border-radius:12px;background:#22c55e;color:#fff;font-weight:800;padding:0 16px}.cj-ok:disabled{opacity:.5}
+.cj-exf{margin:4px 0 4px;font-size:13px;min-height:18px;line-height:18px}.cj-exf.ok{color:#22a55b;font-weight:700}.cj-exf.ko{color:#e5484d}
