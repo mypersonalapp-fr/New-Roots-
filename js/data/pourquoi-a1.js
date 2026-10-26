@@ -10,7 +10,7 @@ export const WHY_A1 = {
         ["Un goût", "He likes coffee.", "Il aime le café."]
       ],
       marks: "Mots repères : every day, always, usually, often, never, on Mondays.",
-      watch: "Pourquoi un « s » ? Avec he, she, it, le verbe prend s. « En ce moment » : autre temps, vu plus tard."
+      watch: "Avec he, she, it (une seule personne), le verbe prend un s : she plays. Si l’action se passe maintenant (now), ce n’est pas ce temps : tu le verras plus tard."
     }
   }
 };
