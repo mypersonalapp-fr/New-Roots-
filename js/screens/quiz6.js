@@ -1,4 +1,4 @@
-import { SYN } from "../data/syn-fr.js?v=20261025e";
+import { SYN } from "../data/syn-fr.js?v=20261025f";
 // The Roots — page de test : 6 questions sur une page, 4 bonnes réponses minimum pour passer. Les erreurs reviennent.
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };

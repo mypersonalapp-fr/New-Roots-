@@ -6,43 +6,43 @@
 // personnage choisi dans Paramètres (settings.avatarGender / avatarIndex).
 
 import { store } from "../data/store.js?v=20260930a";
-import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261025e";
-import { EXTRA_TURN_A1 } from "../data/dialogues-extra-a1.js?v=20261025e";
-import { withExtraQs } from "../data/extra-qs.js?v=20261025e";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261025e";
-import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261025e";
-import { runRattrapage } from "./rattrapage.js?v=20261025e";
+import { EXPRESSION_PLUS_A1 } from "../data/expression-plus-a1.js?v=20261025f";
+import { EXTRA_TURN_A1 } from "../data/dialogues-extra-a1.js?v=20261025f";
+import { withExtraQs } from "../data/extra-qs.js?v=20261025f";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261025f";
+import { retakeLocked, rtSeries } from "../data/bulletin-a1.js?v=20261025f";
+import { runRattrapage } from "./rattrapage.js?v=20261025f";
 import { AI_RELAY_URL } from "../data/ai-config.js?v=20260930a";
-import { createCity } from "./roots-city.js?v=20261025e";
-import { createGames } from "./jeux-a11.js?v=20261025e";
-import { balanceAll } from "../data/balance.js?v=20261025e";
-import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261025e";
-import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261025e";
-import { plusPages } from "../data/vocab-plus-a1.js?v=20261025e";
-import { buildPractice, mountPractice } from "./practice.js?v=20261025e";
-import { createVoice } from "./voice.js?v=20261025e";
-import { CONJ_A1, conjRows, conjQuiz, conjEx, conjLabel, conjTitle } from "../data/conjugation-a1.js?v=20261025e";
-import { REMISE } from "../data/a2-remise.js?v=20261025e";
-import { WHY_A1, WHY_A2, WHY_CONJ_A1, WHY_CONJ_A2 } from "../data/pourquoi-a1.js?v=20261025e";
-import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js?v=20261025e";
-import { SYN_TR } from "../data/syn-fr.js?v=20261025e";
-import { XQ } from "../data/a1-extra-q.js?v=20261025e";
-import { XQ2 } from "../data/a2-extra-q.js?v=20261025e";
-import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc, setStrict } from "./quiz6.js?v=20261025e";
-import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261025e";
-import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261025e";
-import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261025e";
-import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261025e";
-import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261025e";
-import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261025e";
-import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261025e";
-import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261025e";
-import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261025e";
-import { flagOf } from "../data/flags.js?v=20261025e";
-import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261025e";
-import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261025e";
-import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261025e";
-import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261025e";
+import { createCity } from "./roots-city.js?v=20261025f";
+import { createGames } from "./jeux-a11.js?v=20261025f";
+import { balanceAll } from "../data/balance.js?v=20261025f";
+import { MUST_A1 } from "../data/dialogues-a1-must.js?v=20261025f";
+import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261025f";
+import { plusPages } from "../data/vocab-plus-a1.js?v=20261025f";
+import { buildPractice, mountPractice } from "./practice.js?v=20261025f";
+import { createVoice } from "./voice.js?v=20261025f";
+import { CONJ_A1, conjRows, conjQuiz, conjEx, conjExFor, conjLabel, conjTitle } from "../data/conjugation-a1.js?v=20261025f";
+import { REMISE } from "../data/a2-remise.js?v=20261025f";
+import { WHY_A1, WHY_A2, WHY_CONJ_A1, WHY_CONJ_A2 } from "../data/pourquoi-a1.js?v=20261025f";
+import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js?v=20261025f";
+import { SYN_TR } from "../data/syn-fr.js?v=20261025f";
+import { XQ } from "../data/a1-extra-q.js?v=20261025f";
+import { XQ2 } from "../data/a2-extra-q.js?v=20261025f";
+import { mountQuiz, quizHtml, vocabItems, gramItems, same, maskHint, isVoc, setStrict } from "./quiz6.js?v=20261025f";
+import { EXT_A1 } from "../data/dialogues-ext-a1.js?v=20261025f";
+import { BATCH_A13 } from "../data/dialogues-batch-a13.js?v=20261025f";
+import { SITUATIONS_A1 } from "../data/situations-a1.js?v=20261025f";
+import { DIALOGUES_A1 } from "../data/dialogues-a1.js?v=20261025f";
+import { DIALOGUES_A1_REST } from "../data/dialogues-a1-rest.js?v=20261025f";
+import { SITUATIONS_A2 } from "../data/situations-a2.js?v=20261025f";
+import { DIALOGUES_A2 } from "../data/dialogues-a2.js?v=20261025f";
+import { MORE_A2 } from "../data/dialogues-more-a2.js?v=20261025f";
+import { MORE_A1 } from "../data/dialogues-more-a1.js?v=20261025f";
+import { flagOf } from "../data/flags.js?v=20261025f";
+import { withVocabExtraPlus } from "../data/vocab-extra-plus-a1.js?v=20261025f";
+import { withVocabExtra } from "../data/vocab-extra-a1.js?v=20261025f";
+import { withGrammarExtra } from "../data/grammar-extra-a1.js?v=20261025f";
+import { GRAMMAR_PAGES, READING_PAGES, LISTENING_PAGES, EXERCISE_PAGES, EXPRESSION_PAGES, TRANSV_DAYS, TEST_TEXTS, TEST_AUDIOS, TEST_GRAMMAR } from "../data/lecon-a11-data.js?v=20261025f";
 
 let PROGRESS_KEY = "the_roots_a11_lesson_v1"; // fixé à chaque ouverture de leçon (renderLesson)
 const GIRLS = 9;
@@ -61,7 +61,7 @@ const GREETINGS = [
 // Pages 2 à 5 : mots d'identité du cahier des charges A1.1.
 // q = [question, choix, index de la bonne réponse]
 const IC_IMG = { vocab:1, grammar:1, reading:1, listening:1, speaking:1, exercises:1, transversal:1, test:1 };
-const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261025e" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
+const icImg = (id, fb) => IC_IMG[id] ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${id}.webp?v=20261025f" alt="" width="28" height="28" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now();}else{this.replaceWith(document.createTextNode('${fb}'));}"/>` : fb;
 const SCENES = [["scene-greeting","Hello! Nice to meet you."],["scene-friends","Hi! How are you?"],["scene-goodbye","Goodbye! See you tomorrow!"]];
 
 const rxTest = (re, txt) => new RegExp(re, "i").test(String(txt || "").replace(/[’‘`´]/g, "'").replace(/\s+/g, " "));
@@ -645,7 +645,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     }
     if (page === L.length + off) {
       return quizScreen({ think: true, total, key: "cj:" + B.code, bubble: "Teste-toi !", btn: "Terminer ✓", back: exit,
-        build: (miss) => gramItems(conjQuiz(L), miss), prev: () => { page--; cjTab = 0; showConj(); },
+        build: (miss) => gramItems(conjQuiz(L), miss), prev: () => { page--; cjTab = 2; showConj(); },
         onCheck: (good, tot) => { const o = prog.conj || {}; prog.conj = { best: Math.max(o.best || 0, good), tot, tries: (o.tries || 0) + 1, last: good }; saveProgress(prog); },
         next: () => { prog.done = Object.assign({}, prog.done, { conj: true }); saveProgress(prog); showMenu(); } });
     }
@@ -654,17 +654,18 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const TABS = ["Affirmative", "Négative", "Question"];
     const rows = conjRows(verb, cjTab).map(([a, b, cx, fr, say]) => `<li><span class="lc-w"><b>${esc(a)}</b><span class="cj-hl">${esc(b)}</span><span class="cj-cx">${esc(cx)}</span><small class="cj-fr">${esc(fr)}</small></span>${spk(say)}</li>`).join("");
     // Une ligne d'exercice sous le tableau : même forme que l'onglet affiché (affirmative / négative / question).
-    const cjQ = conjEx(verb, cjTab);
+    const cjQ = conjExFor(L, verb, cjTab);
     const cjEx = `<div class="cj-ex"><p class="cj-exq">✍️ À toi : <b>${esc(cjQ[0])}</b></p><div class="cj-exi"><input class="lc-ta q6-in" id="cjIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…"><button type="button" class="cj-ok" id="cjOk">OK</button></div><p class="cj-exf" id="cjFb" aria-live="polite"></p></div>`;
-    const body = `<section class="lc-card"><h2 class="lc-h2">🔁 ${esc(conjTitle(verb))} <span class="lc-why-t">${esc(conjLabel(verb))}</span></h2>
-      <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${t}</button>`).join("")}</div>
+    const body = `<section class="lc-card"><h2 class="lc-h2">🔁 ${esc(conjTitle(verb))} <span class="lc-why-t">${esc(conjLabel(verb))} · onglet ${cjTab + 1}/3</span></h2>
+      <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${i < cjTab ? "✓ " : ""}${t}</button>`).join("")}</div>
       <ul class="lc-list lc-vl lc-rules">${rows}</ul>${cjEx}</section>`;
-    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page - off === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
+    const lastV = page - off === L.length - 1, nxt = cjTab === 0 ? "Négative →" : cjTab === 1 ? "Question →" : lastV ? "Test ✏️" : "Verbe suivant →";
+    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${nxt}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + body, foot);
     const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = 0;
     el.querySelector("#lcBack").onclick = exit;
-    el.querySelector("#lcPrev").onclick = () => { if (page === 0) { exit(); return; } page--; cjTab = 0; showConj(); };
-    el.querySelector("#lcNext").onclick = () => { page++; cjTab = 0; showConj(); };
+    el.querySelector("#lcPrev").onclick = () => { if (cjTab > 0) { cjTab--; showConj(); return; } if (page === 0) { exit(); return; } page--; cjTab = page >= off ? 2 : 0; showConj(); };
+    el.querySelector("#lcNext").onclick = () => { if (cjTab < 2) { cjTab++; showConj(); return; } page++; cjTab = 0; showConj(); };
     el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { cjTab = Number(b.dataset.t); showConj(); }));
     el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); b.classList.add("lc-spk-on"); setTimeout(() => b.classList.remove("lc-spk-on"), 900); }));
     { const inp = el.querySelector("#cjIn"), fb = el.querySelector("#cjFb"); let tries = 0;
@@ -879,7 +880,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
               <div class="lc-bb ${i % 2 ? "me" : "npc"}"><span class="lc-bt">${esc(en)}<small>${esc(fr)}</small></span>${spk(en)}</div>`).join("")}</div>
           </div>
           ${B.scenes ? `<h3 class="lc-h3">En situation</h3>
-          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261025e" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
+          <div class="lc-scenes">${B.scenes.map(([f, t]) => `<figure><img src="assets/img/lesson/${f}.webp?v=20261025f" alt="" loading="lazy" onerror="this.closest('figure').remove()"/><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : ""}
           <div class="lc-tip"><span>💡</span><div><b>Astuce</b><p>${esc(p.tip)}</p></div></div>
         </section>`;
 
@@ -913,7 +914,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
         </section>` : `
         <section class="lc-card">
           ${head}
-          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 && !vSplit ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261025e" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
+          ${hasScene(p) && st.ci === 0 ? `<div class="lc-scenes lc-scene-sm lc-scene-voc${st.words.length >= 6 && !vSplit ? " lc-sc6" : ""}"><figure><img src="assets/img/lesson/${p.scene[0]}.webp?v=20261025f" alt="" decoding="async" onerror="this.closest('figure').remove()"/></figure></div>` : ""}
           <ul class="lc-list lc-vl">${vWords.map(([en, fr]) => `
             <li><span class="lc-w"><b>${/^Les (pays|nationalités)$/.test(p.title) ? flagOf(en) + " " : ""}${esc(en)}</b><small>${esc(fr)}</small></span>${spk(en)}</li>`).join("")}</ul>
           ${vSplit ? vqHtml : ""}
@@ -958,7 +959,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     if (vSplit) { const mn = el.querySelector(".lc-main"), ft = el.querySelector(".lc-foot"), ov = () => { const cd = mn.querySelector(":scope > .lc-card"); return cd && ft && cd.getBoundingClientRect().bottom > ft.getBoundingClientRect().top + 14; }; if (ov()) { const its = el.querySelectorAll(".lc-vq-i"); if (its.length > 1) its[1].remove(); } }
     fillRows();
     { const hp = el.querySelector(".lc-nexthint"), ft2 = el.querySelector(".lc-foot"); if (hp && ft2 && hp.getBoundingClientRect().bottom > ft2.getBoundingClientRect().top - 2) hp.remove(); }
-    for (let k = 1; k <= 4; k++) { const ns = steps[page + k]; if (ns && ns.p && ns.t === "words" && ns.ci === 0 && hasScene(ns.p)) { const im = new Image(); im.src = `assets/img/lesson/${ns.p.scene[0]}.webp?v=20261025e`; } }
+    for (let k = 1; k <= 4; k++) { const ns = steps[page + k]; if (ns && ns.p && ns.t === "words" && ns.ci === 0 && hasScene(ns.p)) { const im = new Image(); im.src = `assets/img/lesson/${ns.p.scene[0]}.webp?v=20261025f`; } }
     el.querySelector("#lcBack").onclick = showMenu;
     el.querySelectorAll(".lc-vq-b").forEach((bt) => bt.addEventListener("click", () => { const it = bt.closest(".lc-vq-i"); if (it.dataset.done) return; it.dataset.done = "1"; const ok = bt.dataset.v === it.dataset.a; it.querySelectorAll(".lc-vq-b").forEach((x) => { x.disabled = true; if (x.dataset.v === it.dataset.a) x.classList.add("ok"); }); if (!ok) bt.classList.add("ko"); }));
     el.querySelector("#lcPrev").onclick = () => { if (vSplit && vsub) { vsub = 0; showVocab(); return; } if (page === 0) showMenu(); else { page--; showVocab(); } };
@@ -1271,7 +1272,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       <button type="button" class="lc-cta lc-trad-ok">Valider</button>
       <p class="lc-trad-msg" aria-live="polite">${trDone(pt) ? "Série réussie : bravo !" : `${trCount(pt)}/${pt.rows.length} phrases justes. Objectif : ${Math.ceil(pt.rows.length * 0.8)}.`}</p></section>`; };
     const body = p.trad ? trBody() : `<section class="lc-card"><h2 class="lc-h2">${p.icon} ${esc(p.title)}</h2>
-      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261025e" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
+      ${p.img ? `<figure class="lc-pic"><img src="assets/img/lesson/${p.img}.webp?v=20261025f" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}
       <div class="lc-tabs" role="tablist">
         ${`<button type="button" class="lc-tab ${tab === "speak" ? "on" : ""}" data-tab="speak" role="tab" aria-selected="${tab === "speak"}">🎤 Parler</button>`}
         <button type="button" class="lc-tab ${tab === "write" ? "on" : ""}" data-tab="write" role="tab" aria-selected="${tab === "write"}">✍️ Écrire</button></div>
@@ -1375,7 +1376,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
 
   /* ----- Conversation : le personnage parle, l'élève répond en anglais ----- */
   const dlgState = { done: {} };
-  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261025e" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+  const sceneHero = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261025f" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
   function showDialogueList() {
     screen = "dialogue";
     const done = prog.dialogues || {};
@@ -1613,7 +1614,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       ? dictSentences().map((t) => ({ kind, text: t, model: t }))
       : SIT.map((x) => Object.assign({ kind }, x));
     let i = 0, tries = 0, first = 0, shown = false;
-    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261025e" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
+    const scImg = (k) => { const sl = (B.vocab || []).filter((x) => x.scene).map((x) => x.scene).concat(B.scenes || []), sc = sl[k % Math.max(1, sl.length)]; return sc ? `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${sc[0]}.webp?v=20261025f" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>` : ""; };
     function draw(msg) {
       if (i >= items.length) {
         prog.writes = Object.assign({}, prog.writes, { [kind]: true });
@@ -1770,7 +1771,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     T.plan = T.plan || {};
     const Q = (key, q, n) => `<div class="lc-qb"><p class="lc-q">${n}. ${esc(q[0])}</p><div class="lc-choices" role="group">${q[1].map((o, i) => `<button type="button" class="lc-choice ${T.ans[key] === i ? "lc-sel" : ""}" data-k="${key}" data-i="${i}">${esc(o)}</button>`).join("")}</div></div>`;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261025e" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
+    const exImg = (n) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/exam-a1-${n}.webp?v=20261025f" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
     // la page est découpée en blocs ; on remplit chaque écran au maximum, sans défilement
     const bl = []; let head = "", hero = "";
     if (p === 0) {
@@ -1786,11 +1787,11 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       T.gram.slice((p - 2) * 10, (p - 2) * 10 + 10).forEach((id, i) => bl.push({ k: "q", h: Q("g" + id, B.testGrammar[id], (p - 2) * 10 + i + 1), keys: ["g" + id] }));
     } else if (p === 4) {
       head = "Expression écrite · 7,5 pts"; hero = exImg("writing");
-      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261025e" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="6" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
+      bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">✍️ ${esc(T.wt)}</h2><p class="lc-lead">${esc(T.wl)}</p>${T.wimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.wimg}.webp?v=20261025f" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}<textarea id="lcTa" class="lc-ta" rows="6" aria-label="Ta présentation en anglais">${esc(T.written)}</textarea></section>`, ta: true });
     } else {
       head = "Expression orale · 7,5 pts"; hero = exImg("speaking");
       bl.push({ k: "x", h: `<section class="lc-card"><h2 class="lc-h2">🎤 ${esc(T.ot)}</h2><p class="lc-lead">${esc(T.ol)} Puis coche ce que tu as réellement dit (auto-évaluation).</p>
-        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261025e" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
+        ${SR ? `<div class="lc-mic"><button type="button" class="lc-micbtn" id="lcMic" aria-label="Appuie et parle">🎙️</button><p class="lc-heard" id="lcHeard">${esc(T.heard)}</p></div>` : ""}${T.oimg ? `<figure class="lc-pic"><img src="assets/img/lesson/${T.oimg}.webp?v=20261025f" alt="Image à décrire" onerror="this.closest('figure').remove()"/></figure>` : ""}</section>` });
       EO.checks.forEach(([l], i) => bl.push({ k: "c", h: `<li><label><input type="checkbox" data-o="${i}" ${T.oral[i] ? "checked" : ""}/> ${esc(l)}</label></li>` }));
     }
     const last = p === total - 1;
