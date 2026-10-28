@@ -1,6 +1,0 @@
-<!doctype html><link rel=stylesheet href="/css/base.css"><link rel=stylesheet href="/css/backgrounds.css"><link rel=stylesheet href="/css/screens.css"><link rel=stylesheet href="/css/daily.css"><link rel=stylesheet href="/css/lecon-a11.css"><div id=app></div>
-<script type=module>
-import {loadBundleA2} from '/js/data/lecons-a2.js';import {renderLesson} from '/js/screens/lecon-a11.js';
-const B=await loadBundleA2(11);renderLesson(document.getElementById('app'),B,{onExit(){}});window.ok=1;
-window.st=()=>{const m=document.querySelector('.lc-main');const t=document.querySelector('.cj-tab.on');return [document.querySelector('.lc-h2')?.innerText,t?t.innerText:'-',document.querySelector('.cj-exq')?.innerText||'',document.querySelector('#lcNext').innerText,m.scrollHeight-m.clientHeight].join(' || ')};
-</script>
