@@ -9,11 +9,11 @@
 // rassemble ces résultats pour toutes les langues, façon livret scolaire.
 
 import { store } from "../data/store.js?v=20260930a";
-import { renderLesson } from "./lecon-a11.js?v=20261025i";
-import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261025i";
-import { renderShell } from "./shell.js?v=20261025i";
-import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261025i";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261025i";
+import { renderLesson } from "./lecon-a11.js?v=20261025j";
+import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261025j";
+import { renderShell } from "./shell.js?v=20261025j";
+import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261025j";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261025j";
 import { renderLevelTest } from "./level-test.js?v=20260930a";
 import { t, formatDate } from "../data/i18n.js?v=20260930a";
 import { A1_EN_GENERAL_OBJECTIVE, A1_EN_PALIERS, A1_EN_ENTRY_MODULE } from "../data/programme-a1-en.js?v=20260930a";
@@ -23,15 +23,15 @@ import { B2_EN_GENERAL_OBJECTIVE, B2_EN_PALIERS, B2_EN_ENTRY_MODULE } from "../d
 import { C1_EN_GENERAL_OBJECTIVE, C1_EN_PALIERS, C1_EN_ENTRY_MODULE } from "../data/programme-c1-en.js?v=20260930a";
 import { A1_ES_GENERAL_OBJECTIVE, A1_ES_PALIERS } from "../data/programme-a1-es.js?v=20260930a";
 import { A2_ES_GENERAL_OBJECTIVE, A2_ES_PALIERS } from "../data/programme-a2-es.js?v=20261007a";
-import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261025i";
-import { plantSvg } from "./plant.js?v=20261025i";
+import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261025j";
+import { plantSvg } from "./plant.js?v=20261025j";
 import { BLOCAGES_ES, BLOCAGES_ES_TITLE, blocageHref, blocagesDone } from "../data/atelier-es-blocages.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
-import { currentCharacter } from "./lecon-a11.js?v=20261025i";
-import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2 } from "../data/lecons-a2.js?v=20261025i";
-import { runRattrapage } from "./rattrapage.js?v=20261025i";
-import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261025i";
-import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261025i";
+import { currentCharacter } from "./lecon-a11.js?v=20261025j";
+import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2 } from "../data/lecons-a2.js?v=20261025j";
+import { runRattrapage } from "./rattrapage.js?v=20261025j";
+import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261025j";
+import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261025j";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---
@@ -194,7 +194,7 @@ function bothFlagsFor(l) {
 }
 
 // --- Bulletin scolaire (maquette 1) : notes par compétence, lacunes détectées, tests réussis / à repasser ---
-const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261025i`;
+const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261025j`;
 const BL_SK = [BL_IMG("exam-a1-reading"), BL_IMG("exam-a1-listening"), BL_IMG("ic-grammar"), BL_IMG("exam-a1-writing"), BL_IMG("exam-a1-speaking")];
 const BL_GAP = { "Grammaire": "ic-grammar", "Lecture": "ic-reading", "Écoute": "ic-listening" };
 export function bulletinParts(level = "A1") {
