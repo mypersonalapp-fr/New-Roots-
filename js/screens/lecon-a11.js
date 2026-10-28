@@ -625,7 +625,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     mountQuiz(el.querySelector(".q6"), key, build, { speak, onCheck, think, pass });
   }
   // Conjugaison : 6 verbes nouveaux par leçon (une page par verbe, 3 onglets) puis un test de 6 questions.
-  let cjTab = 0;
+  let cjTab = 0; const cjDone = new Set(); // « À toi » obligatoire : onglets déjà réussis (ou corrigés après 2 erreurs)
   const conjList = () => B.conj || ((B.code && /^A1\.\d+$/.test(B.code)) ? CONJ_A1[Number(B.code.split(".")[1])] : null) || null;
   function showConj() {
     screen = "conj";
@@ -660,16 +660,18 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${i < cjTab ? "✓ " : ""}${t}</button>`).join("")}</div>
       <ul class="lc-list lc-vl lc-rules">${rows}</ul>${cjEx}</section>`;
     const lastV = page - off === L.length - 1, nxt = cjTab === 0 ? "Négative →" : cjTab === 1 ? "Question →" : lastV ? "Test ✏️" : "Verbe suivant →";
-    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${nxt}</button></footer>`;
+    const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext"${cjDone.has(page + ":" + cjTab) ? "" : " disabled"}>${nxt}</button></footer>`;
     frame(HEAD, { cur: page + 1, total }, guide + body, foot);
     const mn = el.querySelector(".lc-main"); if (mn) mn.scrollTop = 0;
     el.querySelector("#lcBack").onclick = exit;
     el.querySelector("#lcPrev").onclick = () => { if (cjTab > 0) { cjTab--; showConj(); return; } if (page === 0) { exit(); return; } page--; cjTab = page >= off ? 2 : 0; showConj(); };
-    el.querySelector("#lcNext").onclick = () => { if (cjTab < 2) { cjTab++; showConj(); return; } page++; cjTab = 0; showConj(); };
-    el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { cjTab = Number(b.dataset.t); showConj(); }));
+    el.querySelector("#lcNext").onclick = () => { if (!cjDone.has(page + ":" + cjTab)) return; if (cjTab < 2) { cjTab++; showConj(); return; } page++; cjTab = 0; showConj(); };
+    el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { const t = Number(b.dataset.t); if (t > cjTab && !cjDone.has(page + ":" + cjTab)) { const f0 = el.querySelector("#cjFb"); if (f0) { f0.className = "cj-exf ko"; f0.textContent = "Fais d’abord l’exercice « À toi »."; } return; } cjTab = t; showConj(); }));
     el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); b.classList.add("lc-spk-on"); setTimeout(() => b.classList.remove("lc-spk-on"), 900); }));
     { const inp = el.querySelector("#cjIn"), fb = el.querySelector("#cjFb"); let tries = 0;
-      const check = () => { const v = inp.value.trim(); if (!v) return; if (same(v, [cjQ[1], cjQ[3]].filter(Boolean).join(" / "), false, null)) { fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); inp.disabled = true; el.querySelector("#cjOk").disabled = true; } else { tries++; fb.className = "cj-exf ko"; fb.textContent = tries < 2 ? "Pas tout à fait. Indice : " + cjQ[2] : "La réponse : " + cjQ[1] + ". " + cjQ[2]; } };
+      const check = () => { const v = inp.value.trim(); if (!v) return; if (same(v, [cjQ[1], cjQ[3]].filter(Boolean).join(" / "), false, null)) { fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); inp.disabled = true; el.querySelector("#cjOk").disabled = true; unlock(); } else { tries++; fb.className = "cj-exf ko"; fb.textContent = tries < 2 ? "Pas tout à fait. Indice : " + cjQ[2] : "La réponse : " + cjQ[1] + ". " + cjQ[2]; if (tries >= 2) { inp.disabled = true; el.querySelector("#cjOk").disabled = true; unlock(); } } };
+      const unlock = () => { cjDone.add(page + ":" + cjTab); const nb = el.querySelector("#lcNext"); if (nb) nb.disabled = false; };
+      if (cjDone.has(page + ":" + cjTab)) { inp.disabled = true; el.querySelector("#cjOk").disabled = true; fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); }
       el.querySelector("#cjOk").onclick = check; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); }); }
     fillRows();
     { const fitCj = () => { const mn2 = el.querySelector(".lc-main"), lis = el.querySelectorAll(".lc-rules li"), ft = el.querySelector(".lc-foot"); if (!mn2 || !ft || !lis.length || !mn2.lastElementChild) return; // ça déborde (phrases longues, petit écran) : on resserre les lignes puis l'exercice
