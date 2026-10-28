@@ -21,7 +21,7 @@ export function entryOf(lang) {
 }
 export function lessonSheet(level, L, entry = {}) {
   if (level === "B0") { // Passerelle : une ligne par étape (score sur 10), le bilan est noté en %
-    const p = b0Load(), raw = L.n === 8 ? p.bilan : ((p.scores || {})[L.n] != null ? p.scores[L.n] * 10 : null), has = raw != null && raw !== undefined, pct = has ? raw : 0;
+    const p = b0Load(), raw = L.n === 8 ? p.bilan : ((p.scores || {})[L.n] != null ? p.scores[L.n] : null), has = raw != null && raw !== undefined, pct = has ? raw : 0;
     const n20 = Math.round(pct / 5 * 10) / 10;
     return { rows: [{ name: L.n === 8 ? "Bilan (70 % pour ouvrir B1)" : "Score de l'étape", e: B0_ICONS[L.n], has, pct, note: has ? pct + " %" : "", ent: null, gain: null }], gain: null, avg: pct, note20: n20, conj: { done: false, note: 0, best: 0, tot: 6, bonus: 0 }, total: n20, any: has };
   }

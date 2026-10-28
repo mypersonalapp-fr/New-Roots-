@@ -1,5 +1,5 @@
 // The Roots — B0 « Passerelle » : revoir les fondamentaux A1 + A2 avant le B1.
-// 7 étapes de 10 questions (cours, temps, exercices, CO, CE, expression écrite, expression orale) puis un bilan de 10 questions (70 % pour ouvrir B1).
+// 7 étapes de 12 questions (cours, temps, exercices, CO, CE, expression écrite, expression orale) puis un bilan de 12 questions (70 % pour ouvrir B1).
 import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261028b";
 import { B0_STEPS, B0_NAMES, B0_ICONS, B0_BILAN_REFS, B0_PASS, b0Load, b0Save } from "../data/b0-data.js?v=20261028b";
 
@@ -11,7 +11,7 @@ function say(text) {
 }
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
 
-// Liste des 10 questions d'une étape (ou du bilan = étape 8), avec la bonne réponse repérée.
+// Liste des 12 questions d'une étape (ou du bilan = étape 8), avec la bonne réponse repérée.
 function items(step) {
   const mk = (q, intro, ctx) => {
     const type = q[3] || "qcm";
@@ -63,30 +63,30 @@ export function renderB0(root, { onExit } = {}) {
     const tiles = [1,2,3,4,5,6,7,8].map((k) => {
       const m = TILES[k], open = opened(k), has = k === 8 ? p.bilan != null : sc[k] != null;
       return `<button type="button" class="lc-tile ${open ? "" : "lc-tile-off"}" data-k="${k}" style="--c:${m.c}" ${open ? "" : "disabled"}>
-        <span class="lc-tn">${k}</span><span class="lc-tic">${tIcon(m)}</span><b>${esc(m.t)}</b><small>${esc(has ? "Meilleur score : " + (k === 8 ? p.bilan + " %" : sc[k] + "/10") : m.s)}</small>${has ? `<span class="lc-tdone">✓</span>` : ""}</button>`;
+        <span class="lc-tn">${k}</span><span class="lc-tic">${tIcon(m)}</span><b>${esc(m.t)}</b><small>${esc(has ? "Meilleur score : " + (k === 8 ? p.bilan : sc[k]) + " %" : m.s)}</small>${has ? `<span class="lc-tdone">✓</span>` : ""}</button>`;
     }).join("");
     frame("B0 · Passerelle", { cur: 1, total: 8 }, `<section class="lc-mosaic">${tiles}</section>${p.passed ? `<p class="lc-fb lc-fb-ok" style="text-align:center">✔ B0 validé (${p.bilan} %). Le B1 est ouvert.</p>` : ""}`);
     el.querySelector("#b0Back").onclick = intro;
     el.querySelectorAll("[data-k]").forEach((b) => b.onclick = () => quiz(Number(b.dataset.k)));
   }
 
-  const SCENE = [null, "scene-a20-bridge", "scene-a20-time", "scene-a20-daily-verbs", "exam-a1-listening", "exam-a1-reading", "exam-a1-writing", "exam-a1-speaking", "scene-a20-basic-verbs"];
   const AVA = "assets/img/characters/boy-3.webp", HERO = "assets/img/characters/boy-3-intro.webp";
   const chip = (k, pct, sub) => { const m = TILES[k]; return `<div class="lc-mchip" style="--c:${m.c}"><span class="lc-mchip-ic">${tIcon(m)}</span><div class="lc-mchip-tx"><b>${esc(m.t)}</b><small>${esc(sub || m.s)}</small></div><div class="lc-mchip-pg"><i><s style="width:${pct}%"></s></i></div></div>`; };
   const guide = (t) => `<div class="lc-guide"><img class="lc-ava lc-ava-md" src="${AVA}" alt=""/><div class="lc-gbub">${esc(t)}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
-  const scene = (k) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${SCENE[k]}.webp" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
+  const scene = (img) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${img}.webp" style="display:block;margin:0 auto;width:auto;max-width:100%;max-height:185px;object-fit:contain" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
 
   // Une étape = 2 pages de 5 questions (comme les pages de test A1/A2) : rubrique, personnage, image, questions.
   function quiz(step) {
-    const list = items(step), got = new Array(10).fill(false);
+    const list = items(step), N = list.length, got = new Array(N).fill(false);
+    const POOL = [null, ["scene-a20-bridge", "scene-a20-basic-verbs", "scene-a20-city-verbs", "scene-a21-day"], ["scene-a20-time", "scene-a21-now", "scene-a23-moment", "scene-a24-plan"], ["scene-a20-daily-verbs", "scene-a21-morning", "scene-a21-work", "scene-a21-evening"], ["exam-a1-listening", "scene-a21-commute", "scene-a212-airport", "scene-a29-message"], ["exam-a1-reading", "scene-a22-journey", "scene-a212-hotel", "scene-a29-office"], ["exam-a1-writing", "scene-a29-phrases", "scene-a211-expressions", "scene-a24-weekend"], ["exam-a1-speaking", "scene-a210-invite", "scene-a211-agree", "scene-a210-reactions"], ["scene-a20-basic-verbs", "scene-a20-bridge", "scene-a24-decision", "scene-a211-plans"]];
     const BUB = ["", "Révisons les règles !", "Quel temps choisir ?", "Conjugue avec moi !", "Écoute bien !", "Lis bien !", "Écris avec moi !", "Parle avec moi !", "Dernier test !"];
     const hist = [];
-    const draw = (from, size = 5, back) => {
+    const draw = (from, size = (step === 4 || step === 5 ? 3 : 4), back) => {
       if (!back) hist.push(from);
       while (size > 2 && list.length - (from + size) === 1) size--; // pas de page orpheline à 1 question
       let part = list.slice(from, from + size);
       const c0 = part[0].ctx ? part[0].ctx.t : ""; part = part.filter((it) => (it.ctx ? it.ctx.t : "") === c0); // une page = un seul audio / texte
-      const last = from + part.length >= 10, sel = {}, txt = {};
+      const last = from + part.length >= N, sel = {}, txt = {};
       const ctx = part[0].ctx;
       const ctxHtml = ctx && ctx.k === "audio"
         ? `<div class="lc-player"><button type="button" class="lc-play" id="b0Play" aria-label="Écouter l’audio">▶</button><span class="lc-wave" aria-hidden="true"></span></div><p class="q6-help" style="margin:4px 0 8px">${esc(ctx.t)} · touche ▶ pour écouter</p><p class="q6-hint" id="b0Tr" hidden>${esc(ctx.x)}</p>`
@@ -99,26 +99,17 @@ export function renderB0(root, { onExit } = {}) {
         else body = `<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="lc-sec-btn" data-model="${j}">🔊 Écouter le modèle</button><button type="button" class="lc-sec-btn" data-said="${j}">🎤 J’ai dit la phrase</button></div>`;
         return `<div class="q6-q" data-j="${j}"><p class="q6-p"><span>${n}</span>${esc(it.q)}</p>${body}<p class="q6-hint" data-fb="${j}" hidden></p></div>`;
       }).join("");
-      frame(`${step === 8 ? "Bilan B0" : "B0 · Étape " + step}`, { cur: from + part.length, total: 10 },
-        chip(step, Math.round(from * 10), `Questions ${from + 1} à ${from + part.length} sur 10`) + guide(BUB[step]) +
-        `<section class="lc-card q6" style="display:flex;flex-direction:column;gap:12px">${scene(step)}${ctxHtml}<div class="q6-list" style="display:flex;flex-direction:column;gap:12px">${qh}</div><p class="lc-fb q6-fb" id="b0Fb" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="b0Check" disabled>Vérifier</button></section>`,
+      frame(`${step === 8 ? "Bilan B0" : "B0 · Étape " + step}`, { cur: from + part.length, total: N },
+        chip(step, Math.round((from / N) * 100), `Questions ${from + 1} à ${from + part.length} sur ${N}`) + guide(BUB[step]) +
+        `<section class="lc-card q6" style="display:flex;flex-direction:column;gap:12px">${ctx && ctx.k === "text" ? "" : scene(POOL[step][(hist.length - 1) % 4])}${ctxHtml}<div class="q6-list" style="display:flex;flex-direction:column;gap:12px">${qh}</div><p class="lc-fb q6-fb" id="b0Fb" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="b0Check" disabled>Vérifier</button></section>`,
         `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="b0Prev">← Précédent</button><button type="button" class="lc-cta lc-next" id="b0Next" disabled>${last ? "Voir mon score" : "Suite →"}</button></footer>`);
       const main = el.querySelector(".lc-main"); if (main) main.scrollTop = 0;
-      // Tout doit tenir sur l'écran : on resserre (comme les pages de test A1/A2), puis on réduit l'image sans la couper.
-      const fit = () => {
-        const m = el.querySelector(".lc-main"), c = el.querySelector(".q6"); if (!m || !c) return;
-        const over = () => m.scrollHeight - m.clientHeight > 2, im = c.querySelector(".lc-exhero img");
-        c.classList.remove("q6-t1", "q6-t2"); if (im) { im.style.height = ""; im.style.objectFit = ""; }
-        if (over()) c.classList.add("q6-t1");
-        if (over()) c.classList.add("q6-t2");
-        if (im && over()) { im.style.objectFit = "contain"; for (const h of [150, 120, 95, 75]) { im.style.height = h + "px"; if (!over()) break; } }
-      };
-      // Si ça déborde encore après resserrage, on enlève une question de la page (elle passe à la page suivante).
+      // Si ça déborde, on enlève une question de la page (elle passe à la page suivante).
       const imgs = [...el.querySelectorAll(".lc-exhero img")];
-      const settle = () => { fit(); const m = el.querySelector(".lc-main"); if (m && m.scrollHeight - m.clientHeight > 2 && part.length > 2 && !Object.keys(sel).length && !Object.keys(txt).length) { hist.pop(); draw(from, part.length - 1); } };
+      const settle = () => { const m = el.querySelector(".lc-main"); if (m && m.scrollHeight - m.clientHeight > 2 && part.length > 2 && !Object.keys(sel).length && !Object.keys(txt).length) { hist.pop(); draw(from, part.length - 1); } };
       Promise.all(imgs.map((im) => (im.complete ? 1 : new Promise((r) => { im.onload = im.onerror = r; })))).then(() => requestAnimationFrame(settle));
       el.querySelector("#b0Back").onclick = () => menu();
-      el.querySelector("#b0Prev").onclick = () => { hist.pop(); if (!hist.length) menu(); else draw(hist[hist.length - 1], 5, true); };
+      el.querySelector("#b0Prev").onclick = () => { hist.pop(); if (!hist.length) menu(); else draw(hist[hist.length - 1], undefined, true); };
       const check = el.querySelector("#b0Check"), next = el.querySelector("#b0Next");
       let locked = false;
       const ready = () => part.every((it, j) => it.type === "qcm" ? sel[j] !== undefined : it.type === "free" ? (txt[j] || "").trim().split(/\s+/).filter(Boolean).length >= 6 : sel[j] === true);
@@ -154,14 +145,14 @@ export function renderB0(root, { onExit } = {}) {
     const done = () => {
       const n = got.filter(Boolean).length, p = b0Load();
       p.scores = p.scores || {};
-      if (step === 8) { const pct = n * 10; p.bilan = Math.max(p.bilan || 0, pct); p.last = pct; if (pct >= B0_PASS) p.passed = true; }
-      else p.scores[step] = Math.max(p.scores[step] || 0, n);
+      if (step === 8) { const pct = Math.round((n / N) * 100); p.bilan = Math.max(p.bilan || 0, pct); p.last = pct; if (pct >= B0_PASS) p.passed = true; }
+      else p.scores[step] = Math.max(p.scores[step] || 0, Math.round((n / N) * 100));
       b0Save(p);
-      if (step === 8) return result(n * 10);
-      const ok = n * 10 >= B0_PASS;
+      if (step === 8) return result(Math.round((n / N) * 100));
+      const ok = Math.round((n / N) * 100) >= B0_PASS;
       frame(`B0 · Étape ${step}`, null,
         `<section class="lc-hero"><div class="lc-bubble">${ok ? "Well done!" : "Keep going!"}</div><img class="lc-hero-full" src="${HERO}" alt="Personnage"/></section>
-         <section class="lc-card lc-intro"><div class="lc-level">${n} / 10</div><h1>${esc(TILES[step].t)}</h1>
+         <section class="lc-card lc-intro"><div class="lc-level">${n} / ${N}</div><h1>${esc(TILES[step].t)}</h1>
          <p class="lc-fb ${ok ? "lc-fb-ok" : "lc-fb-ko"}" style="text-align:center">${ok ? "✔ Étape réussie. Tu peux continuer." : "Sous " + B0_PASS + " %. Tu peux continuer : cette étape te sera proposée en rattrapage. Tu peux aussi la refaire."}</p>
          <button type="button" class="lc-cta" id="b0Go">${step === 7 ? "Aller au bilan →" : "Étape suivante →"}</button>
          <button type="button" class="lc-sec-btn" id="b0Redo" style="width:100%;margin-top:8px">↻ Refaire cette étape</button></section>`);
@@ -174,12 +165,12 @@ export function renderB0(root, { onExit } = {}) {
 
   function result(pct) {
     const p = b0Load(), sc = p.scores || {}, ok = pct >= B0_PASS;
-    const weak = [1,2,3,4,5,6,7].filter((k) => sc[k] != null && sc[k] * 10 < B0_PASS);
+    const weak = [1,2,3,4,5,6,7].filter((k) => sc[k] != null && sc[k] < B0_PASS);
     frame("Bilan B0", null,
       `<section class="lc-hero"><div class="lc-bubble">${ok ? "Congratulations!" : "Almost there!"}</div><img class="lc-hero-full" src="${HERO}" alt="Personnage"/></section>
        <section class="lc-card lc-intro"><div class="lc-level">${pct} %</div><h1>${ok ? "B0 validé" : "Pas encore"}</h1>
        <p class="lc-fb ${ok ? "lc-fb-ok" : "lc-fb-ko"}" style="text-align:center">${ok ? "✔ Le B1 est ouvert." : "Il faut " + B0_PASS + " % pour ouvrir le B1."}</p>
-       ${ok || !weak.length ? "" : `<p class="lc-lead">Points à revoir :</p><div class="lc-choices">${weak.map((k) => `<button type="button" class="lc-choice" data-k="${k}">↻ ${esc(TILES[k].t)} (${sc[k]}/10)</button>`).join("")}</div>`}
+       ${ok || !weak.length ? "" : `<p class="lc-lead">Points à revoir :</p><div class="lc-choices">${weak.map((k) => `<button type="button" class="lc-choice" data-k="${k}">↻ ${esc(TILES[k].t)} (${sc[k]} %)</button>`).join("")}</div>`}
        ${ok ? "" : `<button type="button" class="lc-cta" id="b0Again" style="margin-top:10px">Repasser le bilan</button>`}
        <button type="button" class="lc-sec-btn" id="b0Menu" style="width:100%;margin-top:8px">Menu B0</button></section>`);
     el.querySelector("#b0Back").onclick = () => menu();
