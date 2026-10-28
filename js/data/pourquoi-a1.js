@@ -1,6 +1,132 @@
 // The Roots — « Pourquoi on l'utilise ? » : une page d'explication avant la règle, pour les pages de grammaire A1 qui portent sur un temps ou une structure.
 // WHY_A1[code de leçon][titre de la page de grammaire] = { intro, uses: [[ce que ça dit, exemple EN, exemple FR]], marks, watch }
 export const WHY_A1 = {
+  "A1.1": {
+    "Le verbe to be (au présent)": {
+      intro: "Be (être) sert à dire qui tu es, où tu es, ton âge et comment tu vas. C’est le verbe le plus utilisé : on le trouve presque partout.",
+      uses: [
+        ["Qui tu es", "I am Ana.", "Je suis Ana."],
+        ["Où tu es", "She is at school.", "Elle est à l’école."],
+        ["Ton âge", "I am twenty.", "J’ai vingt ans."]
+      ],
+      marks: "Mots repères : I am, you are, he / she / it is, we / they are.",
+      watch: "L’âge se dit avec be : I am twenty (jamais I have twenty)."
+    },
+    "Le verbe to have": {
+      intro: "Have (avoir) sert à dire ce que tu as : une famille, un animal, un objet. Pour une personne seule (he, she, it), on dit has.",
+      uses: [
+        ["Ta famille", "I have a brother.", "J’ai un frère."],
+        ["Un animal", "We have a dog.", "Nous avons un chien."],
+        ["Un objet", "She has a phone.", "Elle a un téléphone."]
+      ],
+      marks: "Mots repères : I have, you have, he / she has.",
+      watch: "Pas de s sur have sauf he / she / it : has (jamais haves)."
+    }
+  },
+  "A1.2": {
+    "There is / There are": {
+      intro: "There is / there are sert à dire ce qu’il y a quelque part : une chose (is) ou plusieurs (are). On l’utilise pour décrire une pièce, une rue, une ville.",
+      uses: [
+        ["Une chose", "There is a table in the kitchen.", "Il y a une table dans la cuisine."],
+        ["Plusieurs choses", "There are two chairs.", "Il y a deux chaises."],
+        ["Négatif", "There isn’t a sofa.", "Il n’y a pas de canapé."]
+      ],
+      marks: "Mots repères : there is + un seul · there are + plusieurs.",
+      watch: "On ne dit pas It has : en anglais, il y a = there is / there are."
+    },
+    "Have got / has got": {
+      intro: "Have got dit ce que tu possèdes, surtout à l’oral : ta famille, ta maison, tes animaux. C’est un synonyme de have.",
+      uses: [
+        ["Ta famille", "I have got a sister.", "J’ai une sœur."],
+        ["Ta maison", "We have got a garden.", "Nous avons un jardin."],
+        ["Une personne", "She has got a dog.", "Elle a un chien."]
+      ],
+      marks: "Mots repères : have got / has got · haven’t got / hasn’t got.",
+      watch: "Question : Have you got… ? (on inverse, sans do)."
+    }
+  },
+  "A1.4": {
+    "L'impératif": {
+      intro: "L’impératif sert à donner un ordre, un conseil ou une indication : demander ton chemin, indiquer une direction, dire à quelqu’un quoi faire.",
+      uses: [
+        ["Une direction", "Turn left.", "Tourne à gauche."],
+        ["Un conseil", "Take the bus.", "Prends le bus."],
+        ["Défendre", "Don’t turn right.", "Ne tourne pas à droite."]
+      ],
+      marks: "Mots repères : go, turn, take, cross · please.",
+      watch: "Pas de sujet : on dit Turn left (jamais You turn left). Pour défendre : don’t + verbe."
+    }
+  },
+  "A1.5": {
+    "Like / love / hate + -ing": {
+      intro: "Pour dire ce que tu aimes ou détestes faire, on utilise like, love ou hate. C’est déjà le verbe conjugué : le 2ᵉ verbe devient le nom de l’activité, avec -ing.",
+      uses: [
+        ["J’aime", "I like swimming.", "J’aime nager."],
+        ["J’adore", "She loves dancing.", "Elle adore danser."],
+        ["Je déteste", "We hate waiting.", "Nous détestons attendre."]
+      ],
+      marks: "Mots repères : like, love, hate + verbe-ing.",
+      watch: "Seul like se conjugue : he likes swimming. Jamais I like swim."
+    }
+  },
+  "A1.6": {
+    "I'd like et I want": {
+      intro: "I’d like (je voudrais) sert à demander poliment, par exemple au restaurant. I want (je veux) est plus direct : on l’évite avec des inconnus.",
+      uses: [
+        ["Commander", "I’d like a coffee, please.", "Je voudrais un café, s’il vous plaît."],
+        ["Direct", "I want a coffee.", "Je veux un café."],
+        ["Proposer", "Would you like some tea?", "Voulez-vous du thé ?"]
+      ],
+      marks: "Mots repères : I’d like, would you like, please.",
+      watch: "I’d = I would. Après I’d like : un nom (I’d like a tea) ou to + verbe (I’d like to sit)."
+    }
+  },
+  "A1.8": {
+    "Le présent continu : formation": {
+      intro: "Le présent continu sert à dire ce qui se passe maintenant, en ce moment, pendant que tu parles. Tu l’utilises pour dire ce que tu fais là.",
+      uses: [
+        ["Maintenant", "I am waiting for the bus.", "J’attends le bus (maintenant)."],
+        ["En train de faire", "She is running.", "Elle est en train de courir."],
+        ["Plusieurs personnes", "They are talking.", "Ils sont en train de parler."]
+      ],
+      marks: "Mots repères : now, right now, at the moment.",
+      watch: "Forme : am / is / are + verbe-ing. Pas de -ing avec know, like, understand."
+    }
+  },
+  "A1.9": {
+    "Going to : les projets": {
+      intro: "Going to sert à dire ce que tu as décidé de faire bientôt. Le projet existe déjà dans ta tête : un voyage, un départ, une réservation.",
+      uses: [
+        ["Un projet", "I am going to travel.", "Je vais voyager."],
+        ["Une réservation", "She is going to book a room.", "Elle va réserver une chambre."],
+        ["Un départ proche", "We are going to leave at nine.", "Nous allons partir à neuf heures."]
+      ],
+      marks: "Mots repères : tomorrow, next week, tonight, soon.",
+      watch: "Forme : am / is / are + going to + verbe (sans -s, sans -ing)."
+    },
+    "Would like : demander poliment": {
+      intro: "Would like sert à demander ou à proposer quelque chose de façon polie : à l’hôtel, au restaurant, à la réception.",
+      uses: [
+        ["Demander", "I would like a room.", "Je voudrais une chambre."],
+        ["Proposer", "Would you like breakfast?", "Voulez-vous le petit déjeuner ?"],
+        ["Dire son souhait", "We would like to stay two nights.", "Nous voudrions rester deux nuits."]
+      ],
+      marks: "Mots repères : would like, would you like, please.",
+      watch: "Pas de -s : she would like (jamais she woulds like)."
+    }
+  },
+  "A1.10": {
+    "Prépositions de temps : at / on / in": {
+      intro: "On utilise at, on ou in pour dire quand quelque chose arrive. Le choix dépend de la taille du moment : une heure, un jour, une période.",
+      uses: [
+        ["At : une heure précise", "I start at nine.", "Je commence à neuf heures."],
+        ["On : un jour", "We rest on Sunday.", "Nous nous reposons le dimanche."],
+        ["In : une période", "She works in the morning.", "Elle travaille le matin."]
+      ],
+      marks: "At + heure · on + jour · in + mois, saison, matin, année.",
+      watch: "Exceptions : at night, at the weekend. On dit in the morning mais on Monday morning."
+    }
+  },
   "A1.3": {
     "Le présent simple : he / she / it": {
       intro: "Il dit ce qui est vrai en général ou ce qui se répète. Demande-toi : « ça arrive souvent, ou tout le temps ? » Si oui, c’est le présent simple.",
@@ -97,6 +223,17 @@ export const WHY_A2 = {
       ],
       marks: "À retenir : I like (verbe conjugué) + verbe-ing (gérondif).",
       watch: "Seul like se conjugue : he likes dancing. Pas le gérondif français (en nageant)."
+    },
+    "Want, decide, plan, hope + to": {
+      title: "Comment savoir : -ing ou to ?",
+      intro: "Regarde toujours le 1er verbe : c’est lui qui décide. Chaque verbe s’apprend avec sa structure, comme un mot de vocabulaire.",
+      uses: [
+        ["Goût, habitude → -ing", "I like reading. I hate waiting.", "J’aime lire. Je déteste attendre."],
+        ["Projet, envie, décision → to", "I want to see it. I decided to stay.", "Je veux le voir. J’ai décidé de rester."],
+        ["Après une préposition → -ing", "I’m interested in learning.", "Je m’intéresse à apprendre."]
+      ],
+      marks: "like, love, hate, enjoy + -ing · want, decide, plan, hope + to.",
+      watch: "Un doute ? Pense au sens : une chose que tu fais d’habitude (-ing) ou une chose que tu veux faire (to)."
     },
     "-ing ou to : le sens": {
       title: "I like swimming ou I’d like to swim ?",
