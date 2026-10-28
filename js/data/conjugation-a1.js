@@ -52,7 +52,7 @@ const frQ = (i, fv, r) => { const p = fv + (r ? " " + r : ""); return i === 0 ? 
 // complément français : « sing|plur » (adjectifs) ; à la négation, un / une / des → de / d’
 const frC = (c, i, neg) => { if (!c) return ""; let x = c.split("|"); x = i >= 5 && x[1] ? x[1] : x[0]; return neg ? x.replace(/^(un|une|des) (\S)/, (m, a, b) => (vow(b) ? "d’" : "de ") + b) : x; };
 
-const IRRP = { build: "built", break: "broke", swim: "swam", dial: "dialled" };
+const IRRP = { build: "built", break: "broke", swim: "swam", dial: "dialled", buy: "bought", make: "made", take: "took", write: "wrote", send: "sent", bring: "brought", eat: "ate" };
 const pastOf = (v) => IRRP[v] || (/e$/.test(v) ? v + "d" : /[^aeiou]y$/.test(v) ? v.slice(0, -1) + "ied" : v + "ed");
 const FRPP = { collect: "collectionné", climb: "grimpé", build: "construit", fish: "pêché", break: "cassé", burn: "brûlé", answer: "répondu", dial: "composé", record: "enregistré", type: "tapé", delete: "supprimé", download: "téléchargé", miss: "raté" };
 const AVI = ["ai", "as", "a", "a", "a", "avons", "ont"], AVIMP = ["avais", "avais", "avait", "avait", "avait", "avions", "avaient"], ETIMP = ["étais", "étais", "était", "était", "était", "étions", "étaient"];
@@ -106,9 +106,20 @@ export function conjExFor(list, verb, mode) {
   const o = others.find((x) => x[0] !== verb[0]);
   return o && t !== "be" && t !== "hg" ? conjEx([o[0], o[1], o[2], o[3], t, o[5], o[6]], mode) : conjEx(verb, mode);
 }
+// Test final : jamais les verbes déjà enseignés dans la leçon. On prend d'autres verbes au même temps (be / have / do : d'autres compléments).
+const TV = [["cook", "dinner"], ["buy", "a ticket"], ["write", "a letter"], ["clean", "the room"], ["open", "the window"], ["make", "a cake"], ["watch", "a film"], ["call", "a friend"], ["eat", "lunch"], ["wash", "the car"], ["send", "an email"], ["visit", "a museum"], ["paint", "a picture"], ["carry", "a bag"], ["bring", "a book"], ["learn", "a song"], ["take", "the bus"], ["play", "the piano"]];
+const TC = { be: ["at the park", "from Italy", "in the kitchen", "at the office", "at the station", "from Brazil"], hg: ["a sister", "a cat", "two brothers", "a big house", "a bike", "three cousins"], hv: ["a sister", "a cat", "two brothers", "a big house", "a bike", "three cousins"], do: ["the dishes", "the cleaning", "the laundry", "the homework", "the ironing", "the gardening"] };
+function testVerbs(list) {
+  const taught = new Set(list.map((x) => x[0])), free = TV.filter((x) => !taught.has(x[0])), cnt = {};
+  return list.map((verb, n) => {
+    const t = tenseOf(verb);
+    if (TC[t]) { const k = (cnt[t] = (cnt[t] || 0) + 1) - 1; return [verb[0], verb[1], verb[2], TC[t][k % TC[t].length], t]; }
+    const [v, cx] = free[n % free.length]; return [v, "", "", cx, t];
+  });
+}
 // 18 questions de test pour une liste de verbes : [énoncé, choix, bonne réponse, explication]
 export function conjQuiz(level) {
-  const list = Array.isArray(level) ? level : CONJ_A1[level] || [], out = [];
+  const list = testVerbs(Array.isArray(level) ? level : CONJ_A1[level] || []), out = [];
   const shuf = (a) => a.slice().sort(() => Math.random() - 0.5), S = ["She", "We", "He", "They", "My friend", "You", "I"];
   const idx = (s) => (s === "I" ? 0 : s === "You" ? 1 : s === "We" ? 5 : s === "They" ? 6 : 2), low = (s) => (s === "I" ? "I" : s.toLowerCase());
   const push = (q, good, bad, ex) => { const a = shuf([good, ...bad]); out.push([q, a, a.indexOf(good), ex]); };
