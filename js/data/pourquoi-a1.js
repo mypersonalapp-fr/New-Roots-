@@ -128,6 +128,26 @@ export const WHY_A1 = {
     }
   },
   "A1.3": {
+    "Can / can’t : ce que je sais faire": {
+      intro: "Can dit ce que tu sais faire ou ce que tu peux faire : un talent, une capacité, une possibilité. Le verbe qui suit ne change jamais.",
+      uses: [
+        ["Un talent", "I can swim.", "Je sais nager."],
+        ["Une langue", "She can speak English.", "Elle parle anglais."],
+        ["Ce que tu ne sais pas", "I can’t dance.", "Je ne sais pas danser."]
+      ],
+      marks: "Mots repères : can, can’t, Can you… ?",
+      watch: "Jamais de -s ni de to après can : she can swim (pas she cans, pas can to swim)."
+    },
+    "Can I… ? Can you… ? : demander": {
+      intro: "Can I… ? sert à demander la permission. Can you… ? sert à demander un service. Ce sont les phrases de tous les jours pour demander poliment.",
+      uses: [
+        ["Une permission", "Can I sit here?", "Je peux m’asseoir ici ?"],
+        ["Un service", "Can you help me, please?", "Tu peux m’aider, s’il te plaît ?"],
+        ["Répondre", "Sure. / Sorry, I can’t.", "Bien sûr. / Désolé, je ne peux pas."]
+      ],
+      marks: "Mots repères : Can I… ? Can you… ? please, sure.",
+      watch: "On ne dit pas Do you can… ? : on inverse directement Can you… ?"
+    },
     "Le présent simple : he / she / it": {
       intro: "Il dit ce qui est vrai en général ou ce qui se répète. Demande-toi : « ça arrive souvent, ou tout le temps ? » Si oui, c’est le présent simple.",
       uses: [
