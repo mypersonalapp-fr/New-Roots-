@@ -8,7 +8,7 @@ P[1] = { title: "Questions de cours : les règles de grammaire", intro: "Répond
   ["Complète : « She ___ two brothers. »", ["has", "have", "haves"], "Have got / have : avec he, she, it on dit has."],
   ["Après « does not », le verbe est…", ["à l'infinitif, sans -s (he does not work)", "avec un -s (he does not works)", "au passé (he does not worked)"], "Does porte déjà la marque de la 3e personne : le verbe reste simple."],
   ["Complète : « There ___ three books on the table. »", ["are", "is", "be"], "There is + singulier, there are + pluriel."],
-  ["Quel article devant « apple » ?", ["an", "a", "the apple d'office"], "An devant un son voyelle : an apple, an hour."],
+  ["Quel article devant « apple » ?", ["an", "a", "the"], "An devant un son voyelle : an apple, an hour."],
   ["Quel est le pluriel de « child » ?", ["children", "childs", "childes"], "Pluriel irrégulier : child, children."],
   ["Où place-t-on l'adjectif en anglais ?", ["Avant le nom (a red car)", "Après le nom (a car red)", "Au choix"], "L'adjectif est toujours avant le nom et ne prend pas de -s."],
   ["Après « can », le verbe est…", ["à l'infinitif sans to (I can swim)", "avec to (I can to swim)", "avec -ing (I can swimming)"], "Can + base verbale, pour tous les sujets."],

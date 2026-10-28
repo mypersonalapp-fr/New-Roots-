@@ -72,7 +72,7 @@ export function renderB0(root, { onExit } = {}) {
 
   const SCENE = [null, "scene-a20-bridge", "scene-a20-time", "scene-a20-daily-verbs", "exam-a1-listening", "exam-a1-reading", "exam-a1-writing", "exam-a1-speaking", "scene-a20-basic-verbs"];
   const AVA = "assets/img/characters/boy-3.webp", HERO = "assets/img/characters/boy-3-intro.webp";
-  const chip = (k, pct) => { const m = TILES[k]; return `<div class="lc-mchip" style="--c:${m.c}"><span class="lc-mchip-ic">${tIcon(m)}</span><div class="lc-mchip-tx"><b>${esc(m.t)}</b><small>${esc(m.s)}</small></div><div class="lc-mchip-pg"><i><s style="width:${pct}%"></s></i></div></div>`; };
+  const chip = (k, pct, sub) => { const m = TILES[k]; return `<div class="lc-mchip" style="--c:${m.c}"><span class="lc-mchip-ic">${tIcon(m)}</span><div class="lc-mchip-tx"><b>${esc(m.t)}</b><small>${esc(sub || m.s)}</small></div><div class="lc-mchip-pg"><i><s style="width:${pct}%"></s></i></div></div>`; };
   const guide = (t) => `<div class="lc-guide"><img class="lc-ava lc-ava-md" src="${AVA}" alt=""/><div class="lc-gbub">${esc(t)}</div><div class="lc-path" aria-hidden="true"><i class="d"></i><u></u><i class="c"></i></div></div>`;
   const scene = (k) => `<div class="lc-scenes lc-scene-sm lc-exhero"><figure><img src="assets/img/lesson/${SCENE[k]}.webp" alt="" loading="lazy" onerror="this.closest('.lc-exhero').remove()"/></figure></div>`;
 
@@ -80,8 +80,13 @@ export function renderB0(root, { onExit } = {}) {
   function quiz(step) {
     const list = items(step), got = new Array(10).fill(false);
     const BUB = ["", "Révisons les règles !", "Quel temps choisir ?", "Conjugue avec moi !", "Écoute bien !", "Lis bien !", "Écris avec moi !", "Parle avec moi !", "Dernier test !"];
-    const draw = (half) => {
-      const from = half * 5, part = list.slice(from, from + 5), sel = {}, txt = {};
+    const hist = [];
+    const draw = (from, size = 5, back) => {
+      if (!back) hist.push(from);
+      while (size > 2 && list.length - (from + size) === 1) size--; // pas de page orpheline à 1 question
+      let part = list.slice(from, from + size);
+      const c0 = part[0].ctx ? part[0].ctx.t : ""; part = part.filter((it) => (it.ctx ? it.ctx.t : "") === c0); // une page = un seul audio / texte
+      const last = from + part.length >= 10, sel = {}, txt = {};
       const ctx = part[0].ctx;
       const ctxHtml = ctx && ctx.k === "audio"
         ? `<div class="lc-player"><button type="button" class="lc-play" id="b0Play" aria-label="Écouter l’audio">▶</button><span class="lc-wave" aria-hidden="true"></span></div><p class="q6-help" style="margin:4px 0 8px">${esc(ctx.t)} · touche ▶ pour écouter</p><p class="q6-hint" id="b0Tr" hidden>${esc(ctx.x)}</p>`
@@ -94,13 +99,26 @@ export function renderB0(root, { onExit } = {}) {
         else body = `<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="lc-sec-btn" data-model="${j}">🔊 Écouter le modèle</button><button type="button" class="lc-sec-btn" data-said="${j}">🎤 J’ai dit la phrase</button></div>`;
         return `<div class="q6-q" data-j="${j}"><p class="q6-p"><span>${n}</span>${esc(it.q)}</p>${body}<p class="q6-hint" data-fb="${j}" hidden></p></div>`;
       }).join("");
-      frame(`${step === 8 ? "Bilan B0" : "B0 · Étape " + step}`, { cur: half + 1, total: 2 },
-        chip(step, half * 50) + guide(BUB[step]) +
+      frame(`${step === 8 ? "Bilan B0" : "B0 · Étape " + step}`, { cur: from + part.length, total: 10 },
+        chip(step, Math.round(from * 10), `Questions ${from + 1} à ${from + part.length} sur 10`) + guide(BUB[step]) +
         `<section class="lc-card q6" style="display:flex;flex-direction:column;gap:12px">${scene(step)}${ctxHtml}<div class="q6-list" style="display:flex;flex-direction:column;gap:12px">${qh}</div><p class="lc-fb q6-fb" id="b0Fb" aria-live="polite"></p><button type="button" class="lc-cta q6-go" id="b0Check" disabled>Vérifier</button></section>`,
-        `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="b0Prev">← Précédent</button><button type="button" class="lc-cta lc-next" id="b0Next" disabled>${half === 1 ? "Voir mon score" : "Suite →"}</button></footer>`);
+        `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="b0Prev">← Précédent</button><button type="button" class="lc-cta lc-next" id="b0Next" disabled>${last ? "Voir mon score" : "Suite →"}</button></footer>`);
       const main = el.querySelector(".lc-main"); if (main) main.scrollTop = 0;
+      // Tout doit tenir sur l'écran : on resserre (comme les pages de test A1/A2), puis on réduit l'image sans la couper.
+      const fit = () => {
+        const m = el.querySelector(".lc-main"), c = el.querySelector(".q6"); if (!m || !c) return;
+        const over = () => m.scrollHeight - m.clientHeight > 2, im = c.querySelector(".lc-exhero img");
+        c.classList.remove("q6-t1", "q6-t2"); if (im) { im.style.height = ""; im.style.objectFit = ""; }
+        if (over()) c.classList.add("q6-t1");
+        if (over()) c.classList.add("q6-t2");
+        if (im && over()) { im.style.objectFit = "contain"; for (const h of [150, 120, 95, 75]) { im.style.height = h + "px"; if (!over()) break; } }
+      };
+      // Si ça déborde encore après resserrage, on enlève une question de la page (elle passe à la page suivante).
+      const imgs = [...el.querySelectorAll(".lc-exhero img")];
+      const settle = () => { fit(); const m = el.querySelector(".lc-main"); if (m && m.scrollHeight - m.clientHeight > 2 && part.length > 2 && !Object.keys(sel).length && !Object.keys(txt).length) { hist.pop(); draw(from, part.length - 1); } };
+      Promise.all(imgs.map((im) => (im.complete ? 1 : new Promise((r) => { im.onload = im.onerror = r; })))).then(() => requestAnimationFrame(settle));
       el.querySelector("#b0Back").onclick = () => menu();
-      el.querySelector("#b0Prev").onclick = () => (half === 0 ? menu() : draw(0));
+      el.querySelector("#b0Prev").onclick = () => { hist.pop(); if (!hist.length) menu(); else draw(hist[hist.length - 1], 5, true); };
       const check = el.querySelector("#b0Check"), next = el.querySelector("#b0Next");
       let locked = false;
       const ready = () => part.every((it, j) => it.type === "qcm" ? sel[j] !== undefined : it.type === "free" ? (txt[j] || "").trim().split(/\s+/).filter(Boolean).length >= 6 : sel[j] === true);
@@ -131,7 +149,7 @@ export function renderB0(root, { onExit } = {}) {
         const tr = el.querySelector("#b0Tr"); if (tr) tr.hidden = false;
         const fb = el.querySelector("#b0Fb"); fb.className = "lc-fb q6-fb " + (good >= 4 ? "lc-fb-ok" : "lc-fb-ko"); fb.textContent = `${good}/5 sur cette page.`;
       };
-      next.onclick = () => (half === 0 ? draw(1) : done());
+      next.onclick = () => (last ? done() : draw(from + part.length));
     };
     const done = () => {
       const n = got.filter(Boolean).length, p = b0Load();
