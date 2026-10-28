@@ -1,9 +1,9 @@
 // The Roots — registre des leçons du niveau A2 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js). Même principe que lecons-a1.js.
 // Leçons construites : A2.0 à A2.12 (voir A2_BUILT). Les autres paliers viendront un par un.
-import { CONJ_A2 } from "./conjugation-a1.js?v=20261025k";
+import { CONJ_A2 } from "./conjugation-a1.js?v=20261025l";
 import { A2_EN_PALIERS } from "./programme-a2-en.js";
-import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261025k";
+import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261025l";
 
 // Objectifs courts pour l'écran d'accueil : une ligne chacun (le détail reste dans les pages de grammaire).
 const cut = (t, n = 64) => { let x = String(t).split(/ [—–-] | \(|\.\s/)[0].replace(/^Grammaire : /, ""); x = x.split(" : ")[0]; if (x.length > n) { x = x.slice(0, n); x = x.slice(0, x.lastIndexOf(" ")) + "…"; } return x; };
@@ -28,7 +28,7 @@ export function lessonStatusA2(n) {
 // A2.0 « Passerelle » : petit parcours (pas de Roots City, Exercices, Jeux, ni Contrôle). Il est validé quand toutes ces matières sont faites.
 export const A20_MENU = ["vocab", "grammar", "dialogue", "trad", "listening", "reading", "ewrite", "eoral", "write", "conj", "bilan", "remise"];
 const A20_DONE = ["vocab", "grammar", "dialogue", "listening", "reading", "speaking", "write", "conj", "bilan"];
-const V = "20261025k";
+const V = "20261025l";
 export async function loadBundleA2(n) {
   if (!A2_BUILT.includes(n)) throw new Error("A2." + n + " pas encore construit");
   const s = `A2${n}`, base = n === 0 ? A20_BASE : A2_EN_PALIERS[n - 1], titleFr = n === 0 ? "Passerelle A1 → A2" : A2_TITLES_FR[n - 1];
