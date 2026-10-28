@@ -1,9 +1,9 @@
 // The Roots — registre des leçons du niveau A2 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js). Même principe que lecons-a1.js.
 // Leçons construites : A2.0 à A2.12 (voir A2_BUILT). Les autres paliers viendront un par un.
-import { CONJ_A2 } from "./conjugation-a1.js?v=20261025p";
+import { CONJ_A2 } from "./conjugation-a1.js?v=20261028a";
 import { A2_EN_PALIERS } from "./programme-a2-en.js";
-import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261025p";
+import { EXPRESSION_PLUS_A2 } from "./expression-plus-a1.js?v=20261028a";
 
 // Objectifs courts pour l'écran d'accueil : une ligne chacun (le détail reste dans les pages de grammaire).
 const cut = (t, n = 64) => { let x = String(t).split(/ [—–-] | \(|\.\s/)[0].replace(/^Grammaire : /, ""); x = x.split(" : ")[0]; if (x.length > n) { x = x.slice(0, n); x = x.slice(0, x.lastIndexOf(" ")) + "…"; } return x; };
