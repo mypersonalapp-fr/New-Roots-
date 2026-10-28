@@ -374,7 +374,7 @@ export function renderMesCours(container, shellRoot) {
     const Ls = lessonsOf(lvLevel), nav = `<button type="button" class="bl-back" data-view="home">← Tous les niveaux</button>`;
     if (!Ls.length) return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="card bl-card"><p class="bl-soft">Ce livret est prêt. Les leçons arrivent bientôt : les notes s'afficheront ici.</p></div>`;
     const t = Ls.map((L) => { const sh = lessonSheet(lvLevel, L); return `<button type="button" class="lv-ls${L.built ? "" : " off"}" ${L.built ? `data-view="lesson" data-ls="${L.n}"` : "disabled"}><b>${L.code}</b><small>${L.title}</small>${gauge(sh.avg)}<span>${L.built ? sh.avg + " %" : "bientôt"}</span></button>`; }).join("");
-    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div>${lvLevel === "A1" ? examCard() : ""}<button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`;
+    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div>${lvLevel === "A1" ? examCard() : ""}${lvLevel === "B0" ? "" : `<button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`}`;
   }
   function livretLesson() {
     const L = lessonsOf(lvLevel).find((x) => x.n === lvLesson); if (!L) return livretLevel();
@@ -383,9 +383,9 @@ export function renderMesCours(container, shellRoot) {
     const rows = sh.rows.map((r) => `<div class="cmp-r"><div class="n"><span>${r.e} ${r.name}</span>${r.gain !== null ? `<em class="${r.gain >= 0 ? "up" : "dn"}">${r.gain >= 0 ? "+" : ""}${r.gain} pts</em>` : ""}</div>${r.ent !== null ? bar(r.ent, true) : `<div class="cmp-c e"><div class="fx">${gauge(0)}</div><span>—</span></div>`}${r.has ? bar(r.pct) : `<div class="cmp-c"><div class="fx">${gauge(0)}</div><span>—</span></div>`}</div>`).join("");
     return `<button type="button" class="bl-back" data-view="level">← ${lvLevel}</button><div class="lv-title">${L.code} · ${L.title}</div>
       <div class="card bl-card lv-c"><div class="bl-sp"><h3 class="bl-h">Mes matières</h3><b class="lv-avg">${sh.avg} %</b></div><div class="cmp-h"><span>À l'entrée</span><span>Aujourd'hui</span></div>${rows}<div class="lv-note">Note de la leçon : <b>${nf(sh.note20)} / 20</b>${sh.gain !== null ? ` · Progression : <b class="${sh.gain >= 0 ? "up" : "dn"}">${sh.gain >= 0 ? "+" : ""}${sh.gain} pts</b>` : ""}</div></div>
-      <div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
+      ${lvLevel === "B0" ? "" : `<div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
         <p class="bl-soft">Noté à part. Ajoute jusqu'à +${BONUS_MAX} point au total (plafonné à 20). ${k.done ? `Test : ${k.best}/${k.tot}.` : "Pas encore passé."}</p></div>
-      <div class="lv-total"><span>Total final</span><b>${nf(sh.total)} / 20</b><small>${nf(sh.note20)} + ${nf(k.bonus)} bonus</small></div>`;
+      <div class="lv-total"><span>Total final</span><b>${nf(sh.total)} / 20</b><small>${nf(sh.note20)} + ${nf(k.bonus)} bonus</small></div>`}`;
   }
   function hubHtml(l) {
     const back = (to, label) => `<button type="button" class="bl-back" data-tab="${to}">← ${label}</button>`;

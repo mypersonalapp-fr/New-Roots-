@@ -1,14 +1,16 @@
 // The Roots — livret : structure complète niveaux → leçons → matières (jauges à 0 tant qu'aucun examen n'est passé).
 import { A1_LIST } from "./lecons-a1.js?v=20261028a";
 import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261028a";
+import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261028a";
 import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261028a";
-export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B1", "Intermédiaire", false], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
+export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B0", "Passerelle", true], ["B1", "Intermédiaire", false], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 const SKN = [["Compréhension écrite", 7.5, "📖"], ["Compréhension orale", 7.5, "🎧"], ["Grammaire", 10, "🧩"], ["Expression écrite", 7.5, "✍️"], ["Expression orale", 7.5, "🎤"]];
 export const BONUS_MAX = 1; // points de bonus max sur 20 (Conjugaison)
 export function lessonsOf(level) {
   if (level === "A1") return A1_LIST.map((L) => ({ n: L.n, code: L.code, title: L.titleFr, key: L.key, built: true }));
   if (level === "A2") return A2_LIST.map((L) => ({ n: L.n, code: L.code, title: L.titleFr, key: L.key, built: A2_BUILT.includes(L.n) }));
+  if (level === "B0") return B0_NAMES.slice(1).map((nm, i) => ({ n: i + 1, code: i === 7 ? "Bilan" : "Étape " + (i + 1), title: i === 7 ? "B0" : nm, key: B0_KEY, built: true }));
   return [];
 }
 const pc = (a, b) => (b ? Math.round((a / b) * 100) : 0);
@@ -18,6 +20,11 @@ export function entryOf(lang) {
   return { ce: f(k.ce), co: f(k.co), gr: f(k.gr), glob: lang && lang.entryScore != null ? lang.entryScore : null };
 }
 export function lessonSheet(level, L, entry = {}) {
+  if (level === "B0") { // Passerelle : une ligne par étape (score sur 10), le bilan est noté en %
+    const p = b0Load(), raw = L.n === 8 ? p.bilan : ((p.scores || {})[L.n] != null ? p.scores[L.n] * 10 : null), has = raw != null && raw !== undefined, pct = has ? raw : 0;
+    const n20 = Math.round(pct / 5 * 10) / 10;
+    return { rows: [{ name: L.n === 8 ? "Bilan (70 % pour ouvrir B1)" : "Score de l'étape", e: B0_ICONS[L.n], has, pct, note: has ? pct + " %" : "", ent: null, gain: null }], gain: null, avg: pct, note20: n20, conj: { done: false, note: 0, best: 0, tot: 6, bonus: 0 }, total: n20, any: has };
+  }
   const p = read(L.key);
   if (level === "A2" && L.n === 0) { // Passerelle : pas de contrôle ; chaque matière est « faite » ou non, la conjugaison reste notée à part
     const dn = p.done || {}, M = [["Vocabulaire", "📖", "vocab"], ["Grammaire", "🧩", "grammar"], ["Conversation", "💬", "dialogue"], ["Compréhension orale", "🎧", "listening"], ["Compréhension écrite", "📖", "reading"], ["Expressions écrite et orale", "✍️", "speaking"], ["Dictée", "🔤", "write"]];
