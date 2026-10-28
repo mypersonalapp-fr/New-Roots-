@@ -23,7 +23,7 @@ import { buildPractice, mountPractice } from "./practice.js?v=20261025d";
 import { createVoice } from "./voice.js?v=20261025d";
 import { CONJ_A1, conjRows, conjQuiz, conjEx, conjLabel, conjTitle } from "../data/conjugation-a1.js?v=20261025d";
 import { REMISE } from "../data/a2-remise.js?v=20261025d";
-import { WHY_A1, WHY_CONJ_A1 } from "../data/pourquoi-a1.js?v=20261025d";
+import { WHY_A1, WHY_CONJ_A1, WHY_CONJ_A2 } from "../data/pourquoi-a1.js?v=20261025d";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js?v=20261025d";
 import { SYN_TR } from "../data/syn-fr.js?v=20261025d";
 import { XQ } from "../data/a1-extra-q.js?v=20261025d";
@@ -629,7 +629,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
   const conjList = () => B.conj || ((B.code && /^A1\.\d+$/.test(B.code)) ? CONJ_A1[Number(B.code.split(".")[1])] : null) || null;
   function showConj() {
     screen = "conj";
-    const L = conjList() || [], why = WHY_CONJ_A1[B.code], off = why ? 1 : 0, total = L.length + 1 + off, lvl = Number(String(B.code || "").split(".")[1]) || 1;
+    const L = conjList() || [], why = WHY_CONJ_A1[B.code] || WHY_CONJ_A2[B.code], off = why ? 1 : 0, total = L.length + 1 + off, lvl = Number(String(B.code || "").split(".")[1]) || 1;
     if (page >= total) page = total - 1;
     const exit = showMenu;
     if (why && page === 0) { // 1re page : pourquoi on utilise ce temps
