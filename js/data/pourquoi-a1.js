@@ -82,3 +82,32 @@ export const WHY_CONJ_A2 = {
   "A2.6": { title: "Les modaux : should, have to, must", intro: "Should donne un conseil. Have to dit une obligation qui vient des règles ou de la situation. Must dit une obligation forte, ou, au négatif, une interdiction.", uses: [["Conseil", "You should sleep more.", "Tu devrais dormir plus."], ["Obligation", "She has to swallow the pill.", "Elle doit avaler le comprimé."], ["Forte / interdiction", "You mustn’t lift weights.", "Tu ne dois pas soulever de poids."]], marks: "Mots repères : should, have to, must, mustn’t.", watch: "Should et must : verbe de base, jamais de -s, jamais de to. Don’t have to = pas obligé (≠ mustn’t = interdit)." },
   "A2.10": { title: "Would like to : proposer et inviter", intro: "Would like to est la façon polie de dire ce que tu veux faire ou de proposer quelque chose à quelqu’un.", uses: [["Ton souhait", "I would like to celebrate my birthday.", "Je voudrais fêter mon anniversaire."], ["Inviter", "Would you like to accept the invitation?", "Voudrais-tu accepter l’invitation ?"], ["Refuser poliment", "I wouldn’t like to refuse the offer.", "Je ne voudrais pas refuser l’offre."]], marks: "Mots repères : would like to, Shall we…?, Why don’t we…?", watch: "Would like to + verbe de base, sans -s : she would like to thank the guests." }
 };
+
+// Grammaire A2 : pages « Pourquoi » avant une règle (clé = code de leçon puis titre de la page de grammaire). Une ligne qui commence par ✗ est fausse : pas d'audio.
+export const WHY_A2 = {
+  "A2.11": {
+    "Like, love, hate, enjoy + -ing": {
+      title: "Le gérondif : pourquoi -ing après I like ?",
+      intro: "Dans « I like swimming », like est déjà le verbe conjugué. Le 2ᵉ verbe ne peut plus l’être : il devient le nom de l’activité, avec -ing. C’est le gérondif.",
+      uses: [
+        ["✗ Deux verbes à la suite", "I like swim", "Faux : like est déjà conjugué."],
+        ["✓ Le 2ᵉ verbe prend -ing", "I like swimming.", "J’aime nager."],
+        ["✓ Même chose", "I like dancing, skipping rope, driving.", "J’aime danser, sauter à la corde, conduire."]
+      ],
+      marks: "À retenir : I like (verbe conjugué) + verbe-ing (gérondif).",
+      watch: "Seul like se conjugue : he likes dancing. Pas le gérondif français (en nageant)."
+    },
+    "-ing ou to : le sens": {
+      title: "I like swimming ou I’d like to swim ?",
+      intro: "Dans les deux cas, le 1er verbe est conjugué (like, would like). Le 2ᵉ change de forme selon le sens.",
+      uses: [
+        ["Goût général : like + -ing", "I like swimming.", "J’aime nager, en général."],
+        ["✗ Pas pour aujourd’hui", "I like to swim today", "Faux : today = moment précis, like = goût général."],
+        ["Envie du moment : would like + to", "I’d like to swim today.", "J’aimerais nager aujourd’hui."],
+        ["✗ Pas de -ing ici", "I’d like swimming", "Faux : would like → to + verbe."]
+      ],
+      marks: "Goût → like + -ing · Envie → would like + to.",
+      watch: "I like to swim existe aussi (un choix). Retiens la règle."
+    }
+  }
+};
