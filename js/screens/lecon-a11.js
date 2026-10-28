@@ -21,7 +21,7 @@ import { REGISTERS_A1 } from "../data/dialogues-a1-registers.js?v=20261025c";
 import { plusPages } from "../data/vocab-plus-a1.js?v=20261025c";
 import { buildPractice, mountPractice } from "./practice.js?v=20261025c";
 import { createVoice } from "./voice.js?v=20261025c";
-import { CONJ_A1, conjRows, conjQuiz } from "../data/conjugation-a1.js";
+import { CONJ_A1, conjRows, conjQuiz, conjEx, conjLabel, conjTitle } from "../data/conjugation-a1.js";
 import { REMISE } from "../data/a2-remise.js";
 import { WHY_A1, WHY_CONJ_A1 } from "../data/pourquoi-a1.js";
 import { THEMES, themeById, mkItems, DICTEES, GUIDED, COMP, checkDictee, checkGuided, WRITE_CRITERIA, BILAN_PASS } from "../data/a2-bilan.js";
@@ -654,9 +654,9 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const TABS = ["Affirmative", "Négative", "Question"];
     const rows = conjRows(verb, cjTab).map(([a, b, cx, fr, say]) => `<li><span class="lc-w"><b>${esc(a)}</b><span class="cj-hl">${esc(b)}</span><span class="cj-cx">${esc(cx)}</span><small class="cj-fr">${esc(fr)}</small></span>${spk(say)}</li>`).join("");
     // Une ligne d'exercice sous le tableau : même forme que l'onglet affiché (affirmative / négative / question).
-    const cjQ = [[`She ___ ${verb[3]}. (${verb[0]})`, conjRows(verb, 0)[3][1], "she → verbe + s."], [`He ___ ${verb[0]} ${verb[3]}. (non)`, "doesn’t", "he → doesn’t + verbe."], [`___ she ${verb[0]} ${verb[3]}?`, "Does", "she → Does + sujet + verbe."]][cjTab];
+    const cjQ = conjEx(verb, cjTab);
     const cjEx = `<div class="cj-ex"><p class="cj-exq">✍️ À toi : <b>${esc(cjQ[0])}</b></p><div class="cj-exi"><input class="lc-ta q6-in" id="cjIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Écris ta réponse…"><button type="button" class="cj-ok" id="cjOk">OK</button></div><p class="cj-exf" id="cjFb" aria-live="polite"></p></div>`;
-    const body = `<section class="lc-card"><h2 class="lc-h2">🔁 To ${esc(verb[0])} : ${esc(verb[1])}</h2>
+    const body = `<section class="lc-card"><h2 class="lc-h2">🔁 ${esc(conjTitle(verb))} <span class="lc-why-t">${esc(conjLabel(verb))}</span></h2>
       <div class="cj-tabs" role="tablist">${TABS.map((t, i) => `<button type="button" class="cj-tab ${i === cjTab ? "on" : ""}" data-t="${i}" role="tab" aria-selected="${i === cjTab}">${t}</button>`).join("")}</div>
       <ul class="lc-list lc-vl lc-rules">${rows}</ul>${cjEx}</section>`;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev" ${page === 0 ? "" : ""}>← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext">${page - off === L.length - 1 ? "Test ✏️" : "Suivant →"}</button></footer>`;
@@ -668,7 +668,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     el.querySelectorAll(".cj-tab").forEach((b) => b.addEventListener("click", () => { cjTab = Number(b.dataset.t); showConj(); }));
     el.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => { if (!speak(b.dataset.say)) toast("Audio indisponible sur cet appareil"); b.classList.add("lc-spk-on"); setTimeout(() => b.classList.remove("lc-spk-on"), 900); }));
     { const inp = el.querySelector("#cjIn"), fb = el.querySelector("#cjFb"); let tries = 0;
-      const check = () => { const v = inp.value.trim(); if (!v) return; if (same(v, cjQ[1], false, null)) { fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); inp.disabled = true; el.querySelector("#cjOk").disabled = true; } else { tries++; fb.className = "cj-exf ko"; fb.textContent = tries < 2 ? "Pas tout à fait. Indice : " + cjQ[2] : "La réponse : " + cjQ[1] + ". " + cjQ[2]; } };
+      const check = () => { const v = inp.value.trim(); if (!v) return; if (same(v, [cjQ[1], cjQ[3]].filter(Boolean).join(" / "), false, null)) { fb.className = "cj-exf ok"; fb.textContent = "✔ " + cjQ[0].replace("___", cjQ[1]).replace(/ \((.*?)\)$/, ""); inp.disabled = true; el.querySelector("#cjOk").disabled = true; } else { tries++; fb.className = "cj-exf ko"; fb.textContent = tries < 2 ? "Pas tout à fait. Indice : " + cjQ[2] : "La réponse : " + cjQ[1] + ". " + cjQ[2]; } };
       el.querySelector("#cjOk").onclick = check; inp.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); }); }
     fillRows();
     { const mn2 = el.querySelector(".lc-main"), lis = el.querySelectorAll(".lc-rules li"), ft = el.querySelector(".lc-foot"); // ça déborde (phrases longues) : on resserre les lignes

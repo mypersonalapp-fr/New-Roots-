@@ -1,18 +1,18 @@
 // The Roots — Conjugaison A1 : 6 nouveaux verbes par leçon (aucun verbe déjà vu en grammaire).
 // [verbe, infinitif français, "je|tu|il|nous|ils" (présent, sans pronom), complément anglais]
 export const CONJ_A1 = {
-  1: [["live", "habiter", "habite|habites|habite|habitons|habitent", "in Paris"], ["speak", "parler", "parle|parles|parle|parlons|parlent", "English"], ["come", "venir", "viens|viens|vient|venons|viennent", "from Spain"], ["call", "appeler", "appelle|appelles|appelle|appelons|appellent", "my friend"], ["study", "étudier", "étudie|étudies|étudie|étudions|étudient", "at school"], ["learn", "apprendre", "apprends|apprends|apprend|apprenons|apprennent", "English"]],
-  2: [["help", "aider", "aide|aides|aide|aidons|aident", "my mother"], ["visit", "rendre visite à", "visite|visites|visite|visitons|visitent", "my cousins"], ["see", "voir", "vois|vois|voit|voyons|voient", "my sister"], ["look", "regarder", "regarde|regardes|regarde|regardons|regardent", "at the photo"], ["ask", "demander", "demande|demandes|demande|demandons|demandent", "a question"], ["give", "donner", "donne|donnes|donne|donnons|donnent", "a gift"]],
+  1: [["be", "être", "suis|es|est|sommes|sont", "at school", "be", "à l’école"], ["be", "être", "suis|es|est|sommes|sont", "from Spain", "be", "d’Espagne"], ["be", "être", "ai|as|a|avons|ont", "twenty years old", "be", "vingt ans", "To be : être (l’âge : avoir en français)"], ["have", "avoir", "ai|as|a|avons|ont", "a brother", "hv", "un frère"], ["have", "avoir", "ai|as|a|avons|ont", "a dog", "hv", "un chien"], ["do", "faire", "fais|fais|fait|faisons|font", "the shopping", "do", "les courses"]],
+  2: [["have", "avoir", "ai|as|a|avons|ont", "a brother", "hg", "un frère"], ["have", "avoir", "ai|as|a|avons|ont", "two sisters", "hg", "deux sœurs"], ["have", "avoir", "ai|as|a|avons|ont", "a big family", "hg", "une grande famille"], ["be", "être", "suis|es|est|sommes|sont", "young", "be", "jeune|jeunes"], ["be", "être", "suis|es|est|sommes|sont", "funny", "be", "drôle|drôles"], ["be", "être", "suis|es|est|sommes|sont", "friendly", "be", "sympa|sympas"]],
   3: [["play", "jouer", "joue|joues|joue|jouons|jouent", "football"], ["watch", "regarder", "regarde|regardes|regarde|regardons|regardent", "a film"], ["meet", "rencontrer", "rencontre|rencontres|rencontre|rencontrons|rencontrent", "new friends"], ["invite", "inviter", "invite|invites|invite|invitons|invitent", "friends"], ["chat", "discuter", "discute|discutes|discute|discutons|discutent", "online"], ["join", "rejoindre", "rejoins|rejoins|rejoint|rejoignons|rejoignent", "a club"]],
   4: [["walk", "marcher", "marche|marches|marche|marchons|marchent", "to school"], ["turn", "tourner", "tourne|tournes|tourne|tournons|tournent", "left"], ["find", "trouver", "trouve|trouves|trouve|trouvons|trouvent", "the station"], ["cross", "traverser", "traverse|traverses|traverse|traversons|traversent", "the street"], ["stop", "arrêter", "arrête|arrêtes|arrête|arrêtons|arrêtent", "the bus"], ["follow", "suivre", "suis|suis|suit|suivons|suivent", "the road"]],
   5: [["read", "lire", "lis|lis|lit|lisons|lisent", "a book"], ["listen", "écouter", "écoute|écoutes|écoute|écoutons|écoutent", "to music"], ["cook", "cuisiner", "cuisine|cuisines|cuisine|cuisinons|cuisinent", "dinner"], ["dance", "danser", "danse|danses|danse|dansons|dansent", "at parties"], ["sing", "chanter", "chante|chantes|chante|chantons|chantent", "songs"], ["draw", "dessiner", "dessine|dessines|dessine|dessinons|dessinent", "animals"]],
   6: [["eat", "manger", "mange|manges|mange|mangeons|mangent", "fish"], ["drink", "boire", "bois|bois|boit|buvons|boivent", "water"], ["order", "commander", "commande|commandes|commande|commandons|commandent", "a pizza"], ["pay", "payer", "paie|paies|paie|payons|paient", "the bill"], ["taste", "goûter", "goûte|goûtes|goûte|goûtons|goûtent", "the soup"], ["share", "partager", "partage|partages|partage|partageons|partagent", "a cake"]],
   7: [["buy", "acheter", "achète|achètes|achète|achetons|achètent", "a dress"], ["wear", "porter", "porte|portes|porte|portons|portent", "jeans"], ["try", "essayer", "essaie|essaies|essaie|essayons|essaient", "a jacket"], ["choose", "choisir", "choisis|choisis|choisit|choisissons|choisissent", "a bag"], ["sell", "vendre", "vends|vends|vend|vendons|vendent", "shoes"], ["spend", "dépenser", "dépense|dépenses|dépense|dépensons|dépensent", "money"]],
-  8: [["repeat", "répéter", "répète|répètes|répète|répétons|répètent", "the question"], ["wait", "attendre", "attends|attends|attend|attendons|attendent", "for the bus"], ["lose", "perdre", "perds|perds|perd|perdons|perdent", "my keys"], ["ride", "rouler", "roule|roules|roule|roulons|roulent", "a bike"], ["drive", "conduire", "conduis|conduis|conduit|conduisons|conduisent", "a car"], ["understand", "comprendre", "comprends|comprends|comprend|comprenons|comprennent", "English"]],
-  9: [["travel", "voyager", "voyage|voyages|voyage|voyageons|voyagent", "by train"], ["book", "réserver", "réserve|réserves|réserve|réservons|réservent", "a room"], ["leave", "partir", "pars|pars|part|partons|partent", "at nine"], ["arrive", "arriver", "arrive|arrives|arrive|arrivons|arrivent", "at the hotel"], ["rent", "louer", "loue|loues|loue|louons|louent", "a car"], ["stay", "rester", "reste|restes|reste|restons|restent", "at a hotel"]],
+  8: [["repeat", "répéter", "répète|répètes|répète|répétons|répètent", "the question", "pc"], ["wait", "attendre", "attends|attends|attend|attendons|attendent", "for the bus", "pc"], ["lose", "perdre", "perds|perds|perd|perdons|perdent", "my keys", "pc"], ["run", "courir", "cours|cours|court|courons|courent", "to the bus", "pc"], ["ride", "rouler", "roule|roules|roule|roulons|roulent", "a bike", "ps"], ["drive", "conduire", "conduis|conduis|conduit|conduisons|conduisent", "a car", "ps"]],
+  9: [["travel", "voyager", "voyage|voyages|voyage|voyageons|voyagent", "by train", "gt"], ["book", "réserver", "réserve|réserves|réserve|réservons|réservent", "a room", "gt"], ["leave", "partir", "pars|pars|part|partons|partent", "at nine", "gt"], ["arrive", "arriver", "arrive|arrives|arrive|arrivons|arrivent", "at the hotel", "gt"], ["rent", "louer", "loue|loues|loue|louons|louent", "a car", "gt"], ["stay", "rester", "reste|restes|reste|restons|restent", "at a hotel", "gt"]],
   10: [["work", "travailler", "travaille|travailles|travaille|travaillons|travaillent", "in an office"], ["teach", "enseigner", "enseigne|enseignes|enseigne|enseignons|enseignent", "English"], ["start", "commencer", "commence|commences|commence|commençons|commencent", "at nine"], ["finish", "finir", "finis|finis|finit|finissons|finissent", "at five"], ["open", "ouvrir", "ouvre|ouvres|ouvre|ouvrons|ouvrent", "the door"], ["close", "fermer", "ferme|fermes|ferme|fermons|ferment", "the window"]],
-  11: [["sleep", "dormir", "dors|dors|dort|dormons|dorment", "well"], ["enjoy", "apprécier", "apprécie|apprécies|apprécie|apprécions|apprécient", "the sun"], ["bring", "apporter", "apporte|apportes|apporte|apportons|apportent", "an umbrella"], ["carry", "porter", "porte|portes|porte|portons|portent", "a coat"], ["check", "vérifier", "vérifie|vérifies|vérifie|vérifions|vérifient", "the weather"], ["plan", "planifier", "planifie|planifies|planifie|planifions|planifient", "a picnic"]],
-  12: [["say", "dire", "dis|dis|dit|disons|disent", "hello"], ["tell", "raconter", "raconte|racontes|raconte|racontons|racontent", "a story"], ["know", "connaître", "connais|connais|connaît|connaissons|connaissent", "this city"], ["think", "penser", "pense|penses|pense|pensons|pensent", "about it"], ["remember", "retenir", "retiens|retiens|retient|retenons|retiennent", "new words"], ["decide", "décider", "décide|décides|décide|décidons|décident", "today"]],
+  11: [["sleep", "dormir", "dors|dors|dort|dormons|dorment", "well", "ps"], ["enjoy", "apprécier", "apprécie|apprécies|apprécie|apprécions|apprécient", "the sun", "pc"], ["bring", "apporter", "apporte|apportes|apporte|apportons|apportent", "an umbrella", "ps"], ["carry", "porter", "porte|portes|porte|portons|portent", "a coat", "pc"], ["check", "vérifier", "vérifie|vérifies|vérifie|vérifions|vérifient", "the weather", "ps"], ["plan", "planifier", "planifie|planifies|planifie|planifions|planifient", "a picnic", "pc"]],
+  12: [["say", "dire", "dis|dis|dit|disons|disent", "hello", "ps"], ["tell", "raconter", "raconte|racontes|raconte|racontons|racontent", "a story", "pc"], ["know", "connaître", "connais|connais|connaît|connaissons|connaissent", "this city", "ps"], ["think", "penser", "pense|penses|pense|pensons|pensent", "about it", "pc"], ["remember", "retenir", "retiens|retiens|retient|retenons|retiennent", "new words", "gt"], ["decide", "décider", "décide|décides|décide|décidons|décident", "today", "gt"]],
 };
 // A2.0 (passerelle) : 6 nouveaux verbes, jamais vus dans les leçons A1.
 export const CONJ_A2 = {
@@ -31,33 +31,68 @@ export const CONJ_A2 = {
   12: [["miss", "rater", "rate|rates|rate|ratons|ratent", "the train"], ["delay", "retarder", "retarde|retardes|retarde|retardons|retardent", "the flight"], ["cancel", "annuler", "annule|annules|annule|annulons|annulent", "the trip"], ["change", "changer", "change|changes|change|changeons|changent", "the plan"], ["refund", "rembourser", "rembourse|rembourses|rembourse|remboursons|remboursent", "the ticket"], ["board", "embarquer", "embarque|embarques|embarque|embarquons|embarquent", "the plane"]],
 };
 const PRON = [["I", 0], ["You", 1], ["He", 2], ["She", 2], ["It", 2], ["We", 3], ["They", 4]];
-const third = (v) => (/[^aeiou]y$/.test(v) ? v.slice(0, -1) + "ies" : /(s|sh|ch|x|z|o)$/.test(v) ? v + "es" : v + "s");
+// verbe = [verbe, infinitif FR, formes FR "je|tu|il|nous|ils", complément EN, temps, complément FR, titre]
+// temps : ps = présent simple · pc = présent continu · gt = going to · be = to be · hg = have got · hv / do = présent simple de have / do
+const IRR3 = { have: "has" };
+const third = (v) => IRR3[v] || (/[^aeiou]y$/.test(v) ? v.slice(0, -1) + "ies" : /(s|sh|ch|x|z|o)$/.test(v) ? v + "es" : v + "s");
+const DBL = ["run", "stop", "plan", "swim", "chat", "drop", "win", "shop", "sit", "get", "put"];
+export const ing = (v) => (/ie$/.test(v) ? v.slice(0, -2) + "ying" : /[^e]e$/.test(v) ? v.slice(0, -1) + "ing" : DBL.includes(v) ? v + v.slice(-1) + "ing" : v + "ing");
 const vow = (s) => /^[aeiouhéèêâîôùàAEIOUH]/.test(s);
+const FRP = ["Je", "Tu", "Il", "Elle", "Il / Elle", "Nous", "Ils"], FRS = ["je", "tu", "il", "elle", "il / elle", "nous", "ils"];
+const BE = ["am", "are", "is", "is", "is", "are", "are"], BEN = ["am not", "aren’t", "isn’t", "isn’t", "isn’t", "aren’t", "aren’t"], BENF = ["am not", "are not", "is not", "is not", "is not", "are not", "are not"];
+const BEFR = ["suis", "es", "est", "est", "est", "sommes", "sont"], ALLER = ["vais", "vas", "va", "va", "va", "allons", "vont"];
+const cap = (s) => s[0].toUpperCase() + s.slice(1), SIDX = [0, 1, 2, 2, 2, 3, 4];
+export const tenseOf = (verb) => verb[4] || "ps";
+const LABEL = { ps: "Présent simple", pc: "Présent continu", gt: "Going to", be: "Présent : to be", hg: "Have got", hv: "Présent : to have", do: "Présent : to do" };
+export const conjLabel = (verb) => LABEL[tenseOf(verb)];
+export const conjTitle = (verb) => verb[6] || `To ${verb[0]} : ${verb[1]}`;
+const frAff = (i, fv, r) => (i === 0 ? (vow(fv) ? "J’" : "Je ") : FRP[i] + " ") + fv + (r ? " " + r : "");
+const frNeg = (i, fv, r) => (i === 0 ? (vow(fv) ? "Je n’" : "Je ne ") : FRP[i] + " " + (vow(fv) ? "n’" : "ne ")) + fv + " pas" + (r ? " " + r : "");
+const frQ = (i, fv, r) => { const p = fv + (r ? " " + r : ""); return i === 0 ? "Est-ce que " + (vow(p) ? "j’" : "je ") + p + " ?" : [2, 3, 4, 6].includes(i) ? "Est-ce qu’" + FRS[i] + " " + p + " ?" : "Est-ce que " + FRS[i] + " " + p + " ?"; };
+// complément français : « sing|plur » (adjectifs) ; à la négation, un / une / des → de / d’
+const frC = (c, i, neg) => { if (!c) return ""; let x = c.split("|"); x = i >= 5 && x[1] ? x[1] : x[0]; return neg ? x.replace(/^(un|une|des) (\S)/, (m, a, b) => (vow(b) ? "d’" : "de ") + b) : x; };
 // Lignes d'un tableau : [sujet, forme verbale (mise en valeur), reste, traduction française, phrase à prononcer]
 export function conjRows(verb, mode) {
-  const [v, , frs, cx] = verb, f = frs.split("|"), t = third(v);
-  const si = (i) => (i === 2 || i === 3 || i === 4 ? 2 : -1); // he / she / it
-  const FRP = ["Je", "Tu", "Il", "Elle", "Il / Elle", "Nous", "Ils"], FRQ = ["je", "tu", "il", "elle", "il / elle", "nous", "ils"];
+  const [v, inf, frs, cx, , fc] = verb, t = tenseOf(verb), f = frs.split("|"), ig = ing(v), d = vow(inf) ? "d’" : "de ";
   return PRON.map(([p, k], i) => {
-    const third3 = i >= 2 && i <= 4, form = third3 ? t : v, fv = f[k];
-    if (mode === 0) { const fr = i === 0 ? (vow(fv) ? "J’" : "Je ") + fv : FRP[i] + " " + fv; return [p, form, " " + cx, fr, `${p} ${form} ${cx}.`]; }
-    if (mode === 1) { const aux = third3 ? "doesn’t" : "don’t", ne = vow(fv) ? "n’" : "ne ", fr = i === 0 ? (vow(fv) ? "Je n’" : "Je ne ") + fv + " pas" : FRP[i] + " " + ne + fv + " pas"; return [p, `${aux} ${v}`, " " + cx, fr, `${p} ${third3 ? "does not" : "do not"} ${v} ${cx}.`]; }
-    const aux = third3 ? "Does" : "Do", sj = p === "I" ? "I" : p.toLowerCase(), fr = i === 0 ? "Est-ce que " + (vow(fv) ? "j’" : "je ") + fv + " ?" : i === 2 ? "Est-ce qu’il " + fv + " ?" : i === 3 ? "Est-ce qu’elle " + fv + " ?" : i === 4 ? "Est-ce qu’il / elle " + fv + " ?" : "Est-ce que " + FRQ[i] + " " + fv + " ?";
-    return [`${aux} ${sj}`, v, ` ${cx} ?`, fr, `${aux} ${sj} ${v} ${cx}?`];
+    const t3 = i >= 2 && i <= 4, fv = f[k], sj = p === "I" ? "I" : p.toLowerCase(), c = " " + cx;
+    if (t === "be") return mode === 0 ? [p, BE[i], c, frAff(i, fv, frC(fc, i)), `${p} ${BE[i]}${c}.`] : mode === 1 ? [p, BEN[i], c, frNeg(i, fv, frC(fc, i, 1)), `${p} ${BENF[i]}${c}.`] : ["", cap(BE[i]), ` ${sj}${c} ?`, frQ(i, fv, frC(fc, i)), `${cap(BE[i])} ${sj}${c}?`];
+    if (t === "hg") { const h = t3 ? "has" : "have"; return mode === 0 ? [p, `${h} got`, c, frAff(i, fv, frC(fc, i)), `${p} ${h} got${c}.`] : mode === 1 ? [p, `${h}n’t got`, c, frNeg(i, fv, frC(fc, i, 1)), `${p} ${h} not got${c}.`] : [`${cap(h)} ${sj}`, "got", c + " ?", frQ(i, fv, frC(fc, i)), `${cap(h)} ${sj} got${c}?`]; }
+    if (t === "pc") { const r = `en train ${d}${inf}`; return mode === 0 ? [p, `${BE[i]} ${ig}`, c, frAff(i, BEFR[i], r), `${p} ${BE[i]} ${ig}${c}.`] : mode === 1 ? [p, `${BEN[i]} ${ig}`, c, frNeg(i, BEFR[i], r), `${p} ${BENF[i]} ${ig}${c}.`] : [`${cap(BE[i])} ${sj}`, ig, c + " ?", frQ(i, BEFR[i], r), `${cap(BE[i])} ${sj} ${ig}${c}?`]; }
+    if (t === "gt") return mode === 0 ? [p, `${BE[i]} going to ${v}`, c, frAff(i, ALLER[i], inf), `${p} ${BE[i]} going to ${v}${c}.`] : mode === 1 ? [p, `${BEN[i]} going to ${v}`, c, frNeg(i, ALLER[i], inf), `${p} ${BENF[i]} going to ${v}${c}.`] : [`${cap(BE[i])} ${sj}`, `going to ${v}`, c + " ?", frQ(i, ALLER[i], inf), `${cap(BE[i])} ${sj} going to ${v}${c}?`];
+    // présent simple (ps, hv, do)
+    const form = t3 ? third(v) : v, r = frC(fc, i), rn = frC(fc, i, 1);
+    if (mode === 0) return [p, form, c, frAff(i, fv, r), `${p} ${form}${c}.`];
+    if (mode === 1) return [p, `${t3 ? "doesn’t" : "don’t"} ${v}`, c, frNeg(i, fv, rn), `${p} ${t3 ? "does not" : "do not"} ${v}${c}.`];
+    const aux = t3 ? "Does" : "Do";
+    return [`${aux} ${sj}`, v, c + " ?", frQ(i, fv, r), `${aux} ${sj} ${v}${c}?`];
   });
 }
-// 18 questions de test pour un niveau : [énoncé, choix, bonne réponse, explication]
+// Ligne « À toi » sous le tableau : [énoncé, réponse, indice, autres réponses acceptées]
+export function conjEx(verb, mode) {
+  const [v, , , cx] = verb, t = tenseOf(verb), ig = ing(v), e = t === "hg" ? "have got" : v;
+  const N = (a) => [a[0], a[1], a[2], a[3] || ""];
+  if (t === "be") return N([[`She ___ ${cx}. (be)`, "is", "she → is."], [`He ___ ${cx}. (non)`, "isn’t", "he → isn’t (is + not).", "is not"], [`___ she ${cx}?`, "Is", "question avec be : Is + sujet."]][mode]);
+  if (t === "hg") return N([[`She ___ ${cx}. (have got)`, "has got", "she → has got."], [`He ___ ${cx}. (non)`, "hasn’t got", "he → hasn’t got.", "has not got"], [`___ she got ${cx}?`, "Has", "question : Has + sujet + got."]][mode]);
+  if (t === "pc") return N([[`She ___ ${cx}. (${v})`, `is ${ig}`, "she → is + verbe-ing."], [`He ___ ${cx}. (${v}, non)`, `isn’t ${ig}`, "he → isn’t + verbe-ing.", `is not ${ig}`], [`___ she ${ig} ${cx}?`, "Is", "question : Is + sujet + verbe-ing."]][mode]);
+  if (t === "gt") return N([[`She ___ ${cx}. (${v})`, `is going to ${v}`, "she → is going to + verbe."], [`He ___ ${cx}. (${v}, non)`, `isn’t going to ${v}`, "he → isn’t going to + verbe.", `is not going to ${v}`], [`___ she going to ${v} ${cx}?`, "Is", "question : Is + sujet + going to."]][mode]);
+  const t3 = third(v);
+  return N([[`She ___ ${cx}. (${v})`, t3, t3 === v + "s" ? "she → verbe + s." : `she → ${t3} (forme spéciale).`], [`He ___ ${v} ${cx}. (non)`, "doesn’t", "he → doesn’t + verbe.", "does not"], [`___ she ${v} ${cx}?`, "Does", "she → Does + sujet + verbe."]][mode]);
+}
+// 18 questions de test pour une liste de verbes : [énoncé, choix, bonne réponse, explication]
 export function conjQuiz(level) {
-  const list = Array.isArray(level) ? level : CONJ_A1[level] || [], out = [], subj = [["She", 1], ["He", 1], ["My friend", 1], ["We", 0], ["They", 0], ["You", 0], ["I", 0]];
-  const shuf = (a) => a.slice().sort(() => Math.random() - 0.5);
+  const list = Array.isArray(level) ? level : CONJ_A1[level] || [], out = [];
+  const shuf = (a) => a.slice().sort(() => Math.random() - 0.5), S = ["She", "We", "He", "They", "My friend", "You", "I"];
+  const idx = (s) => (s === "I" ? 0 : s === "You" ? 1 : s === "We" ? 5 : s === "They" ? 6 : 2), low = (s) => (s === "I" ? "I" : s.toLowerCase());
+  const push = (q, good, bad, ex) => { const a = shuf([good, ...bad]); out.push([q, a, a.indexOf(good), ex]); };
   list.forEach((verb, n) => {
-    const [v, , , cx] = verb, t = third(v), s3 = subj[n % 3], sp = subj[3 + (n % 4)];
-    const a = shuf([t, v, "is " + v]);
-    out.push([`${s3[0]} ____ ${cx}. (${v})`, a, a.indexOf(t), `Avec he / she / it, on ajoute -s : ${s3[0].toLowerCase()} ${t}.`]);
-    const b = shuf([`don’t ${v}`, `doesn’t ${v}`, `don’t ${t}`]);
-    out.push([`${sp[0]} ____ ${cx}. (non)`, b, b.indexOf(`don’t ${v}`), `Avec ${sp[0].toLowerCase() === "i" ? "I" : sp[0].toLowerCase()} : don’t + ${v}.`]);
-    const c = shuf([`Does she ${v}`, `Does she ${t}`, `Do she ${v}`]);
-    out.push([`____ ${cx} ? (elle)`, c, c.indexOf(`Does she ${v}`), `Question avec she : Does + sujet + ${v}, sans -s.`]);
+    const [v, , , cx] = verb, t = tenseOf(verb), ig = ing(v), s1 = S[n % 7], s2 = S[(n + 2) % 7], i1 = idx(s1), i2 = idx(s2), b1 = BE[i1], w1 = b1 === "are" ? "is" : "are", n2 = BEN[i2], w2 = n2 === "aren’t" ? "isn’t" : "aren’t", tw = t === "ps" || t === "hv" || t === "do";
+    const sg = (s) => idx(s) === 2;
+    if (t === "be") { push(`${s1} ____ ${cx}. (be)`, b1, ["am", "is", "are"].filter((x) => x !== b1), `Avec ${low(s1)} : ${b1}.`); push(`${s2} ____ ${cx}. (non)`, n2, [i2 === 0 ? "aren’t" : w2, "don’t"], `Négatif de be : ${low(s2)} ${n2}.`); push(`____ ${cx} ? (elle)`, "Is she", ["Are she", "Does she"], "Question avec be : Is + sujet."); }
+    else if (t === "hg") { const h1 = sg(s1) ? "has got" : "have got", h2 = sg(s2) ? "hasn’t got" : "haven’t got"; push(`${s1} ____ ${cx}. (have got)`, h1, [sg(s1) ? "have got" : "has got", "is got"], `Avec ${low(s1)} : ${h1}.`); push(`${s2} ____ ${cx}. (non)`, h2, [sg(s2) ? "haven’t got" : "hasn’t got", "isn’t got"], `Négatif : ${low(s2)} ${h2}.`); push(`____ ${cx} ? (elle)`, "Has she got", ["Have she got", "Is she got"], "Question avec she : Has + sujet + got."); }
+    else if (t === "pc") { push(`${s1} ____ ${cx}. (${v})`, `${b1} ${ig}`, [`${w1} ${ig}`, `${b1} ${v}`], `${low(s1)} → ${b1} + verbe-ing : ${b1} ${ig}.`); push(`${s2} ____ ${cx}. (non)`, `${n2} ${ig}`, [`${w2} ${ig}`, `${n2} ${v}`], `Négatif : ${n2} + verbe-ing.`); push(`____ ${cx} ? (elle)`, `Is she ${ig}`, [`Are she ${ig}`, `Is she ${v}`], "Question : Is + sujet + verbe-ing."); }
+    else if (t === "gt") { push(`${s1} ____ ${cx}. (${v})`, `${b1} going to ${v}`, [`${w1} going to ${v}`, `${b1} going ${v}`], `${b1} + going to + verbe.`); push(`${s2} ____ ${cx}. (non)`, `${n2} going to ${v}`, [`${w2} going to ${v}`, `${n2} going ${v}`], `Négatif : ${n2} going to + verbe.`); push(`____ ${cx} ? (elle)`, `Is she going to ${v}`, [`Are she going to ${v}`, `Is she going ${v}`], "Question : Is + sujet + going to + verbe."); }
+    else { const s3 = ["She", "He", "My friend"][n % 3], sp = ["We", "They", "You", "I"][n % 4], t3 = third(v); push(`${s3} ____ ${cx}. (${v})`, t3, [v, "is " + v], `Avec he / she / it : ${low(s3)} ${t3}.`); push(`${sp} ____ ${cx}. (non)`, `don’t ${v}`, [`doesn’t ${v}`, `don’t ${t3}`], `Avec ${low(sp)} : don’t + ${v}.`); push(`____ ${cx} ? (elle)`, `Does she ${v}`, [`Does she ${t3}`, `Do she ${v}`], `Question avec she : Does + sujet + ${v}, sans -s.`); }
   });
   return out;
 }
