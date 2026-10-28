@@ -37,18 +37,36 @@ export function renderB0(root, { onExit } = {}) {
   };
   const opened = (k) => UNLOCK_ALL_PREVIEW || k === 1 || (k === 8 ? [1,2,3,4,5,6,7].every((i) => (b0Load().scores || {})[i] != null) : (b0Load().scores || {})[k - 1] != null);
 
+  // Présentation (comme A2.0) : personnage + objectifs, puis menu mosaïque des rubriques.
+  const TILES = [null,
+    { t: "Questions de cours", s: "Les Règles", c: "#22A06B", img: "grammar", em: "📘" },
+    { t: "Les Temps", s: "Quand Les Utiliser", c: "#EF476F", em: "⏱️" },
+    { t: "Exercices", s: "Sur Les Temps", c: "#16A34A", img: "exercises", em: "✏️" },
+    { t: "Compréhension Orale", s: "Écouter", c: "#2F80ED", img: "listening", em: "🎧" },
+    { t: "Compréhension Écrite", s: "Lire", c: "#0FA3A3", img: "reading", em: "📖" },
+    { t: "Expression Écrite", s: "Écrire", c: "#5B5BD6", em: "✍️" },
+    { t: "Expression Orale", s: "Prononcer Et Parler", c: "#D946EF", img: "speaking", em: "🎤" },
+    { t: "Bilan", s: "70 % Pour Ouvrir B1", c: "#0EA5E9", em: "🧭" }];
+  const tIcon = (m) => (m.img ? `<img class="lc-ic-img" src="assets/img/lesson/ic-${m.img}.webp" alt="" width="28" height="28" onerror="this.replaceWith(document.createTextNode('${m.em}'))"/>` : `<span class="lc-ph-ic">${m.em}</span>`);
+  function intro() {
+    frame("B0 · Passerelle", null, `
+      <section class="lc-hero"><div class="lc-bubble">Let’s review!</div><img class="lc-hero-full" src="assets/img/characters/boy-3-intro.webp" alt="Personnage"/></section>
+      <section class="lc-card lc-intro"><div class="lc-level">B0</div><h1>Passerelle A1 → A2 → B1</h1>
+        <p class="lc-lead">Dans ce niveau, tu vas revoir :</p>
+        <ul class="lc-goals"><li><span class="lc-check">✓</span>Les règles de grammaire de A1 et A2</li><li><span class="lc-check">✓</span>Les temps : quand les utiliser et les conjuguer</li><li><span class="lc-check">✓</span>Écouter, lire, écrire et parler</li></ul>
+        <button type="button" class="lc-cta" id="b0Start">Commencer →</button></section>`);
+    el.querySelector("#b0Back").onclick = () => onExit && onExit();
+    el.querySelector("#b0Start").onclick = menu;
+  }
   function menu() {
     const p = b0Load(), sc = p.scores || {};
-    const rows = [1,2,3,4,5,6,7,8].map((k) => {
-      const open = opened(k), has = k === 8 ? p.bilan != null : sc[k] != null;
-      const note = k === 8 ? (p.bilan != null ? p.bilan + " %" : "") : (sc[k] != null ? sc[k] + "/10" : "");
-      return `<button type="button" class="lc-choice" data-k="${k}" ${open ? "" : "disabled"} style="display:flex;align-items:center;gap:10px;width:100%;${open ? "" : "opacity:.55"}">
-        <span aria-hidden="true">${B0_ICONS[k]}</span><span style="flex-grow:1"><b>${k === 8 ? "Bilan B0" : "Étape " + k + " · " + esc(B0_NAMES[k])}</b>${note ? `<span style="display:block;font-size:12px;opacity:.75">Meilleur score : ${note}</span>` : ""}</span><span aria-hidden="true">${has ? "✓" : open ? "›" : "🔒"}</span></button>`;
+    const tiles = [1,2,3,4,5,6,7,8].map((k) => {
+      const m = TILES[k], open = opened(k), has = k === 8 ? p.bilan != null : sc[k] != null;
+      return `<button type="button" class="lc-tile ${open ? "" : "lc-tile-off"}" data-k="${k}" style="--c:${m.c}" ${open ? "" : "disabled"}>
+        <span class="lc-tn">${k}</span><span class="lc-tic">${tIcon(m)}</span><b>${esc(m.t)}</b><small>${esc(has ? "Meilleur score : " + (k === 8 ? p.bilan + " %" : sc[k] + "/10") : m.s)}</small>${has ? `<span class="lc-tdone">✓</span>` : ""}</button>`;
     }).join("");
-    frame("B0 · Passerelle", null, `<section class="lc-card"><p class="lc-lead">Avant le B1, on revoit les bases de A1 et A2 : les règles de grammaire et les temps. 7 étapes de 10 questions, puis un bilan. À ${B0_PASS} % ou plus au bilan, le B1 s’ouvre.</p>
-      <p class="q6-help" style="margin:0 0 10px">Temps revus : présent simple, présent continu, passé simple, passé continu, going to, will, If + présent, used to. Modaux : can, should, must, have to, would like.</p>
-      <div class="lc-choices">${rows}</div>${p.passed ? `<p class="lc-fb lc-fb-ok">✔ B0 validé (${p.bilan} %). Le B1 est ouvert.</p>` : ""}</section>`);
-    el.querySelector("#b0Back").onclick = () => onExit && onExit();
+    frame("B0 · Passerelle", { cur: 1, total: 8 }, `<section class="lc-mosaic">${tiles}</section>${p.passed ? `<p class="lc-fb lc-fb-ok" style="text-align:center">✔ B0 validé (${p.bilan} %). Le B1 est ouvert.</p>` : ""}`);
+    el.querySelector("#b0Back").onclick = intro;
     el.querySelectorAll("[data-k]").forEach((b) => b.onclick = () => quiz(Number(b.dataset.k)));
   }
 
@@ -125,5 +143,5 @@ export function renderB0(root, { onExit } = {}) {
     el.querySelectorAll("[data-k]").forEach((b) => b.onclick = () => quiz(Number(b.dataset.k)));
   }
 
-  menu();
+  intro();
 }
