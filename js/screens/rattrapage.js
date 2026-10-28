@@ -7,14 +7,14 @@ import { loadBundleA2 } from "../data/lecons-a2.js?v=20261025n";
 const esc = (x) => String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 export async function runRattrapage(container, id, { onBack, onRetest, backLabel = "Retour au livret" } = {}) {
-  const isExam = id === "EXAM-A1", lv = id.startsWith("A2") ? "A2" : "A1", B = bulletinA1(lv);
+  const isExam = id.startsWith("EXAM-"), lv = id.startsWith("A2") || id === "EXAM-A2" ? "A2" : "A1", B = bulletinA1(lv);
   const g = B.gaps.find((x) => x.id === id), n = isExam ? 0 : g ? g.n : Number(id.split(".")[1]);
   let exercises;
-  if (isExam) { exercises = []; for (let k = 1; k <= 12; k++) exercises = exercises.concat((await loadBundle(k)).exercises); }
+  if (isExam) { exercises = []; for (let k = 1; k <= 12; k++) exercises = exercises.concat((await (lv === "A2" ? loadBundleA2(k) : loadBundle(k))).exercises); }
   else exercises = (lv === "A2" ? await loadBundleA2(n) : await loadBundle(n)).exercises;
   const att = (rtLoad()[id] || {}).series || 0;
   const items = pickRattrapage(exercises, g ? g.weak : [], att + n);
-  const label = isExam ? "Grand contrôle A1" : g ? g.code : "";
+  const label = isExam ? "Grand contrôle " + lv : g ? g.code : "";
   let i = 0, firstOk = 0, tried = false;
   const draw = () => {
     if (i >= items.length) {

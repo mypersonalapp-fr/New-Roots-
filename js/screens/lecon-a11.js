@@ -1709,13 +1709,13 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       return Object.assign({}, d, { turns: [...d.turns.slice(0, -1), ...add, d.turns[d.turns.length - 1]], batch: 3, _xi: undefined });
     }) : DLG0; // A1.3 : 3 questions par écran
   const leave = () => (B.exam ? (onExit && onExit()) : showMenu());
-  const RID = B.exam ? "EXAM-A1" : B.code;
+  const RID = B.exam ? (B.examId || "EXAM-A1") : B.code;
   const retakeBlocked = () => !UNLOCK_ALL_PREVIEW && retakeLocked(prog, RID);
   // Après un échec, le test est fermé tant qu'une série de rattrapage n'est pas terminée (voir bulletin-a1.js : retakeLocked).
   function showRetakeLock() {
     screen = "retake-lock";
     const last = ((prog.testHist || []).slice(-1)[0]) || null, sc = (prog.scores || {}).test || (last ? last.total + "/40" : "");
-    frame(B.exam ? "Grand contrôle A1" : "Test de fin de leçon", null, `
+    frame(B.exam ? (B.examTitle || "Grand contrôle A1") : "Test de fin de leçon", null, `
       <section class="lc-hero">${c0().win ? `<img class="lc-hero-full" src="${c0().win}" alt=""/>` : `<img class="lc-hero-img lc-hero-sm" src="${c0().src}" alt=""/>`}</section>
       <section class="lc-card lc-intro"><h1>Une petite série d'abord</h1>
         <p class="lc-lead">Ta dernière note : ${esc(sc)}. Il faut 32/40 pour valider. Fais une série de 5 questions corrigées (environ 5 minutes) : le test se rouvre ensuite.</p>
@@ -1801,7 +1801,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const last = p === total - 1;
     const foot = `<footer class="lc-foot"><button type="button" class="lc-sec-btn" id="lcPrev">← Précédent</button><button type="button" class="lc-cta lc-next" id="lcNext" disabled>${last ? "Voir mon résultat" : "Suivant →"}</button></footer>`;
     const build = (a, z, first, tight, meas) => {
-      let html = first ? `${tight === 2 ? (p === 4 ? hero.replace("lc-exhero", "lc-exhero lc-exs lc-exs2") : "") : tight === 1 ? hero.replace("lc-exhero", "lc-exhero lc-exs") : hero}<div class="lc-vocab-head"><span class="lc-vh-ic">🏆</span><div><h1>${B.exam ? "Grand contrôle A1" : "Test de fin"}</h1><p>${esc(head)}</p></div></div>` : (hero && tight < 1 ? hero : "");
+      let html = first ? `${tight === 2 ? (p === 4 ? hero.replace("lc-exhero", "lc-exhero lc-exs lc-exs2") : "") : tight === 1 ? hero.replace("lc-exhero", "lc-exhero lc-exs") : hero}<div class="lc-vocab-head"><span class="lc-vh-ic">🏆</span><div><h1>${B.exam ? (B.examTitle || "Grand contrôle A1") : "Test de fin"}</h1><p>${esc(head)}</p></div></div>` : (hero && tight < 1 ? hero : "");
       if (!first && p < 2) { const rt = p === 0 ? T.text.text : T.audio.script; html += `<div class="lc-recap-row"><button type="button" class="lc-chip lc-recap" data-recap="${esc(rt)}" data-kind="${p === 0 ? "text" : "audio"}">${p === 0 ? "📖 Revoir le texte" : "🎧 Réécouter"}</button></div>`; }
       for (let i = a; i < z;) {
         const k = bl[i].k;
@@ -1813,7 +1813,7 @@ export function renderLesson(root, B, { onExit, start } = {}) {
       }
       return html;
     };
-    const ttl = B.exam ? "Grand contrôle A1" : "Test de fin de leçon";
+    const ttl = B.exam ? (B.examTitle || "Grand contrôle A1") : "Test de fin de leçon";
     T.typed = T.typed || {};
     const qOf = (k) => (k[0] === "r" ? T.text.q[+k.slice(1)] : k[0] === "l" ? T.audio.q[+k.slice(1)] : B.testGrammar[+k.slice(1)]);
     const typifyDom = () => el.querySelectorAll(".lc-qb").forEach((box) => { // on écrit d'abord : champ de réponse, propositions derrière « Indice »
@@ -1941,9 +1941,9 @@ export function renderLesson(root, B, { onExit, start } = {}) {
     const wrong = [
       ...T.text.q.map((q, i) => ["r" + i, q]), ...T.audio.q.map((q, i) => ["l" + i, q]), ...T.gram.map((id) => ["g" + id, B.testGrammar[id]]),
     ].filter(([k, q]) => T.ans[k] !== q[2]).map(([k, q]) => `<li><b>${esc(q[0])}</b><small>Ta réponse : ${esc((T.typed && T.typed[k]) || q[1][T.ans[k]] || "—")} · Bonne réponse : ${esc(q[1][q[2]])}</small></li>`).join("");
-    frame(B.exam ? "Grand contrôle A1" : "Test de fin de leçon", null, `
+    frame(B.exam ? (B.examTitle || "Grand contrôle A1") : "Test de fin de leçon", null, `
       <section class="lc-hero">${c0().win ? `<img class="lc-hero-full" src="${c0().win}" alt=""/>` : `<img class="lc-hero-img lc-hero-sm" src="${c0().src}" alt=""/>`}</section>
-      <section class="lc-card lc-intro"><h1>${passed ? (B.exam ? "Niveau A1 validé !" : "Leçon terminée !") : (prog.done || {}).test ? "Déjà validée" : "Presque !"}</h1>
+      <section class="lc-card lc-intro"><h1>${passed ? (B.exam ? (B.examPassedTitle || "Niveau A1 validé !") : "Leçon terminée !") : (prog.done || {}).test ? "Déjà validée" : "Presque !"}</h1>
         <p class="lc-lead">${passed ? `Bravo ! Tu as validé ${HEAD}.` : (prog.done || {}).test ? "Cette note ne change rien : ta leçon reste validée." : "Il faut 32/40 pour valider. Revois les points manqués et réessaie."}</p>
         <table class="lc-table"><tbody>
           <tr><td>Compréhension écrite</td><td class="lc-form">${fmt(pts[0])} / 7,5</td></tr>

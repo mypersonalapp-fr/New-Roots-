@@ -48,3 +48,25 @@ export async function loadBundleA2(n) {
     city: { missions: m[`MISSIONS_${s}`], data: m[`DATA_${s}`] },
   };
 }
+
+/* ----- Grand contrôle de fin de A2 (passage vers B1) : tire dans les banques de test des 12 leçons A2.1 à A2.12 ----- */
+export const EXAM_A2_KEY = "the_roots_a2_exam_v1";
+export function examStatusA2() {
+  try { const p = JSON.parse(localStorage.getItem(EXAM_A2_KEY) || "{}"); return { passed: !!(p.done && p.done.test), score: (p.scores || {}).test || null }; }
+  catch (e) { return { passed: false, score: null }; }
+}
+export const examUnlockedA2 = (unlockAll) => unlockAll || A2_LIST.filter((L) => L.n >= 1).every((L) => lessonStatusA2(L.n).passed);
+export async function loadExamBundleA2() {
+  const all = [];
+  for (let n = 1; n <= 12; n++) all.push(await loadBundleA2(n));
+  const base = all[0];
+  return {
+    exam: true, examId: "EXAM-A2", examTitle: "Grand contrôle A2", examPassedTitle: "Niveau A2 validé !",
+    code: "A2", head: "le Grand contrôle A2", titleFr: "Grand contrôle de fin de A2", progressKey: EXAM_A2_KEY,
+    goals: [], vocab: [], grammar: [], reading: [], listening: [], exercises: [], expression: base.expression, transv: null, conj: null,
+    testTexts: all.map((b) => b.testTexts[0]), testAudios: all.map((b) => b.testAudios[0]),
+    testGrammar: all.flatMap((b) => b.testGrammar.slice(0, 5)), testW: 0, testO: 1, testPool: all.flatMap((b) => b.expression),
+    testWriteTitle: "Raconte et donne ton avis", testWriteLead: "Écris 4 phrases : ce que tu as fait récemment, ce que tu fais d’habitude, ce que tu vas faire, et ton opinion sur un sujet.",
+    testOralTitle: base.testOralTitle, testOralLead: base.testOralLead, adviceTopic: "Grand contrôle A2", adviceLede: "Réponds avec bienveillance. Niveau A2.", city: null,
+  };
+}

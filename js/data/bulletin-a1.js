@@ -20,13 +20,13 @@ export function bulletinA1(level = "A1") {
   const gaps = tests.filter((t) => t.done && !t.passed).map((t) => ({ n: t.n, id: t.id, legacy: !t.last.pts, code: t.code, title: t.title, miss: PASS - t.last.total, list: (t.last.gaps || []).slice(0, 3), weak: t.last.pts ? SK.filter(([, m], i) => t.last.pts[i] / m < 0.8).map(([nm]) => nm) : [] }));
   const avg = done.length ? done.reduce((a, t) => a + t.best, 0) / done.length : null;
   let exam = null;
-  if (level === "A1") {
-    const p = read(EXAM_KEY), h = p.testHist || [], sc = parseInt(((p.scores || {}).test || "").split("/")[0], 10), best = h.length ? h.reduce((m, x) => Math.max(m, x.total), 0) : (Number.isFinite(sc) ? sc : 0);
+  if (level === "A1" || level === "A2") {
+    const p = read(level === "A2" ? "the_roots_a2_exam_v1" : EXAM_KEY), h = p.testHist || [], sc = parseInt(((p.scores || {}).test || "").split("/")[0], 10), best = h.length ? h.reduce((m, x) => Math.max(m, x.total), 0) : (Number.isFinite(sc) ? sc : 0);
     exam = { done: h.length > 0 || Number.isFinite(sc), best, passed: !!(p.done && p.done.test) || best >= PASS, open: tests.every((t) => t.passed) };
     // Grand contrôle raté : il a lui aussi sa série de rattrapage (questions tirées des 12 leçons, selon la compétence faible).
     if (exam.done && !exam.passed) {
       const l = h[h.length - 1] || null;
-      gaps.push({ n: 0, id: "EXAM-A1", legacy: !(l && l.pts), code: "A1", title: "Grand contrôle", miss: PASS - best, list: ((l && l.gaps) || []).slice(0, 3), weak: l && l.pts ? SK.filter(([, m], i) => l.pts[i] / m < 0.8).map(([nm]) => nm) : [] });
+      gaps.push({ n: 0, id: "EXAM-" + level, legacy: !(l && l.pts), code: level, title: "Grand contrôle", miss: PASS - best, list: ((l && l.gaps) || []).slice(0, 3), weak: l && l.pts ? SK.filter(([, m], i) => l.pts[i] / m < 0.8).map(([nm]) => nm) : [] });
     }
   }
   // Traduction (EN→FR et FR→EN) : meilleur score par sens, enregistré par la page « Traduction » de chaque leçon.
