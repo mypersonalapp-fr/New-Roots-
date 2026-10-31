@@ -34,7 +34,7 @@ import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livr
 import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261028c";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 import { renderB0 } from "./b0.js?v=20261028c";
-import { renderB1, b1Status } from "./b1.js?v=20261031j";
+import { renderB1, b1Status } from "./b1.js?v=20261031k";
 import { b0Status } from "../data/b0-data.js?v=20261028c";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---

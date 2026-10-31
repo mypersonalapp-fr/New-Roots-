@@ -154,8 +154,8 @@ const TS=[
 {id:'prf',n:'Present perfect',s:'Pres. perfect',g:'pres',sec:0,when:'DU PASSÉ À MAINTENANT',fm:'have / has + participe passé',ex:['I ','have visited',' Paris three times.'],fr:'J\'ai visité Paris trois fois.',us:'Lien entre le passé et maintenant : expérience, résultat.'},
 {id:'psn',n:'Present simple',s:'Pres. simple',g:'pres',sec:0,when:'TOUS LES JOURS',fm:'verbe de base (+ s à he / she / it)',ex:['I ','work',' every day.'],fr:'Je travaille tous les jours.',us:'Habitudes et vérités générales.'},
 {id:'pcn',n:'Present continuous',s:'Pres. cont.',g:'pres',sec:0,when:'EN CE MOMENT',fm:'am / is / are + verbe-ing',ex:['I ','am working',' right now.'],fr:'Je suis en train de travailler.',us:'Action qui se déroule maintenant.'},
-{id:'wl',n:'Future with will',s:'Will',g:'fut',sec:86400,when:'DEMAIN',fm:'will + verbe de base',ex:['I ','will call',' you tomorrow.'],fr:'Je t\'appellerai demain.',us:'Décision, promesse, prévision.'},
-{id:'gt',n:'Going to',s:'Going to',g:'fut',sec:7*86400,when:'SEMAINE PROCHAINE',fm:'am / is / are going to + verbe',ex:['I ','am going to travel',' next week.'],fr:'Je vais voyager la semaine prochaine.',us:'Projet déjà décidé.'}];
+{id:'wl',n:'Future with will',s:'Fut. will',g:'fut',sec:86400,when:'DEMAIN',fm:'will + verbe de base',ex:['I ','will call',' you tomorrow.'],fr:'Je t\'appellerai demain.',us:'Décision, promesse, prévision.'},
+{id:'gt',n:'Going to',s:'Fut. going to',g:'fut',sec:7*86400,when:'SEMAINE PROCHAINE',fm:'am / is / are going to + verbe',ex:['I ','am going to travel',' next week.'],fr:'Je vais voyager la semaine prochaine.',us:'Projet déjà décidé.'}];
 const TX={};TS.forEach(x=>TX[x.id]=x);
 const CUR='prf',SEEN=['ps','psn','pcn','wl'],POS={pp:7,ps:20,pc:30,prf:46,psn:54,pcn:62,wl:80,gt:93};
 const DIFF={ps:'<b>Past simple</b> : moment précis, terminé (yesterday). <b>Present perfect</b> : lien avec maintenant, pas de date précise.',psn:'<b>Present simple</b> : une habitude. <b>Present perfect</b> : une expérience ou un résultat jusqu\'à maintenant.',pcn:'<b>Present continuous</b> : en train de se faire maintenant. <b>Present perfect</b> : fait, avec un résultat présent.',wl:'<b>Will</b> : le futur. <b>Present perfect</b> : du passé jusqu\'à maintenant.'};
@@ -163,19 +163,32 @@ function goT(id){const x=TX[id];S.tense=x.g;$('#frame').dataset.t=x.g;S.target=x
 const QC=[
 {fr:'J\'ai visité Paris trois fois.',en:['I ',' Paris three times.'],o:[['have visited','prf'],['visited','ps'],['am visiting','pcn']],a:0,why:'have / has + participe passé : <b>have visited</b>.'},
 {fr:'Elle a fini son travail.',en:['She ',' her work.'],o:[['have finished','prf'],['has finished','prf'],['finishes','psn']],a:1,why:'Avec <b>she</b>, on utilise <b>has</b> : has finished.'},
-{fr:'Nous avons vu ce film.',en:['We ',' this film.'],o:[['have seen','prf'],['have saw','prf'],['are seeing','pcn']],a:0,why:'Le participe de see est <b>seen</b> : have seen.'}];
+{fr:'Nous avons vu ce film.',en:['We ',' this film.'],o:[['have seen','prf'],['have saw','prf'],['are seeing','pcn']],a:0,why:'Le participe de see est <b>seen</b> : have seen.'},
+{fr:'Il a habité à Londres pendant deux ans.',en:['He ',' in London for two years.'],o:[['have lived','prf'],['has lived','prf'],['lives','psn']],a:1,why:'Avec <b>he</b>, on utilise <b>has</b> : has lived.'},
+{fr:'Nous n\'avons jamais mangé de sushi.',en:['We ',' sushi.'],o:[['have never eaten','prf'],['have never ate','prf'],['don\'t never eat','psn']],a:0,why:'<b>never</b> se place entre have et le participe : have never <b>eaten</b>.'},
+{fr:'As-tu déjà lu ce livre ?',en:['',' this book?'],o:[['Have you already read','prf'],['Do you already read','psn'],['Are you already reading','pcn']],a:0,why:'Question au present perfect : <b>Have you</b> + participe passé.'},
+{fr:'Elle n\'a pas encore répondu.',en:['She ',' yet.'],o:['hasn\'t answered','haven\'t answered','isn\'t answering'].map((t,i)=>[t,i<2?'prf':'pcn']),a:0,why:'Avec <b>she</b> : <b>hasn\'t</b> + participe passé. <b>yet</b> = pas encore.'},
+{fr:'Ils ont déjà pris le train.',en:['They ',' the train already.'],o:[['have taken','prf'],['have took','prf'],['has taken','prf']],a:0,why:'Participe de take : <b>taken</b>. Avec <b>they</b> : have.'},
+{fr:'J\'ai perdu mes clés.',en:['I ',' my keys.'],o:[['have lost','prf'],['have losed','prf'],['lose','psn']],a:0,why:'Lose est irrégulier : lose, lost, <b>lost</b>. Résultat maintenant : je ne les ai plus.'},
+{fr:'Il a écrit trois livres.',en:['He ',' three books.'],o:[['has written','prf'],['has wrote','prf'],['have written','prf']],a:0,why:'Participe de write : <b>written</b>. Avec <b>he</b> : has.'}];
 const QS=[
 {fr:'<b>Hier</b>, je suis allé à Paris.',o:[['Past simple','ps'],['Present perfect','prf'],['Present simple','psn']],a:0,why:'Un moment précis du passé (hier) : <b>Past simple</b>.'},
-{fr:'J\'ai <b>déjà</b> visité Paris trois fois.',o:[['Past simple','ps'],['Present perfect','prf'],['Will','wl']],a:1,why:'Une expérience, sans date précise : <b>Present perfect</b>.'},
+{fr:'J\'ai <b>déjà</b> visité Paris trois fois.',o:[['Past simple','ps'],['Present perfect','prf'],['Futur (will)','wl']],a:1,why:'Une expérience, sans date précise : <b>Present perfect</b>.'},
 {fr:'Je travaille <b>tous les jours</b>.',o:[['Present continuous','pcn'],['Present perfect','prf'],['Present simple','psn']],a:2,why:'Une habitude : <b>Present simple</b>.'},
-{fr:'<b>Demain</b>, je t\'appellerai.',o:[['Will','wl'],['Past simple','ps'],['Present perfect','prf']],a:0,why:'Une promesse pour demain : <b>Will</b>.'}];
+{fr:'<b>Demain</b>, je t\'appellerai.',o:[['Futur (will)','wl'],['Past simple','ps'],['Present perfect','prf']],a:0,why:'Une promesse pour demain : le <b>futur</b>, avec <b>will</b>.'},
+{fr:'Elle <b>est en train de</b> cuisiner.',o:[['Present continuous','pcn'],['Present simple','psn'],['Present perfect','prf']],a:0,why:'Une action en cours : <b>Present continuous</b>.'},
+{fr:'Je suis allé à Rome <b>l\'année dernière</b>.',o:[['Present perfect','prf'],['Past simple','ps'],['Futur (will)','wl']],a:1,why:'Un moment précis du passé : <b>Past simple</b>.'},
+{fr:'Il <b>n\'est jamais allé</b> au Japon (jusqu\'à maintenant).',o:[['Past simple','ps'],['Present perfect','prf'],['Present simple','psn']],a:1,why:'Une expérience jusqu\'à maintenant : <b>Present perfect</b>.'},
+{fr:'Nous voyageons <b>la semaine prochaine</b> (c\'est prévu).',o:[['Futur (going to)','gt'],['Past simple','ps'],['Present perfect','prf']],a:0,why:'Un projet décidé : le <b>futur</b>, avec <b>going to</b>.'},
+{fr:'<b>Hier à 15 h</b>, je travaillais.',o:[['Past continuous','pc'],['Present continuous','pcn'],['Present perfect','prf']],a:0,why:'Une action en cours à un moment du passé : <b>Past continuous</b>.'},
+{fr:'Je travaille ici <b>depuis 2020</b>.',o:[['Present simple','psn'],['Present perfect','prf'],['Past simple','ps']],a:1,why:'Du passé jusqu\'à maintenant (since / for) : <b>Present perfect</b>.'}];
 let mode='conj',Qs=QC,qi=0,answered=false,tmr=null;
 function showQ(){clearTimeout(tmr);answered=false;const q=Qs[qi];goT(q.o[q.a][1]);
  $('#qn').textContent=(qi+1)+'/'+Qs.length;
  $('#fr').innerHTML=mode==='conj'?`Temps du cours : <b>Present perfect</b>. Comment dit-on : <b>${q.fr}</b> ?`:`Quelle situation ? ${q.fr} <span style="opacity:.75">Quel temps choisir ?</span>`;
  $('#live').innerHTML=mode==='conj'?`${q.en[0]}<u>___</u>${q.en[1]}`:'<u>Quel temps ?</u>';
  $('#opts').innerHTML=q.o.map((o,j)=>`<button type="button" class="op" data-j="${j}">${o[0]}</button>`).join('');
- $('#fb').innerHTML='';$('#nx').disabled=true;$('#nx').textContent=qi===Qs.length-1?'Recommencer ↺':'Question suivante ›'}
+ $('#fb').innerHTML='';$('#nx').disabled=true;$('#nx').textContent=qi===Qs.length-1?(mode==='conj'?'Partie suivante : Situations ›':'Partie suivante : Comparer ›'):'Question suivante ›'}
 function choose(j){if(answered)return;answered=true;const q=Qs[qi],[f,tid]=q.o[j],good=q.o[q.a][0],gid=q.o[q.a][1];
  document.querySelectorAll('#opts .op').forEach((b,k)=>b.classList.add(k===q.a?'good':(k===j?'bad':'x')));
  if(mode==='conj')$('#live').innerHTML=`${q.en[0]}<u>${f}</u>${q.en[1]}`;else $('#live').innerHTML=`<u>${f}</u>`;
@@ -183,7 +196,7 @@ function choose(j){if(answered)return;answered=true;const q=Qs[qi],[f,tid]=q.o[j
  else{goT(tid);$('#fb').innerHTML=`<b>Non.</b> ${tid===gid?'':`Ta réponse place la phrase <b>${TX[tid].when.toLowerCase()}</b>, mais elle appartient à <b>${TX[gid].when.toLowerCase()}</b>. `}Bonne réponse : <b>${good}</b>. ${q.why}`;tmr=setTimeout(()=>goT(gid),2800)}
  $('#nx').disabled=false}
 $('#opts').onclick=e=>{const b=e.target.closest('.op');if(b)choose(+b.dataset.j)};
-$('#nx').onclick=()=>{if(!answered)return;qi=(qi+1)%Qs.length;showQ()};
+$('#nx').onclick=()=>{if(!answered)return;if(qi===Qs.length-1){mode=mode==='conj'?'sit':'cmp';qi=0;layout='A';render();return}qi++;showQ()};
 const EX3={ps:['I ','visited',' Paris last year.'],prf:['I ','have visited',' Paris three times.'],psn:['I ','visit',' Paris every year.'],pcn:['I ','am visiting',' Paris right now.'],wl:['I ','will visit',' Paris next year.']};
 const SEQ=['ps','prf','psn','pcn','wl'],LOCK=['pp','pc','gt'];
 const GC={past:'#d9944a',pres:'#5fbf7f',fut:'#5a8cff'};
@@ -206,9 +219,11 @@ const DU=[
 {q:'Laquelle parle d\'une <b>expérience</b>, sans date précise ?',a:['I went to Paris yesterday.','ps'],b:['I have visited Paris three times.','prf'],ok:'b',why:'<b>Present perfect</b> : un lien avec maintenant, sans date. <b>Yesterday</b> demande le Past simple.'},
 {q:'Laquelle est une <b>habitude</b> ?',a:['I visit Paris every year.','psn'],b:['I have visited Paris.','prf'],ok:'a',why:'<b>Present simple</b> : une habitude (every year).'},
 {q:'Laquelle se passe <b>en ce moment</b> ?',a:['I have visited Paris.','prf'],b:['I am visiting Paris right now.','pcn'],ok:'b',why:'<b>Present continuous</b> : am / is / are + verbe-ing = en cours maintenant.'},
-{q:'Laquelle parle du <b>futur</b> ?',a:['I will visit Paris next year.','wl'],b:['I have visited Paris.','prf'],ok:'a',why:'<b>Will</b> + verbe = le futur.'}];
+{q:'Laquelle parle du <b>futur</b> ?',a:['I will visit Paris next year.','wl'],b:['I have visited Paris.','prf'],ok:'a',why:'Le <b>futur</b> se forme ici avec <b>will</b> + verbe (will n\'est pas un temps : c\'est la forme).'},
+{q:'Laquelle montre <b>un résultat présent</b> (je ne les ai plus) ?',a:['I lost my keys yesterday.','ps'],b:['I have lost my keys.','prf'],ok:'b',why:'<b>Present perfect</b> : le passé a un résultat maintenant.'},
+{q:'Laquelle utilise <b>for</b> correctement ?',a:['I have lived here for five years.','prf'],b:['I live here for five years.','psn'],ok:'a',why:'<b>for</b> + durée, avec le <b>Present perfect</b> : have lived.'}];
 function rD(){clearTimeout(duT);duAns=false;const d=DU[du];const gid=d[d.ok][1];goT(gid);
- $('#cbox').innerHTML=`<div class="du"><div class="q"><small>L'HORLOGER · DUEL ${du+1}/${DU.length}</small>Temps du cours : <b>Present perfect</b>. ${d.q}</div><div class="duo"><button type="button" class="dc" data-k="a"><i>PHRASE A</i>${d.a[0]}</button><button type="button" class="dc" data-k="b"><i>PHRASE B</i>${d.b[0]}</button></div><div class="fb" id="dfb"></div><button type="button" class="nx2" id="dnx" disabled>${du===DU.length-1?'Recommencer ↺':'Duel suivant ›'}</button></div>`}
+ $('#cbox').innerHTML=`<div class="du"><div class="q"><small>L'HORLOGER · DUEL ${du+1}/${DU.length}</small>Temps du cours : <b>Present perfect</b>. ${d.q}</div><div class="duo"><button type="button" class="dc" data-k="a"><i>PHRASE A</i>${d.a[0]}</button><button type="button" class="dc" data-k="b"><i>PHRASE B</i>${d.b[0]}</button></div><div class="fb" id="dfb"></div><button type="button" class="nx2" id="dnx" disabled>${du===DU.length-1?'Terminer l\'atelier ✓':'Duel suivant ›'}</button></div>`}
 function duPick(k){if(duAns)return;duAns=true;const d=DU[du];document.querySelectorAll('.dc').forEach(b=>b.classList.add(b.dataset.k===d.ok?'good':(b.dataset.k===k?'bad':'x')));
  const gid=d[d.ok][1],pid=d[k][1];
  if(k===d.ok)$('#dfb').innerHTML=`<b>Exact.</b> ${d.why}`;else{goT(pid);$('#dfb').innerHTML=`<b>Non.</b> Ta phrase place l'horloge <b>${TX[pid].when.toLowerCase()}</b>. ${d.why}`;duT=setTimeout(()=>goT(gid),2800)}
@@ -224,13 +239,14 @@ function rAB(){const ids=[CUR,...SEEN],order=TS.map(x=>x.id);
  car.onscroll=()=>{const w=car.firstElementChild.offsetWidth+8,i=Math.round(car.scrollLeft/w);if(i!==cardIdx)mark(i)};
  car.scrollLeft=cardIdx*(car.firstElementChild.offsetWidth+8);mark(cardIdx)}
 function nodeGo(id){const car=$('#car');let i=[CUR,...SEEN].indexOf(id);if(i<0)i=SEEN.length+1;car.scrollTo({left:i*(car.firstElementChild.offsetWidth+8),behavior:'smooth'});if([CUR,...SEEN].indexOf(id)<0)setTimeout(()=>goT(id),450)}
-function cmpLayout(){clearTimeout(duT);document.querySelectorAll('#sub button').forEach(b=>b.classList.toggle('on',b.dataset.l===layout));rAB()}
+function cmpLayout(){clearTimeout(duT);$('#sub').style.display='none';if(layout==='D'){rD();return}rAB();$('#cbox').insertAdjacentHTML('beforeend','<button type="button" class="nx2" id="toDuel" style="margin-top:9px;width:100%;border:0;border-radius:12px;padding:11px;font:800 14px system-ui;background:#ffd36b;color:#14203f">Partie suivante : les duels ›</button>')}
 $('#sub').onclick=e=>{const b=e.target.closest('button');if(!b)return;layout=b.dataset.l;cmpLayout()};
 $('#cbox').onclick=e=>{
  const n=e.target.closest('.nd');if(n){nodeGo(n.dataset.id);return}
  const r=e.target.closest('.lr[data-id]');if(r){sel=r.dataset.id;rC();return}
  const d=e.target.closest('.dc');if(d){duPick(d.dataset.k);return}
- if(e.target.closest('#dnx')&&duAns){du=(du+1)%DU.length;rD()}};
+ if(e.target.closest('#toDuel')){layout='D';du=0;cmpLayout();return}
+ if(e.target.closest('#dnx')&&duAns){if(du===DU.length-1){try{window.parent.postMessage({roots:'exit'},'*')}catch(x){}return}du++;rD()}};
 function render(){clearTimeout(tmr);$('#qz').style.display=mode==='cmp'?'none':'';$('#tm').style.display=mode==='cmp'?'':'none';$('#frame').dataset.m=mode;
  document.querySelectorAll('#md button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));
  if(mode==='cmp')cmpLayout();else{Qs=mode==='conj'?QC:QS;if(qi>=Qs.length)qi=0;showQ()}}
