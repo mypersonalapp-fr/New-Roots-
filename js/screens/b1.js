@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031h";
+import "../data/roots-ai-url.js?v=20261031i";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -16,14 +16,14 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031i", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031h", preview: true },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031h" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031h" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031i" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031i" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -78,12 +78,14 @@ export function renderB1(root, { onExit } = {}) {
   .b1h .lx small{font-weight:600;font-size:10.5px;opacity:.85}
   .b1h .lx.off{opacity:.55;cursor:default;filter:saturate(.6)}
   .b1h .lx em{position:absolute;top:8px;right:8px;z-index:1;font-style:normal;font-size:10px;font-weight:800;background:#ffd36b;color:#241606;border-radius:99px;padding:2px 8px}
-  .b1fb{position:absolute;left:50%;top:50%;width:max(100vw,calc(100dvh*2/3));aspect-ratio:2/3;transform:translate(-50%,-50%);background:url(assets/img/b/foret.jpg) center/100% 100%;container-type:inline-size}
+  .b1fb{position:absolute;left:50%;top:50%;width:max(100cqw,calc(100cqh*2/3));aspect-ratio:2/3;transform:translate(-50%,-50%);background:url(assets/img/b/foret.jpg) center/100% 100%;container-type:inline-size}
   .b1x.fin .b1fb{animation:b1fbin 1.1s ease-out both}
   @keyframes b1fbin{from{transform:translate(-50%,-50%) scale(1.18)}to{transform:translate(-50%,-50%)}}
-  .b1fb .sg{position:absolute;display:flex;align-items:center;justify-content:center;border:0;background:#0a0f2200;color:#4a2a08;font:800 1.7cqw/1 inherit;text-transform:uppercase;letter-spacing:.04em;padding:0;cursor:pointer;border-radius:6px}
+  .b1x.fo{container-type:size}
+  .b1fb .sg{position:absolute;display:flex;align-items:center;justify-content:center;border:0;background:#0a0f2200;color:#3b2208;font:700 2.1cqw/1 Georgia,'Times New Roman',serif;text-shadow:0 1px 0 #f3d9a0aa;letter-spacing:.01em;padding:0;cursor:pointer;border-radius:6px;white-space:nowrap}
+  .b1fb .pl{position:absolute;left:40.8%;width:16%;height:3.3%;display:flex;align-items:center;justify-content:center;color:#3b2208;font:700 1.9cqw/1 Georgia,'Times New Roman',serif;text-shadow:0 1px 0 #f3d9a0aa;pointer-events:none;white-space:nowrap}
   .b1fb .sg::before{content:"";position:absolute;inset:-14px -12px}
-  .b1fb .sg.off{color:#4a2a0888;background:#0a0f2255;cursor:pointer}
+  .b1fb .sg.off{color:#3b2208aa;background:#0a0f2244;cursor:pointer}
   .b1fb .sg.on{background:radial-gradient(ellipse,#ffe9a8cc,#ffc84a66 70%,#ffc84a00);box-shadow:0 0 18px 6px #ffd36baa;animation:b1sg 1.8s ease-in-out infinite;color:#3a1f04}
   @keyframes b1sg{50%{box-shadow:0 0 30px 12px #ffe08acc;transform:scale(1.07)}}
   .b1fb .tg{position:absolute;transform:translate(-50%,-100%);margin-top:-6px;z-index:2;background:#241606e6;color:#ffd36b;font:800 3.2cqw inherit;padding:3px 9px;border-radius:99px;white-space:nowrap;pointer-events:none;animation:b1up .6s ease-out 1.4s both}
@@ -109,23 +111,25 @@ export function renderB1(root, { onExit } = {}) {
     el.querySelector("#b1Go2").onclick = enter;
   };
   const PREVIEW = true; // mode construction : Conjugaison déjà allumée en aperçu
-  const SIGNS = [ // du panneau le plus proche (Grammaire) au plus lointain, le long du chemin
-    { k: "gram", x: 62.7, y: 45.6, w: 13, h: 4.9, ab: "Gram." },
-    { k: "voc", x: 23, y: 38.4, w: 12.7, h: 5.9, ab: "Voc." },
-    { k: "conj", x: 61, y: 30.7, w: 9.5, h: 4.4, ab: "Conj." },
-    { k: "comp", x: 36.9, y: 27.2, w: 9, h: 4.2, ab: "Comp." },
-    { k: "expr", x: 45.7, y: 18.1, w: 7.5, h: 4, ab: "Expr." },
+  const SIGNS = [ // chemin en zigzag : Grammaire (droite), Conjugaison (en face, gauche), puis on monte vers la porte
+    { k: "gram", x: 62.7, y: 45.6, w: 13, h: 4.9 },
+    { k: "conj", x: 23, y: 38.4, w: 12.7, h: 5.9 },
+    { k: "voc", x: 61, y: 30.7, w: 9.5, h: 4.4 },
+    { k: "comp", x: 36.9, y: 27.2, w: 9, h: 4.2 },
+    { k: "expr", x: 45.7, y: 18.1, w: 7.5, h: 4 },
   ];
-  const lit = (l) => l.k === "gram" || (l.k === "conj" && PREVIEW);
+  const PLANKS = [62.4, 66.4, 70.3, 74.1, 78.0]; // planches du panneau de l'entrée (arche)
+  const lit = (l, S) => { const i = LIEUX.indexOf(l); return i === 0 || (PREVIEW && l.k === "conj") || (S.done >= 2 && i === 1); };
   const forest = (fin) => {
-    const sg = SIGNS.map((g) => { const l = LIEUX.find((x) => x.k === g.k); return `<button type="button" class="sg ${lit(l) ? "on" : "off"}" data-l="${g.k}" aria-label="${esc(l.t)}" style="left:${g.x}%;top:${g.y}%;width:${g.w}%;height:${g.h}%">${g.ab}</button>`; }).join("");
-    const g0 = SIGNS[0];
-    el.innerHTML = `${STY}<div class="b1x${fin === true ? " fin" : " in"}"><div class="b1fb">${sg}<div class="tg" style="left:${g0.x}%;top:${g0.y}%;transform:translate(-70%,-100%)">Grammaire</div></div>
+    const S = b1Status();
+    const sg = SIGNS.map((g) => { const l = LIEUX.find((x) => x.k === g.k); return `<button type="button" class="sg ${lit(l, S) ? "on" : "off"}" data-l="${g.k}" aria-label="${esc(l.t)}" style="left:${g.x}%;top:${g.y}%;width:${g.w}%;height:${g.h}%">${esc(l.t)}</button>`; }).join("");
+    const pl = LIEUX.map((l, i) => `<div class="pl" style="top:${PLANKS[i]}%">${esc(l.t)}</div>`).join("");
+    el.innerHTML = `${STY}<div class="b1x fo${fin === true ? " fin" : " in"}"><div class="b1fb">${pl}${sg}</div>
       <button type="button" class="back" id="b1Back">← B</button><div id="b1Pop"></div></div>`;
     el.querySelector("#b1Back").onclick = transition;
     const pop = el.querySelector("#b1Pop");
     el.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => {
-      const l = LIEUX.find((x) => x.k === b.dataset.l), on = lit(l);
+      const l = LIEUX.find((x) => x.k === b.dataset.l), on = lit(l, S);
       pop.innerHTML = `<div class="b1pop"><button type="button" class="x" id="b1X">×</button><h2>${esc(l.t)} · ${esc(l.p)}</h2><p>${on ? (l.k === "gram" ? "Entre en classe avec ton professeur : tu observes, tu réponds, tu es corrigé." : "Aperçu : l'atelier de l'horloger (contenu d'exemple).") : "Bientôt : ce lieu s'ouvrira avec son cours."}</p>${on ? '<button type="button" class="go" id="b1In">Entrer ' + (l.k === "gram" ? "en classe" : "dans l'atelier") + " →</button>" : ""}</div>`;
       pop.querySelector("#b1X").onclick = () => (pop.innerHTML = "");
       const inn = pop.querySelector("#b1In");
