@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031x";
+import "../data/roots-ai-url.js?v=20261031y";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -16,19 +16,19 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031x", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031y", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031x" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031x" },
-  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261031x" },
-  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261031x" },
-  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261031x" },
-  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261031x" },
-  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261031x" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031y" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031y" },
+  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261031y" },
+  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261031y" },
+  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261031y" },
+  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261031y" },
+  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261031y" },
 ];
 
 export function renderB1(root, { onExit } = {}) {

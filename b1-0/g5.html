@@ -747,11 +747,12 @@ async function REMSKILL(k){
   P();const R=RM2[k];
   await T(`On reprend : <b>${esc(SKN[k])}</b>.`);
   await B(`<span class="ln">Rappel</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
-  const exs=R.items||R.replay.map(([sn,en])=>SEQ[sn-1].ex[en-1]);
+  const rp=R.replay?R.replay.map(([sn,en])=>SEQ[sn-1].ex[en-1]):[];const exs=R.items?rp.concat(R.items):rp;
   const sts=[];
   for(let j=0;j<exs.length;j++)sts.push(await runEx(Object.assign({},exs[j]),`rem.${k}.${j}`,null,k));
-  const okc=sts.filter(x=>x==='ok'||x==='learning').length;
-  await T(`Réussite locale : <b>${okc}/${exs.length}</b> (objectif : ${esc(R.ok)})`);
+  const cnt=R.items?sts.slice(rp.length):sts;
+  const okc=cnt.filter(x=>x==='ok'||x==='learning').length;
+  await T(`Réussite locale : <b>${okc}/${cnt.length}</b> (objectif : ${esc(R.ok)})`);
   PR.sk2=PR.sk2||{};PR.sk2[k]={okc,need:R.need};savePR();
   if(R.tr)await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (scène nouvelle)<br>${esc(R.tr)}`,crit:R.crit,ctx:`Module G5, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle avant la tentative. Vérifie le transfert de la règle et, si demandé, la justification.`,max:2,ph:'Écris ta réponse en anglais…'});
   if(okc<R.need)await T(`Pas encore au niveau voulu (${esc(R.ok)}) : reprends la règle courte de la séquence concernée, puis refais ce bloc.`);
@@ -807,7 +808,7 @@ async function CONTROL2(){
     lg('G5 · Contrôle final'+(set==='B'?' · parallèle':''));
     await titleCard('Contrôle final G5','Réponds sans aide',`15 points · seuil de réussite ${fmt(THR)} / 15 (inclus)`);
     await T(`15 items à 1 point. Une seule réponse attendue sauf production ; pour les questions de sens, j’évalue aussi ta justification. Les corrections viennent à la fin.`);
-    if(set==='B'){await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
+    if(set==='B'){if(typeof FD!=='undefined'&&FD.setBAD)AD();await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
     const A=[];
     for(let i=0;i<15;i++){const q=Q[i];
       await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
@@ -901,4 +902,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261031x"></script>
+</html><script src="voice.js?v=20261031y"></script>
