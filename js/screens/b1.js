@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031d";
+import "../data/roots-ai-url.js?v=20261031e";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -15,8 +15,9 @@ export function b1Status() {
 }
 
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031d" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031d" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031e" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031e" },
+  { k: "c1", n: "C", t: "Conjugaison : l'atelier de l'horloger", s: "Aperçu avec contenu d'exemple, en attente de ton cours", url: "b1-0/c1.html?v=20261031e", preview: true },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -83,7 +84,7 @@ export function renderB1(root, { onExit } = {}) {
   };
   const forest = (fin) => {
     const S = b1Status();
-    const rows = WORKSHOPS.map((w) => { const st = S[w.k]; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; }).join("");
+    const rows = WORKSHOPS.map((w) => { const st = S[w.k] || {}; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${w.preview ? "Aperçu" : st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; }).join("");
     el.innerHTML = `${STY}<div class="b1x${fin === true ? " fin" : " in"}"><div class="b1f"></div>
       <button type="button" class="back" id="b1Back">← B</button>
       <div class="b1g"><h2>B1.0 · Grammaire</h2><p>🏫 En classe avec ton professeur : tu observes, tu réponds, tu es corrigé sur tes vraies phrases.</p>${rows}<div class="nx">Les autres ateliers du B1.0 arrivent. B1.1 s'ouvrira quand tous seront validés.</div></div></div>`;
