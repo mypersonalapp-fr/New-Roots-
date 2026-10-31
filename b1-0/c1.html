@@ -78,7 +78,22 @@
 #sub{flex-wrap:nowrap;gap:5px;margin-bottom:7px}#sub button{flex:1;padding:5px 2px;font-size:11px;border-radius:9px;white-space:nowrap}#dt b{font-size:20px;padding:3px 14px}
 #frame[data-m=cmp] #stage{transform:translateY(-70px)}#sub{display:none!important}.fa{padding-top:16px}
 .car{align-items:flex-start}.cd{font-size:12px}.cd .vs{font-size:11.5px}
+
+#intro{position:fixed;inset:0;z-index:50;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#6b4620 0,#3a2410 55%,#1a0f06 100%);transition:opacity .9s ease,transform 1.1s cubic-bezier(.5,0,.8,.4);transform-origin:50% 38%}
+#intro.out{opacity:0;transform:scale(2.6);pointer-events:none}
+#intro .wood{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 2px,transparent 2px 46px),repeating-linear-gradient(0deg,rgba(255,200,120,.04) 0 3px,transparent 3px 9px)}
+#intro svg{position:absolute;left:0;top:0;width:100%;height:78%}
+#intro .ck{opacity:0;animation:ckin .7s ease-out forwards}
+@keyframes ckin{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+#intro .box{position:absolute;left:14px;right:14px;bottom:max(16px,env(safe-area-inset-bottom));border-radius:20px;padding:14px;background:rgba(236,222,178,.96);color:#2f1f08;border:3px solid #b88a2c;box-shadow:0 12px 30px #000a;animation:ckin .6s ease-out 1.6s both}
+#intro .box small{display:block;font:800 10px system-ui;letter-spacing:.12em;opacity:.7;margin-bottom:3px}
+#intro .box b{display:block;font:700 19px Georgia,serif;margin-bottom:4px}
+#intro .box p{margin:0 0 10px;font-size:13.5px;line-height:1.4}
+#intro .box button{width:100%;border:0;border-radius:12px;padding:12px;font:800 15px system-ui;background:#ffd36b;color:#14203f}
+#intro .qt{position:absolute;top:max(12px,env(safe-area-inset-top));left:12px;z-index:2;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,30,.6);color:#fff;border-radius:999px;padding:7px 13px;font:800 13px system-ui}
 </style>
+<div id="intro"><div class="wood"></div><svg id="introSvg" viewBox="0 0 390 610" preserveAspectRatio="xMidYMid slice"></svg><button type="button" class="qt" id="introQ">Quitter ×</button>
+<div class="box"><small>L'ATELIER DE L'HORLOGER</small><b>Bienvenue dans mon atelier</b><p>Ici, chaque horloge raconte un moment : le passé, le présent, le futur. Aujourd'hui, nous allons comparer le temps du cours aux temps déjà vus.</p><button type="button" id="introGo">Entrer dans l'atelier →</button></div></div>
 <div id="app">
  <div style="display:flex;align-items:center;padding-right:12px"><div id="tabs" style="flex:1"></div><button type="button" id="quitC" style="flex:none;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,30,.6);color:#fff;border-radius:999px;padding:7px 13px;font:800 13px system-ui">Quitter ×</button></div>
  <div id="frame" data-t="pres">
@@ -248,5 +263,30 @@ function loop(n){const dt=Math.min(.05,(n-last)/1000);last=n;
  requestAnimationFrame(loop)}
 setV(0);requestAnimationFrame(loop);
 document.getElementById('quitC').onclick=()=>{try{window.parent.postMessage({roots:'exit'},'*')}catch(e){}};
+
+(function(){
+ const svg=document.getElementById('introSvg'),NS='http://www.w3.org/2000/svg';
+ // [cx,cy,r,vitesse (1 = temps réel x 600), décalage, retour]
+ const C=[[195,205,92,600,0,0],[78,92,48,900,200,0],[312,96,52,-700,500,1],[56,250,40,500,900,0],[336,262,44,1100,100,0],[128,356,38,-900,300,1],[262,372,46,700,800,0],[195,70,30,1300,40,0],[40,400,30,800,700,0],[352,410,32,-1100,60,1],[195,440,36,600,450,0]];
+ const el=(n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+ const hands=[];
+ C.forEach((c,i)=>{const [x,y,r,sp,off,back]=c;const g=el('g',{class:'ck',style:'animation-delay:'+(i*0.12)+'s;transform-origin:'+x+'px '+y+'px'});
+  el('circle',{cx:x,cy:y,r:r+7,fill:'#8a5a1c'},g);el('circle',{cx:x,cy:y,r:r+3,fill:'#e8c46a'},g);el('circle',{cx:x,cy:y,r:r,fill:'#f4e8c4'},g);
+  for(let k=0;k<12;k++){const a=k*Math.PI/6,l=k%3?0.1:0.18;el('line',{x1:x+Math.sin(a)*r*0.82,y1:y-Math.cos(a)*r*0.82,x2:x+Math.sin(a)*r*(0.82-l),y2:y-Math.cos(a)*r*(0.82-l),stroke:'#3a2410','stroke-width':k%3?1:2},g)}
+  const hh=el('line',{x1:x,y1:y,x2:x,y2:y-r*0.5,stroke:'#2a1a08','stroke-width':Math.max(2,r/16),'stroke-linecap':'round'},g);
+  const mh=el('line',{x1:x,y1:y,x2:x,y2:y-r*0.78,stroke:'#2a1a08','stroke-width':Math.max(1.5,r/22),'stroke-linecap':'round'},g);
+  el('circle',{cx:x,cy:y,r:Math.max(2,r/18),fill:'#b88a2c'},g);
+  hands.push({hh,mh,x,y,sp,off,back})});
+ // balancier
+ const pg=el('g',{});const px=195,py=500;el('line',{x1:px,y1:py,x2:px,y2:py+70,stroke:'#e8c46a','stroke-width':3},pg);el('circle',{cx:px,cy:py+78,r:13,fill:'#e8c46a'},pg);
+ let t0=performance.now(),alive=true;
+ function tick(n){if(!alive||!document.getElementById('introSvg'))return;const t=(n-t0)/1000;
+  hands.forEach(h=>{const m=(h.off+t*h.sp/10)*(h.back?-1:1);h.mh.setAttribute('transform','rotate('+(m*6)+' '+h.x+' '+h.y+')');h.hh.setAttribute('transform','rotate('+(m/12*6)+' '+h.x+' '+h.y+')')});
+  pg.setAttribute('transform','rotate('+(Math.sin(t*2.6)*14)+' '+px+' '+py+')');requestAnimationFrame(tick)}
+ requestAnimationFrame(tick);
+ const intro=document.getElementById('intro');
+ document.getElementById('introGo').onclick=()=>{intro.classList.add('out');setTimeout(()=>{alive=false;intro.remove()},1150)};
+ document.getElementById('introQ').onclick=()=>{try{window.parent.postMessage({roots:'exit'},'*')}catch(e){}};
+})();
 </script>
 </body></html>
