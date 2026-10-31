@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031f";
+import "../data/roots-ai-url.js?v=20261031g";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -14,9 +14,16 @@ export function b1Status() {
   return { g1: { parts: (g1.done || []).length, total: 8, ok: g1ok }, g2: { parts: (g2.done || []).length, total: 9, ok: g2ok }, done: (g1ok ? 1 : 0) + (g2ok ? 1 : 0), total: 2 };
 }
 
+const LIEUX = [
+  { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
+  { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031g", preview: true },
+  { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
+  { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
+];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031f" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031f" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031g" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031g" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -64,6 +71,13 @@ export function renderB1(root, { onExit } = {}) {
   .b1g .ws{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid #ffd36b66;border-radius:14px;padding:10px;margin-top:8px;background:rgba(10,14,36,.55);color:#fff;font:inherit;cursor:pointer}
   .b1g .n{flex:none;width:40px;height:40px;border-radius:12px;background:#ffd36b;color:#241606;font-weight:800;display:flex;align-items:center;justify-content:center}.b1g .tx{flex:1;min-width:0;display:flex;flex-direction:column;font-size:13px}.b1g .tx small{opacity:.8}.b1g .st{flex:none;font-weight:800;font-size:12px;color:#ffd36b}
   .b1g .nx{font-size:11px;opacity:.7;margin-top:10px}
+  .b1h{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .b1h .lx{position:relative;height:112px;border:1px solid #ffd36b66;border-radius:14px;overflow:hidden;background:#101a33 center/cover;color:#fff;font:inherit;text-align:left;padding:0;cursor:pointer}
+  .b1h .lx::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0a0f2200 30%,#0a0f22ee 100%)}
+  .b1h .lx span{position:absolute;left:10px;right:8px;bottom:8px;z-index:1;display:flex;flex-direction:column;font-size:14px;font-weight:800}
+  .b1h .lx small{font-weight:600;font-size:10.5px;opacity:.85}
+  .b1h .lx.off{opacity:.55;cursor:default;filter:saturate(.6)}
+  .b1h .lx em{position:absolute;top:8px;right:8px;z-index:1;font-style:normal;font-size:10px;font-weight:800;background:#ffd36b;color:#241606;border-radius:99px;padding:2px 8px}
   .b1-frame{position:fixed;inset:0;z-index:9999;width:100%;height:100%;border:0;background:#0d1226}
   </style>`;
   const transition = () => {
@@ -74,7 +88,7 @@ export function renderB1(root, { onExit } = {}) {
         <button type="button" class="bd go" id="b1Go" style="left:37%;top:37.5%;width:25%;height:8%">B1.0<small>Commencer</small></button>
         <div class="bd off r" style="left:74.5%;top:51.6%;width:19%;height:5.4%">B1.1<small>bientôt</small></div>
         </div></div>
-      <div class="b1g"><h2>Tu as terminé A2</h2><p>Prochaine étape : <b>B1.0</b>. B1.1 t'attend ensuite, de l'autre côté du chemin.</p><button type="button" class="ws" id="b1Go2"><span class="n">B1.0</span><span class="tx"><b>Entrer dans B1.0</b><small>Grammaire : G1 et G2</small></span><span class="st">→</span></button></div></div>`;
+      <div class="b1g"><h2>Tu as terminé A2</h2><p>Prochaine étape : <b>B1.0</b>. B1.1 t'attend ensuite, de l'autre côté du chemin.</p><button type="button" class="ws" id="b1Go2"><span class="n">B1.0</span><span class="tx"><b>Entrer dans B1.0</b><small>Grammaire, Conjugaison…</small></span><span class="st">→</span></button></div></div>`;
     const x = el.querySelector(".b1x");
     const enter = () => { if (x.classList.contains("leave")) return; x.classList.add("leave"); setTimeout(() => forest(true), 1150); };
     el.querySelector("#b1Back").onclick = () => onExit && onExit();
@@ -82,18 +96,30 @@ export function renderB1(root, { onExit } = {}) {
     el.querySelector("#b1Go2").onclick = enter;
   };
   const forest = (fin) => {
-    const S = b1Status();
-    const rows = WORKSHOPS.map((w) => { const st = S[w.k] || {}; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${w.preview ? "Aperçu" : st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; }).join("");
+    const tiles = LIEUX.map((l) => `<button type="button" class="lx${l.url || l.k === "gram" ? "" : " off"}" data-l="${l.k}" style="background-image:url(assets/img/b/${l.img})">${l.preview ? "<em>Aperçu</em>" : !l.url && l.k !== "gram" ? "<em>Bientôt</em>" : ""}<span>${esc(l.t)}<small>${esc(l.p)}</small></span></button>`).join("");
     el.innerHTML = `${STY}<div class="b1x${fin === true ? " fin" : " in"}"><div class="b1f"></div>
       <button type="button" class="back" id="b1Back">← B</button>
-      <div class="b1g"><h2>B1.0 · Grammaire</h2><p>🏫 En classe avec ton professeur : tu observes, tu réponds, tu es corrigé sur tes vraies phrases.</p>${rows}<div class="nx">Les autres ateliers du B1.0 arrivent. B1.1 s'ouvrira quand tous seront validés.</div></div></div>`;
+      <div class="b1g"><h2>B1.0</h2><p>Choisis un lieu : chaque matière a son décor.</p><div class="b1h">${tiles}</div><div class="nx">B1.1 s'ouvrira quand le B1.0 sera validé.</div></div></div>`;
     el.querySelector("#b1Back").onclick = transition;
-    el.querySelectorAll("[data-w]").forEach((b) => (b.onclick = () => open(WORKSHOPS.find((w) => w.k === b.dataset.w))));
+    el.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => {
+      const l = LIEUX.find((x) => x.k === b.dataset.l);
+      if (l.k === "gram") gram(); else if (l.url) open({ url: l.url, t: l.t }, forest);
+    }));
   };
-  const open = (w) => {
+  const gram = () => {
+    const S = b1Status();
+    const rows = WORKSHOPS.map((w) => { const st = S[w.k] || {}; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; }).join("");
+    const later = [3, 4, 5, 6].map((n) => `<div class="ws" style="opacity:.45;cursor:default"><span class="n">G${n}</span><span class="tx"><b>Bientôt</b><small>En attente du cours</small></span></div>`).join("");
+    el.innerHTML = `${STY}<div class="b1x in"><div class="b1f" style="background-image:url(assets/img/b/lieu-gram.jpg)"></div>
+      <button type="button" class="back" id="b1Back">← B1.0</button>
+      <div class="b1g"><h2>Grammaire · La salle de classe</h2><p>En classe avec ton professeur : tu observes, tu réponds, tu es corrigé sur tes vraies phrases.</p>${rows}${later}</div></div>`;
+    el.querySelector("#b1Back").onclick = () => forest();
+    el.querySelectorAll("[data-w]").forEach((b) => (b.onclick = () => open(WORKSHOPS.find((w) => w.k === b.dataset.w), gram)));
+  };
+  const open = (w, back) => {
     const f = document.createElement("iframe");
     f.className = "b1-frame"; f.src = w.url; f.title = w.t;
-    const close = (e) => { if (e && e.data && e.data.roots === "exit") { window.removeEventListener("message", close); f.remove(); forest(); } };
+    const close = (e) => { if (e && e.data && e.data.roots === "exit") { window.removeEventListener("message", close); f.remove(); (back || forest)(); } };
     window.addEventListener("message", close);
     document.body.appendChild(f);
   };
