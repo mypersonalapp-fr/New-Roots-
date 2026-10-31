@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031c";
+import "../data/roots-ai-url.js?v=20261031d";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -15,8 +15,8 @@ export function b1Status() {
 }
 
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031c" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031c" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031d" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031d" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -58,7 +58,7 @@ export function renderB1(root, { onExit } = {}) {
   .b1x .b1g{animation:b1up .7s ease-out 1.1s both}.b1x.fin .b1g{animation-delay:.5s}
   @keyframes b1up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
   .b1f{position:absolute;inset:0;background:url(assets/img/b/foret.jpg) center/cover}
-  .b1f::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0a0f2288 0,#0a0f2255 35%,#0a0f22cc 100%)}
+  .b1f::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0a0f2255 0,#0a0f2200 25%,#0a0f2200 45%,#0a0f22d9 100%)}
   .b1g{position:absolute;left:12px;right:12px;bottom:max(14px,env(safe-area-inset-bottom));z-index:3;border-radius:22px;padding:14px;background:rgba(18,26,58,.55);border:1px solid #ffffff33;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 30px #0008}
   .b1g h2{margin:0 0 2px;font-size:18px}.b1g p{margin:0 0 10px;font-size:12.5px;opacity:.85}
   .b1g .ws{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid #ffd36b66;border-radius:14px;padding:10px;margin-top:8px;background:rgba(10,14,36,.55);color:#fff;font:inherit;cursor:pointer}
