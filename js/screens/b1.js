@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031o";
+import "../data/roots-ai-url.js?v=20261031p";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -16,14 +16,14 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031o", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031p", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031o" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031o" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031p" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031p" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -157,7 +157,7 @@ export function renderB1(root, { onExit } = {}) {
     const S = b1Status();
     const rows = WORKSHOPS.map((w) => { const st = S[w.k] || {}; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; }).join("");
     const later = [3, 4, 5, 6].map((n) => `<div class="ws" style="opacity:.45;cursor:default"><span class="n">G${n}</span><span class="tx"><b>Bientôt</b><small>En attente du cours</small></span></div>`).join("");
-    el.innerHTML = `${STY}<div class="b1x in"><div class="b1f" style="background-image:url(assets/img/b/lieu-gram.jpg)"></div>
+    el.innerHTML = `${STY}<div class="b1x in"><div class="b1f" style="background-image:url(assets/img/b/lieu-gram${root.clientWidth / Math.max(1, root.clientHeight) > 1.2 ? '-land' : ''}.jpg)"></div>
       <button type="button" class="back" id="b1Back">← B1.0</button>
       <div class="b1g"><h2>Grammaire · La salle de classe</h2><p>En classe avec ton professeur : tu observes, tu réponds, tu es corrigé sur tes vraies phrases.</p>${rows}${later}</div></div>`;
     el.querySelector("#b1Back").onclick = () => forest();
