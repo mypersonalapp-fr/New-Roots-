@@ -1,7 +1,7 @@
 // The Roots — B0 « Passerelle » : revoir les fondamentaux A1 + A2 avant le B1.
 // 7 étapes de 12 questions (cours, temps, exercices, CO, CE, expression écrite, expression orale) puis un bilan de 12 questions (70 % pour ouvrir B1).
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031p";
-import { B0_STEPS, B0_NAMES, B0_ICONS, B0_BILAN_REFS, B0_PASS, b0Load, b0Save } from "../data/b0-data.js?v=20261031p";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031q";
+import { B0_STEPS, B0_NAMES, B0_ICONS, B0_BILAN_REFS, B0_PASS, b0Load, b0Save } from "../data/b0-data.js?v=20261031q";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const shuffle = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };

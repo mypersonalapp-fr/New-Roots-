@@ -1,8 +1,8 @@
 // The Roots — livret : structure complète niveaux → leçons → matières (jauges à 0 tant qu'aucun examen n'est passé).
-import { A1_LIST } from "./lecons-a1.js?v=20261031p";
-import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261031p";
-import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261031p";
-import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261031p";
+import { A1_LIST } from "./lecons-a1.js?v=20261031q";
+import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261031q";
+import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261031q";
+import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261031q";
 export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B0", "Passerelle", true], ["B1", "Intermédiaire", false], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 const SKN = [["Compréhension écrite", 7.5, "📖"], ["Compréhension orale", 7.5, "🎧"], ["Grammaire", 10, "🧩"], ["Expression écrite", 7.5, "✍️"], ["Expression orale", 7.5, "🎤"]];

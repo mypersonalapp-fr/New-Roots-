@@ -9,11 +9,11 @@
 // rassemble ces résultats pour toutes les langues, façon livret scolaire.
 
 import { store } from "../data/store.js?v=20260930a";
-import { renderLesson } from "./lecon-a11.js?v=20261031p";
-import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261031p";
-import { renderShell } from "./shell.js?v=20261031p";
-import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261031p";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031p";
+import { renderLesson } from "./lecon-a11.js?v=20261031q";
+import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261031q";
+import { renderShell } from "./shell.js?v=20261031q";
+import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261031q";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031q";
 import { renderLevelTest } from "./level-test.js?v=20260930a";
 import { t, formatDate } from "../data/i18n.js?v=20260930a";
 import { A1_EN_GENERAL_OBJECTIVE, A1_EN_PALIERS, A1_EN_ENTRY_MODULE } from "../data/programme-a1-en.js?v=20260930a";
@@ -23,19 +23,19 @@ import { B2_EN_GENERAL_OBJECTIVE, B2_EN_PALIERS, B2_EN_ENTRY_MODULE } from "../d
 import { C1_EN_GENERAL_OBJECTIVE, C1_EN_PALIERS, C1_EN_ENTRY_MODULE } from "../data/programme-c1-en.js?v=20260930a";
 import { A1_ES_GENERAL_OBJECTIVE, A1_ES_PALIERS } from "../data/programme-a1-es.js?v=20260930a";
 import { A2_ES_GENERAL_OBJECTIVE, A2_ES_PALIERS } from "../data/programme-a2-es.js?v=20261007a";
-import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261031p";
-import { plantSvg } from "./plant.js?v=20261031p";
+import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261031q";
+import { plantSvg } from "./plant.js?v=20261031q";
 import { BLOCAGES_ES, BLOCAGES_ES_TITLE, blocageHref, blocagesDone } from "../data/atelier-es-blocages.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
-import { currentCharacter } from "./lecon-a11.js?v=20261031p";
-import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2, loadExamBundleA2, examStatusA2, examUnlockedA2 } from "../data/lecons-a2.js?v=20261031p";
-import { runRattrapage } from "./rattrapage.js?v=20261031p";
-import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261031p";
-import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261031p";
+import { currentCharacter } from "./lecon-a11.js?v=20261031q";
+import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2, loadExamBundleA2, examStatusA2, examUnlockedA2 } from "../data/lecons-a2.js?v=20261031q";
+import { runRattrapage } from "./rattrapage.js?v=20261031q";
+import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261031q";
+import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261031q";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
-import { renderB0 } from "./b0.js?v=20261031p";
-import { renderB1, b1Status } from "./b1.js?v=20261031p";
-import { b0Status } from "../data/b0-data.js?v=20261031p";
+import { renderB0 } from "./b0.js?v=20261031q";
+import { renderB1, b1Status } from "./b1.js?v=20261031q";
+import { b0Status } from "../data/b0-data.js?v=20261031q";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---
 const DAY = 24 * 3600 * 1000;
@@ -197,7 +197,7 @@ function bothFlagsFor(l) {
 }
 
 // --- Bulletin scolaire (maquette 1) : notes par compétence, lacunes détectées, tests réussis / à repasser ---
-const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261031p`;
+const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261031q`;
 const BL_SK = [BL_IMG("exam-a1-reading"), BL_IMG("exam-a1-listening"), BL_IMG("ic-grammar"), BL_IMG("exam-a1-writing"), BL_IMG("exam-a1-speaking")];
 const BL_GAP = { "Grammaire": "ic-grammar", "Lecture": "ic-reading", "Écoute": "ic-listening" };
 export function bulletinParts(level = "A1") {

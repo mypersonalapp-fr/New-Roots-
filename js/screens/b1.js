@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031p";
+import "../data/roots-ai-url.js?v=20261031q";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -16,14 +16,14 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031p", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031q", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031p" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031p" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031q" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031q" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -86,7 +86,7 @@ export function renderB1(root, { onExit } = {}) {
   .b1h .lx em{position:absolute;top:8px;right:8px;z-index:1;font-style:normal;font-size:10px;font-weight:800;background:#ffd36b;color:#241606;border-radius:99px;padding:2px 8px}
   .b1fb{position:absolute;left:50%;top:50%;width:calc(100cqh*2/3);aspect-ratio:2/3;transform:translate(-50%,-50%);background:url(assets/img/b/foret.jpg) center/100% 100%;container-type:inline-size}
   .b1fb.ls{width:max(100cqw,calc(100cqh*1.5));aspect-ratio:3/2;background-image:url(assets/img/b/foret-land.jpg)}
-  .b1fb.ls .sg{font-size:.95cqw}.b1fb.ls .pl{left:29.4%;width:16.2%;height:4.6%;font-size:1.3cqw}
+  .b1fb.ls .sg{font-size:.95cqw}.b1fb.ls .pl{left:29%;width:16.4%;height:4.9%;font-size:1.3cqw}
   .b1x.fin .b1fb{animation:b1fbin 1.1s ease-out both}
   @keyframes b1fbin{from{transform:translate(-50%,-50%) scale(1.18)}to{transform:translate(-50%,-50%)}}
     .b1fb .sg{position:absolute;display:flex;align-items:center;justify-content:center;border:0;background:#0a0f2200;color:#3b2208;font:700 2.1cqw/1 Georgia,'Times New Roman',serif;text-shadow:0 1px 0 #f3d9a0aa;letter-spacing:.01em;padding:0;cursor:pointer;border-radius:6px;white-space:nowrap}
@@ -127,13 +127,13 @@ export function renderB1(root, { onExit } = {}) {
     { k: "expr", x: 45.7, y: 18.1, w: 7.5, h: 4 },
   ];
   const SIGNS_L = [ // version paysage (ordinateur)
-    { k: "gram", x: 70.8, y: 67.5, w: 8.6, h: 9.3 },
-    { k: "conj", x: 44.9, y: 36.3, w: 5.9, h: 4.7 },
-    { k: "voc", x: 67.7, y: 32.4, w: 5.9, h: 4 },
-    { k: "comp", x: 47.8, y: 25.2, w: 4.2, h: 4.1 },
-    { k: "expr", x: 63.7, y: 22.3, w: 3.7, h: 3.3 },
+    { k: "gram", x: 70.5, y: 70, w: 8.9, h: 8.5 },
+    { k: "conj", x: 45.1, y: 36.3, w: 5.8, h: 4.5 },
+    { k: "voc", x: 67.9, y: 32.2, w: 5.7, h: 4.4 },
+    { k: "comp", x: 47.5, y: 25.2, w: 5.2, h: 4.1 },
+    { k: "expr", x: 63.2, y: 20.7, w: 4.8, h: 3.4 },
   ];
-  const PLANKS_L = [58.2, 63.4, 68.5, 73.7, 78.9];
+  const PLANKS_L = [58.1, 63.5, 68.8, 73.9, 79.3];
   const PLANKS = [62.4, 66.4, 70.3, 74.1, 78.0]; // planches du panneau de l'entrée (arche)
   const lit = (l, S) => { const i = LIEUX.indexOf(l); return i === 0 || (PREVIEW && l.k === "conj") || (S.done >= 2 && i === 1); };
   const forest = (fin) => {

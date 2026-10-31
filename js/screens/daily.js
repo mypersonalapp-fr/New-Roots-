@@ -1,8 +1,8 @@
 // The Roots Daily — actualités et mails à lire en anglais, questions SANS QCM (réponse tapée).
 // Contenu dans js/data/the-roots-daily-en.js. Progression locale (localStorage, try/catch).
 
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031p";
-import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261031p";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031q";
+import { DAILY_ITEMS } from "../data/the-roots-daily-en.js?v=20261031q";
 
 const KEY = "the_roots_daily_v1";
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
