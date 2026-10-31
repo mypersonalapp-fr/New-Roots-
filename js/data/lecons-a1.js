@@ -1,4 +1,4 @@
-import { CONJ_A1 } from "./conjugation-a1.js?v=20261031s";
+import { CONJ_A1 } from "./conjugation-a1.js?v=20261031t";
 // The Roots — registre des 12 leçons du niveau A1 (anglais) : charge à la demande les données de chaque leçon
 // et les met au format attendu par renderLesson() (js/screens/lecon-a11.js).
 import { A1_EN_PALIERS } from "./programme-a1-en.js?v=20260930a";
@@ -27,12 +27,12 @@ export function nextLessonN(unlockAll) {
 }
 
 const V = "20261025p";
-import { EXPRESSION_PLUS_A1 } from "./expression-plus-a1.js?v=20261031s";
-import { plusPages } from "./vocab-plus-a1.js?v=20261031s";
-import { TEST_PLUS_A1 } from "./test-plus-a1.js?v=20261031s";
+import { EXPRESSION_PLUS_A1 } from "./expression-plus-a1.js?v=20261031t";
+import { plusPages } from "./vocab-plus-a1.js?v=20261031t";
+import { TEST_PLUS_A1 } from "./test-plus-a1.js?v=20261031t";
 const coreSet = (pages) => new Set(pages.flatMap((p) => (p.words || []).map((w) => String(w[0]).toLowerCase())));
 export async function loadBundle(n) {
-  if (n === 1) { const m = await import("../screens/lecon-a11.js?v=20261031s"); return m.BUNDLE_A11; }
+  if (n === 1) { const m = await import("../screens/lecon-a11.js?v=20261031t"); return m.BUNDLE_A11; }
   const s = `A1${n}`, base = A1_EN_PALIERS[n - 1];
   const m = await import(`./lecon-a1${n}-data.js?v=${V}`);
   const city = n === 2 ? await import(`./roots-city-a12-data.js?v=${V}`) : m;

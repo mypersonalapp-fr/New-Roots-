@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031s";
+import "../data/roots-ai-url.js?v=20261031t";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -8,23 +8,24 @@ const prog = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } 
 
 // Statut de chaque atelier, lu dans la progression enregistrée par les pages.
 export function b1Status() {
-  const g1 = prog("g1-chat-progress-v1"), g2 = prog("g2-chat-progress-v1"), g4 = prog("g4-chat-progress-v1");
+  const g1 = prog("g1-chat-progress-v1"), g2 = prog("g2-chat-progress-v1"), g4 = prog("g4-chat-progress-v1"), g5 = prog("g5-chat-progress-v1");
   const g1ok = (g1.hist || []).some((h) => h && h.score != null && h.score >= 12);
   const g2ok = !!(g2.ctl && g2.ctl.valid);
-  return { g4: { parts: (g4.done || []).length, total: 11, ok: !!(g4.ctl && g4.ctl.valid) }, g1: { parts: (g1.done || []).length, total: 8, ok: g1ok }, g2: { parts: (g2.done || []).length, total: 9, ok: g2ok }, done: (g1ok ? 1 : 0) + (g2ok ? 1 : 0), total: 2 };
+  return { g5: { parts: (g5.done || []).length, total: 9, ok: !!(g5.ctl && g5.ctl.valid) }, g4: { parts: (g4.done || []).length, total: 11, ok: !!(g4.ctl && g4.ctl.valid) }, g1: { parts: (g1.done || []).length, total: 8, ok: g1ok }, g2: { parts: (g2.done || []).length, total: 9, ok: g2ok }, done: (g1ok ? 1 : 0) + (g2ok ? 1 : 0), total: 2 };
 }
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031s", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031t", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031s" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031s" },
-  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261031s" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031t" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031t" },
+  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261031t" },
+  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261031t" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
