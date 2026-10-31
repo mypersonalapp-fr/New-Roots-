@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261031l";
+import "../data/roots-ai-url.js?v=20261031m";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -16,14 +16,14 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031l", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261031m", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031l" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031l" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261031m" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261031m" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -52,6 +52,12 @@ export function renderB1(root, { onExit } = {}) {
   .b1t .bd.l{animation-delay:.9s}.b1t .bd.go{animation-delay:1.2s,1.9s;font-size:6cqw;cursor:pointer;animation-name:b1pop,b1p;animation-duration:.6s,2.2s;animation-iteration-count:1,infinite}.b1t .bd.go small{font-size:3.4cqw}.b1t .bd.r{animation-delay:1.5s}
   @keyframes b1pop{from{opacity:0;transform:translateY(-14px) scale(.9)}to{opacity:1;transform:none}}
   @keyframes b1p{50%{transform:scale(1.06);filter:drop-shadow(0 0 10px #ffd36b)}}
+  .b1t.ls{top:50%;width:max(100cqw,calc(100cqh*1.5));aspect-ratio:3/2;transform:translate(-50%,-50%)}
+  .b1t.ls .cam{-webkit-mask-image:none;mask-image:none}
+  .b1t.ls .im{background-image:url(assets/img/b/transition-land.jpg)}.b1t.ls .gl{display:none}
+  .b1t.ls .bd{font-size:2.3cqw}.b1t.ls .bd small{font-size:1.4cqw}.b1t.ls .bd.go{font-size:3.2cqw}.b1t.ls .bd.go small{font-size:1.8cqw}
+  .b1x.leave .b1t.ls{animation:b1zoomL 1.25s cubic-bezier(.55,0,.8,.4) forwards}
+  @keyframes b1zoomL{to{transform:translate(-50%,-50%) scale(3.2)}}
   .b1x.leave .b1t{animation:b1zoom 1.25s cubic-bezier(.55,0,.8,.4) forwards}
   @keyframes b1zoom{to{transform:translateX(-50%) scale(3.4)}}
   .b1x.leave .b1t .gl{animation:none;opacity:.95;transition:opacity .5s}
@@ -95,12 +101,13 @@ export function renderB1(root, { onExit } = {}) {
   .b1-frame{position:fixed;inset:0;z-index:9999;width:100%;height:100%;border:0;background:#0d1226}
   </style>`;
   const transition = () => {
-    el.innerHTML = `${STY}<div class="b1x in"><div class="bk" style="background-image:url(assets/img/b/transition.jpg)"></div>
+    const wide = root.clientWidth / Math.max(1, root.clientHeight) > 1.2;
+    el.innerHTML = `${STY}<div class="b1x in"><div class="bk" style="background-image:url(assets/img/b/${wide ? "transition-land" : "transition"}.jpg)"></div>
       <button type="button" class="back" id="b1Back">← Retour</button><div class="tt">Mon parcours · B</div>
-      <div class="b1t"><div class="cam"><div class="im"></div><div class="gl"></div>
-        <div class="bd off l" style="left:1%;top:48.3%;width:22%;height:6.5%">A2<small>terminé</small></div>
-        <button type="button" class="bd go" id="b1Go" style="left:37%;top:37.5%;width:25%;height:8%">B1.0<small>Commencer</small></button>
-        <div class="bd off r" style="left:74.5%;top:51.6%;width:19%;height:5.4%">B1.1<small>bientôt</small></div>
+      <div class="b1t${wide ? " ls" : ""}"><div class="cam"><div class="im"></div><div class="gl"></div>
+        <div class="bd off l" style="${wide ? "left:3.5%;top:38.5%;width:16.5%;height:9.5%" : "left:1%;top:48.3%;width:22%;height:6.5%"}">A2<small>terminé</small></div>
+        <button type="button" class="bd go" id="b1Go" style="${wide ? "left:38.8%;top:22.5%;width:20%;height:15.5%" : "left:37%;top:37.5%;width:25%;height:8%"}">B1.0<small>Commencer</small></button>
+        <div class="bd off r" style="${wide ? "left:72.5%;top:46%;width:14.5%;height:8%" : "left:74.5%;top:51.6%;width:19%;height:5.4%"}">B1.1<small>bientôt</small></div>
         </div></div>
       <div class="b1g"><h2>Tu as terminé A2</h2><p>Prochaine étape : <b>B1.0</b>. B1.1 t'attend ensuite, de l'autre côté du chemin.</p><button type="button" class="ws" id="b1Go2"><span class="n">B1.0</span><span class="tx"><b>Entrer dans B1.0</b><small>Grammaire, Conjugaison…</small></span><span class="st">→</span></button></div></div>`;
     const x = el.querySelector(".b1x");
