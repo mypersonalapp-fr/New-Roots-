@@ -9,11 +9,11 @@
 // rassemble ces résultats pour toutes les langues, façon livret scolaire.
 
 import { store } from "../data/store.js?v=20260930a";
-import { renderLesson } from "./lecon-a11.js?v=20261031w";
-import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261031w";
-import { renderShell } from "./shell.js?v=20261031w";
-import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261031w";
-import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031w";
+import { renderLesson } from "./lecon-a11.js?v=20261031x";
+import { A1_LIST, lessonStatus, isUnlocked, nextLessonN, loadBundle, loadExamBundle, examStatus, examUnlocked } from "../data/lecons-a1.js?v=20261031x";
+import { renderShell } from "./shell.js?v=20261031x";
+import { CREATOR_MODE, UNLOCK_COURSES_PREVIEW } from "../data/dev-config.js?v=20261031x";
+import { UNLOCK_ALL_PREVIEW } from "../data/dev-config.js?v=20261031x";
 import { renderLevelTest } from "./level-test.js?v=20260930a";
 import { t, formatDate } from "../data/i18n.js?v=20260930a";
 import { A1_EN_GENERAL_OBJECTIVE, A1_EN_PALIERS, A1_EN_ENTRY_MODULE } from "../data/programme-a1-en.js?v=20260930a";
@@ -23,19 +23,19 @@ import { B2_EN_GENERAL_OBJECTIVE, B2_EN_PALIERS, B2_EN_ENTRY_MODULE } from "../d
 import { C1_EN_GENERAL_OBJECTIVE, C1_EN_PALIERS, C1_EN_ENTRY_MODULE } from "../data/programme-c1-en.js?v=20260930a";
 import { A1_ES_GENERAL_OBJECTIVE, A1_ES_PALIERS } from "../data/programme-a1-es.js?v=20260930a";
 import { A2_ES_GENERAL_OBJECTIVE, A2_ES_PALIERS } from "../data/programme-a2-es.js?v=20261007a";
-import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261031w";
-import { plantSvg } from "./plant.js?v=20261031w";
+import { langGrowth, skillGauges, profileSummary, controls, boosts, missions, lessonTitle } from "../data/progress.js?v=20261031x";
+import { plantSvg } from "./plant.js?v=20261031x";
 import { BLOCAGES_ES, BLOCAGES_ES_TITLE, blocageHref, blocagesDone } from "../data/atelier-es-blocages.js?v=20260930a";
 import { renderAtelierEs } from "./atelier-es.js?v=20261008a";
-import { currentCharacter } from "./lecon-a11.js?v=20261031w";
-import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2, loadExamBundleA2, examStatusA2, examUnlockedA2 } from "../data/lecons-a2.js?v=20261031w";
-import { runRattrapage } from "./rattrapage.js?v=20261031w";
-import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livret-niveaux.js?v=20261031w";
-import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261031w";
+import { currentCharacter } from "./lecon-a11.js?v=20261031x";
+import { A2_LIST, A2_BUILT, lessonStatusA2, loadBundleA2, bilanA2, loadExamBundleA2, examStatusA2, examUnlockedA2 } from "../data/lecons-a2.js?v=20261031x";
+import { runRattrapage } from "./rattrapage.js?v=20261031x";
+import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX, b1Gaps } from "../data/livret-niveaux.js?v=20261031x";
+import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261031x";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
-import { renderB0 } from "./b0.js?v=20261031w";
-import { renderB1, b1Status } from "./b1.js?v=20261031w";
-import { b0Status } from "../data/b0-data.js?v=20261031w";
+import { renderB0 } from "./b0.js?v=20261031x";
+import { renderB1, b1Status } from "./b1.js?v=20261031x";
+import { b0Status } from "../data/b0-data.js?v=20261031x";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---
 const DAY = 24 * 3600 * 1000;
@@ -197,7 +197,7 @@ function bothFlagsFor(l) {
 }
 
 // --- Bulletin scolaire (maquette 1) : notes par compétence, lacunes détectées, tests réussis / à repasser ---
-const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261031w`;
+const BL_IMG = (f) => `assets/img/lesson/${f}.webp?v=20261031x`;
 const BL_SK = [BL_IMG("exam-a1-reading"), BL_IMG("exam-a1-listening"), BL_IMG("ic-grammar"), BL_IMG("exam-a1-writing"), BL_IMG("exam-a1-speaking")];
 const BL_GAP = { "Grammaire": "ic-grammar", "Lecture": "ic-reading", "Écoute": "ic-listening" };
 export function bulletinParts(level = "A1") {
@@ -375,7 +375,11 @@ export function renderMesCours(container, shellRoot) {
     const Ls = lessonsOf(lvLevel), nav = `<button type="button" class="bl-back" data-view="home">← Tous les niveaux</button>`;
     if (!Ls.length) return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="card bl-card"><p class="bl-soft">Ce livret est prêt. Les leçons arrivent bientôt : les notes s'afficheront ici.</p></div>`;
     const t = Ls.map((L) => { const sh = lessonSheet(lvLevel, L); return `<button type="button" class="lv-ls${L.built ? "" : " off"}" ${L.built ? `data-view="lesson" data-ls="${L.n}"` : "disabled"}><b>${L.code}</b><small>${L.title}</small>${gauge(sh.avg)}<span>${L.built ? sh.avg + " %" : "bientôt"}</span></button>`; }).join("");
-    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div>${lvLevel === "A1" ? examCard() : ""}${lvLevel === "B0" ? "" : `<button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`}`;
+    return `${nav}<div class="lv-title">Niveau ${lvLevel}</div><div class="lv-lessons">${t}</div>${lvLevel === "A1" ? examCard() : ""}${lvLevel === "B0" || lvLevel === "B1" ? "" : `<button type="button" class="lv-over" data-view="tabs">📈 Vue d'ensemble du niveau (notes, lacunes, tests…)</button>`}`;
+  }
+  function b1GapsCard() {
+    const g = b1Gaps();
+    return `<div class="card bl-card"><h3 class="bl-h">🔎 Lacunes détectées · B1.0</h3>${g.length ? `<p class="bl-soft">Repérées à partir de tes erreurs dans les cours de grammaire (le plus fréquent d'abord).</p>${g.slice(0, 8).map((x) => `<div class="cmp-r"><div class="n"><span>${x.course} · ${x.skill}</span><em class="dn">${x.n} erreur${x.n > 1 ? "s" : ""}</em></div></div>`).join("")}` : `<p class="bl-soft">Aucune lacune enregistrée pour l'instant.</p>`}</div>`;
   }
   function livretLesson() {
     const L = lessonsOf(lvLevel).find((x) => x.n === lvLesson); if (!L) return livretLevel();
@@ -384,7 +388,7 @@ export function renderMesCours(container, shellRoot) {
     const rows = sh.rows.map((r) => `<div class="cmp-r"><div class="n"><span>${r.e} ${r.name}</span>${r.gain !== null ? `<em class="${r.gain >= 0 ? "up" : "dn"}">${r.gain >= 0 ? "+" : ""}${r.gain} pts</em>` : ""}</div>${r.ent !== null ? bar(r.ent, true) : `<div class="cmp-c e"><div class="fx">${gauge(0)}</div><span>—</span></div>`}${r.has ? bar(r.pct) : `<div class="cmp-c"><div class="fx">${gauge(0)}</div><span>—</span></div>`}</div>`).join("");
     return `<button type="button" class="bl-back" data-view="level">← ${lvLevel}</button><div class="lv-title">${L.code} · ${L.title}</div>
       <div class="card bl-card lv-c"><div class="bl-sp"><h3 class="bl-h">Mes matières</h3><b class="lv-avg">${sh.avg} %</b></div><div class="cmp-h"><span>À l'entrée</span><span>Aujourd'hui</span></div>${rows}<div class="lv-note">Note de la leçon : <b>${nf(sh.note20)} / 20</b>${sh.gain !== null ? ` · Progression : <b class="${sh.gain >= 0 ? "up" : "dn"}">${sh.gain >= 0 ? "+" : ""}${sh.gain} pts</b>` : ""}</div></div>
-      ${lvLevel === "B0" ? "" : `<div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
+      ${lvLevel === "B0" || lvLevel === "B1" ? (lvLevel === "B1" ? b1GapsCard() : "") : `<div class="card bl-card lv-bonus lv-c"><div class="bl-sp"><h3 class="bl-h">⭐ Bonus · Conjugaison</h3><b>${k.done ? nf(k.note) + " / 10" : "—"}</b></div>${gauge(k.done ? k.note * 10 : 0)}
         <p class="bl-soft">Noté à part. Ajoute jusqu'à +${BONUS_MAX} point au total (plafonné à 20). ${k.done ? `Test : ${k.best}/${k.tot}.` : "Pas encore passé."}</p></div>
       <div class="lv-total"><span>Total final</span><b>${nf(sh.total)} / 20</b><small>${nf(sh.note20)} + ${nf(k.bonus)} bonus</small></div>`}`;
   }
