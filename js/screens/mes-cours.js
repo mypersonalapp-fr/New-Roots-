@@ -34,6 +34,7 @@ import { LEVELS, lessonsOf, lessonSheet, entryOf, BONUS_MAX } from "../data/livr
 import { bulletinA1, rattrapagesFaits, PASS, pickRattrapage, rtLoad, rtSave } from "../data/bulletin-a1.js?v=20261028c";
 import { renderAtelierEn } from "./atelier-en.js?v=20261008a";
 import { renderB0 } from "./b0.js?v=20261028c";
+import { renderB1, b1Status } from "./b1.js?v=20261031a";
 import { b0Status } from "../data/b0-data.js?v=20261028c";
 
 // --- Petits blocs du livret (24/09) : jauges, contrôles, missions, renforts ---
@@ -517,18 +518,19 @@ export function renderMesCours(container, shellRoot) {
     const lvInfo = (L) => {
       if (L === "A1") { const d = A1_LIST.filter((x) => lessonStatus(x.n).passed).length; return { built: true, done: d, total: 12, ok: d >= 12 }; }
       if (L === "A2") { const d = A2_LIST.filter((x) => x.n >= 1 && lessonStatusA2(x.n).passed).length; return { built: true, done: d, total: 12, ok: d >= 12 }; }
+      if (L === "B") { const s = b1Status(); return { built: true, done: s.done, total: s.total, ok: s.done >= s.total, unit: "ateliers" }; }
       if (L === "B0") { const s = b0Status(); return { built: true, done: s.done + (s.bilan != null ? 1 : 0), total: 8, ok: s.passed, unit: "étapes" }; }
       return { built: false, done: 0, total: 12, ok: false };
     };
     const parcoursHtml = () => {
-      const SQ = ["A1", "A2", "B0", "B1", "B2", "C1", "C2"];
+      const SQ = ["A1", "A2", "B", "C1", "C2"];
       const sq = SQ.map((L, i) => {
         const inf = lvInfo(L), open = inf.built && (UNLOCK_ALL_PREVIEW || (L !== "B1" && LVN.indexOf(L) <= entryIdx && LVN.indexOf(L) >= 0) || lvInfo(SQ[i - 1] || "A1").ok); // règle : sans B0 validé (bilan ≥ 70 %), B1 reste fermé (hors mode vérification)
         return `<button type="button" class="mc-sq${open ? "" : " off"}" data-pl="${L}" ${open ? "" : "disabled"}>
           <span class="mc-sq-ic" aria-hidden="true">${open ? (inf.ok ? "✓" : "🔓") : "🔒"}</span><b>${L}</b>
           <small>${inf.built ? `${inf.done}/${inf.total} ${inf.unit || "leçons"}` : "Bientôt"}</small></button>`;
       }).join("");
-      return `<div class="dash-box"><h3>🌱 Mon parcours</h3><div class="mc-sqgrid">${sq}</div>${UNLOCK_ALL_PREVIEW ? `<div style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;text-align:center">Mode vérification : A1, A2 et B0 sont ouverts.</div>` : ""}</div>`;
+      return `<div class="dash-box"><h3>🌱 Mon parcours</h3><div class="mc-sqgrid">${sq}</div>${UNLOCK_ALL_PREVIEW ? `<div style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;text-align:center">Mode vérification : A1, A2 et B sont ouverts.</div>` : ""}</div>`;
     };
     // Programme résumé, visible seulement tant que le test de niveau n'est pas fait (le détail reste dans l'onglet « Programme »).
     const programBrief = () => `<div class="dash-box"><h3>📚 Le programme</h3><div class="card">
@@ -536,6 +538,7 @@ export function renderMesCours(container, shellRoot) {
       <p style="font-size:12.5px;color:var(--ink-soft);margin:10px 0 0">6 niveaux, 12 paliers par niveau. Ton parcours s'affichera ici dès que le test de niveau sera fait.</p>
     </div></div>`;
     if (pathLevel) {
+      if (pathLevel === "B") { pathLevel = null; renderB1(shellRoot, { onExit: exitToCourses }); return; }
       if (pathLevel === "B0") { pathLevel = null; renderB0(shellRoot, { onExit: exitToCourses }); return; }
       const isA2 = pathLevel === "A2";
       container.innerHTML = `<div class="mc-topbar"><button class="settings-back" id="mcBack">‹ Mon parcours</button></div>${isA2 ? a2PathHtml() : a1PathHtml()}`;
