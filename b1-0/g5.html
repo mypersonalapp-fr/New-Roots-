@@ -389,7 +389,7 @@ async function intro(quote){await T(quote)}
 const done=(k)=>{if(!PR.done.includes(k))PR.done.push(k);savePR();paintJump()};
 
 /* ===== G5 · DONNÉES (source : The_Roots_B1-0_G5_Future_Forms_cours_complet.docx — contenu non modifié ; ajouts marqués AD) ===== */
-const SKN={A:"will confondu avec intention déjà formée",B:"going to mal construit",C:"Present Continuous sans be ou sans -ing",D:"Horaire officiel confondu avec arrangement personnel",E:"Choix fondé uniquement sur tomorrow / next week",F:"Erreurs d’accord ou de question"};
+const SKN={A:"will : décision, prédiction, offre",B:"going to : intention et indice",C:"Arrangement au Present Continuous",D:"Present Simple et horaires",E:"Construction des formes (négation, question, be/do)",F:"Choix en contexte et transfert"};
 const REPERES=[["will + base verbale","Décision prise au moment de parler ; offre, promesse ; prédiction ou opinion sans preuve directe."],["be going to + base verbale","Intention déjà formée ; prédiction appuyée sur un indice présent."],["Present Continuous","Arrangement futur déjà organisé, souvent avec heure, lieu ou personnes convenus."],["Present Simple","Horaire ou programme officiel, souvent transport, ouverture ou calendrier."]];
 const SEQ=[
 {n:1,title:"Prédiction, décision ou réaction immédiate ?",goal:"Distinguer will selon qu’il s’agit d’une opinion/prédiction, d’une décision spontanée, d’une offre ou d’une promesse.",setting:"Dans le hall du festival, l’équipe réagit à des imprévus et imagine les résultats des rencontres.",skill:"A",
@@ -458,21 +458,21 @@ const MIS2=[
  ctx:"Tu commentes les finales du festival. Une joueuse fait une prédiction sur le score, puis réagit à un changement de météo et propose son aide.",
  consigne:"1) Écris une prédiction personnelle sur le résultat avec will. 2) À partir de nuages noirs visibles, annonce ce qui va probablement se passer avec going to. 3) Réagis à un bénévole qui cherche une bâche : propose de l’apporter avec will.",
  tasks:["Une prédiction personnelle avec will","Une prédiction fondée sur les nuages noirs avec going to","Une offre spontanée avec will pour la bâche"],
- crit:[["Trois réponses compréhensibles",1],["Distinction entre opinion, preuve visible et réaction spontanée",1]],max:2,
+ crit:[["Prédiction will cohérente",1],["Prédiction going to fondée sur indice",1],["Offre spontanée avec will",1]],max:3,
  logic:"Relance en cas d’erreur : « La décision existait-elle avant qu’on te parle ? Quel indice vois-tu ? »",
  expect:"opinion avec will, prédiction avec going to appuyée sur l’indice (nuages), offre spontanée avec will.",skills:["A","B"],ph:"Écris tes trois réponses en anglais…"},
 {key:"M2",title:"Mission 2 · Le planning multisport",kicker:"Production personnelle",
  ctx:"Tu aides à organiser football, basket, rugby et tennis. Le programme officiel donne les heures ; tu as aussi des rendez-vous confirmés avec deux équipes.",
  consigne:"4) Rédige deux lignes de programme officiel au Present Simple. 5) Rédige deux arrangements confirmés au Present Continuous, avec jour/heure ou lieu. 6) Explique en une phrase pourquoi les horaires officiels ne sont pas des promesses personnelles.",
  tasks:["Deux lignes de programme officiel (Present Simple)","Deux arrangements confirmés (Present Continuous) avec jour/heure ou lieu","Une phrase d’explication : horaires officiels et promesses personnelles"],
- crit:[["Accords corrects au Present Simple",1],["be + -ing pour les rendez-vous",1],["Repères temporels clairs",1]],max:3,
+ crit:[["Deux horaires au Present Simple corrects",1],["Deux arrangements au Present Continuous avec repère",1],["Explication cohérente du contraste",1]],max:3,
  logic:"Tolérer le Present Continuous pour un horaire si l’apprenant décrit un événement organisé, à condition que la lecture soit justifiée.",
  expect:"horaires au Present Simple (accord -s), rendez-vous en be + -ing avec repère de temps ou de lieu, explication cohérente.",skills:["C","D"],ph:"Écris tes réponses en anglais…"},
 {key:"M3",title:"Mission 3 · La réunion de dernière minute",kicker:"Production personnelle",
  ctx:"À la veille du festival, vous avez des intentions prévues, des rendez-vous fixés et un imprévu : les paniers de basket arrivent en retard.",
  consigne:"7) Écris une intention déjà décidée avec going to. 8) Écris un arrangement confirmé avec le responsable du basket au Present Continuous. 9) Réponds spontanément au problème en faisant une offre avec will. 10) Ajoute une question à un coéquipier sur son arrangement et une réponse courte correcte.",
  tasks:["Une intention déjà décidée avec going to","Un arrangement confirmé avec le responsable du basket (Present Continuous)","Une offre spontanée avec will","Une question sur un arrangement + une réponse courte correcte"],
- crit:[["Quatre fonctions bien distinctes",1],["Interrogative et réponse courte bien formées",1]],max:2,
+ crit:[["Intention préalable",1],["Arrangement confirmé",1],["Offre spontanée",1],["Question + réponse courte correctes",1]],max:4,
  logic:"Correction adaptée à la catégorie d’erreur, sans pénaliser une variante cohérente.",
  expect:"going to pour l’intention, be + -ing pour l’arrangement, will pour l’offre, question avec be et réponse courte reprenant l’auxiliaire.",skills:["A","B","C","F"],ph:"Écris tes quatre réponses en anglais…"}
 ];
@@ -482,52 +482,52 @@ const CT={
 A:[
 {q:"Un joueur trébuche ; tu réagis : “I ___ help you.”",t:"txt",ok:["will","'ll","ll"],why:"will — décision spontanée.",sk:["A"]},
 {q:"“I think the tennis final ___ exciting.”",t:"txt",ok:["will be","'ll be","ll be"],why:"will be — opinion ; will + base verbale.",sk:["A"]},
-{q:"Le comité a déjà décidé d’ajouter du rugby fauteuil : “We ___ add a session.”",t:"txt",ok:["are going to","'re going to","re going to"],why:"are going to — intention préalable.",sk:["A","B"]},
+{q:"Le comité a déjà décidé d’ajouter du rugby fauteuil : “We ___ add a session.”",t:"txt",ok:["are going to","'re going to","re going to"],why:"are going to — intention préalable.",sk:["B"]},
 {q:"Le ciel devient noir : “It ___ rain.”",t:"txt",ok:["is going to","'s going to","s going to"],why:"is going to — prédiction fondée sur un indice.",sk:["B"]},
 {q:"Rendez-vous confirmé demain : “I ___ the coach at 9.”",t:"txt",ok:["am meeting","'m meeting","m meeting"],why:"am meeting — arrangement ; be + -ing.",sk:["C"]},
 {q:"Programme affiché : “The doors ___ at 8:30.”",t:"txt",ok:["open"],why:"open — horaire officiel au Present Simple.",sk:["D"]},
-{q:"Négation correcte de “She will play.”",t:"txt",ok:["she will not play"],why:"She won’t play. — won’t + base.",sk:["F"]},
-{q:"Question correcte sur un plan : ___ they going to enter the race?",t:"txt",ok:["are"],why:"Are — be + sujet + going to.",sk:["B","F"]},
-{q:"Question correcte sur un arrangement : ___ Maya playing on Sunday?",t:"txt",ok:["is"],why:"Is — auxiliaire be avant le sujet.",sk:["C","F"]},
-{q:"Question correcte sur l’horaire : ___ the bus leave at 7?",t:"txt",ok:["does"],why:"Does — Present Simple avec bus singulier.",sk:["D","F"]},
+{q:"Négation correcte de “She will play.”",t:"txt",ok:["she will not play"],why:"She won’t play. — won’t + base.",sk:["E"]},
+{q:"Question correcte sur un plan : ___ they going to enter the race?",t:"txt",ok:["are"],why:"Are — be + sujet + going to.",sk:["B","E"]},
+{q:"Question correcte sur un arrangement : ___ Maya playing on Sunday?",t:"txt",ok:["is"],why:"Is — auxiliaire be avant le sujet.",sk:["C","E"]},
+{q:"Question correcte sur l’horaire : ___ the bus leave at 7?",t:"txt",ok:["does"],why:"Does — Present Simple avec bus singulier.",sk:["D","E"]},
 {q:"Choisis la lecture d’une heure dans le programme officiel : écris la phrase pour “le match commence à 5 h”.",t:"txt",ok:["the match starts at 5"],re:[/^the match starts at (5|five)( .*)?$/],why:"The match starts at 5. — Present Simple d’horaire.",sk:["D"],ph:"Écris la phrase en anglais…"},
-{q:"Explique la différence : “I’ll call the organiser” / “I’m going to call the organiser.”",t:"fre",crit:["Première phrase : décision prise maintenant possible","Seconde phrase : intention déjà formée"],pts:[0.5,0.5],why:"Première : décision prise maintenant possible ; seconde : intention déjà formée. Le moment de formation de l’intention distingue les lectures.",sk:["A","E"]},
-{q:"Corrige : “We are meet the tennis team tomorrow.”",t:"txt",ok:["we are meeting the tennis team tomorrow"],why:"We are meeting the tennis team tomorrow. — arrangement au Present Continuous.",sk:["C"]},
+{q:"Explique la différence : “I’ll call the organiser” / “I’m going to call the organiser.”",t:"fre",crit:["Première phrase : décision prise maintenant possible","Seconde phrase : intention déjà formée"],pts:[0.5,0.5],why:"Première : décision prise maintenant possible ; seconde : intention déjà formée. Le moment de formation de l’intention distingue les lectures.",sk:["F"]},
+{q:"Corrige : “We are meet the tennis team tomorrow.”",t:"txt",ok:["we are meeting the tennis team tomorrow"],why:"We are meeting the tennis team tomorrow. — arrangement au Present Continuous.",sk:["C","E"]},
 {q:"Complète l’offre spontanée : “The bags are heavy. I ___ carry one.”",t:"txt",ok:["will","'ll","ll"],why:"will — offre faite maintenant.",sk:["A"]},
-{q:"Production : donne un horaire officiel, une intention et un rendez-vous confirmé liés à trois sports différents.",t:"fre",crit:["Un horaire officiel au Present Simple","Une intention avec going to","Un rendez-vous confirmé au Present Continuous"],rule:"count3",why:"Une phrase par fonction, forme cohérente et compréhensible, trois sports différents. 1 point si les trois phrases sont grammaticales et bien différenciées ; 0,5 si deux catégories sont correctes ; 0 sinon.",sk:["E"]}
+{q:"Production : donne un horaire officiel, une intention et un rendez-vous confirmé liés à trois sports différents.",t:"fre",crit:["Un horaire officiel au Present Simple","Une intention avec going to","Un rendez-vous confirmé au Present Continuous"],rule:"count3",why:"Une phrase par fonction, forme cohérente et compréhensible, trois sports différents. 1 point si les trois phrases sont grammaticales et bien différenciées ; 0,5 si deux catégories sont correctes ; 0 sinon.",sk:["F"]}
 ],
 B:[
-{q:"Une joueuse fait tomber son sac. Tu réagis : “I ___ pick it up.”",t:"txt",ok:["will","'ll","ll"],why:"will — décision spontanée.",sk:["A"]},
-{q:"“I think the basketball final ___ close.”",t:"txt",ok:["will be","'ll be","ll be"],why:"will be — opinion ; will + base verbale.",sk:["A"]},
-{q:"Le comité a déjà décidé d’ouvrir un nouveau court : “They ___ build it.”",t:"txt",ok:["are going to","'re going to","re going to"],why:"are going to — intention préalable.",sk:["A","B"]},
-{q:"Le gardien boite beaucoup : “He ___ miss the match.”",t:"txt",ok:["is going to","'s going to","s going to"],why:"is going to — prédiction fondée sur un indice.",sk:["B"]},
-{q:"Rendez-vous confirmé demain : “I ___ the referee at 10.”",t:"txt",ok:["am meeting","'m meeting","m meeting"],why:"am meeting — arrangement ; be + -ing.",sk:["C"]},
-{q:"Programme affiché : “The gates ___ at 7:45.”",t:"txt",ok:["open"],why:"open — horaire officiel au Present Simple.",sk:["D"]},
-{q:"Négation correcte de “He will win.”",t:"txt",ok:["he will not win"],why:"He won’t win. — won’t + base.",sk:["F"]},
-{q:"Question correcte sur un plan : ___ she going to join the relay?",t:"txt",ok:["is"],why:"Is — be + sujet + going to.",sk:["B","F"]},
-{q:"Question correcte sur un arrangement : ___ the coaches visiting us on Saturday?",t:"txt",ok:["are"],why:"Are — auxiliaire be avant le sujet.",sk:["C","F"]},
-{q:"Question correcte sur l’horaire : ___ the train arrive at 6?",t:"txt",ok:["does"],why:"Does — Present Simple avec train singulier.",sk:["D","F"]},
-{q:"Écris la phrase du programme officiel pour “le match commence à 4 h”.",t:"txt",ok:["the match starts at 4"],re:[/^the match starts at (4|four)( .*)?$/],why:"The match starts at 4. — Present Simple d’horaire.",sk:["D"],ph:"Écris la phrase en anglais…"},
-{q:"Explique la différence : “I’ll call the referee” / “I’m going to call the referee.”",t:"fre",crit:["Première phrase : décision prise maintenant possible","Seconde phrase : intention déjà formée"],pts:[0.5,0.5],why:"Première : décision prise maintenant possible ; seconde : intention déjà formée.",sk:["A","E"]},
-{q:"Corrige : “They are play the volleyball final tomorrow.”",t:"txt",ok:["they are playing the volleyball final tomorrow"],why:"They are playing the volleyball final tomorrow. — arrangement au Present Continuous.",sk:["C"]},
-{q:"Complète l’offre spontanée : “The boxes are heavy. I ___ carry one.”",t:"txt",ok:["will","'ll","ll"],why:"will — offre faite maintenant.",sk:["A"]},
-{q:"Production : donne un horaire officiel, une intention et un rendez-vous confirmé liés à trois sports différents.",t:"fre",crit:["Un horaire officiel au Present Simple","Une intention avec going to","Un rendez-vous confirmé au Present Continuous"],rule:"count3",why:"Une phrase par fonction, forme cohérente et compréhensible, trois sports différents.",sk:["E"]}
+{q:"Une nageuse tombe dans l’eau et tu proposes ton aide immédiatement : “I ___ help you.”",opts:["will","am going to","am helping"],ok:["a"],t:"txt",why:"will — offre immédiate.",sk:["A"]},
+{q:"Complète : “I think the cycling final ___ be exciting.”",opts:["will","is going to","starts"],ok:["a"],t:"txt",why:"will — opinion.",sk:["A"]},
+{q:"Le club a décidé la veille d’ajouter une épreuve de volley : “We ___ add a volleyball event.”",opts:["will","are going to","add"],ok:["b"],t:"txt",why:"are going to — intention préalable.",sk:["B"]},
+{q:"Le vent se lève brusquement. Complète : “Look at those trees! It ___ get windy.”",opts:["will","is going to","gets"],ok:["b"],t:"txt",why:"is going to — prédiction fondée sur un indice.",sk:["B"]},
+{q:"Le rendez-vous avec l’équipe de natation est confirmé pour demain : “I ___ the coach at 9 tomorrow.”",opts:["meet","am meeting","will meet"],ok:["b"],t:"txt",why:"am meeting — arrangement confirmé.",sk:["C"]},
+{q:"Horaire affiché de la course : “The cycling race ___ at 8:30.”",opts:["starts","is starting","will start"],ok:["a"],t:"txt",why:"starts — horaire officiel au Present Simple.",sk:["D"]},
+{q:"Mets à la forme négative : “The swimmer will compete tomorrow.”",t:"txt",ok:["the swimmer will not compete tomorrow"],why:"The swimmer won’t compete tomorrow.",sk:["E"]},
+{q:"Complète la question sur un projet : “___ they going to enter the volleyball tournament?”",opts:["Are","Do","Will"],ok:["a"],t:"txt",why:"Are — be + sujet + going to.",sk:["E"]},
+{q:"Complète la question sur un arrangement : “___ Leo playing in the final on Sunday?”",opts:["Does","Is","Will"],ok:["b"],t:"txt",why:"Is — be + sujet + -ing.",sk:["C","E"]},
+{q:"Complète la question sur un horaire : “___ the first train leave before the race?”",opts:["Does","Is","Will"],ok:["a"],t:"txt",why:"Does — Present Simple, sujet singulier.",sk:["D","E"]},
+{q:"Choisis la phrase qui annonce le programme officiel.",opts:["The swimming heats start at 9.","I think the swimming heats start at 9."],ok:["a"],t:"txt",why:"The swimming heats start at 9. — programme officiel, sans “I think”.",sk:["D"]},
+{q:"Explique la différence de sens : “I’ll call the cycling coach” / “I’m going to call the cycling coach.”",t:"fre",crit:["I’ll call : décision prise maintenant","I’m going to call : intention déjà formée"],pts:[0.5,0.5],why:"I’ll call = décision prise maintenant ; I’m going to call = intention déjà formée.",sk:["F"]},
+{q:"Corrige : “We are meet the volleyball team after school.”",t:"txt",ok:["we are meeting the volleyball team after school"],why:"We are meeting the volleyball team after school.",sk:["C","E"]},
+{q:"Une bénévole porte trop de matériel. Fais-lui une offre spontanée avec will.",t:"txt",ok:[],re:[/^(i will|i'll|ll) [a-z ']+/],why:"Exemple : I’ll carry one for you. Toute offre cohérente avec will + base verbale.",sk:["A"]},
+{q:"Écris trois phrases liées à trois sports différents : un horaire officiel, une intention déjà décidée et un arrangement confirmé.",t:"fre",crit:["Un horaire officiel au Present Simple","Une intention déjà décidée avec going to","Un arrangement confirmé au Present Continuous"],rule:"count3",why:"Exemple : The swimming heats start at 9. / We are going to enter the cycling race. / We are meeting the volleyball coach on Friday. 1 point si les trois fonctions sont distinctes et correctement formées ; 0,5 si deux le sont ; 0 sinon.",sk:["F"]}
 ]};
 
-/* ===== REMÉDIATION (profils d’erreur de ton docx) ===== */
+/* ===== REMÉDIATION (blocs et transferts de ton docx « contrôles parallèles et remédiation ») ===== */
 const RM2={
-A:{profil:"will confondu avec intention déjà formée",rappel:"Rejouer 2 situations : décision prise maintenant vs projet décidé hier. Faire verbaliser « I decided now » / « I had already decided ».",ok:"Réussir 4 choix sur 5 et justifier le moment de la décision.",need:4,replay:[[1,1],[2,1],[2,5],[5,1],[5,2]],
-  ctx:"Sport inédit : le volley. Une joueuse voit le filet tomber ; une autre a déjà décidé, hier, d’organiser un tournoi.",task:"Écris une phrase de décision spontanée (will) et une phrase d’intention déjà formée (going to) sur le volley.",crit:["Une décision spontanée avec will","Une intention déjà formée avec going to"]},
-B:{profil:"going to mal construit",rappel:"Recomposer les formes : am/is/are + going to + base. Transformer une phrase affirmative en négative et en question.",ok:"Produire 3 formes correctes : affirmative, négative, interrogative.",need:3,replay:[[2,1],[2,3],[2,4]],
-  ctx:"Sport inédit : la natation. Un club a décidé d’ouvrir un bassin.",task:"Écris une phrase affirmative, une négative et une question avec going to sur la natation.",crit:["Affirmative avec am/is/are going to + base","Négative correcte","Question correcte avec be"]},
-C:{profil:"Present Continuous sans be ou sans -ing",rappel:"Assembler sujet + be + -ing à partir de rendez-vous confirmés ; vérifier le repère temporel.",ok:"Corriger 4 phrases sur 5, dont une question.",need:4,replay:[[3,1],[3,2],[3,3],[3,4],[6,2]],
-  ctx:"Sport inédit : le cyclisme. Deux équipes ont confirmé leurs rendez-vous.",task:"Écris deux rendez-vous confirmés et une question au Present Continuous sur le cyclisme.",crit:["be + -ing correctement construit","Repère temporel présent","Une question avec be"]},
-D:{profil:"horaire officiel confondu avec arrangement personnel",rappel:"Trier des cartes « programme imprimé » / « rendez-vous convenu » et écrire un exemple de chaque type.",ok:"Classer 4 éléments sur 5 et écrire deux exemples justifiés.",need:4,replay:[[4,1],[4,2],[4,3],[4,4],[5,4]],
-  ctx:"Sport inédit : le golf. Le programme du tournoi est imprimé ; deux joueurs se sont donné rendez-vous.",task:"Écris un exemple de programme imprimé et un exemple de rendez-vous convenu sur le golf, puis justifie en une phrase.",crit:["Horaire au Present Simple","Rendez-vous au Present Continuous","Justification de la différence"]},
-E:{profil:"choix fondé uniquement sur tomorrow / next week",rappel:"Comparer le même repère futur dans quatre contextes : opinion, intention, rendez-vous, horaire.",ok:"Choisir et justifier au moins 3 contextes sur 4 sans utiliser seulement le marqueur temporel.",need:3,replay:[[5,1],[5,2],[5,3],[5,5]],
-  ctx:"Sport inédit : le ski. Le repère « next week » apparaît dans quatre contextes différents.",task:"Écris quatre phrases avec « next week » sur le ski : une opinion, une intention, un rendez-vous, un horaire.",crit:["Opinion avec will","Intention avec going to","Rendez-vous au Present Continuous","Horaire au Present Simple"]},
-F:{profil:"erreurs d’accord ou de question",rappel:"Revoir he/she/it + -s au Present Simple ; do/does pour les questions ; be pour going to et Present Continuous ; will pour les réponses courtes.",ok:"Réussir une série courte de 5 items sans erreur d’auxiliaire.",need:5,replay:[[1,4],[1,5],[2,4],[3,2],[4,3]],
-  ctx:"Sport inédit : l’escalade. Un entraîneur pose des questions sur le programme et sur les plans de chacun.",task:"Écris une question au Present Simple, une avec going to, une avec be (arrangement) et une réponse courte avec will.",crit:["Question d’horaire avec do/does","Question avec be + going to","Question d’arrangement avec be + -ing","Réponse courte avec will"]}
+A:{rappel:"Rejouer G5 séquence 1, exercices 1–5 : will pour décision, prédiction, offre.",ok:"4 réponses réussies sur 5",need:4,replay:[[1,1],[1,2],[1,3],[1,4],[1,5]],
+  tr:"Transfert volley : une joueuse glisse. Réagis spontanément en lui proposant de l’aider avec will.",crit:["Offre spontanée avec will + base verbale"]},
+B:{rappel:"Rejouer G5 séquence 2, exercices 1–5 : going to, intention et indice.",ok:"4 réponses réussies sur 5",need:4,replay:[[2,1],[2,2],[2,3],[2,4],[2,5]],
+  tr:"Transfert natation : tu as réservé une ligne d’eau hier. Écris ton intention ; puis observe un orage qui approche et prédis ce qui va se passer.",crit:["Intention avec going to","Prédiction avec going to fondée sur l’orage"]},
+C:{rappel:"Rejouer G5 séquence 3, exercices 1–5 : arrangement au Present Continuous.",ok:"4 réponses réussies sur 5",need:4,replay:[[3,1],[3,2],[3,3],[3,4],[3,5]],
+  tr:"Transfert cyclisme : un rendez-vous avec le mécanicien est confirmé pour jeudi à 16 h. Écris la phrase.",crit:["Present Continuous correct (be + -ing)","Repère de temps (jeudi, 16 h)"]},
+D:{rappel:"Rejouer G5 séquence 4, exercices 1–5 : Present Simple et horaires.",ok:"4 réponses réussies sur 5",need:4,replay:[[4,1],[4,2],[4,3],[4,4],[4,5]],
+  tr:"Transfert volley : l’affiche indique que le premier match commence à 9 h 15. Écris l’horaire officiel.",crit:["Horaire officiel au Present Simple (starts)","Heure indiquée"]},
+E:{rappel:"Rejouer G5 séquence 5, exercices 1–5 : questions et négations.",ok:"4 réponses réussies sur 5",need:4,replay:[[5,1],[5,2],[5,3],[5,4],[5,5]],
+  tr:"Transfert natation : forme une question sur le projet de deux nageurs, puis une négation avec will à propos de leur compétition.",crit:["Question avec be + going to","Négation avec will not / won’t + base verbale"]},
+F:{rappel:"Rejouer G5 séquence 6, exercices 1–5, puis revoir les items 12–15 du contrôle d’origine.",ok:"4 réponses réussies sur 5",need:4,replay:[[6,1],[6,2],[6,3],[6,4],[6,5]],
+  tr:"Transfert cyclisme : écris trois phrases distinctes : horaire officiel d’une course, intention d’un cycliste, rendez-vous déjà fixé. Justifie brièvement chaque choix.",crit:["Horaire officiel au Present Simple","Intention avec going to","Rendez-vous fixé au Present Continuous","Justification cohérente de chaque choix"]}
 };
 
 
@@ -640,7 +640,7 @@ async function prod(spec){
   return {r:last,ans};
 }
 
-/* ===== G5 · SECTIONS (source : The_Roots_B1-0_G5_Future_Forms_cours_complet.docx) ===== */
+/* ===== G4 · SECTIONS (source : The_Roots_B1-0_G5_Future_Forms_cours_complet.docx) ===== */
 const PIC={r1:''};PIC.r2=PIC.r1;
 const SHOW_PICS=false; // B1.0 : sans illustrations (réservées au B1.1)
 async function pic(k){if(!SHOW_PICS||!PIC[k])return;const d=document.createElement('div');d.className='pic';d.innerHTML='<img alt="" src="'+PIC[k]+'">';chat.appendChild(d);down();await sleep(RM?0:900)}
@@ -746,17 +746,14 @@ async function runSeq(n){
 async function REMSKILL(k){
   P();const R=RM2[k];
   await T(`On reprend : <b>${esc(SKN[k])}</b>.`);
-  await B(`<span class="ln">Rappel et micro-activité</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
+  await B(`<span class="ln">Rappel</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
+  const exs=R.items||R.replay.map(([sn,en])=>SEQ[sn-1].ex[en-1]);
   const sts=[];
-  for(let j=0;j<R.replay.length;j++){
-    const [sn,en]=R.replay[j];const ex=SEQ[sn-1].ex[en-1];
-    sts.push(await runEx(Object.assign({},ex),`rem.${k}.${j}`,null,k));
-  }
-  const okc=sts.filter(s=>s==='ok'||s==='learning').length;
-  await T(`Réussite locale : <b>${okc}/${R.replay.length}</b> (objectif : ${esc(R.ok)})`);
+  for(let j=0;j<exs.length;j++)sts.push(await runEx(Object.assign({},exs[j]),`rem.${k}.${j}`,null,k));
+  const okc=sts.filter(x=>x==='ok'||x==='learning').length;
+  await T(`Réussite locale : <b>${okc}/${exs.length}</b> (objectif : ${esc(R.ok)})`);
   PR.sk2=PR.sk2||{};PR.sk2[k]={okc,need:R.need};savePR();
-  AD();
-  await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (sport et contexte inédits)<br>${esc(R.ctx)}<br>${esc(R.task)}`,crit:R.crit,ctx:`Module G5, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle. Vérifie que l’apprenant transfère la distinction, sans recycler un item raté.`,max:2,ph:'Écris ta réponse en anglais…'});
+  if(R.tr)await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (scène nouvelle)<br>${esc(R.tr)}`,crit:R.crit,ctx:`Module G5, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle avant la tentative. Vérifie le transfert de la règle et, si demandé, la justification.`,max:2,ph:'Écris ta réponse en anglais…'});
   if(okc<R.need)await T(`Pas encore au niveau voulu (${esc(R.ok)}) : reprends la règle courte de la séquence concernée, puis refais ce bloc.`);
   return okc>=R.need;
 }
@@ -783,9 +780,9 @@ async function MISSIONS(){
     const rec=PR.ans[m.key];
     if(res.r){
       const tot=res.r.criteria.slice(0,m.crit.length).reduce((s,c,i)=>s+c.score*(m.crit[i]?m.crit[i][1]:0),0);
-      rec.total=tot;const sat=tot>=m.max*0.6;PR.mis[m.key]=sat;savePR();
+      rec.total=tot;const sat=tot>=Math.ceil(m.max*0.6-1e-9);PR.mis[m.key]=sat;savePR();
       await B(`<span class="ln" style="font-size:26px">${fmt(tot)} / ${m.max}</span><small>${sat?'Mission jugée satisfaisante':'Pas encore satisfaisante : tu pourras la refaire'}</small>`);
-      AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points (non précisé dans le programme).</small>`);
+      if(typeof FD!=='undefined'&&FD.misAD){AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points, arrondi au point supérieur (règle de G5/G6 appliquée ici par défaut).</small>`)}
       if(m.classify&&res.r.table){
         const rows=res.r.table.filter(t=>KIND[t.kind]).slice(0,4);let conf=false;
         if(rows.length){
@@ -810,11 +807,11 @@ async function CONTROL2(){
     lg('G5 · Contrôle final'+(set==='B'?' · parallèle':''));
     await titleCard('Contrôle final G5','Réponds sans aide',`15 points · seuil de réussite ${fmt(THR)} / 15 (inclus)`);
     await T(`15 items à 1 point. Une seule réponse attendue sauf production ; pour les questions de sens, j’évalue aussi ta justification. Les corrections viennent à la fin.`);
-    if(set==='B'){AD();await T(`<small>Contrôle parallèle rédigé sur la même grille de compétences, avec des phrases nouvelles.</small>`)}
+    if(set==='B'){await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
     const A=[];
     for(let i=0;i<15;i++){const q=Q[i];
       await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
-      A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
+      if(q.opts){await B(q.opts.map((o,m)=>`<span class="ln">${String.fromCharCode(65+m)}. ${esc(o)}</span>`).join(''));const kk=await choose(q.opts);A[i]=kk<0?null:String.fromCharCode(97+kk)}else A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
     await T(`Merci. Je corrige ton contrôle…`);
     const sc=[];const okq=[];const R={};
     for(let i=0;i<15;i++){const q=Q[i];
@@ -904,4 +901,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261031v"></script>
+</html><script src="voice.js?v=20261031w"></script>

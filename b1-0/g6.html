@@ -389,7 +389,7 @@ async function intro(quote){await T(quote)}
 const done=(k)=>{if(!PR.done.includes(k))PR.done.push(k);savePR();paintJump()};
 
 /* ===== G6 · DONNÉES (source : The_Roots_B1-0_G6_Future_Forms_cours_complet.docx — contenu non modifié ; ajouts marqués AD) ===== */
-const SKN={A:"Past Continuous sans be ou sans -ing",B:"Past Simple et Past Continuous inversés",C:"Did + verbe au passé",D:"Erreur sur les formes irrégulières",E:"used to confondu avec be used to",F:"Récit sans chronologie claire"};
+const SKN={A:"Action en cours et construction (Past Continuous)",B:"Chronologie des actions (fond, simultanéité, interruption)",C:"Événement terminé et formes (Past Simple, did + base, accord)",D:"Verbes irréguliers",E:"Habitudes passées (used to)",F:"Production narrative"};
 const REPERES=[["Past Simple","Action terminée, événement principal ou succession. The referee blew the whistle. / We arrived and found our seats."],["Past Continuous","Action en cours à un moment du passé ; décor ou action de fond. At 6 p.m., the teams were warming up."],["Past Simple + Past Continuous","Action brève qui survient pendant une action en cours. I was watching the match when the lights went out."],["used to + base verbale","Habitude ou état vrai autrefois et qui n’est plus vrai, ou contraste avec maintenant. I used to play handball every weekend."],["Formes","was/were + verbe-ing ; Past Simple : -ed ou forme irrégulière ; questions/négations avec did + base (sauf be) ; used to + base ; négation courante : didn’t use to ; question : Did … use to …?"]];
 const FD={prog:"G6 — Past Simple, Past Continuous, used to",title:"Raconter une action passée",sub:"Past Simple, Past Continuous et used to",fil:"les souvenirs d’un festival multisport.",mission:"Raconter une scène passée clairement : action terminée, action en cours, interruption ou habitude ancienne.",prereq:"Past Simple étudié en G4 ; repères de phrase ; be et verbes réguliers/irréguliers",place:"G4 a déjà travaillé le Past Simple pour raconter des événements terminés et l’a comparé au Present Perfect. G6 réutilise le Past Simple comme point d’appui pour installer le décor d’un récit avec le Past Continuous, signaler une interruption avec when/while et évoquer une habitude passée avec used to. Le cours ne reprend pas le Present Perfect.",goals:null,extra:"Comment on travaille : une question par écran, tu observes la chronologie avant la règle. Après une première erreur, tu reçois un indice puis une seconde tentative avant l’explication. When et while sont acceptés quand ils restent cohérents avec la relation temporelle ; le contexte prime sur un mot isolé."};
 const SEQ=[
@@ -461,21 +461,21 @@ const MIS2=[
  ctx:"Tu commentes un ralenti de finale. Une action se déroule déjà, puis un événement soudain change le match. Tu peux choisir un sport différent du football.",
  consigne:"Décris l’action en cours au moment du ralenti avec le Past Continuous. Ajoute l’événement décisif au Past Simple. Ajoute une phrase sur ce que le public faisait pendant l’action.",
  tasks:["L’action en cours au moment du ralenti (Past Continuous)","L’événement décisif (Past Simple)","Une phrase sur ce que le public faisait"],
- crit:[["Distinguer arrière-plan et événement principal",1],["Former be + -ing",1],["Forme passée correcte pour l’événement bref",1]],max:3,
+ crit:[["Action en cours au Past Continuous",1],["Événement décisif au Past Simple",1],["Phrase cohérente sur l’action du public",1]],max:3,
  logic:"Valide selon le sens et la chronologie. Corrige séparément la forme et la narration.",
  expect:"action de fond au Past Continuous, événement bref au Past Simple, phrase du public au Past Continuous.",skills:["A","B"],ph:"Écris tes phrases en anglais…"},
 {key:"M2",title:"Mission 2 · L’interview de l’ancienne championne",kicker:"Mission de transfert",
  ctx:"Tu interviewes une ancienne championne sur ses années de compétition.",
  consigne:"Pose deux questions avec Did … use to…? Écris deux réponses possibles en used to, dont une négative avec didn’t use to. Ajoute un contraste avec sa vie actuelle.",
  tasks:["Deux questions avec Did … use to…?","Deux réponses en used to, dont une négative avec didn’t use to","Un contraste avec sa vie actuelle"],
- crit:[["use après did/didn’t",1],["Base verbale",1],["Contraste passé/présent explicite ou compréhensible",1]],max:3,
+ crit:[["Deux questions Did … use to … ?",1],["Réponses affirmatives avec used to",1],["Réponse négative avec didn’t use to + base",1],["Contraste présent/passé clair",1]],max:4,
  logic:"Valide selon le sens. Corrige séparément la forme (use/used) et le sens du changement.",
  expect:"Did … use to + base, réponses avec used to et didn’t use to + base, contraste avec le présent.",skills:["C","E"],ph:"Écris tes questions et réponses en anglais…"},
 {key:"M3",title:"Mission 3 · Le souvenir en quatre images",kicker:"Mission de transfert",
  ctx:"Quatre images montrent les préparatifs, le public, une interruption météo et la reprise du match.",
  consigne:"Raconte le décor avec au moins deux actions en cours. Utilise when ou while pour relier un événement terminé à une action en cours. Ajoute une habitude passée liée à ce sport avec used to. Termine par deux actions terminées qui font avancer le récit.",
  tasks:["Le décor avec au moins deux actions en cours","when ou while reliant un événement terminé à une action en cours","Une habitude passée avec used to","Deux actions terminées qui font avancer le récit"],
- crit:[["Chronologie logique",1],["Variété des formes selon le sens",1]],max:2,
+ crit:[["Deux actions de fond",1],["Lien when/while cohérent",1],["Habitude avec used to",1],["Deux événements terminés",1],["Chronologie intelligible",1]],max:5,
  logic:"Valide selon la chronologie et le sens. Corrige séparément la forme et la narration, individuellement.",
  expect:"deux actions en cours, when/while, used to + base, deux actions au Past Simple, chronologie logique.",skills:["A","B","F"],ph:"Écris ton récit en anglais…"}
 ];
@@ -484,8 +484,8 @@ const MIS2=[
 const CT={
 A:[
 {q:"At 8 p.m., the team ___ (train).",t:"txt",ok:["was training"],why:"was training — action en cours à un moment précis.",sk:["A"]},
-{q:"The referee ___ (blow) the whistle.",t:"txt",ok:["blew"],why:"blew — Past Simple, verbe irrégulier.",sk:["D"]},
-{q:"We ___ (watch) when the player ___ (fall).",t:"txt",ok:["were watching fell"],re:[/were watching.*fell/],why:"were watching / fell — action de fond + événement.",sk:["B"]},
+{q:"The referee ___ (blow) the whistle.",t:"txt",ok:["blew"],why:"blew — Past Simple, verbe irrégulier.",sk:["C","D"]},
+{q:"We ___ (watch) when the player ___ (fall).",t:"txt",ok:["were watching fell"],re:[/were watching.*fell/],why:"were watching / fell — action de fond + événement.",sk:["B","F"]},
 {q:"Négation de “They were cheering.”",t:"txt",ok:["they were not cheering"],why:"They weren’t cheering. — be not + -ing.",sk:["A"]},
 {q:"Question : “Maya was running.”",t:"txt",ok:["was maya running"],why:"Was Maya running? — inversion de be.",sk:["A"]},
 {q:"“___ I was serving, the lights went out.”",t:"txt",ok:["while","when"],why:"While — action en cours (when reste acceptable selon la lecture).",sk:["B"]},
@@ -494,43 +494,43 @@ A:[
 {q:"Habitude révolue : I ___ cycle to school.",t:"txt",ok:["used to"],why:"used to — used to + base.",sk:["E"]},
 {q:"Question sur habitude passée : ___ she use to swim?",t:"txt",ok:["did"],why:"Did — Did + sujet + use to.",sk:["E"]},
 {q:"Négation correcte de “He used to compete.”",t:"txt",ok:["he did not use to compete"],why:"He didn’t use to compete. — use sans -d après did.",sk:["E"]},
-{q:"Deux actions en même temps : fans / sing ; players / warm up. Écris la phrase.",t:"txt",ok:["the fans were singing while the players were warming up"],re:[/^(the )?fans were singing (while|as) (the )?players were warming up$/],why:"The fans were singing while the players were warming up. — Past Continuous simultané.",sk:["A","B"]},
-{q:"Corriger : “We was waiting when the bus arrived.”",t:"txt",ok:["we were waiting when the bus arrived"],why:"We were waiting when the bus arrived. — accord de were avec we.",sk:["A"]},
-{q:"Explique la fonction de was raining dans “It was raining when the match started.”",t:"fre",crit:["La pluie était en cours (arrière-plan)","Le début du match est l’événement (premier plan)"],pts:[0.5,0.5],why:"La pluie était en cours ; le début du match est l’événement.",sk:["B"]},
+{q:"Deux actions en même temps : fans / sing ; players / warm up. Écris la phrase.",t:"txt",ok:["the fans were singing while the players were warming up"],re:[/^(the )?fans were singing (while|as) (the )?players were warming up$/],why:"The fans were singing while the players were warming up. — Past Continuous simultané.",sk:["B","F"]},
+{q:"Corriger : “We was waiting when the bus arrived.”",t:"txt",ok:["we were waiting when the bus arrived"],why:"We were waiting when the bus arrived. — accord de were avec we.",sk:["C"]},
+{q:"Explique la fonction de was raining dans “It was raining when the match started.”",t:"fre",crit:["La pluie était en cours (arrière-plan)","Le début du match est l’événement (premier plan)"],pts:[0.5,0.5],why:"La pluie était en cours ; le début du match est l’événement.",sk:["B","F"]},
 {q:"Production : deux phrases avec used to, Past Continuous et Past Simple autour d’un souvenir sportif.",t:"fre",crit:["Une habitude passée avec used to","Une action en cours au Past Continuous","Un événement terminé au Past Simple"],rule:"all3",why:"1 point si les trois formes sont utilisées correctement et que le récit différencie clairement habitude passée, action en cours et événement terminé.",sk:["F"]}
 ],
 B:[
-{q:"At 9 p.m., the fans ___ (sing).",t:"txt",ok:["were singing"],why:"were singing — action en cours à un moment précis.",sk:["A"]},
-{q:"The captain ___ (take) the trophy.",t:"txt",ok:["took"],why:"took — Past Simple, verbe irrégulier.",sk:["D"]},
-{q:"They ___ (play) when the rain ___ (start).",t:"txt",ok:["were playing started"],re:[/were playing.*started/],why:"were playing / started — action de fond + événement.",sk:["B"]},
-{q:"Négation de “She was smiling.”",t:"txt",ok:["she was not smiling"],why:"She wasn’t smiling. — be not + -ing.",sk:["A"]},
-{q:"Question : “The players were warming up.”",t:"txt",ok:["were the players warming up"],why:"Were the players warming up? — inversion de be.",sk:["A"]},
-{q:"“___ we were queuing, the gates opened.”",t:"txt",ok:["while","when"],why:"While — action en cours (when reste acceptable selon la lecture).",sk:["B"]},
-{q:"Après did, choisir : Did they ___ yesterday?",t:"txt",ok:["train"],re:[/^(train|play|win|practise|practice|arrive|leave|compete|run|swim)$/],why:"train — base verbale après did.",sk:["C"]},
-{q:"Compléter : They ___ (not / see) the goal.",t:"txt",ok:["did not see"],why:"didn’t see — didn’t + base.",sk:["C"]},
-{q:"Habitude révolue : We ___ walk to training.",t:"txt",ok:["used to"],why:"used to — used to + base.",sk:["E"]},
-{q:"Question sur habitude passée : ___ they use to play here?",t:"txt",ok:["did"],why:"Did — Did + sujet + use to.",sk:["E"]},
-{q:"Négation correcte de “She used to swim.”",t:"txt",ok:["she did not use to swim"],why:"She didn’t use to swim. — use sans -d après did.",sk:["E"]},
-{q:"Deux actions en même temps : coach / talk ; players / listen. Écris la phrase.",t:"txt",ok:["the coach was talking while the players were listening"],re:[/^(the )?coach was talking (while|as) (the )?players were listening$/],why:"The coach was talking while the players were listening. — Past Continuous simultané.",sk:["A","B"]},
-{q:"Corriger : “They was cheering when we scored.”",t:"txt",ok:["they were cheering when we scored"],why:"They were cheering when we scored. — accord de were avec they.",sk:["A"]},
-{q:"Explique la fonction de were singing dans “The fans were singing when the lights went out.”",t:"fre",crit:["Le chant était en cours (arrière-plan)","La panne de lumière est l’événement (premier plan)"],pts:[0.5,0.5],why:"Le chant était en cours ; la panne est l’événement.",sk:["B"]},
-{q:"Production : deux phrases avec used to, Past Continuous et Past Simple autour d’un souvenir sportif.",t:"fre",crit:["Une habitude passée avec used to","Une action en cours au Past Continuous","Un événement terminé au Past Simple"],rule:"all3",why:"1 point si les trois formes sont utilisées correctement et que le récit différencie clairement les trois fonctions.",sk:["F"]}
+{q:"Complète : “At 6 p.m., the volleyball players ___ (stretch).”",t:"txt",ok:["were stretching"],why:"were stretching.",sk:["A"]},
+{q:"Complète au Past Simple : “The cyclist ___ (break) the record yesterday.”",t:"txt",ok:["broke"],why:"broke — Past Simple irrégulier.",sk:["C","D"]},
+{q:"Complète : “We ___ (swim) when the storm ___ (begin).”",t:"txt",ok:["were swimming began"],re:[/were swimming.*began/],why:"were swimming / began.",sk:["B","F"]},
+{q:"Mets au négatif : “The spectators were shouting.”",t:"txt",ok:["the spectators were not shouting"],why:"The spectators weren’t shouting.",sk:["A"]},
+{q:"Mets à la forme interrogative : “Lina was serving.”",t:"txt",ok:["was lina serving"],why:"Was Lina serving?",sk:["A"]},
+{q:"Complète avec when ou while : “___ the swimmers were warming up, the lights went out.”",opts:["While","Unless"],t:"txt",ok:["a"],why:"A — While.",sk:["B"]},
+{q:"Complète : “Did the referee ___ (see) the foul?”",t:"txt",ok:["see"],why:"see — base verbale après did.",sk:["C"]},
+{q:"Complète au négatif : “The team ___ (not / hear) the starting signal.”",t:"txt",ok:["did not hear"],why:"didn’t hear.",sk:["C"]},
+{q:"Complète : “My aunt ___ (use to) cycle in every local race.”",t:"txt",ok:["used to"],why:"used to.",sk:["E"]},
+{q:"Pose une question sur l’habitude passée : “___ he ___ (use to / swim) every morning?” (deux mots)",t:"txt",ok:["did use to","did use to swim"],re:[/^did.*use to/],why:"Did / use to.",sk:["E"]},
+{q:"Mets au négatif : “She used to train before school.”",t:"txt",ok:["she did not use to train before school"],why:"She didn’t use to train before school.",sk:["E"]},
+{q:"Combine les actions simultanées : “the audience / clap” et “the divers / prepare”.",t:"txt",ok:["the audience was clapping while the divers were preparing","the divers were preparing while the audience was clapping"],re:[/^(the )?(audience was clapping (while|as) (the )?divers were preparing|divers were preparing (while|as) (the )?audience was clapping)$/],why:"The audience was clapping while the divers were preparing. (L’ordre inverse est accepté.)",sk:["B"]},
+{q:"Corrige : “The players was waiting when the referee arrived.”",t:"txt",ok:["the players were waiting when the referee arrived"],why:"The players were waiting when the referee arrived.",sk:["C"]},
+{q:"Explique les deux temps dans : “It was snowing when the cycling race started.”",t:"fre",crit:["was snowing : action de fond en cours (Past Continuous)","the race started : événement terminé qui survient (Past Simple)"],pts:[0.5,0.5],why:"Il neigeait déjà : action de fond au Past Continuous ; le début de la course est l’événement terminé au Past Simple.",sk:["B","F"]},
+{q:"Écris un mini-récit de deux phrases sur un souvenir de volley, natation ou cyclisme. Utilise used to, une action en cours au Past Continuous et un événement terminé au Past Simple.",t:"fre",crit:["Une habitude passée avec used to","Une action en cours au Past Continuous","Un événement terminé au Past Simple"],rule:"count3",why:"Exemple : I used to watch the volleyball team. I was sitting near the court when the captain scored. 1 point si les trois fonctions apparaissent correctement dans un récit cohérent (0,5 si deux sur trois).",sk:["F"]}
 ]};
 
-/* ===== REMÉDIATION (micro-activités et critères de ton docx) ===== */
+/* ===== REMÉDIATION (blocs et transferts de ton docx « contrôles parallèles et remédiation ») ===== */
 const RM2={
-A:{profil:"Past Continuous sans be ou sans -ing",rappel:"Reconstituer sujet + was/were + verbe-ing ; varier sujet singulier/pluriel.",ok:"4 phrases correctes sur 5, avec une question et une négation.",need:4,replay:[[1,1],[1,2],[1,3],[1,4],[3,4]],
-  ctx:"Nouvelle scène : un match de volley pendant un orage.",task:"Écris une phrase, une négation et une question au Past Continuous sur cette scène.",crit:["Phrase affirmative avec was/were + -ing","Négation correcte","Question avec Was/Were"]},
-B:{profil:"Past Simple et Past Continuous inversés",rappel:"Ligne du temps : action en cours puis événement. Raconter des scènes avec when.",ok:"Distinguer le fond et l’événement dans 4 scènes sur 5.",need:4,replay:[[3,1],[3,2],[3,3],[6,2],[6,3]],
-  ctx:"Nouvelle scène : un entraînement de natation interrompu par une alarme.",task:"Écris une phrase avec when ou while : action de fond et événement.",crit:["Action de fond au Past Continuous","Événement au Past Simple"]},
-C:{profil:"Did + verbe au passé",rappel:"Transformer affirmations en questions/négations ; encercler did puis remettre le verbe à la base.",ok:"5 transformations correctes d’affilée.",need:5,replay:[[2,2],[2,3],[5,2],[5,3],[6,4]],
-  ctx:"Nouvelle scène : une finale de tennis.",task:"Écris une question et une négation au Past Simple avec did sur cette scène.",crit:["Question avec Did + base verbale","Négation avec didn’t + base verbale"]},
-D:{profil:"Erreur sur les formes irrégulières",rappel:"Mini-liste : go/went, see/saw, blow/blew, fall/fell, leave/left. Réutiliser en phrases de récit.",ok:"Employer correctement 4 formes travaillées sur 5.",need:4,replay:[[2,1],[2,3],[3,1],[3,3],[6,3]],
-  ctx:"Nouvelle scène : la fin d’un match de basket.",task:"Écris deux phrases de récit avec des verbes irréguliers (go, see, blow, fall, leave).",crit:["Première forme irrégulière correcte","Deuxième forme irrégulière correcte"]},
-E:{profil:"used to confondu avec be used to",rappel:"Trier habitude passée / être habitué à ; ne pratiquer ici que used to + base.",ok:"Classer 4 cas sur 5 et former une affirmation, une négation, une question.",need:4,replay:[[5,1],[5,2],[5,3],[5,4],[6,4]],
-  ctx:"Nouvelle scène : un ancien entraîneur de cyclisme.",task:"Écris une affirmation, une négation et une question avec used to / use to.",crit:["Affirmation avec used to + base","Négation avec didn’t use to + base","Question avec Did … use to …?"]},
-F:{profil:"Récit sans chronologie claire",rappel:"Remettre 4 événements en ordre puis raconter avec un début de fond, une interruption et une fin.",ok:"Récit de 4 phrases avec ordre et formes cohérents.",need:3,replay:[[3,1],[3,3],[6,2],[6,3]],
-  ctx:"Nouvelle scène : un tournoi de rugby sous la pluie.",task:"Écris un récit de 4 phrases : un début de fond, une interruption et une fin.",crit:["Début de fond au Past Continuous","Interruption au Past Simple","Fin cohérente","Ordre chronologique clair"]}
+A:{rappel:"Rejouer séquence 1, exercices 1–5 : was/were + -ing, question et négation.",ok:"4 réponses réussies sur 5",need:4,replay:[[1,1],[1,2],[1,3],[1,4],[1,5]],
+  tr:"Transfert volley : “At 5 p.m., the players ___ (stretch).” Mets aussi la phrase à la forme négative.",crit:["were stretching","Négation correcte : weren’t stretching"]},
+B:{rappel:"Rejouer séquence 3, exercices 11–15, avec when/while.",ok:"4 réponses réussies sur 5",need:4,replay:[[3,1],[3,2],[3,3],[3,4],[3,5]],
+  tr:"Transfert natation : “The swimmers ___ (train) when the storm ___ (begin).” Explique quelle action était déjà en cours.",crit:["Formes correctes : were training / began","Explication : l’entraînement était en cours"]},
+C:{rappel:"Rejouer séquence 2, exercices 6–10 et les exercices de questions/négations.",ok:"5 réponses réussies sur 5",need:5,replay:[[2,1],[2,2],[2,3],[2,4],[2,5]],
+  tr:"Transfert cyclisme : transforme “The rider saw the finish line” en question, puis en négation.",crit:["Question : Did the rider see the finish line?","Négation : The rider didn’t see the finish line."]},
+D:{rappel:"Rejouer la mini-liste et les phrases du cours avec go/went, see/saw, blow/blew, fall/fell, leave/left.",ok:"4 réponses réussies sur 5",need:4,replay:[[2,1],[2,3],[3,1],[3,3],[6,3]],
+  tr:"Transfert volley : “The captain ___ (leave) the court and the referee ___ (blow) the whistle.”",crit:["left","blew"]},
+E:{rappel:"Rejouer séquence 5, exercices 21–25 : affirmation, négation et question.",ok:"4 réponses réussies sur 5",need:4,replay:[[5,1],[5,2],[5,3],[5,4],[5,5]],
+  tr:"Transfert natation : écris une question sur l’ancienne habitude d’une nageuse, puis une réponse négative.",crit:["Question avec Did … use to …?","Réponse négative avec didn’t use to + base"]},
+F:{rappel:"Rejouer séquence 6, exercices 26–30, en mettant les événements dans l’ordre.",ok:"4 réponses réussies sur 5",need:4,replay:[[6,1],[6,2],[6,3],[6,4],[6,5]],
+  tr:"Transfert cyclisme : raconte trois phrases : une habitude ancienne, une action en cours, puis une chute terminée qui interrompt l’action.",crit:["Habitude ancienne avec used to","Action en cours au Past Continuous","Chute terminée au Past Simple qui interrompt l’action"]}
 };
 
 
@@ -561,7 +561,7 @@ Règles :
 - Réponse incomplète : verdict "incomplete" et une question qui guide dans "guide". Incompréhensible : "incomprehensible", demande une clarification, n’invente pas son intention. Hors sujet : "off_topic".
 - "retry" : une NOUVELLE situation courte, différente, qui fait pratiquer le même point (français, 1–2 phrases), sans réponse modèle dedans.
 - "criteria" : un objet par critère donné (même ordre) avec "score" 0, 0.5 ou 1 et une justification d’une phrase ; [] si aucun critère.
-- "skills" : codes des compétences à retravailler parmi A (Past Continuous sans be ou sans -ing), B (Past Simple et Past Continuous inversés), C (did + verbe au passé), D (formes irrégulières), E (used to confondu avec be used to), F (récit sans chronologie claire); [] si tout est acquis.
+- "skills" : codes des compétences à retravailler parmi A (Past Continuous : be + -ing), B (chronologie : fond, simultanéité, interruption), C (Past Simple, did + base, accord), D (verbes irréguliers), E (used to), F (production narrative); [] si tout est acquis.
 - "satisfying" : true seulement si la consigne est remplie avec un anglais compréhensible et des choix de temps cohérents.
 
 Réponds UNIQUEMENT par un JSON valide :
@@ -643,7 +643,7 @@ async function prod(spec){
   return {r:last,ans};
 }
 
-/* ===== G6 · SECTIONS (source : The_Roots_B1-0_G6_Future_Forms_cours_complet.docx) ===== */
+/* ===== G4 · SECTIONS (source : The_Roots_B1-0_G6_Future_Forms_cours_complet.docx) ===== */
 const PIC={r1:''};PIC.r2=PIC.r1;
 const SHOW_PICS=false; // B1.0 : sans illustrations (réservées au B1.1)
 async function pic(k){if(!SHOW_PICS||!PIC[k])return;const d=document.createElement('div');d.className='pic';d.innerHTML='<img alt="" src="'+PIC[k]+'">';chat.appendChild(d);down();await sleep(RM?0:900)}
@@ -745,17 +745,14 @@ async function runSeq(n){
 async function REMSKILL(k){
   P();const R=RM2[k];
   await T(`On reprend : <b>${esc(SKN[k])}</b>.`);
-  await B(`<span class="ln">Rappel et micro-activité</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
+  await B(`<span class="ln">Rappel</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
+  const exs=R.items||R.replay.map(([sn,en])=>SEQ[sn-1].ex[en-1]);
   const sts=[];
-  for(let j=0;j<R.replay.length;j++){
-    const [sn,en]=R.replay[j];const ex=SEQ[sn-1].ex[en-1];
-    sts.push(await runEx(Object.assign({},ex),`rem.${k}.${j}`,null,k));
-  }
-  const okc=sts.filter(s=>s==='ok'||s==='learning').length;
-  await T(`Réussite locale : <b>${okc}/${R.replay.length}</b> (objectif : ${esc(R.ok)})`);
+  for(let j=0;j<exs.length;j++)sts.push(await runEx(Object.assign({},exs[j]),`rem.${k}.${j}`,null,k));
+  const okc=sts.filter(x=>x==='ok'||x==='learning').length;
+  await T(`Réussite locale : <b>${okc}/${exs.length}</b> (objectif : ${esc(R.ok)})`);
   PR.sk2=PR.sk2||{};PR.sk2[k]={okc,need:R.need};savePR();
-  AD();
-  await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (sport et contexte inédits)<br>${esc(R.ctx)}<br>${esc(R.task)}`,crit:R.crit,ctx:`Module G6, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle. Vérifie que l’apprenant transfère la distinction, sans recycler un item raté.`,max:2,ph:'Écris ta réponse en anglais…'});
+  if(R.tr)await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (scène nouvelle)<br>${esc(R.tr)}`,crit:R.crit,ctx:`Module G6, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle avant la tentative. Vérifie le transfert de la règle et, si demandé, la justification.`,max:2,ph:'Écris ta réponse en anglais…'});
   if(okc<R.need)await T(`Pas encore au niveau voulu (${esc(R.ok)}) : reprends la règle courte de la séquence concernée, puis refais ce bloc.`);
   return okc>=R.need;
 }
@@ -782,9 +779,9 @@ async function MISSIONS(){
     const rec=PR.ans[m.key];
     if(res.r){
       const tot=res.r.criteria.slice(0,m.crit.length).reduce((s,c,i)=>s+c.score*(m.crit[i]?m.crit[i][1]:0),0);
-      rec.total=tot;const sat=tot>=m.max*0.6;PR.mis[m.key]=sat;savePR();
+      rec.total=tot;const sat=tot>=Math.ceil(m.max*0.6-1e-9);PR.mis[m.key]=sat;savePR();
       await B(`<span class="ln" style="font-size:26px">${fmt(tot)} / ${m.max}</span><small>${sat?'Mission jugée satisfaisante':'Pas encore satisfaisante : tu pourras la refaire'}</small>`);
-      AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points (non précisé dans le programme).</small>`);
+      if(typeof FD!=='undefined'&&FD.misAD){AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points, arrondi au point supérieur (règle de G6/G6 appliquée ici par défaut).</small>`)}
       if(m.classify&&res.r.table){
         const rows=res.r.table.filter(t=>KIND[t.kind]).slice(0,4);let conf=false;
         if(rows.length){
@@ -809,11 +806,11 @@ async function CONTROL2(){
     lg('G6 · Contrôle final'+(set==='B'?' · parallèle':''));
     await titleCard('Contrôle final G6','Réponds sans aide',`15 points · seuil de réussite ${fmt(THR)} / 15 (inclus)`);
     await T(`15 items à 1 point. Une seule réponse attendue sauf production ; pour les questions de sens, j’évalue aussi ta justification. Les corrections viennent à la fin.`);
-    if(set==='B'){AD();await T(`<small>Contrôle parallèle rédigé sur la même grille de compétences, avec des phrases nouvelles.</small>`)}
+    if(set==='B'){await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
     const A=[];
     for(let i=0;i<15;i++){const q=Q[i];
       await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
-      A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
+      if(q.opts){await B(q.opts.map((o,m)=>`<span class="ln">${String.fromCharCode(65+m)}. ${esc(o)}</span>`).join(''));const kk=await choose(q.opts);A[i]=kk<0?null:String.fromCharCode(97+kk)}else A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
     await T(`Merci. Je corrige ton contrôle…`);
     const sc=[];const okq=[];const R={};
     for(let i=0;i<15;i++){const q=Q[i];
@@ -903,4 +900,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261031v"></script>
+</html><script src="voice.js?v=20261031w"></script>

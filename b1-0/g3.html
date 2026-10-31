@@ -389,9 +389,9 @@ async function intro(quote){await T(quote)}
 const done=(k)=>{if(!PR.done.includes(k))PR.done.push(k);savePR();paintJump()};
 
 /* ===== G3 · DONNÉES (source : The_Roots_B1-0_G3_Future_Forms_cours_complet.docx — contenu non modifié ; ajouts marqués AD) ===== */
-const SKN={A:"Sens : condition future ou règle générale",B:"Ordre et ponctuation",C:"Présent après if ; will dans le résultat",D:"Négation et unless",E:"Modal et conséquence",F:"Phrase complète et justification"};
+const SKN={A:"First ou zero conditional",B:"Ordre et ponctuation",C:"Formes verbales après if",D:"Conditions négatives (négation et unless)",E:"Conséquence nuancée (modal)",F:"Production et justification"};
 const REPERES=[["If + present simple, will + base verb","Condition future réaliste et conséquence possible. Pas de will dans la proposition en if."],["Deux ordres possibles","If + condition, résultat (virgule) / résultat + if + condition (pas de virgule en général)."],["unless = if…not","Condition négative. Négation : if + not (doesn’t / don’t) ou unless."],["Conséquence nuancée","will, can, may, might, must, impératif."],["First vs zero conditional","Événement futur particulier (will) / règle générale (présent dans les deux parties)."]];
-const FD={prog:"G3 — First conditional",title:"Parler d’une possibilité future et de sa conséquence",sub:"First conditional",fil:"Scènes sportives : football, basket, rugby, football américain, tennis.",mission:"L’apprenant apprend à envisager une situation future possible, à annoncer sa conséquence, à poser des conditions et à choisir une réponse adaptée dans des scènes sportives.",prereq:"Présent simple, auxiliaires do/does, will + base verbale",goals:["expliquer qu’un first conditional relie une condition future réaliste à une conséquence possible","construire if + present simple, puis will + base verb, dans les deux ordres possibles","former des questions, négations et formes de be dans la proposition en if","éviter will dans la proposition introduite par if","employer unless, les modaux can/may/might/must et l’impératif dans la conséquence quand le sens le justifie","distinguer une prédiction particulière (first conditional) d’une règle générale (zero conditional)"],extra:"Comment on travaille : une consigne à la fois, tu observes avant l’explication. Après une première erreur, tu reçois un indice puis une seconde tentative avant la correction expliquée. Plusieurs conséquences cohérentes sont acceptées : je n’impose pas une prédiction unique."};
+const FD={prog:"G3 — First conditional",misAD:true,title:"Parler d’une possibilité future et de sa conséquence",sub:"First conditional",fil:"Scènes sportives : football, basket, rugby, football américain, tennis.",mission:"L’apprenant apprend à envisager une situation future possible, à annoncer sa conséquence, à poser des conditions et à choisir une réponse adaptée dans des scènes sportives.",prereq:"Présent simple, auxiliaires do/does, will + base verbale",goals:["expliquer qu’un first conditional relie une condition future réaliste à une conséquence possible","construire if + present simple, puis will + base verb, dans les deux ordres possibles","former des questions, négations et formes de be dans la proposition en if","éviter will dans la proposition introduite par if","employer unless, les modaux can/may/might/must et l’impératif dans la conséquence quand le sens le justifie","distinguer une prédiction particulière (first conditional) d’une règle générale (zero conditional)"],extra:"Comment on travaille : une consigne à la fois, tu observes avant l’explication. Après une première erreur, tu reçois un indice puis une seconde tentative avant la correction expliquée. Plusieurs conséquences cohérentes sont acceptées : je n’impose pas une prédiction unique."};
 const SEQ=[
 {n:1,title:"Une situation possible et sa conséquence",goal:"Comprendre le lien de sens : si une situation future est possible, une conséquence peut en résulter.",setting:"Football : dernière minute d’un match. L’équipe doit marquer pour se qualifier.",skill:"A",
  obs:{line:"If we score now, we will reach the final.",q:"Quelle conséquence est annoncée si l’équipe marque ? (A. Elle atteindra la finale. B. Elle a déjà atteint la finale.)",fb:"La phrase envisage une condition qui peut encore se réaliser et sa conséquence future."},
@@ -506,21 +506,21 @@ A:[
 {q:"Écris une phrase sur une compétition à venir avec if, puis souligne la condition (entoure-la de crochets).",t:"fre",crit:["Condition au présent après if","Conséquence correctement construite (will + base verb)"],pts:[0.5,0.5],why:"Phrase ouverte : if + present simple ; conséquence avec will + base verb. 0,5 pour la condition au présent et 0,5 pour la conséquence.",sk:["F"]}
 ],
 B:[
-{q:"If the captain ___ (choose) us, we will play.",t:"txt",ok:["chooses"],why:"chooses — present simple, 3e personne.",sk:["C"]},
-{q:"If it snows, the rugby match ___ (stop).",t:"txt",ok:["will stop","'ll stop","ll stop"],why:"will stop — will + base verb.",sk:["C"]},
-{q:"Choisis la phrase correcte (écris A ou B). A. If the bus will arrive, we will go to the stadium. B. If the bus arrives, we will go to the stadium.",t:"txt",ok:["b","if the bus arrives we will go to the stadium"],why:"If the bus arrives, we will go to the stadium. — présent après if.",sk:["C"],ph:"A ou B…"},
-{q:"Ajoute la ponctuation : “If the gym is open ___ we will train there.” Recopie la phrase complète.",t:"txt",ok:[],raw:/^if the gym is open, we will train there\.?$/i,why:"virgule après open — condition en tête.",sk:["B"]},
-{q:"Réécris en commençant par le résultat : “If she scores, her team will win.”",t:"txt",ok:["her team will win if she scores"],raw:/^her team will win if she scores\.?$/i,why:"Her team will win if she scores. — ordre inverse, pas de virgule usuelle.",sk:["B"]},
-{q:"Corrige : “If our coach will call, we will start.”",t:"txt",ok:["if our coach calls we will start"],why:"If our coach calls, we will start. — enlever will après if, accord 3e personne.",sk:["C"]},
-{q:"Complète au négatif : “If the team ___ (not/hurry), it ___ (not/finish) on time.”",t:"txt",ok:["does not hurry will not finish"],re:[/does not hurry.*will not finish/],why:"doesn’t hurry / won’t finish — deux négations bien formées.",sk:["D"]},
-{q:"Unless we warm up, we ___ (play) badly.",t:"txt",ok:["will play badly","will play","'ll play","ll play"],why:"will play — unless = if…not.",sk:["D"]},
-{q:"Réécris avec unless : “If you do not call, I will not know.”",t:"txt",ok:["unless you call i will not know"],why:"Unless you call, I will not know. — sens conservé.",sk:["D"]},
-{q:"Pose une question : “what / happen / if / it / rain?”",t:"txt",ok:["what will happen if it rains"],why:"What will happen if it rains? — question en will ; if + présent.",sk:["C"]},
-{q:"Si le second court est libre, nous ___ (can / play) là-bas.",t:"txt",ok:["can play"],why:"can play — modal + base verb.",sk:["E"]},
-{q:"Si l’équipe gagne, elle ___ (might / reach) la finale.",t:"txt",ok:["might reach"],why:"might reach — modal + base verb.",sk:["E"]},
-{q:"“If athletes train regularly, they become stronger.” First ou zero conditional ?",t:"txt",ok:["zero conditional","zero"],why:"Zero conditional — règle générale.",sk:["A"],ph:"first ou zero…"},
-{q:"“If we beat them on Sunday, we will win the cup.” First ou zero conditional ?",t:"txt",ok:["first conditional","first"],why:"First conditional — conséquence future d’un match précis.",sk:["A"],ph:"first ou zero…"},
-{q:"Écris une phrase sur un match à venir avec if, puis souligne la condition (entoure-la de crochets).",t:"fre",crit:["Condition au présent après if","Conséquence correctement construite (will + base verb)"],pts:[0.5,0.5],why:"Phrase ouverte : if + present simple ; conséquence avec will + base verb.",sk:["F"]}
+{q:"Que signifie cette phrase ? “If the Falcons score again, they will qualify.”",opts:["Les Falcons ont déjà gagné leur qualification.","Leur qualification est possible si les Falcons marquent."],t:"txt",ok:["b"],why:"B — la qualification est possible si les Falcons marquent.",sk:["A"]},
+{q:"Choisis la phrase correctement ponctuée.",opts:["If the pool is open, we will train indoors.","If the pool is open we, will train indoors."],t:"txt",ok:["a"],why:"A — virgule après la proposition en if.",sk:["B"]},
+{q:"Complète : “If the volleyball team ___ the last set, it ___ the tournament.”",opts:["wins / will win","will win / wins"],t:"txt",ok:["a"],why:"wins / will win — présent après if, will dans le résultat.",sk:["A"]},
+{q:"Recopie la phrase entière avec la ponctuation correcte : “If the cyclist reaches the checkpoint ___ the support team will give her water.”",t:"txt",ok:[],raw:/^if the cyclist reaches the checkpoint, the support team will give her water\.?$/i,why:"If the cyclist reaches the checkpoint, the support team will give her water.",sk:["B"]},
+{q:"Complète : “If the stadium ___ (be) full, the fans will watch outside.”",t:"txt",ok:["is"],why:"is — present simple après if.",sk:["C"]},
+{q:"Complète : “If Nora ___ (score), her team will take the lead.”",t:"txt",ok:["scores"],why:"scores — present simple, 3e personne.",sk:["C"]},
+{q:"Complète les deux parties au négatif : “If we ___ (not / leave) now, we ___ (not / arrive) before kick-off.”",t:"txt",ok:["do not leave will not arrive"],re:[/do not leave.*will not arrive/],why:"don’t leave / won’t arrive.",sk:["D"]},
+{q:"Complète : “Unless the rain stops, the race ___ (be) delayed.”",t:"txt",ok:["will be","'ll be","ll be"],why:"will be — unless = if…not.",sk:["D"]},
+{q:"Réécris avec unless : “If the court is not dry, we will play indoors.”",t:"txt",ok:["unless the court is dry we will play indoors"],why:"Unless the court is dry, we will play indoors.",sk:["D"]},
+{q:"Pose la question : “What / happen / if / the referee / stop / the race?”",t:"txt",ok:["what will happen if the referee stops the race"],why:"What will happen if the referee stops the race?",sk:["C"]},
+{q:"Complète avec une capacité ou une option : “If the second court is free, we ___ practise there.”",opts:["can","must"],t:"txt",ok:["a"],why:"A — can.",sk:["E"]},
+{q:"Choisis le modal qui exprime une possibilité incertaine : “If the wind gets stronger, the sailing event ___ be postponed.”",opts:["might","must"],t:"txt",ok:["a"],why:"A — might.",sk:["E"]},
+{q:"First ou zero conditional ? “If a basketball player commits five fouls, the player leaves the game.”",t:"txt",ok:["zero conditional","zero"],why:"Zero conditional — règle générale.",sk:["A"],ph:"first ou zero…"},
+{q:"First ou zero conditional ? “If our team wins tonight, we will enter the final.”",t:"txt",ok:["first conditional","first"],why:"First conditional — match précis à venir.",sk:["A"],ph:"first ou zero…"},
+{q:"Écris une phrase sur la compétition de samedi avec if. Entoure la condition entre crochets [ ].",t:"fre",crit:["Condition entre crochets : proposition en if au présent","Conséquence future cohérente (will / modal + base verb, ou impératif approprié)"],pts:[0.5,0.5],why:"Exemple : If the volleyball team wins, [it will lift the trophy]. La condition doit être entre crochets.",sk:["F"]}
 ]};
 
 /* ===== REMÉDIATION (blocs de 3 exercices de ton docx) ===== */
@@ -530,37 +530,37 @@ A:{profil:"Sens condition future ou règle générale",rappel:"Match particulier
  {k:"Match particulier",t:"txt",screen:"This is one match: If Blue Team ___ (win) today, it ___ (qualify).",task:"Complète les deux verbes.",ok:["wins will qualify"],re:[/wins.*will qualify/],show:"wins / will qualify",yes:"Match particulier à venir : first conditional.",hint:"“Today” parle d’un match précis : condition au présent, conséquence avec will.",err:"Confondre règle générale et prédiction."},
  {k:"Règle générale",t:"txt",screen:"General rule: If a player ___ (break) the rules, the referee ___ (stop) the game.",task:"Complète les deux verbes.",ok:["breaks stops"],re:[/breaks.*stops/],show:"breaks / stops",yes:"Règle générale : present simple dans les deux parties.",hint:"La phrase décrit une règle habituelle, pas un match à venir.",err:"Ajouter will à une règle générale."},
  {k:"Vérité générale",t:"txt",screen:"Choisis : “If ice gets warm, it ___.” (règle générale)",task:"Complète avec melt.",ok:["melts"],show:"melts",yes:"Conséquence générale, pas une prédiction ponctuelle.",hint:"Pour une vérité générale, garde le présent dans la conséquence.",err:"Employer will pour une vérité générale."}
- ],just:"Choisis l’une des trois phrases et justifie en une phrase pourquoi c’est un match précis ou une règle générale."},
+ ],tr:"Transfert : “If the volleyball team wins today, it ___ (qualify).” Justifie : s’agit-il d’une règle générale ou d’un match précis ?",crit:["Forme correcte : wins / will qualify", "Justification : match précis, donc First Conditional"]},
 B:{profil:"Ordre et ponctuation",rappel:"Condition en tête → virgule. Condition finale → généralement pas de virgule.",ok:"3/3 questions correctes et justification de sens sur un item.",need:3,
  items:[
  {k:"Ponctuer",t:"txt",screen:"Ponctue : “If our team wins ___ we will play on Sunday.”",task:"Recopie la phrase complète.",ok:[],raw:/^if our team wins, we will play on sunday\.?$/i,show:"If our team wins, we will play on Sunday.",yes:"Condition en tête → virgule.",hint:"La phrase commence par la proposition en if ; place la virgule à sa fin.",err:"Oublier la virgule après une condition placée en tête."},
  {k:"Inverser",t:"txt",screen:"Réécris : “If the gym is open, we will train there.” en commençant par le résultat.",task:"Écris la phrase.",ok:[],raw:/^we will train there if the gym is open\.?$/i,show:"We will train there if the gym is open.",yes:"Condition finale → généralement pas de virgule.",hint:"Déplace d’abord “we will train there” au début.",err:"Ajouter une virgule devant if."},
  {k:"Mettre en ordre",t:"txt",screen:"Mets en ordre : “if / she / scores / her / team / will / win.”",task:"Écris la phrase avec la ponctuation.",ok:[],raw:/^if she scores, her team will win\.?$/i,show:"If she scores, her team will win.",yes:"Présent après if, virgule, will + base dans le résultat.",hint:"Commence par if she scores ; la conséquence commence par her team will…",err:"Oublier la virgule ou placer will après if."}
- ],just:"Choisis l’un des trois items et justifie en une phrase la place de la virgule."},
+ ],tr:"Transfert : recopie entièrement : “If the pool closes early ___ we will move the swimming lesson.” Explique la virgule.",crit:["Phrase recopiée avec la virgule après early", "Explication : condition en tête, donc virgule"]},
 C:{profil:"Présent après if ; will dans le résultat",rappel:"Après if : présent simple (3e personne en -s, be au présent). Dans le résultat : will + base verb.",ok:"3/3 questions correctes et justification de sens sur un item.",need:3,
  items:[
  {k:"3e personne",t:"txt",screen:"If the captain ___ (choose) us, we will play.",task:"Complète.",ok:["chooses"],show:"chooses",yes:"3e personne du singulier au présent.",hint:"Captain = he/she ; ajoute -s au present simple.",err:"Oublier le -s."},
  {k:"Corriger",t:"txt",screen:"Corrige : “If the bus will arrive, we will go to the stadium.”",task:"Écris la phrase corrigée.",ok:["if the bus arrives we will go to the stadium"],show:"If the bus arrives, we will go to the stadium.",yes:"Pas de will dans la proposition en if.",hint:"Enlève will après if et conjugue arrive avec the bus.",err:"Garder will dans la condition."},
  {k:"Be au présent",t:"txt",screen:"If the weather ___ (be) good, the match will continue.",task:"Complète.",ok:["is"],show:"is",yes:"Be au présent après if.",hint:"The weather est singulier : choisis la forme présente de be correspondante.",err:"Employer will be."}
- ],just:"Choisis l’un des trois items et justifie en une phrase pourquoi will n’apparaît pas après if."},
+ ],tr:"Transfert : “If the cyclist ___ (reach) the hill, the team ___ (help) her.” Justifie le temps de chaque proposition.",crit:["Formes correctes : reaches / will help", "Justification : présent après if, will + base dans le résultat"]},
 D:{profil:"Négation et unless",rappel:"Négation au présent : doesn’t / don’t + base. Unless = if…not. Résultat négatif : won’t + base.",ok:"3/3 questions correctes et justification de sens sur un item.",need:3,
  items:[
  {k:"Négation au présent",t:"txt",screen:"If the team ___ (not/hurry), it will miss the start.",task:"Complète.",ok:["does not hurry"],show:"doesn’t hurry",yes:"Présent simple négatif : doesn’t + base.",hint:"The team = it : utilise doesn’t, puis la base hurry.",err:"Écrire doesn’t hurries."},
  {k:"Remplacer unless",t:"txt",screen:"Remplace unless : “Unless we warm up, we might play badly.”",task:"Écris la phrase avec if.",ok:["if we do not warm up we might play badly"],show:"If we don’t warm up, we might play badly.",yes:"Unless = if…not.",hint:"Garde la négation quand tu remplaces unless par if.",err:"Oublier not."},
  {k:"Résultat négatif",t:"txt",screen:"If she doesn’t call, I ___ (not/know) the plan.",task:"Complète.",ok:["will not know"],show:"won’t know",yes:"Négation du résultat : won’t + base verb.",hint:"Le résultat est futur : will not se contracte en won’t, puis le verbe reste à la base.",err:"Écrire won’t knows."}
- ],just:"Choisis l’un des trois items et justifie en une phrase le sens de unless ou la forme négative."},
+ ],tr:"Transfert : réécris avec if : “Unless the swimmers warm up, they might start slowly.” Justifie la négation.",crit:["Réécriture correcte avec if…not", "Justification : unless équivaut ici à if…not"]},
 E:{profil:"Modal et conséquence",rappel:"Après un modal : base verb, sans to ni -s. can = option ; may/might = possibilité ; must = obligation.",ok:"3/3 questions correctes et justification de sens sur un item.",need:3,
  items:[
  {k:"Possibilité pratique",t:"txt",screen:"If the second court is available, we ___ play there. (possibilité pratique)",task:"Complète.",ok:["can"],show:"can",yes:"Can + base verb.",hint:"Pour une option possible, emploie can suivi directement du verbe.",err:"Ajouter to après can."},
  {k:"Possibilité incertaine",t:"txt",screen:"If the weather changes, the game ___ be delayed. (possibilité incertaine)",task:"Complète.",ok:["might","may"],show:"might / may",yes:"May ou might + base verb.",hint:"Choisis le modal d’une possibilité incertaine ; le verbe après reste à la base.",err:"Choisir must."},
  {k:"Obligation",t:"txt",screen:"If you want to compete, you ___ register today. (obligation)",task:"Complète.",ok:["must"],show:"must",yes:"Must + base verb, sans to.",hint:"Pour exprimer une obligation, utilise must + register, sans to.",err:"Ajouter to après must."}
- ],just:"Choisis l’un des trois items et justifie en une phrase le sens du modal."},
+ ],tr:"Transfert : “If the volleyball court is free, we ___ practise there.” Choisis can ou must et justifie.",crit:["Choix correct : can", "Justification : option possible, sans obligation"]},
 F:{profil:"Phrase complète et justification",rappel:"Condition au présent + conséquence en will. Question globale : will en tête, présent après if.",ok:"3/3 questions correctes et justification de sens sur un item.",need:3,
  items:[
  {k:"Prédiction pour ce soir",t:"txt",screen:"If our team ___ (score), we ___ (win). (prédiction pour ce soir)",task:"Complète les deux verbes.",ok:["scores will win"],re:[/scores.*will win/],show:"scores / will win",yes:"Condition au présent + conséquence en will.",hint:"C’est une prédiction pour un match précis : présent après if, will dans le résultat.",err:"Mettre will après if."},
  {k:"Transformer en question",t:"txt",screen:"Transforme en question : “They will practise if the coach arrives.”",task:"Écris la question.",ok:["will they practise if the coach arrives"],show:"Will they practise if the coach arrives?",yes:"Auxiliaire will en tête ; présent après if.",hint:"Pour la question globale, place will avant they ; garde arrives après if.",err:"Mettre arrives au futur."},
  {k:"Ta propre condition",t:"prod",screen:"Écris ta propre condition pour un match samedi.",task:"Réponse libre.",crit:["Condition réaliste au présent après if","Conséquence future compréhensible"],expect:"Condition réaliste au présent et conséquence future compréhensible.",hint:"Choisis d’abord une situation possible, puis imagine ce qui arrivera si elle se réalise.",err:"Oublier l’un des deux éléments."}
- ],just:"Choisis l’un des trois items et justifie en une phrase ton choix de forme."}
+ ],tr:"Transfert : invente une condition pour une course de natation et écris la conséquence. Place la condition entre crochets et justifie le temps du verbe après if.",crit:["Condition en if + présent, entre crochets", "Conséquence future avec will / modal + base, ou impératif justifié", "Justification du temps après if"]}
 };
 const LEX=[["football / soccer","football (jeu au ballon rond)"],["basketball / basket","basket"],["rugby","rugby"],["American football","football américain, ballon ovale et protections"],["tennis court","court de tennis"],["pitch","terrain de football ou de rugby"],["court","terrain de basket ou de tennis"],["score","score / marquer"],["referee","arbitre"],["team-mate","coéquipier"],["to qualify","se qualifier"],["to warm up","s’échauffer"],["to practise / practice","s’entraîner"],["to reach the final","atteindre la finale"],["unless","à moins que / sauf si"]];
 
@@ -592,7 +592,7 @@ Règles :
 - Réponse incomplète : verdict "incomplete" et une question qui guide dans "guide". Incompréhensible : "incomprehensible", demande une clarification, n’invente pas son intention. Hors sujet : "off_topic".
 - "retry" : une NOUVELLE situation courte, différente, qui fait pratiquer le même point (français, 1–2 phrases), sans réponse modèle dedans.
 - "criteria" : un objet par critère donné (même ordre) avec "score" 0, 0.5 ou 1 et une justification d’une phrase ; [] si aucun critère.
-- "skills" : codes des compétences à retravailler parmi A (sens : condition future ou règle générale), B (ordre et ponctuation), C (présent après if, will dans le résultat), D (négation et unless), E (modal et conséquence), F (phrase complète et justification); [] si tout est acquis.
+- "skills" : codes des compétences à retravailler parmi A (First ou zero conditional), B (ordre et ponctuation), C (formes verbales après if), D (conditions négatives), E (conséquence nuancée), F (production et justification); [] si tout est acquis.
 - "satisfying" : true seulement si la consigne est remplie avec un anglais compréhensible et des choix de temps cohérents.
 
 Réponds UNIQUEMENT par un JSON valide :
@@ -674,7 +674,7 @@ async function prod(spec){
   return {r:last,ans};
 }
 
-/* ===== G3 · SECTIONS (source : The_Roots_B1-0_G3_Future_Forms_cours_complet.docx) ===== */
+/* ===== G4 · SECTIONS (source : The_Roots_B1-0_G3_Future_Forms_cours_complet.docx) ===== */
 const PIC={r1:''};PIC.r2=PIC.r1;
 const SHOW_PICS=false; // B1.0 : sans illustrations (réservées au B1.1)
 async function pic(k){if(!SHOW_PICS||!PIC[k])return;const d=document.createElement('div');d.className='pic';d.innerHTML='<img alt="" src="'+PIC[k]+'">';chat.appendChild(d);down();await sleep(RM?0:900)}
@@ -777,12 +777,13 @@ async function REMSKILL(k){
   P();const R=RM2[k];
   await T(`On reprend : <b>${esc(SKN[k])}</b>.`);
   await B(`<span class="ln">Rappel</span><small>${esc(R.rappel)}<br>Réussite : ${esc(R.ok)}</small>`);
+  const exs=R.items||R.replay.map(([sn,en])=>SEQ[sn-1].ex[en-1]);
   const sts=[];
-  for(let j=0;j<R.items.length;j++)sts.push(await runEx(Object.assign({},R.items[j]),`rem.${k}.${j}`,null,k));
+  for(let j=0;j<exs.length;j++)sts.push(await runEx(Object.assign({},exs[j]),`rem.${k}.${j}`,null,k));
   const okc=sts.filter(x=>x==='ok'||x==='learning').length;
-  await T(`Réussite locale : <b>${okc}/${R.items.length}</b>`);
+  await T(`Réussite locale : <b>${okc}/${exs.length}</b> (objectif : ${esc(R.ok)})`);
   PR.sk2=PR.sk2||{};PR.sk2[k]={okc,need:R.need};savePR();
-  if(R.just){await T(esc(R.just));const jv=await typed('Ta justification (français ou anglais)…');PR.ans[`rem.${k}.just`]={initial:jv,status:jv==null?'skip':'done'};savePR()}
+  if(R.tr)await prod({key:`rem.${k}.tr`,sit:`<b>Question de transfert</b> (scène nouvelle)<br>${esc(R.tr)}`,crit:R.crit,ctx:`Module G3, remédiation « ${SKN[k]} »`,logic:`Ne donne pas de modèle avant la tentative. Vérifie le transfert de la règle et, si demandé, la justification.`,max:2,ph:'Écris ta réponse en anglais…'});
   if(okc<R.need)await T(`Pas encore au niveau voulu (${esc(R.ok)}) : reprends la règle courte de la séquence concernée, puis refais ce bloc.`);
   return okc>=R.need;
 }
@@ -809,9 +810,9 @@ async function MISSIONS(){
     const rec=PR.ans[m.key];
     if(res.r){
       const tot=res.r.criteria.slice(0,m.crit.length).reduce((s,c,i)=>s+c.score*(m.crit[i]?m.crit[i][1]:0),0);
-      rec.total=tot;const sat=tot>=m.max*0.6;PR.mis[m.key]=sat;savePR();
+      rec.total=tot;const sat=tot>=Math.ceil(m.max*0.6-1e-9);PR.mis[m.key]=sat;savePR();
       await B(`<span class="ln" style="font-size:26px">${fmt(tot)} / ${m.max}</span><small>${sat?'Mission jugée satisfaisante':'Pas encore satisfaisante : tu pourras la refaire'}</small>`);
-      AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points (non précisé dans le programme).</small>`);
+      if(typeof FD!=='undefined'&&FD.misAD){AD();await T(`<small>Seuil de « mission satisfaisante » : 60 % des points, arrondi au point supérieur (règle de G3/G6 appliquée ici par défaut).</small>`)}
       if(m.classify&&res.r.table){
         const rows=res.r.table.filter(t=>KIND[t.kind]).slice(0,4);let conf=false;
         if(rows.length){
@@ -836,11 +837,11 @@ async function CONTROL2(){
     lg('G3 · Contrôle final'+(set==='B'?' · parallèle':''));
     await titleCard('Contrôle final G3','Réponds sans aide',`15 points · seuil de réussite ${fmt(THR)} / 15 (inclus)`);
     await T(`15 items à 1 point. Une seule réponse attendue sauf production ; pour les questions de sens, j’évalue aussi ta justification. Les corrections viennent à la fin.`);
-    if(set==='B'){AD();await T(`<small>Contrôle parallèle rédigé sur la même grille de compétences, avec des phrases nouvelles.</small>`)}
+    if(set==='B'){await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
     const A=[];
     for(let i=0;i<15;i++){const q=Q[i];
       await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
-      A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
+      if(q.opts){await B(q.opts.map((o,m)=>`<span class="ln">${String.fromCharCode(65+m)}. ${esc(o)}</span>`).join(''));const kk=await choose(q.opts);A[i]=kk<0?null:String.fromCharCode(97+kk)}else A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
     await T(`Merci. Je corrige ton contrôle…`);
     const sc=[];const okq=[];const R={};
     for(let i=0;i<15;i++){const q=Q[i];
@@ -855,7 +856,7 @@ async function CONTROL2(){
           const r=await callAI({sit:q.q,crit:q.crit,pts,ctx:`Module G3, contrôle final question ${i+1}`,logic:q.rule==='count3'?'Ne donne aucun modèle. Un critère par fonction : score 1 si la phrase de cette fonction est grammaticale et claire, 0 sinon.':'Ne donne aucun modèle. 0,5 point par partie correctement expliquée.',model:q.why,ans:A[i]});
           R[i]=r;
           const cs=r.criteria.slice(0,q.crit.length);
-          if(q.rule==='count3'){const n=cs.filter(c=>c.score>=1).length;sc[i]=n>=3?1:n===2?0.5:0}
+          if(q.rule==='count3'||q.rule==='all3'){const n=cs.filter(c=>c.score>=1).length;sc[i]=n>=3?1:(q.rule==='count3'&&n===2)?0.5:0}
           else sc[i]=cs.reduce((t,c,j)=>t+c.score*(pts[j]||0),0);
           okq[i]=sc[i]>=1}
         catch(e){pend=true;await T(esc(ERR[e.code]||e.message||'Erreur de correction.'))}
@@ -935,4 +936,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8,9].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261031v"></script>
+</html><script src="voice.js?v=20261031w"></script>
