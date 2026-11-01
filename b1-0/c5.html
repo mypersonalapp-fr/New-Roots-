@@ -115,7 +115,7 @@ html,body{overflow-x:hidden;width:100%}.app{width:100%;overflow-x:hidden}.hd{min
   <div class="menu" id="menu" hidden>
    <h5>La salle de classe · Grammaire · 6 niveaux</h5><div class="path"><b class="on">C5</b></div>
    <h5>Aller à</h5><div class="jump" id="jump"></div>
-   <h5>Réglages</h5><div class="pk" id="pk"></div><div class="pk" id="tpk"><button type="button" data-t="teacher" aria-label="Emma"><img alt="" src=""></button><button type="button" data-t="teacher2" aria-label="Lucas"><img alt="" src=""></button></div><div class="lgr"><button type="button" class="mybtn" id="mybtn" aria-label="Mon personnage"><span class="av"><img class="myimg" alt="" src=""></span>Mon personnage</button><button type="button" class="mybtn" id="tbtn" aria-label="Mon professeur">Prof : <span id="tn">Emma</span></button><div class="spd" role="group" aria-label="Vitesse du professeur"><span>Vitesse</span><button type="button" data-s="0.5">×0,5</button><button type="button" data-s="1">×1</button><button type="button" data-s="1.5">×1,5</button></div></div>
+   <h5>Réglages</h5><div class="pk" id="pk"></div><div class="pk" id="tpk"><button type="button" data-t="teacher" aria-label="Emma"><img alt="" src=""></button><button type="button" data-t="teacher2" aria-label="Lucas"><img alt="" src=""></button></div><div class="lgr"><button type="button" class="mybtn" id="mybtn" aria-label="Mon personnage"><span class="av"><img class="myimg" alt="" src=""></span>Mon personnage</button><button type="button" class="mybtn" id="tbtn" aria-label="Mon professeur">Prof : <span id="tn">Emma</span></button><div class="spd" role="group" aria-label="Vitesse du professeur"><span>Vitesse</span><button type="button" data-s="0.5">×0,5</button><button type="button" data-s="0.75">×0,75</button><button type="button" data-s="1">×1</button><button type="button" data-s="1.5">×1,5</button></div></div>
   </div>
  </div>
  <div class="chat" id="chat" aria-live="polite"></div>
@@ -131,7 +131,7 @@ const CH={"girl-1": "data:image/webp;base64,UklGRq4OAABXRUJQVlA4WAoAAAAQAAAAVwAA
 let TCH='teacher';try{const v=localStorage.getItem('g1-teacher');if(v&&CH[v])TCH=v}catch(e){}
 let MYC='girl-1';try{const v=localStorage.getItem('g1-char');if(v&&CH[v])MYC=v}catch(e){}
 const chat=document.getElementById('chat'),zone=document.getElementById('zone');
-let SPD=1;try{const v=parseFloat(localStorage.getItem('g1-speed'));if([.5,1,1.5].includes(v))SPD=v}catch(e){}
+let SPD=.75;try{const v=parseFloat(localStorage.getItem('c-speed'));if([.5,.75,1,1.5].includes(v))SPD=v}catch(e){}
 let RUN=0;
 const sleep=ms=>{const k=RUN;return new Promise((r,j)=>setTimeout(()=>k===RUN?r():j(new Error('stop')),ms/SPD))};
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -150,13 +150,15 @@ async function teacher(html){
   const words=html.split(/(\s+)/);let acc='';
   for(const w of words){acc+=w;b.innerHTML=acc+'';
     if(!skip&&!RM&&w.trim()&&!w.startsWith('<'))await sleep(200);down();}
-  b.innerHTML=html;b.classList.remove('cur');down();await sleep(RM?0:1100);
+  b.innerHTML=html;b.classList.remove('cur');down();
+  if(RM)return;const nw=txt.split(/\s+/).filter(Boolean).length;let go;const tap=new Promise(r=>{go=r;b.onclick=r});
+  await Promise.race([sleep(1100+Math.min(7000,nw*280)),tap]);b.onclick=null;
 }
 function board(html){const d=document.createElement('div');d.className='bd';d.innerHTML=html;chat.appendChild(d);down();return sleep(RM?0:1200)}
 function me(text){const r=document.createElement('div');r.className='row me';const b=document.createElement('div');b.className='b';b.textContent=text;r.appendChild(b);r.insertAdjacentHTML('beforeend','<div class="av"><img class="myimg" alt="" src="'+CH[MYC]+'"></div>');chat.appendChild(r);down()}
 function choose(opts){return new Promise(res=>{zone.innerHTML='<div class="chips"></div>';const c=zone.firstChild;opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=o;b.onclick=()=>{zone.innerHTML='';me(o);res(i)};c.appendChild(b)});const sk=document.createElement('button');sk.type='button';sk.className='again';sk.textContent='Passer ›';sk.onclick=()=>{zone.innerHTML='';me('Je passe');res(-1)};c.appendChild(sk)})}
 function typed(ph){return new Promise(res=>{zone.innerHTML=`<div class="inp"><textarea id="ta" maxlength="300" placeholder="${ph}"></textarea><button class="go" type="button" id="go" disabled>Envoyer</button></div><div class="chips" style="margin-top:6px"><button class="again" type="button" id="sk">Passer ›</button></div>`;const ta=zone.querySelector('#ta'),g=zone.querySelector('#go');ta.oninput=()=>g.disabled=!ta.value.trim();const send=()=>{if(!ta.value.trim())return;const v=ta.value.trim();zone.innerHTML='';me(v);res(v)};g.onclick=send;zone.querySelector('#sk').onclick=()=>{zone.innerHTML='';me('Je passe');res(null)};ta.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}})}
-document.querySelectorAll('.spd button').forEach(b=>{const on=()=>b.classList.toggle('on',parseFloat(b.dataset.s)===SPD);on();b.onclick=()=>{SPD=parseFloat(b.dataset.s);try{localStorage.setItem('g1-speed',SPD)}catch(e){}document.querySelectorAll('.spd button').forEach(x=>x.classList.toggle('on',parseFloat(x.dataset.s)===SPD))}});
+document.querySelectorAll('.spd button').forEach(b=>{const on=()=>b.classList.toggle('on',parseFloat(b.dataset.s)===SPD);on();b.onclick=()=>{SPD=parseFloat(b.dataset.s);try{localStorage.setItem('c-speed',SPD)}catch(e){}document.querySelectorAll('.spd button').forEach(x=>x.classList.toggle('on',parseFloat(x.dataset.s)===SPD))}});
 
 (function(){const f=()=>{chat.scrollTop=chat.scrollHeight};try{new ResizeObserver(()=>{f();setTimeout(f,60)}).observe(chat);new MutationObserver(()=>{f();setTimeout(f,60);setTimeout(f,250)}).observe(zone,{childList:true})}catch(e){}})();
 const lg=t=>document.getElementById('lg').textContent=t;
@@ -887,4 +889,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101b"></script>
+</html><script src="voice.js?v=20261101c"></script>
