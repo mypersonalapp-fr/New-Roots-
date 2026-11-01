@@ -1,6 +1,6 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261101a";
+import "../data/roots-ai-url.js?v=20261101b";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
@@ -8,31 +8,32 @@ const prog = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } 
 
 // Statut de chaque atelier, lu dans la progression enregistrée par les pages.
 export function b1Status() {
-  const g1 = prog("g1-chat-progress-v1"), g2 = prog("g2-chat-progress-v1"), g4 = prog("g4-chat-progress-v1"), g5 = prog("g5-chat-progress-v1"), g3 = prog("g3-chat-progress-v1"), g6 = prog("g6-chat-progress-v1"), c1 = prog("c1-chat-progress-v1"), c2 = prog("c2-chat-progress-v1"), c3 = prog("c3-chat-progress-v1"), c4 = prog("c4-chat-progress-v1"), tf = prog("test-final-v1");
+  const g1 = prog("g1-chat-progress-v1"), g2 = prog("g2-chat-progress-v1"), g4 = prog("g4-chat-progress-v1"), g5 = prog("g5-chat-progress-v1"), g3 = prog("g3-chat-progress-v1"), g6 = prog("g6-chat-progress-v1"), c1 = prog("c1-chat-progress-v1"), c2 = prog("c2-chat-progress-v1"), c3 = prog("c3-chat-progress-v1"), c4 = prog("c4-chat-progress-v1"), c5 = prog("c5-chat-progress-v1"), tf = prog("test-final-v1");
   const g1ok = (g1.hist || []).some((h) => h && h.score != null && h.score >= 12);
   const g2ok = !!(g2.ctl && g2.ctl.valid);
-  return { c1: { parts: (c1.done || []).length, total: 9, ok: !!(c1.ctl && c1.ctl.valid) }, c2: { parts: (c2.done || []).length, total: 9, ok: !!(c2.ctl && c2.ctl.valid) }, c3: { parts: (c3.done || []).length, total: 9, ok: !!(c3.ctl && c3.ctl.valid) }, c4: { parts: (c4.done || []).length, total: 9, ok: !!(c4.ctl && c4.ctl.valid) }, tf: { parts: (tf.a || []).length, total: 36, ok: !!(tf.done && (tf.score || 0) >= 30) }, g6: { parts: (g6.done || []).length, total: 9, ok: !!(g6.ctl && g6.ctl.valid) }, g3: { parts: (g3.done || []).length, total: 10, ok: !!(g3.ctl && g3.ctl.valid) }, g5: { parts: (g5.done || []).length, total: 9, ok: !!(g5.ctl && g5.ctl.valid) }, g4: { parts: (g4.done || []).length, total: 11, ok: !!(g4.ctl && g4.ctl.valid) }, g1: { parts: (g1.done || []).length, total: 8, ok: g1ok }, g2: { parts: (g2.done || []).length, total: 9, ok: g2ok }, done: (g1ok ? 1 : 0) + (g2ok ? 1 : 0), total: 2 };
+  return { c1: { parts: (c1.done || []).length, total: 9, ok: !!(c1.ctl && c1.ctl.valid) }, c2: { parts: (c2.done || []).length, total: 9, ok: !!(c2.ctl && c2.ctl.valid) }, c3: { parts: (c3.done || []).length, total: 9, ok: !!(c3.ctl && c3.ctl.valid) }, c4: { parts: (c4.done || []).length, total: 9, ok: !!(c4.ctl && c4.ctl.valid) }, c5: { parts: (c5.done || []).length, total: 9, ok: !!(c5.ctl && c5.ctl.valid) }, tf: { parts: (tf.a || []).length, total: 36, ok: !!(tf.done && (tf.score || 0) >= 30) }, g6: { parts: (g6.done || []).length, total: 9, ok: !!(g6.ctl && g6.ctl.valid) }, g3: { parts: (g3.done || []).length, total: 10, ok: !!(g3.ctl && g3.ctl.valid) }, g5: { parts: (g5.done || []).length, total: 9, ok: !!(g5.ctl && g5.ctl.valid) }, g4: { parts: (g4.done || []).length, total: 11, ok: !!(g4.ctl && g4.ctl.valid) }, g1: { parts: (g1.done || []).length, total: 8, ok: g1ok }, g2: { parts: (g2.done || []).length, total: 9, ok: g2ok }, done: (g1ok ? 1 : 0) + (g2ok ? 1 : 0), total: 2 };
 }
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261101a", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261101b", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261101a" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261101a" },
-  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261101a" },
-  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261101a" },
-  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261101a" },
-  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261101a" },
-  { k: "c1", n: "C1", t: "Le présent simple", s: "Former les phrases au présent simple", url: "b1-0/c1.html?v=20261101a" },
-  { k: "c2", n: "C2", t: "Le présent continu", s: "Former des phrases sur les actions en cours", url: "b1-0/c2.html?v=20261101a" },
-  { k: "c3", n: "C3", t: "Le prétérit simple", s: "Raconter et construire des phrases au passé", url: "b1-0/c3.html?v=20261101a" },
-  { k: "c4", n: "C4", t: "Le prétérit continu", s: "Décrire une action qui était en cours dans le passé", url: "b1-0/c4.html?v=20261101a" },
-  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261101a" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261101b" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261101b" },
+  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261101b" },
+  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261101b" },
+  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261101b" },
+  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261101b" },
+  { k: "c1", n: "C1", t: "Le présent simple", s: "Former les phrases au présent simple", url: "b1-0/c1.html?v=20261101b" },
+  { k: "c2", n: "C2", t: "Le présent continu", s: "Former des phrases sur les actions en cours", url: "b1-0/c2.html?v=20261101b" },
+  { k: "c3", n: "C3", t: "Le prétérit simple", s: "Raconter et construire des phrases au passé", url: "b1-0/c3.html?v=20261101b" },
+  { k: "c4", n: "C4", t: "Le prétérit continu", s: "Décrire une action qui était en cours dans le passé", url: "b1-0/c4.html?v=20261101b" },
+  { k: "c5", n: "C5", t: "Les formes du futur", s: "Will, be going to, présent continu : décider, projeter, organiser", url: "b1-0/c5.html?v=20261101b" },
+  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261101b" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
@@ -168,7 +169,7 @@ export function renderB1(root, { onExit } = {}) {
     const S = b1Status();
     const rowOf = (w) => { const st = S[w.k] || {}; return `<button type="button" class="ws" data-w="${w.k}"><span class="n">${w.n}</span><span class="tx"><b>${esc(w.t)}</b><small>${esc(w.s)}</small></span><span class="st">${st.ok ? "✓ validé" : st.parts ? `${st.parts}/${st.total}` : "Commencer"}</span></button>`; };
     const soon = (n) => `<div class="ws" style="opacity:.45;cursor:default"><span class="n">G${n}</span><span class="tx"><b>Bientôt</b><small>En attente du cours</small></span></div>`;
-    const rows = conj ? [1, 2, 3, 4].map((n) => rowOf(WORKSHOPS.find((x) => x.n === "C" + n))).join("") : [1, 2, 3, 4, 5, 6].map((n) => { const w = WORKSHOPS.find((x) => x.n === "G" + n); return w ? rowOf(w) : soon(n); }).join("") + rowOf(WORKSHOPS.find((x) => x.k === "tf"));
+    const rows = conj ? [1, 2, 3, 4, 5].map((n) => rowOf(WORKSHOPS.find((x) => x.n === "C" + n))).join("") : [1, 2, 3, 4, 5, 6].map((n) => { const w = WORKSHOPS.find((x) => x.n === "G" + n); return w ? rowOf(w) : soon(n); }).join("") + rowOf(WORKSHOPS.find((x) => x.k === "tf"));
     const later = "";
     el.innerHTML = `${STY}<div class="b1x in"><div class="b1f" style="background-image:url(assets/img/b/lieu-${kind}${!conj && root.clientWidth / Math.max(1, root.clientHeight) > 1.2 ? '-land' : ''}.jpg)"></div>
       <button type="button" class="back" id="b1Back">← B1.0</button>
