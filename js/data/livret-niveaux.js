@@ -1,8 +1,8 @@
 // The Roots — livret : structure complète niveaux → leçons → matières (jauges à 0 tant qu'aucun examen n'est passé).
-import { A1_LIST } from "./lecons-a1.js?v=20261031y";
-import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261031y";
-import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261031y";
-import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261031y";
+import { A1_LIST } from "./lecons-a1.js?v=20261031z";
+import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261031z";
+import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261031z";
+import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261031z";
 export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B0", "Passerelle", true], ["B1", "Intermédiaire", true], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 const SKN = [["Compréhension écrite", 7.5, "📖"], ["Compréhension orale", 7.5, "🎧"], ["Grammaire", 10, "🧩"], ["Expression écrite", 7.5, "✍️"], ["Expression orale", 7.5, "🎤"]];
@@ -21,13 +21,16 @@ export function entryOf(lang) {
   return { ce: f(k.ce), co: f(k.co), gr: f(k.gr), glob: lang && lang.entryScore != null ? lang.entryScore : null };
 }
 // B1.0 : une ligne par cours de grammaire (meilleur contrôle /15) + test final (/36). Les autres matières apparaissent à 0 tant que leurs cours n'existent pas.
-export const B1_GRAM = [["g1", "G1", "Verbes et prépositions", 12], ["g2", "G2", "Present Simple et Present Continuous", 12.5], ["g3", "G3", "First conditional", 12.5], ["g4", "G4", "Past Simple et Present Perfect", 12.5], ["g5", "G5", "Parler du futur", 12.5], ["g6", "G6", "Récit au passé", 12.5], ["c1", "C1", "Le présent simple (Conjugaison)", 12.5]];
+export const B1_GRAM = [["g1", "G1", "Verbes et prépositions", 12], ["g2", "G2", "Present Simple et Present Continuous", 12.5], ["g3", "G3", "First conditional", 12.5], ["g4", "G4", "Past Simple et Present Perfect", 12.5], ["g5", "G5", "Parler du futur", 12.5], ["g6", "G6", "Récit au passé", 12.5], ["c1", "C1", "Le présent simple (Conjugaison)", 12.5], ["c2", "C2", "Le présent continu (Conjugaison)", 12.5], ["c3", "C3", "Le prétérit simple (Conjugaison)", 12.5], ["c4", "C4", "Le prétérit continu (Conjugaison)", 12.5]];
 export const B1_SKN = {
   g2: { A: "Routine ou action en cours", B: "Temporaire, stable ou tendance", C: "Verbe d’état ou action selon le sens", D: "Always et nuance", E: "Rendez-vous futur ou horaire", F: "Forme : do/does ou be" },
   g3: { A: "First ou zero conditional", B: "Ordre et ponctuation", C: "Formes verbales après if", D: "Conditions négatives", E: "Conséquence nuancée (modal)", F: "Production et justification" },
   g4: { A: "Repères de passé terminé", B: "Forme du Present Perfect", C: "Participes passés et verbes irréguliers", D: "Choisir le temps selon le contexte", E: "just, already et yet", F: "for et since" },
   g5: { A: "will : décision, prédiction, offre", B: "going to : intention et indice", C: "Arrangement au Present Continuous", D: "Present Simple et horaires", E: "Construction des formes", F: "Choix en contexte et transfert" },
   c1: { A: "Verbe lexical et 3e personne", B: "Be : formes, négation et question", C: "Questions avec do/does", D: "Négations avec don’t/doesn’t", E: "Have/has et fonctions de do", F: "Production intégrée" },
+  c2: { A: "Choisir be selon le sujet", B: "Orthographe du participe en -ing", C: "Accord de be et négation", D: "Choix de be plutôt que do", E: "Inversion de be et réponses courtes", F: "Questions avec mot interrogatif et production" },
+  c3: { A: "Prétérit régulier et orthographe de -ed", B: "Was et were", C: "Verbes irréguliers fréquents", D: "Négation avec didn’t + base", E: "Questions, réponses courtes et base après did", F: "Be au passé et production intégrée" },
+  c4: { A: "Choisir was/were selon le sujet", B: "Orthographe de la forme en -ing", C: "Négation et choix de be", D: "Inversion et réponses courtes", E: "Réponse courte et question ouverte", F: "Production intégrée" },
   g6: { A: "Past Continuous : construction", B: "Chronologie des actions", C: "Past Simple, did + base, accord", D: "Verbes irréguliers", E: "Habitudes passées (used to)", F: "Production narrative" },
 };
 export function b1Gaps() { // [{course, skill, n}] tiré des erreurs enregistrées dans chaque cours
@@ -40,7 +43,7 @@ function b1Sheet() {
   B1_GRAM.forEach(([k, code, name, thr]) => {
     const p = read(k + "-chat-progress-v1"), h = (p.hist || []).filter((x) => x && x.score != null);
     const best = h.length ? Math.max.apply(null, h.map((x) => x.score)) : null, has = best !== null;
-    rows.push({ name: code + " · " + name, e: k === "c1" ? "🕰️" : "🧩", has, pct: has ? pc(best, 15) : 0, note: has ? (String(best).replace(".", ",") + "/15" + (best >= thr ? " ✓" : "")) : "", ent: null, gain: null });
+    rows.push({ name: code + " · " + name, e: k[0] === "c" ? "🕰️" : "🧩", has, pct: has ? pc(best, 15) : 0, note: has ? (String(best).replace(".", ",") + "/15" + (best >= thr ? " ✓" : "")) : "", ent: null, gain: null });
   });
   const t = read("test-final-v1"), tHas = !!t.done;
   rows.push({ name: "Test final de grammaire G1–G6", e: "🏆", has: tHas, pct: tHas ? pc(t.score, 36) : 0, note: tHas ? t.score + "/36" + (t.pend ? " (+" + t.pend + " à relire)" : "") : "", ent: null, gain: null });
