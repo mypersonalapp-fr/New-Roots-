@@ -106,6 +106,24 @@ html,body{overflow-x:hidden;width:100%}.app{width:100%;overflow-x:hidden}.hd{min
 .menu .path{padding:0}.menu .lgr{justify-content:flex-start}
 .hd .r{display:none}.menu[hidden],.scrim[hidden]{display:none!important}
 @media (min-aspect-ratio:6/5){html,body{background:#2a1606 url(../assets/img/b/atelier-land.jpg) center/cover no-repeat}body::before{content:'';position:fixed;inset:0;background:rgba(20,10,2,.35);pointer-events:none}.app{position:relative;z-index:1;box-shadow:0 0 60px #000a}}
+.clk{flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;padding:2px 14px 4px;--cs:clamp(100px,20vh,190px)}
+.cw{width:var(--cs);height:var(--cs);border-radius:50%;overflow:hidden;box-shadow:0 6px 22px #000b,0 0 0 3px #b88a2c;transition:filter .8s;flex:none;background:#120b05}
+.cw svg{display:block;width:100%;height:100%}
+.cw[data-t=past]{filter:sepia(.55) saturate(1.1)}.cw[data-t=fut]{filter:hue-rotate(-12deg) saturate(1.15) brightness(1.05)}
+.clb{text-align:center;text-shadow:0 2px 8px #000;line-height:1.2}.clb span{display:block;font:800 10px var(--body);letter-spacing:.18em;color:var(--gold)}
+.clb b{display:inline-block;margin-top:2px;font:700 15px var(--body);padding:2px 12px;border-radius:10px;color:#fff7d6;background:linear-gradient(180deg,rgba(255,211,107,.38),rgba(255,160,40,.22));border:1.5px solid rgba(255,225,140,.9);box-shadow:0 0 10px rgba(255,200,80,.6)}
+.clb em{display:block;font:700 12px 'Courier New',monospace;font-style:normal;color:#ffe39a}
+.cfr{width:100%;max-width:440px;background:rgba(16,22,48,.82);border:1.5px solid #e8c46a;border-radius:14px;padding:6px 8px 4px}
+.cr{display:flex;justify-content:space-between;position:relative}
+.cr::before{content:'';position:absolute;left:7%;right:7%;top:10px;height:3px;border-radius:2px;background:linear-gradient(90deg,#d9944a 30%,#5fbf7f 50%,#5a8cff 90%);opacity:.8}
+.cn{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;font:800 8.5px var(--body);text-align:center;line-height:1.1;color:#f3efe2;min-width:0}
+.cn em{font-style:normal}.cn u{width:21px;height:21px;border-radius:50%;border:3px solid currentColor;background:#241c3a;display:flex;align-items:center;justify-content:center;font:800 10px var(--body);text-decoration:none;margin-bottom:3px;transition:transform .25s}
+.cn.seen u{background:#f3efe2;color:#14203f}.cn.cur u{background:#ffd36b;color:#14203f;border-color:#b88a2c;box-shadow:0 0 10px #ffd36b}.cn.lk{opacity:.4}.cn.sel u{outline:3px solid #ffd36b;transform:scale(1.15)}
+.clk.off .cw,.clk.off .clb{display:none}
+.spd2{display:flex;gap:5px;align-items:center;flex-wrap:wrap;font:800 10px var(--body);color:#cbb98a;letter-spacing:.08em;text-transform:uppercase}
+.spd2 button{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:var(--txt);border-radius:99px;padding:3px 9px;font:800 11px var(--body);cursor:pointer}
+.spd2 button.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+@media (min-aspect-ratio:6/5) and (min-width:1000px){.clk{position:fixed;left:0;top:50%;transform:translateY(-50%);width:calc((100vw - 480px)/2);z-index:2;--cs:min(300px,32vh);padding:0 20px;gap:12px}.cr{flex-direction:column;gap:9px}.cr::before{display:none}.cn{flex:none;flex-direction:row;gap:10px;font-size:13px;text-align:left;justify-content:flex-start}.cn u{margin:0}.cn em br{display:none}.cfr{max-width:330px;padding:12px 16px}.clb b{font-size:19px}}
 </style>
 <div class="app">
  <div class="hd">
@@ -113,11 +131,12 @@ html,body{overflow-x:hidden;width:100%}.app{width:100%;overflow-x:hidden}.hd{min
   <div class="bar" id="bar"></div>
   <div class="scrim" id="scrim" hidden></div>
   <div class="menu" id="menu" hidden>
-   <h5>La salle de classe · Grammaire · 6 niveaux</h5><div class="path"><b class="on">C5</b></div>
+   <h5>L’atelier de l’horloger · Conjugaison · 5 cours</h5><div class="path"><b>C1</b><i></i><b>C2</b><i></i><b>C3</b><i></i><b>C4</b><i></i><b class="on">C5</b></div>
    <h5>Aller à</h5><div class="jump" id="jump"></div>
-   <h5>Réglages</h5><div class="pk" id="pk"></div><div class="pk" id="tpk"><button type="button" data-t="teacher" aria-label="Emma"><img alt="" src=""></button><button type="button" data-t="teacher2" aria-label="Lucas"><img alt="" src=""></button></div><div class="lgr"><button type="button" class="mybtn" id="mybtn" aria-label="Mon personnage"><span class="av"><img class="myimg" alt="" src=""></span>Mon personnage</button><button type="button" class="mybtn" id="tbtn" aria-label="Mon professeur">Prof : <span id="tn">Emma</span></button><div class="spd" role="group" aria-label="Vitesse du professeur"><span>Vitesse</span><button type="button" data-s="0.5">×0,5</button><button type="button" data-s="0.75">×0,75</button><button type="button" data-s="1">×1</button><button type="button" data-s="1.5">×1,5</button></div></div>
+   <h5>Réglages</h5><div class="pk" id="pk"></div><div class="pk" id="tpk"><button type="button" data-t="teacher" aria-label="Emma"><img alt="" src=""></button><button type="button" data-t="teacher2" aria-label="Lucas"><img alt="" src=""></button></div><div class="lgr"><button type="button" class="mybtn" id="mybtn" aria-label="Mon personnage"><span class="av"><img class="myimg" alt="" src=""></span>Mon personnage</button><button type="button" class="mybtn" id="tbtn" aria-label="Mon professeur">Prof : <span id="tn">Emma</span></button><div class="spd" role="group" aria-label="Vitesse du professeur"><span>Vitesse</span><button type="button" data-s="0.5">×0,5</button><button type="button" data-s="0.75">×0,75</button><button type="button" data-s="1">×1</button><button type="button" data-s="1.5">×1,5</button></div></div><div class="lgr" style="margin-top:8px"><div class="spd2" id="clkset" role="group" aria-label="Horloge"><span>Horloge</span><button type="button" data-k="laiton">🕰️ Laiton</button><button type="button" data-k="sablier">⏳ Sablier</button><button type="button" data-k="off">Masquée</button></div></div>
   </div>
  </div>
+ <div class="clk" id="clk"><div class="cw" id="cw"></div><div class="clb"><span id="clw"></span><b id="cld"></b><em id="clt"></em></div><div class="cfr" id="cfr"></div></div>
  <div class="chat" id="chat" aria-live="polite"></div>
  <div class="zone" id="zone"></div>
 </div>
@@ -135,6 +154,76 @@ let SPD=.75;try{const v=parseFloat(localStorage.getItem('c-speed'));if([.5,.75,1
 let RUN=0;
 const sleep=ms=>{const k=RUN;return new Promise((r,j)=>setTimeout(()=>k===RUN?r():j(new Error('stop')),ms/SPD))};
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CLK=(()=>{
+const R=Math.PI/180;
+function pt(cx,cy,r,a){return[cx+r*Math.sin(a*R),cy-r*Math.cos(a*R)]}
+function ticks(cx,cy,r1,r2,n,w,c,every,r3){let s='';for(let i=0;i<n;i++){const big=every&&i%every===0;const [x1,y1]=pt(cx,cy,big?(r3||r1-6):r1,i*360/n),[x2,y2]=pt(cx,cy,r2,i*360/n);s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${big?w*1.8:w}" stroke-linecap="round"/>`}return s}
+function gear(cx,cy,r,n,fill,stroke,hole){let p='';const ri=r*.82;for(let i=0;i<n;i++){const a=i*360/n,s=360/n;[[a-s*.28,ri],[a-s*.17,r],[a+s*.17,r],[a+s*.28,ri]].forEach(([aa,rr],k)=>{const[x,y]=pt(0,0,rr,aa);p+=(i===0&&k===0?'M':'L')+x.toFixed(1)+' '+y.toFixed(1)})}p+='Z';
+ let spokes='';for(let i=0;i<5;i++){const[x,y]=pt(0,0,ri*.8,i*72);spokes+=`<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="${stroke}" stroke-width="${r*.09}" opacity=".7"/>`}
+ return `<g transform="translate(${cx} ${cy})"><g class="rt" data-k="${1}" data-cx="0" data-cy="0" data-gr="${n}"><path d="${p}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><circle r="${ri*.86}" fill="none" stroke="${stroke}" stroke-width="${r*.07}" opacity=".6"/>${spokes}<circle r="${hole||r*.14}" fill="${stroke}"/></g></g>`}
+const defs=`<defs>
+<radialGradient id="brass" cx="35%" cy="30%"><stop offset="0" stop-color="#fff0b0"/><stop offset=".4" stop-color="#d9a73e"/><stop offset="1" stop-color="#6e4a10"/></radialGradient>
+<radialGradient id="ivory" cx="50%" cy="40%"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e0cfa2"/></radialGradient>
+<linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2412"/><stop offset="1" stop-color="#150c05"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="50%"><stop offset="0" stop-color="#ffcf70" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf70" stop-opacity="0"/></radialGradient></defs>`;
+const hands=(cx,cy,L,c,sc)=>`
+<g class="rt" data-k="${1/120}" data-t0="1" data-cx="${cx}" data-cy="${cy}"><polygon points="${cx-5},${cy+12} ${cx},${cy-L*.5} ${cx+5},${cy+12}" fill="${c}"/></g>
+<g class="rt" data-k="0.1" data-t0="1" data-cx="${cx}" data-cy="${cy}"><polygon points="${cx-3.5},${cy+14} ${cx},${cy-L*.8} ${cx+3.5},${cy+14}" fill="${c}"/></g>
+<g class="rt" data-k="6" data-t0="1" data-cx="${cx}" data-cy="${cy}"><line x1="${cx}" y1="${cy+22}" x2="${cx}" y2="${cy-L*.9}" stroke="${sc}" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="6" fill="${sc}"/></g>`;
+const roman=(cx,cy,r,c,size)=>['XII','I','II','III','IIII','V','VI','VII','VIII','IX','X','XI'].map((n,i)=>{const[x,y]=pt(cx,cy,r,i*30);return`<text x="${x}" y="${y+size*.35}" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="${size}" fill="${c}">${n}</text>`}).join('');
+const V=[];
+// 1 Horloge murale laiton
+V.push({n:'1 · Horloge murale',d:'Temps du cours : Present perfect, comparé aux temps déjà vus.',card:['rgba(238,224,180,.96)','#2f1f08','#b88a2c','#9a5b00'],
+svg:()=>`${defs}<rect width="390" height="760" fill="url(#wood)"/>
+<g opacity=".35">${gear(40,120,70,14,'#6b4a1b','#2a1a08')}${gear(350,300,90,18,'#6b4a1b','#2a1a08')}${gear(330,70,40,10,'#6b4a1b','#2a1a08')}</g>
+<circle cx="195" cy="270" r="200" fill="url(#glow)"/>
+<circle cx="195" cy="270" r="158" fill="url(#brass)"/><circle cx="195" cy="270" r="140" fill="url(#ivory)" stroke="#6e4a10" stroke-width="3"/>
+${ticks(195,270,134,122,60,1,'#4a3515',5,118)}${roman(195,270,100,'#3a2509',19)}
+<text x="195" y="215" text-anchor="middle" font-family="Georgia,serif" font-size="12" letter-spacing="4" fill="#6e4a10">THE ROOTS</text>${hands(195,270,125,'#2a1a08','#9b2b1b')}
+<circle cx="195" cy="270" r="9" fill="url(#brass)"/>`});
+// 6 Sablier
+V.push({n:'6 · Sablier & romains',d:'Temps du cours : Present perfect, comparé aux temps déjà vus.',card:['rgba(40,26,12,.95)','#f6e8c6','#c58b3a','#ffd36b'],
+svg:()=>{const c=195,y=250;let sand='';for(let i=0;i<6;i++)sand+=`<circle class="sand" style="animation-delay:${i*.18}s" cx="${c}" cy="${y-10}" r="2.2" fill="#f0c968"/>`;
+ let rom=['XII','I','II','III','IIII','V','VI','VII','VIII','IX','X','XI'].map((n,i)=>{const[x,yy]=pt(c,y,150,i*30);return`<text x="${x}" y="${yy+7}" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="21" fill="#e8c46a"><tspan>${n}</tspan></text>`}).join('');
+ return`${defs}<rect width="390" height="760" fill="#120b05"/><circle cx="${c}" cy="${y}" r="190" fill="url(#glow)"/>
+<g class="rt" data-t0="1" data-k="0.0083" data-cx="${c}" data-cy="${y}"><circle cx="${c}" cy="${y}" r="150" fill="none" stroke="#6e4a10" stroke-width="1.5" stroke-dasharray="3 7"/>${rom}</g>
+<g class="rt" data-t0="1" data-k="-0.05" data-cx="${c}" data-cy="${y}"><circle cx="${c}" cy="${y}" r="120" fill="none" stroke="#c58b3a" stroke-width="2"/>${ticks(c,y,120,110,48,1,'#c58b3a',4,104)}</g>
+<path d="M${c-48} ${y-90}H${c+48}C${c+48} ${y-40} ${c+8} ${y-14} ${c+8} ${y}C${c+8} ${y+14} ${c+48} ${y+40} ${c+48} ${y+90}H${c-48}C${c-48} ${y+40} ${c-8} ${y+14} ${c-8} ${y}C${c-8} ${y-14} ${c-48} ${y-40} ${c-48} ${y-90}Z" fill="rgba(255,235,190,.1)" stroke="#e8c46a" stroke-width="3"/>
+<path d="M${c-36} ${y+86}H${c+36}C${c+28} ${y+56} ${c+10} ${y+44} ${c} ${y+40}C${c-10} ${y+44} ${c-28} ${y+56} ${c-36} ${y+86}Z" fill="#f0c968" opacity=".9"/>
+<rect x="${c-56}" y="${y-98}" width="112" height="10" rx="3" fill="#8a5a1a"/><rect x="${c-56}" y="${y+88}" width="112" height="10" rx="3" fill="#8a5a1a"/>${sand}
+<circle cx="${c}" cy="${y}" r="3" fill="#f0c968"/>${hands(c,y,150,"#ffe39a","#ff9a6b")}`}});
+
+ const T0=36510,CN=()=>String((typeof FD!=='undefined'&&FD.prog)||'').slice(0,2);
+ const TS={ps:{n:'Past simple',s:'Past <br>simple',g:'past',sec:-86400,when:'HIER'},pc:{n:'Past continuous',s:'Past <br>cont.',g:'past',sec:-86400+17490,when:'HIER, 15H'},psn:{n:'Present simple',s:'Pres. <br>simple',g:'pres',sec:0,when:'TOUS LES JOURS'},pcn:{n:'Present continuous',s:'Pres. <br>cont.',g:'pres',sec:0,when:'EN CE MOMENT'},wl:{n:'Will',s:'Will',g:'fut',sec:86400,when:'DEMAIN'},pcf:{n:'Present continuous (futur)',s:'Pres. cont. <br>futur',g:'fut',sec:3*86400,when:'ARRANGEMENT ORGANISÉ'},gt:{n:'Going to',s:'Going to',g:'fut',sec:7*86400,when:'SEMAINE PROCHAINE'}};
+ const ORDER=['ps','pc','psn','pcn','wl','pcf','gt'],STUDY={C1:['psn'],C2:['pcn'],C3:['ps'],C4:['pc'],C5:['wl','pcf','gt']},COURSES=['C1','C2','C3','C4','C5'];
+ const S={base:0,live:0,target:0,t:0,g:0,ph:0};let els=[],curId=null,tm=null,mode='laiton',el=null;
+ try{const m=localStorage.getItem('c-clock');if(['laiton','sablier','off'].includes(m))mode=m}catch(e){}
+ const $=s=>document.querySelector(s);
+ function friseHTML(){const c=CN(),cur=STUDY[c]||[],seenIds=[];COURSES.slice(0,Math.max(0,COURSES.indexOf(c))).forEach(k=>seenIds.push(...STUDY[k]));
+  return `<div class="cr">${ORDER.map(id=>{const cl=cur.includes(id)?'cur':seenIds.includes(id)?'seen':'lk';return `<span class="cn ${cl}" data-t="${id}"><u>${cl==='cur'?'★':cl==='lk'?'🔒':''}</u><em>${TS[id].s}</em></span>`}).join('')}</div>`}
+ function drawClock(){const w=$('#cw');if(!w)return;const i=mode==='sablier'?1:0,box=i?'35 92 320 320':'37 112 316 316';
+  w.innerHTML=`<svg viewBox="${box}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${V[i].svg()}</svg>`;
+  els=[...w.querySelectorAll('.rt')].map(e=>({e,k:+e.dataset.k,cx:+e.dataset.cx,cy:+e.dataset.cy,t0:e.dataset.t0?T0:0,sin:e.dataset.sin?+e.dataset.sin:0,gr:e.dataset.gr?+e.dataset.gr:0}))}
+ function applyMode(){const k=$('#clk');if(!k)return;k.classList.toggle('off',mode==='off');document.querySelectorAll('#clkset button').forEach(b=>b.classList.toggle('on',b.dataset.k===mode));if(mode!=='off')drawClock()}
+ function show(id){const x=TS[id];if(!x)return;S.target=RM?x.sec:x.sec;if(RM)S.base=x.sec;const w=$('#cw');if(w)w.dataset.t=x.g;const f=$('#clk');if(f)f.dataset.when=x.when;
+  const l=$('#clw');if(l)l.textContent=x.when;const n=$('#cln');if(n)n.textContent=x.n;
+  document.querySelectorAll('#cfr .cn').forEach(n=>n.classList.toggle('sel',n.dataset.t===id))}
+ function set(id){curId=id;clearTimeout(tm);show(id)}
+ function peek(id){clearTimeout(tm);show(id);tm=setTimeout(()=>show(curId),2800)}
+ function tenseOf(t){t=String(t||'').toLowerCase().replace(/[’‘´`]/g,"'");if(/going to/.test(t))return 'gt';if(/\bwill\b|\bwon't\b|'ll\b/.test(t))return 'wl';if(/\b\w+ing\b/.test(t))return 'pcf';return null}
+ function def(){const c=CN();return (STUDY[c]||['psn'])[0]}
+ function pick(txt){const c=CN();if(c!=='C5')return def();return tenseOf(txt)||curId||def()}
+ function loop(n){const dt=Math.min(.05,(n-(loop.l||n))/1000);loop.l=n;const diff=S.target-S.base,vel=diff*3.2;S.base+=vel*dt;if(Math.abs(diff)<1)S.base=S.target;
+  S.live+=dt;S.t=S.base+S.live;S.ph+=dt;S.g+=dt*(1+Math.max(-9,Math.min(9,vel/5000)));
+  for(const o of els){let a;if(o.sin)a=o.sin*Math.sin(S.ph*Math.PI);else if(o.gr)a=S.g*(o.k*(360/o.gr)*.5)*(o.gr%4<2?1:-1)*3;else a=(o.t0+S.t)*o.k;o.e.setAttribute('transform',`rotate(${a} ${o.cx} ${o.cy})`)}
+  const d=new Date(2026,9,30,10,8,30+Math.floor(S.t));let ds=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});ds=ds[0].toUpperCase()+ds.slice(1);
+  const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');const a=$('#cld');if(a&&a.textContent!==ds)a.textContent=ds;const b=$('#clt');if(b)b.textContent=hh+':'+mm;
+  requestAnimationFrame(loop)}
+ function init(){el=$('#clk');if(!el)return;$('#cfr').innerHTML=friseHTML();applyMode();document.querySelectorAll('#clkset button').forEach(b=>b.onclick=()=>{mode=b.dataset.k;try{localStorage.setItem('c-clock',mode)}catch(e){}applyMode()});set(def());requestAnimationFrame(loop)}
+ return {init,forEx(ex){if(!el)return;set(pick([ex.screen,(ex.ok||[]).join(' '),ex.show].join(' ')))},forQ(q){if(!el)return;set(pick([q.q,(q.ok||[]).join(' '),q.why].join(' ')))},onMe(t){if(!el||CN()!=='C5')return;const id=tenseOf(t);if(id&&id!==curId)peek(id)}};
+})();
+window.addEventListener('load',()=>CLK.init());
+
 const down=()=>{chat.scrollTop=chat.scrollHeight};
 let skip=false;
 function paintMy(){document.querySelectorAll('.myimg').forEach(i=>i.src=CH[MYC]);document.querySelectorAll('#pk button').forEach(b=>b.classList.toggle('on',b.dataset.c===MYC))}
@@ -155,7 +244,7 @@ async function teacher(html){
   await Promise.race([sleep(1100+Math.min(7000,nw*280)),tap]);b.onclick=null;
 }
 function board(html){const d=document.createElement('div');d.className='bd';d.innerHTML=html;chat.appendChild(d);down();return sleep(RM?0:1200)}
-function me(text){const r=document.createElement('div');r.className='row me';const b=document.createElement('div');b.className='b';b.textContent=text;r.appendChild(b);r.insertAdjacentHTML('beforeend','<div class="av"><img class="myimg" alt="" src="'+CH[MYC]+'"></div>');chat.appendChild(r);down()}
+function me(text){CLK.onMe(text);const r=document.createElement('div');r.className='row me';const b=document.createElement('div');b.className='b';b.textContent=text;r.appendChild(b);r.insertAdjacentHTML('beforeend','<div class="av"><img class="myimg" alt="" src="'+CH[MYC]+'"></div>');chat.appendChild(r);down()}
 function choose(opts){return new Promise(res=>{zone.innerHTML='<div class="chips"></div>';const c=zone.firstChild;opts.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=o;b.onclick=()=>{zone.innerHTML='';me(o);res(i)};c.appendChild(b)});const sk=document.createElement('button');sk.type='button';sk.className='again';sk.textContent='Passer ›';sk.onclick=()=>{zone.innerHTML='';me('Je passe');res(-1)};c.appendChild(sk)})}
 function typed(ph){return new Promise(res=>{zone.innerHTML=`<div class="inp"><textarea id="ta" maxlength="300" placeholder="${ph}"></textarea><button class="go" type="button" id="go" disabled>Envoyer</button></div><div class="chips" style="margin-top:6px"><button class="again" type="button" id="sk">Passer ›</button></div>`;const ta=zone.querySelector('#ta'),g=zone.querySelector('#go');ta.oninput=()=>g.disabled=!ta.value.trim();const send=()=>{if(!ta.value.trim())return;const v=ta.value.trim();zone.innerHTML='';me(v);res(v)};g.onclick=send;zone.querySelector('#sk').onclick=()=>{zone.innerHTML='';me('Je passe');res(null)};ta.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}})}
 document.querySelectorAll('.spd button').forEach(b=>{const on=()=>b.classList.toggle('on',parseFloat(b.dataset.s)===SPD);on();b.onclick=()=>{SPD=parseFloat(b.dataset.s);try{localStorage.setItem('c-speed',SPD)}catch(e){}document.querySelectorAll('.spd button').forEach(x=>x.classList.toggle('on',parseFloat(x.dataset.s)===SPD))}});
@@ -657,7 +746,7 @@ function diag(v,it){return ''}
 const stripC=s=>s.replace(/^Correct\s*:\s*/,'');
 /* un exercice guidé : tentative → indice → nouvelle tentative → correction complète */
 async function runEx(ex,key,num,skill){
-  P();const rec=PR.ans[key]={skill,t:ex.t};
+  P();CLK.forEx(ex);const rec=PR.ans[key]={skill,t:ex.t};
   await T(`<b>${num?'Exercice '+num+' · ':''}${ex.k}</b><br>${esc(ex.screen)}${ex.task?`<br><small>${esc(ex.task)}</small>`:''}`);
   const fin=(st)=>{rec.status=st;if(st==='ko')PR.sk[skill]=(PR.sk[skill]||0)+1;savePR();return st};
   if(ex.t==='mcq'){
@@ -704,7 +793,7 @@ async function runEx(ex,key,num,skill){
   }
 }
 async function runSeq(n){
-  P();const S=SEQ[n-1];const kk=`s${n}`;
+  P();const S=SEQ[n-1];if(window.CLK)CLK.forEx(S.ex[0]);const kk=`s${n}`;
   lg(`C5 · Séquence ${n}`);
   await titleCard(`Séquence ${n}`,S.title,S.goal);
   await T(`<em>Situation</em> : ${esc(S.setting)}`);
@@ -798,7 +887,7 @@ async function CONTROL2(){
     if(set==='B'){if(typeof FD!=='undefined'&&FD.setBAD)AD();await T(`<small>Contrôle parallèle : mêmes compétences, phrases nouvelles.</small>`)}
     const A=[];
     for(let i=0;i<15;i++){const q=Q[i];
-      await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
+      CLK.forQ(q);await T(`<b>Question ${i+1} / 15</b> · 1 point<br>${esc(q.q)}`);
       if(q.opts){await B(q.opts.map((o,m)=>`<span class="ln">${String.fromCharCode(65+m)}. ${esc(o)}</span>`).join(''));const kk=await choose(q.opts);A[i]=kk<0?null:String.fromCharCode(97+kk)}else A[i]=await typed(q.ph||(q.t==='fre'?'Écris ta réponse…':'Écris ta réponse en anglais…'));}
     await T(`Merci. Je corrige ton contrôle…`);
     const sc=[];const okq=[];const R={};
@@ -889,4 +978,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101c"></script>
+</html><script src="voice.js?v=20261101d"></script>
