@@ -124,6 +124,16 @@ html,body{overflow-x:hidden;width:100%}.app{width:100%;overflow-x:hidden}.hd{min
 .spd2 button{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:var(--txt);border-radius:99px;padding:3px 9px;font:800 11px var(--body);cursor:pointer}
 .spd2 button.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
 @media (min-aspect-ratio:6/5) and (min-width:1000px){.clk{position:fixed;left:0;top:50%;transform:translateY(-50%);width:calc((100vw - 480px)/2);z-index:2;--cs:min(300px,32vh);padding:0 20px;gap:12px}.cr{flex-direction:column;gap:9px}.cr::before{display:none}.cn{flex:none;flex-direction:row;gap:10px;font-size:13px;text-align:left;justify-content:flex-start}.cn u{margin:0}.cn em br{display:none}.cfr{max-width:330px;padding:12px 16px}.clb b{font-size:19px}}
+@media (min-width:700px){html,body{background:#2a1606 url(../assets/img/b/atelier-land.jpg) center/cover no-repeat!important}
+@media (orientation:portrait){html,body{background-image:url(../assets/img/b/atelier-portrait.jpg)!important}}
+body::before{background:rgba(20,10,2,.08)!important}
+.app{background:none!important;box-shadow:none!important}.app::before{display:none!important}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,rgba(10,6,2,.6));pointer-events:none;z-index:0}
+.hd{background:linear-gradient(rgba(10,6,2,.6),transparent)}
+.chat,.zone,.clk{text-shadow:0 1px 8px #000,0 0 3px #000}.row .b{text-shadow:none}}
+#clk.bad #cw{border-radius:50%;animation:clkbl .7s 4}@keyframes clkbl{50%{box-shadow:0 0 0 8px rgba(255,40,40,.85),0 0 40px 10px rgba(255,40,40,.8)}}
+#clk.bad #clw{color:#ff6b6b}#clk.bad #cld{border-color:#ff4b4b!important;color:#ffd0d0}
+.cn.bad u{background:#ff3b3b!important;border-color:#ff9a9a!important;animation:clkb2 .7s 4}@keyframes clkb2{50%{opacity:.2}}.cn.bad{color:#ff9a9a}
 </style>
 <div class="app">
  <div class="hd">
@@ -193,8 +203,8 @@ svg:()=>{const c=195,y=250;let sand='';for(let i=0;i<6;i++)sand+=`<circle class=
 <rect x="${c-56}" y="${y-98}" width="112" height="10" rx="3" fill="#8a5a1a"/><rect x="${c-56}" y="${y+88}" width="112" height="10" rx="3" fill="#8a5a1a"/>${sand}
 <circle cx="${c}" cy="${y}" r="3" fill="#f0c968"/>${hands(c,y,150,"#ffe39a","#ff9a6b")}`}});
 
- const T0=36510,CN=()=>String((typeof FD!=='undefined'&&FD.prog)||'').slice(0,2);
- const TS={ps:{n:'Past simple',s:'Past <br>simple',g:'past',sec:-86400,when:'HIER'},pc:{n:'Past continuous',s:'Past <br>cont.',g:'past',sec:-86400+17490,when:'HIER, 15H'},psn:{n:'Present simple',s:'Pres. <br>simple',g:'pres',sec:0,when:'TOUS LES JOURS'},pcn:{n:'Present continuous',s:'Pres. <br>cont.',g:'pres',sec:0,when:'EN CE MOMENT'},wl:{n:'Will',s:'Will',g:'fut',sec:86400,when:'DEMAIN'},pcf:{n:'Present continuous (futur)',s:'Pres. cont. <br>futur',g:'fut',sec:3*86400,when:'ARRANGEMENT ORGANISÉ'},gt:{n:'Going to',s:'Going to',g:'fut',sec:7*86400,when:'SEMAINE PROCHAINE'}};
+ const T00=Date.now(),T0=(()=>{const d=new Date();return d.getHours()*3600+d.getMinutes()*60+d.getSeconds()})(),CN=()=>String((typeof FD!=='undefined'&&FD.prog)||'').slice(0,2);
+ const TS={ps:{n:'Past simple',s:'Past <br>simple',g:'past',sec:-86400,when:'HIER'},pc:{n:'Past continuous',s:'Past <br>cont.',g:'past',sec:-86400+54000-T0,when:'HIER, 15H'},psn:{n:'Present simple',s:'Pres. <br>simple',g:'pres',sec:0,when:'TOUS LES JOURS'},pcn:{n:'Present continuous',s:'Pres. <br>cont.',g:'pres',sec:0,when:'EN CE MOMENT'},wl:{n:'Will',s:'Will',g:'fut',sec:86400,when:'DEMAIN'},pcf:{n:'Present continuous (futur)',s:'Pres. cont. <br>futur',g:'fut',sec:3*86400,when:'ARRANGEMENT ORGANISÉ'},gt:{n:'Going to',s:'Going to',g:'fut',sec:7*86400,when:'SEMAINE PROCHAINE'}};
  const ORDER=['ps','pc','psn','pcn','wl','pcf','gt'],STUDY={C1:['psn'],C2:['pcn'],C3:['ps'],C4:['pc'],C5:['wl','pcf','gt']},COURSES=['C1','C2','C3','C4','C5'];
  const S={base:0,live:0,target:0,t:0,g:0,ph:0};let els=[],curId=null,tm=null,mode='laiton',el=null;
  try{const m=localStorage.getItem('c-clock');if(['laiton','sablier','off'].includes(m))mode=m}catch(e){}
@@ -208,19 +218,25 @@ svg:()=>{const c=195,y=250;let sand='';for(let i=0;i<6;i++)sand+=`<circle class=
  function show(id){const x=TS[id];if(!x)return;S.target=RM?x.sec:x.sec;if(RM)S.base=x.sec;const w=$('#cw');if(w)w.dataset.t=x.g;const f=$('#clk');if(f)f.dataset.when=x.when;
   const l=$('#clw');if(l)l.textContent=x.when;const n=$('#cln');if(n)n.textContent=x.n;
   document.querySelectorAll('#cfr .cn').forEach(n=>n.classList.toggle('sel',n.dataset.t===id))}
- function set(id){curId=id;clearTimeout(tm);show(id)}
+ function set(id){curId=id;clearTimeout(tm);const k=$('#clk');if(k)k.classList.remove('bad');document.querySelectorAll('#cfr .cn.bad').forEach(x=>x.classList.remove('bad'));show(id)}
  function peek(id){clearTimeout(tm);show(id);tm=setTimeout(()=>show(curId),2800)}
  function tenseOf(t){t=String(t||'').toLowerCase().replace(/[’‘´`]/g,"'");if(/going to/.test(t))return 'gt';if(/\bwill\b|\bwon't\b|'ll\b/.test(t))return 'wl';if(/\b\w+ing\b/.test(t))return 'pcf';return null}
+ function cands(t){t=String(t||'').toLowerCase().replace(/[’‘´`]/g,"'");if(!t.trim())return[];
+  if(/going to/.test(t))return['gt'];if(/\bwill\b|\bwon't\b|'ll\b/.test(t))return['wl'];
+  if(/\b\w+ing\b/.test(t)){if(/\b(was|were)\b/.test(t))return['pc'];if(/\b(am|is|are)\b|'m\b|'re\b|'s\b/.test(t))return['pcn','pcf'];return['pcn','pc','pcf']}
+  if(/\b(was|were|did|had|went|saw|ate|took|made|came|got|gave|ran|bought|wrote|met|said|found|left|told|knew|thought|felt|began|won|lost|swam|drove|spoke|sat|stood)\b|\b\w{2,}ed\b|\b(didn't|wasn't|weren't)\b/.test(t))return['ps','pc'];
+  return CN()==='C5'?['psn','pcn','pcf']:[]}
+ function flash(id){clearTimeout(tm);show(id);const k=$('#clk');if(k)k.classList.add('bad');if(TS[id].g==='pres'){const l=$('#clw');if(l)l.textContent='AUJOURD’HUI · PRÉSENT'}document.querySelectorAll('#cfr .cn').forEach(n=>n.classList.toggle('bad',n.dataset.t===id));tm=setTimeout(()=>{if(k)k.classList.remove('bad');document.querySelectorAll('#cfr .cn.bad').forEach(n=>n.classList.remove('bad'));show(curId)},3400)}
  function def(){const c=CN();return (STUDY[c]||['psn'])[0]}
  function pick(txt){const c=CN();if(c!=='C5')return def();return tenseOf(txt)||curId||def()}
  function loop(n){const dt=Math.min(.05,(n-(loop.l||n))/1000);loop.l=n;const diff=S.target-S.base,vel=diff*3.2;S.base+=vel*dt;if(Math.abs(diff)<1)S.base=S.target;
-  S.live+=dt;S.t=S.base+S.live;S.ph+=dt;S.g+=dt*(1+Math.max(-9,Math.min(9,vel/5000)));
+  S.live=(Date.now()-T00)/1000;S.t=S.base+S.live;S.ph+=dt;S.g+=dt*(1+Math.max(-9,Math.min(9,vel/5000)));
   for(const o of els){let a;if(o.sin)a=o.sin*Math.sin(S.ph*Math.PI);else if(o.gr)a=S.g*(o.k*(360/o.gr)*.5)*(o.gr%4<2?1:-1)*3;else a=(o.t0+S.t)*o.k;o.e.setAttribute('transform',`rotate(${a} ${o.cx} ${o.cy})`)}
-  const d=new Date(2026,9,30,10,8,30+Math.floor(S.t));let ds=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});ds=ds[0].toUpperCase()+ds.slice(1);
+  const d=new Date(Date.now()+Math.round(S.base)*1000);let ds=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});ds=ds[0].toUpperCase()+ds.slice(1);ds=ds.replace(/ 1 /,' 1er ');
   const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');const a=$('#cld');if(a&&a.textContent!==ds)a.textContent=ds;const b=$('#clt');if(b)b.textContent=hh+':'+mm;
   requestAnimationFrame(loop)}
  function init(){el=$('#clk');if(!el)return;$('#cfr').innerHTML=friseHTML();applyMode();document.querySelectorAll('#clkset button').forEach(b=>b.onclick=()=>{mode=b.dataset.k;try{localStorage.setItem('c-clock',mode)}catch(e){}applyMode()});set(def());requestAnimationFrame(loop)}
- return {init,forEx(ex){if(!el)return;set(pick([ex.screen,(ex.ok||[]).join(' '),ex.show].join(' ')))},forQ(q){if(!el)return;set(pick([q.q,(q.ok||[]).join(' '),q.why].join(' ')))},onMe(t){if(!el||CN()!=='C5')return;const id=tenseOf(t);if(id&&id!==curId)peek(id)}};
+ return {init,forEx(ex){if(!el)return;set(pick([ex.screen,(ex.ok||[]).join(' '),ex.show].join(' ')))},forQ(q){if(!el)return;set(pick([q.q,(q.ok||[]).join(' '),q.why].join(' ')))},onMe(t){if(!el)return;const c=cands(t);if(c.length&&curId&&!c.includes(curId))flash(c[0])}};
 })();
 window.addEventListener('load',()=>CLK.init());
 
@@ -1001,4 +1017,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101d"></script>
+</html><script src="voice.js?v=20261101e"></script>
