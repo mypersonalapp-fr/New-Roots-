@@ -1,8 +1,8 @@
 // The Roots — livret : structure complète niveaux → leçons → matières (jauges à 0 tant qu'aucun examen n'est passé).
-import { A1_LIST } from "./lecons-a1.js?v=20261031z";
-import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261031z";
-import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261031z";
-import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261031z";
+import { A1_LIST } from "./lecons-a1.js?v=20261101a";
+import { A2_LIST, A2_BUILT } from "./lecons-a2.js?v=20261101a";
+import { B0_NAMES, B0_ICONS, B0_KEY, b0Load } from "./b0-data.js?v=20261101a";
+import { TRADUCTION_A1, TRADUCTION_A2 } from "./traduction-a1a2.js?v=20261101a";
 export const LEVELS = [["A1", "Débutant", true], ["A2", "Élémentaire", true], ["B0", "Passerelle", true], ["B1", "Intermédiaire", true], ["B2", "Intermédiaire +", false], ["C1", "Avancé", false], ["C2", "Maîtrise", false]];
 const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { return {}; } };
 const SKN = [["Compréhension écrite", 7.5, "📖"], ["Compréhension orale", 7.5, "🎧"], ["Grammaire", 10, "🧩"], ["Expression écrite", 7.5, "✍️"], ["Expression orale", 7.5, "🎤"]];
@@ -40,16 +40,22 @@ export function b1Gaps() { // [{course, skill, n}] tiré des erreurs enregistré
 }
 function b1Sheet() {
   const rows = [];
+  const cj = []; // cours de Conjugaison : notés à part (bonus), pas dans la moyenne
   B1_GRAM.forEach(([k, code, name, thr]) => {
     const p = read(k + "-chat-progress-v1"), h = (p.hist || []).filter((x) => x && x.score != null);
     const best = h.length ? Math.max.apply(null, h.map((x) => x.score)) : null, has = best !== null;
-    rows.push({ name: code + " · " + name, e: k[0] === "c" ? "🕰️" : "🧩", has, pct: has ? pc(best, 15) : 0, note: has ? (String(best).replace(".", ",") + "/15" + (best >= thr ? " ✓" : "")) : "", ent: null, gain: null });
+    if (k[0] === "c") cj.push({ code, best: has ? best : 0, has });
+    else rows.push({ name: code + " · " + name, e: k[0] === "c" ? "🕰️" : "🧩", has, pct: has ? pc(best, 15) : 0, note: has ? (String(best).replace(".", ",") + "/15" + (best >= thr ? " ✓" : "")) : "", ent: null, gain: null });
   });
   const t = read("test-final-v1"), tHas = !!t.done;
   rows.push({ name: "Test final de grammaire G1–G6", e: "🏆", has: tHas, pct: tHas ? pc(t.score, 36) : 0, note: tHas ? t.score + "/36" + (t.pend ? " (+" + t.pend + " à relire)" : "") : "", ent: null, gain: null });
   [["Vocabulaire", "📚"], ["Compréhension", "🔭"], ["Expression", "🎭"]].forEach(([n, e]) => rows.push({ name: n + " (cours à venir)", e, has: false, pct: 0, note: "", ent: null, gain: null }));
   const got = rows.filter((r) => r.has), avg = got.length ? Math.round(got.reduce((a, r) => a + r.pct, 0) / got.length) : 0, n20 = Math.round((avg / 100) * 200) / 10;
-  return { rows, gain: null, avg, note20: n20, conj: { done: false, note: 0, best: 0, tot: 6, bonus: 0 }, total: n20, any: got.length > 0 };
+  return { rows, gain: null, avg, note20: n20, conj: bonusB1(cj), total: Math.min(20, Math.round((n20 + bonusB1(cj).bonus) * 10) / 10), any: got.length > 0 };
+}
+function bonusB1(cj) { // bonus Conjugaison B1 : moyenne des meilleurs contrôles C1–C4 (/15, non passé = 0) → jusqu'à +BONUS_MAX
+  const best = cj.reduce((a, c) => a + c.best, 0), tot = cj.length * 15, f = tot ? best / tot : 0;
+  return { done: cj.some((c) => c.has), note: Math.round(f * 100) / 10, best, tot, bonus: Math.round(f * BONUS_MAX * 10) / 10, parts: cj };
 }
 export function lessonSheet(level, L, entry = {}) {
   if (level === "B1") return b1Sheet();
