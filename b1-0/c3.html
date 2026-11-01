@@ -225,7 +225,12 @@ svg:()=>{const c=195,y=250;let sand='';for(let i=0;i<6;i++)sand+=`<circle class=
   if(/going to/.test(t))return['gt'];if(/\bwill\b|\bwon't\b|'ll\b/.test(t))return['wl'];
   if(/\b\w+ing\b/.test(t)){if(/\b(was|were)\b/.test(t))return['pc'];if(/\b(am|is|are)\b|'m\b|'re\b|'s\b/.test(t))return['pcn','pcf'];return['pcn','pc','pcf']}
   if(/\b(was|were|did|had|went|saw|ate|took|made|came|got|gave|ran|bought|wrote|met|said|found|left|told|knew|thought|felt|began|won|lost|swam|drove|spoke|sat|stood)\b|\b\w{2,}ed\b|\b(didn't|wasn't|weren't)\b/.test(t))return['ps','pc'];
+  const all=t+' '+CTX;
+  if(/\b(yesterday|ago|last (night|week|month|year|summer|weekend|monday|tuesday|wednesday|thursday|friday|saturday|sunday)|earlier|in (19|20)\d\d|just now)\b/.test(all))return['ps','pc'];
+  if(/\b(every (day|morning|week|evening|night|year|\w+day)|always|usually|often|never|sometimes|each day)\b/.test(all))return['psn','pcn'];
+  if(CN()==='C5'&&/\b(tomorrow|tonight|next (week|month|year|weekend|\w+day)|soon|later)\b/.test(all))return['psn'];
   return CN()==='C5'?['psn','pcn','pcf']:[]}
+ let CTX='';
  function flash(id){clearTimeout(tm);show(id);const k=$('#clk');if(k)k.classList.add('bad');if(TS[id].g==='pres'){const l=$('#clw');if(l)l.textContent='AUJOURD’HUI · PRÉSENT'}document.querySelectorAll('#cfr .cn').forEach(n=>n.classList.toggle('bad',n.dataset.t===id));tm=setTimeout(()=>{if(k)k.classList.remove('bad');document.querySelectorAll('#cfr .cn.bad').forEach(n=>n.classList.remove('bad'));show(curId)},3400)}
  function def(){const c=CN();return (STUDY[c]||['psn'])[0]}
  function pick(txt){const c=CN();if(c!=='C5')return def();return tenseOf(txt)||curId||def()}
@@ -236,7 +241,7 @@ svg:()=>{const c=195,y=250;let sand='';for(let i=0;i<6;i++)sand+=`<circle class=
   const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');const a=$('#cld');if(a&&a.textContent!==ds)a.textContent=ds;const b=$('#clt');if(b)b.textContent=hh+':'+mm;
   requestAnimationFrame(loop)}
  function init(){el=$('#clk');if(!el)return;$('#cfr').innerHTML=friseHTML();applyMode();document.querySelectorAll('#clkset button').forEach(b=>b.onclick=()=>{mode=b.dataset.k;try{localStorage.setItem('c-clock',mode)}catch(e){}applyMode()});set(def());requestAnimationFrame(loop)}
- return {init,forEx(ex){if(!el)return;set(pick([ex.screen,(ex.ok||[]).join(' '),ex.show].join(' ')))},forQ(q){if(!el)return;set(pick([q.q,(q.ok||[]).join(' '),q.why].join(' ')))},onMe(t){if(!el)return;const c=cands(t);if(c.length&&curId&&!c.includes(curId))flash(c[0])}};
+ return {init,forEx(ex){if(!el)return;CTX=[ex.screen,ex.show].join(" ");set(pick([ex.screen,(ex.ok||[]).join(' '),ex.show].join(' ')))},forQ(q){if(!el)return;CTX=String(q.q||"");set(pick([q.q,(q.ok||[]).join(' '),q.why].join(' ')))},onMe(t){if(!el)return;const c=cands(t);if(c.length&&curId&&!c.includes(curId))flash(c[0])}};
 })();
 window.addEventListener('load',()=>CLK.init());
 
@@ -1017,4 +1022,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101e"></script>
+</html><script src="voice.js?v=20261101f"></script>
