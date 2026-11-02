@@ -178,7 +178,7 @@ export function renderB1(root, { onExit } = {}) {
     const wide = root.clientWidth / Math.max(1, root.clientHeight) > 1.2;
     const sg = (wide ? SIGNS_L : SIGNS).map((g) => { const l = LIEUX.find((x) => x.k === g.k); return `<button type="button" class="sg ${lit(l, S) ? "on" : "off"}" data-l="${g.k}" aria-label="${esc(l.t)}" style="left:${g.x}%;top:${g.y}%;width:${g.w}%;height:${g.h}%">${esc(l.t)}</button>`; }).join("");
     const pl = LIEUX.map((l, i) => `<div class="pl" style="top:${(wide ? PLANKS_L : PLANKS)[i]}%">${esc(l.t)}</div>`).join("");
-    el.innerHTML = `${STY}<div class="b1x fo${fin === true ? " fin" : " in"}"><div class="bk" style="background-image:url(assets/img/b/${wide ? "foret-land" : "foret"}.jpg)"></div><div class="b1fb${wide ? " ls" : ""}">${pl}${sg}<button type="button" class="gc" id="b1Gc" style="left:${wide ? 52.6 : 64}%;top:${wide ? 7 : 6.6}%;width:${wide ? 12 : 22}%;height:${wide ? 4.6 : 4.2}%">Grand contrôle</button></div>
+    el.innerHTML = `${STY}<div class="b1x fo${fin === true ? " fin" : " in"}"><div class="bk" style="background-image:url(assets/img/b/${wide ? "foret-land" : "foret"}.jpg)"></div><div class="b1fb${wide ? " ls" : ""}">${pl}${sg}<button type="button" class="gc" id="b1Gc" style="left:${wide ? 52.6 : 56.5}%;top:${wide ? 7 : 6.6}%;width:${wide ? 12 : 22}%;height:${wide ? 4.6 : 4.2}%">Grand contrôle</button></div>
       <button type="button" class="back" id="b1Back">← B</button><div id="b1Pop"></div></div>`;
     el.querySelector("#b1Back").onclick = transition;
     const pop = el.querySelector("#b1Pop");
