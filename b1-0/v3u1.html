@@ -113,7 +113,7 @@ html,body{overflow-x:hidden;width:100%}.app{width:100%;overflow-x:hidden}.hd{min
   <div class="bar" id="bar"></div>
   <div class="scrim" id="scrim" hidden></div>
   <div class="menu" id="menu" hidden>
-   <h5>La bibliothèque · Vocabulaire · V3 · 10 unités</h5><div class="path"><b class="on">V3 · U1</b></div>
+   <h5>La bibliothèque · Vocabulaire · V3 · passerelle A2 → B1</h5><div class="path"><b class="on">V3 · U1</b></div>
    <h5>Aller à</h5><div class="jump" id="jump"></div>
    <h5>Réglages</h5><div class="pk" id="pk"></div><div class="pk" id="tpk"><button type="button" data-t="teacher" aria-label="Emma"><img alt="" src=""></button><button type="button" data-t="teacher2" aria-label="Lucas"><img alt="" src=""></button></div><div class="lgr"><button type="button" class="mybtn" id="mybtn" aria-label="Mon personnage"><span class="av"><img class="myimg" alt="" src=""></span>Mon personnage</button><button type="button" class="mybtn" id="tbtn" aria-label="Mon professeur">Prof : <span id="tn">Emma</span></button><div class="spd" role="group" aria-label="Vitesse du professeur"><span>Vitesse</span><button type="button" data-s="0.5">×0,5</button><button type="button" data-s="0.75">×0,75</button><button type="button" data-s="1">×1</button><button type="button" data-s="1.5">×1,5</button></div></div>
   </div>
@@ -876,4 +876,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8,9].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101u"></script>
+</html><script src="voice.js?v=20261101v"></script>
