@@ -554,7 +554,11 @@ async function runEx(ex,key,num,skill){
       const v=await typed(ex.ph||'Écris ta réponse en anglais…');
       if(v==null){await T(`Question passée. <small>Réponse : <em>${esc(show)}</em></small>`);return fin('skip')}
       if(a===0)rec.initial=v;
-      if(check(ex,v)){rec.final=v;await T(ex.yes+(a?' <small>(enregistré : en cours d’acquisition)</small>':''));return fin(a?'learning':'ok')}
+      let okv=check(ex,v);
+      if(!okv&&/^(Traduis|Retrouve)/.test(ex.k||'')&&v.trim()&&await aiOK()){
+        try{const w=waitRow();const r=await callAI({sit:ex.screen,crit:['Traduction correcte et naturelle en anglais : '+ex.screen.replace(/[«»]/g,'').trim()],model:show,ans:v,ctx:'Vocabulaire, traduction : accepte toute traduction correcte (grammaire, orthographe, mot visé de l’unité) même si elle diffère du corrigé.',logic:'Verdict correct seulement si la phrase est juste en anglais ET rend le sens du français.',prev:[]});w.remove();okv=r.verdict==='correct'||(r.satisfying&&!(r.errors||[]).length)}catch(e){}
+      }
+      if(okv){rec.final=v;await T(ex.yes+(a?' <small>(enregistré : en cours d’acquisition)</small>':''));return fin(a?'learning':'ok')}
       if(a===0)await T(`Pas tout à fait. ${diag(v,ex)} ${ex.hint} Essaie encore.`);
       else{await T(`Voici la réponse attendue : <em>${esc(show)}</em>. ${esc(stripC(ex.yes))}<br><small>Erreur à repérer : ${esc(ex.err)}</small>`);return fin('ko')}
     }
@@ -815,4 +819,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101n"></script>
+</html><script src="voice.js?v=20261101o"></script>
