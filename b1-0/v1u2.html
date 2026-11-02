@@ -735,10 +735,22 @@ async function VFICHE(){
   await T(esc(VU.obj));
   await B(VU.lots.map((l,i)=>`<span class="ln">Lot ${i+1} · ${esc(l.title)}</span>`).join(''));
 }
+async function vcardC(rows){const d=document.createElement('div');d.className='vc';
+ d.innerHTML=rows.map(r=>{const h=String(r[0]).split('\n'),w=h[0],pr=h[1]||'',mean=String(r[1]).split('\n'),w0=w.replace(/\s*\(.*$/,'');
+  return `<div><b>${esc2(w)}</b> — ${esc2(mean[0])}<button type="button" class="spk" data-w="${esc2(w0)}" onclick="sayW(this.dataset.w)">🔊</button><span>${esc2(pr)}${mean[1]?' · '+esc2(mean[1]):''}<br><i>${esc2(r[6])}</i></span><details style="margin-top:4px"><summary style="cursor:pointer;color:#8a5a1a;font-size:12px">Plus de détails</summary><span>Synonymes : ${esc2(r[2])}<br>UK / US : ${esc2(r[3])}<br>Antonymes : ${esc2(r[4])}<br>${esc2(r[5])}</span></details></div>`}).join('');
+ chat.appendChild(d);down();await sleep(RM?0:600);return await choose(['J’ai lu — suite'])}
+async function VPAIRS(){
+  P();lg(`${VU.N} · Contraires`);
+  await titleCard('Paires de contraires à retenir','',esc(VU.pairsintro));
+  const d=document.createElement('div');d.className='vc';
+  d.innerHTML=VU.pairs.map(r=>`<div><b>${esc2(r[0])}</b> — ${esc2(r[1])}<span><i>${esc2(r[2])}</i></span></div>`).join('');chat.appendChild(d);down();await sleep(RM?0:600);
+  await choose(['J’ai lu — suite']);
+  await B(`<span class="ln">${esc(VU.confh)}</span><small>${esc(VU.conf)}</small>`);
+}
 async function VLOT(k){
   P();const L=VU.lots[k];lg(`${VU.N} · Lot ${k+1}`);
   await titleCard(`Lot ${k+1} sur 5`,L.title,'10 mots');
-  await vcard(L.rows.slice(0,5));await vcard(L.rows.slice(5,10));
+  const vc=VU.fmt==='C'?vcardC:vcard;await vc(L.rows.slice(0,5));await vc(L.rows.slice(5,10));
   if(VU.exinlot){await titleCard('Exercices',`Lot ${k+1} · ${L.title}`);await VEX(VITEMS.filter(x=>x.lot===k+1),`v${VU.pal}u${VU.n}.l${k+1}.`)}
 }
 async function VREP(){
@@ -768,7 +780,7 @@ async function VNOTE(){
 }
 async function VEXB(){
   P();lg(`${VU.N} · Exercices`);
-  await titleCard('Exercices','20 exercices',esc(VU.exsub));
+  await titleCard('Exercices',`${VITEMS.length} exercices`,esc(VU.exsub));
   await VEX(VITEMS,`v${VU.pal}u${VU.n}.x.`);
 }
 async function VREEMPB(){
@@ -776,8 +788,8 @@ async function VREEMPB(){
   await titleCard('Réemploi rapide','Réutilise les mots de l’unité');
   await VEX(VU.rr.map(x=>Object.assign(x,{num:0})),`v${VU.pal}u${VU.n}.rr.`);
 }
-const SEC=VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
-const VJN=VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
+const SEC=VU.fmt==='C'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB,VREEMPB]:VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
+const VJN=VU.fmt==='C'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices','Réemploi']:VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
 
 
 /* ===== navigation par sections ===== */
@@ -803,4 +815,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101l"></script>
+</html><script src="voice.js?v=20261101m"></script>
