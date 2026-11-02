@@ -799,8 +799,58 @@ async function VDIAL(){
   await titleCard('Mini-dialogues de réemploi','');
   for(const t of VU.dial){const i=t.indexOf(' : ');const multi=t.indexOf('\n')>=0;const lab=(!multi&&i>0&&i<30)?t.slice(0,i):'Dialogue';const txt=(!multi&&i>0&&i<30)?t.slice(i+3):t;await B(`<span class="ln">${esc(lab)}</span><small>${esc(txt).replace(/\n/g,'<br>')}</small>`)}
 }
-const SEC=VU.fmt==='D'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB].concat(VU.dial.length?[VDIAL]:[]):VU.fmt==='C'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB,VREEMPB]:VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
-const VJN=VU.fmt==='D'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices'].concat(VU.dial.length?['Dialogues']:[]):VU.fmt==='C'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices','Réemploi']:VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
+async function VCFD(){
+  P();lg(`${VU.N} · Début`);
+  await titleCard('Contrôle final de vocabulaire',VU.unit,'15 points · environ 30 minutes');
+  await B(`<span class="ln">Consigne générale</span><small>${esc(VU.cons.replace(/^Consigne générale : /,''))}</small>`);
+}
+async function VCFQ(part){
+  P();const L=VU[part];lg(`${VU.N} · Partie ${part}`);
+  await titleCard('Partie '+part,VU.intro[part].replace(/^[ABC] · /,''),'5 points');
+  if(VU.intro[part+'i'])await T(esc(VU.intro[part+'i']));
+  for(const q of L){
+    P();const key='cf.'+q.n;
+    if(RESUME&&PR.ans[key]&&PR.ans[key].done)continue;
+    await T(`<b>${q.n}.</b> ${esc(q.q)}`);
+    const v=await typed(part==='C'?'Écris ta phrase en anglais…':part==='B'?'Ton sens en français…':'Le mot anglais…');
+    PR.ans[key]={v:v==null?'':v,skip:v==null,done:true};savePR();
+  }
+  if(part==='C'&&VU.intro.Cv)await T(esc(VU.intro.Cv));
+}
+const nf=(n)=>String(Math.round(n*100)/100).replace('.',',');
+async function VCFRES(){
+  P();lg(`${VU.N} · Résultat`);
+  await titleCard('Résultat','Contrôle final','');
+  const det=[];let sA=0,sB=0,sC=0,pend=false;
+  for(const q of VU.A){const r=PR.ans['cf.'+q.n]||{};const ok=!!r.v&&check({ok:q.ok},r.v);sA+=ok?1:0;det.push({n:q.n,p:'A',v:r.v,pts:ok?1:0,max:1,show:q.show})}
+  const ai=await aiOK();
+  const grade=async(q,part)=>{
+    const r=PR.ans['cf.'+q.n]||{};
+    if(!r.v){det.push({n:q.n,p:part,v:r.v,pts:0,max:1,show:part==='B'?q.show:q.ex});return 0}
+    if(!ai){pend=true;det.push({n:q.n,p:part,v:r.v,pts:null,max:1,show:part==='B'?q.show:q.ex});return 0}
+    try{
+      const item=part==='B'
+        ?{sit:'Donne le sens le plus précis possible : '+q.q,crit:['Le sens français restitue le sens du mot dans le contexte de l’unité (0,5 si l’idée générale est juste mais trop vague ou si une nuance essentielle manque)'],model:q.mean,ans:r.v,ctx:'Contrôle final de vocabulaire, unité « '+VU.unit+' ». Ne pas sanctionner une formulation française différente qui restitue le sens.',logic:'Compare le sens donné au sens attendu, sans exiger la même formulation.',prev:[]}
+        :{sit:q.q,crit:['Le mot imposé « '+q.word+' » est employé avec son bon sens, dans la situation décrite','La phrase est complète, bien construite et compréhensible'],model:q.ex,ans:r.v,ctx:'Contrôle final de vocabulaire, unité « '+VU.unit+' ». Les réponses peuvent varier si le sens et l’usage sont justes.',logic:'Si le mot imposé est absent ou utilisé avec un autre sens, le premier critère vaut 0.',prev:[]};
+      const w=waitRow();const a=await callAI(item);w.remove();
+      const c=a.criteria||[];let pts;
+      if(part==='B')pts=c[0]?c[0].score:0;else{const s1=c[0]?c[0].score:0,s2=c[1]?c[1].score:0;pts=s1===0?0:0.5*s1+0.5*s2}
+      det.push({n:q.n,p:part,v:r.v,pts,max:1,show:part==='B'?q.show:q.ex,why:c.map(x=>x.why).filter(Boolean).join(' ')});return pts;
+    }catch(e){pend=true;det.push({n:q.n,p:part,v:r.v,pts:null,max:1,show:part==='B'?q.show:q.ex});return 0}
+  };
+  for(const q of VU.B)sB+=await grade(q,'B');
+  for(const q of VU.C)sC+=await grade(q,'C');
+  const total=sA+sB+sC;
+  PR.cf={A:sA,B:sB,C:sC,total,pending:pend,t:Date.now()};savePR();
+  const head=pend
+    ?`A : <b>${nf(sA)} / 5</b><br>B et C : en attente de correction (tes réponses sont enregistrées)<br>La note sur 15 sera calculée dès que la correction intelligente sera connectée.`
+    :`A : <b>${nf(sA)} / 5</b> · B : <b>${nf(sB)} / 5</b> · C : <b>${nf(sC)} / 5</b><br>Note : <b>${nf(total)} / 15</b>`;
+  await B(`<span class="ln">Contrôle final · ${esc(VU.unit)}</span><small>${head}</small>`);
+  const lines=det.map(d=>`<b>${d.p}${d.n}</b> · ${d.pts==null?'en attente':nf(d.pts)+' / 1'}<br>Ta réponse : ${esc(d.v||'—')}<br>Attendu : ${esc(d.show)}${d.why?'<br><i>'+esc(d.why)+'</i>':''}`).join('<hr style="border:0;border-top:1px solid #0002;margin:6px 0">');
+  await B(`<span class="ln">Détail</span><small>${lines}</small>`);
+}
+const SEC=VU.fmt==='T'?[VCFD,()=>VCFQ('A'),()=>VCFQ('B'),()=>VCFQ('C'),VCFRES]:VU.fmt==='D'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB].concat(VU.dial.length?[VDIAL]:[]):VU.fmt==='C'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB,VREEMPB]:VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
+const VJN=VU.fmt==='T'?['Début','A · Mot','B · Sens','C · Phrases','Résultat']:VU.fmt==='D'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices'].concat(VU.dial.length?['Dialogues']:[]):VU.fmt==='C'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices','Réemploi']:VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
 
 
 /* ===== navigation par sections ===== */
@@ -826,4 +876,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101s"></script>
+</html><script src="voice.js?v=20261101t"></script>
