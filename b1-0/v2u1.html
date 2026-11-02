@@ -530,7 +530,9 @@ function check(it,v){
 function diag(v,it){return ''}
 const stripC=s=>s.replace(/^Correct\s*:\s*/,'');
 /* un exercice guidé : tentative → indice → nouvelle tentative → correction complète */
+let RESUME=false;
 async function runEx(ex,key,num,skill){
+  if(RESUME){const o=PR.ans&&PR.ans[key];if(o&&o.status&&o.status!=='pending')return o.status}
   P();const rec=PR.ans[key]={skill,t:ex.t};
   await T(`<b>${num?'Exercice '+num+' · ':''}${ex.k}</b><br>${esc(ex.screen)}${ex.task?`<br><small>${esc(ex.task)}</small>`:''}`);
   const fin=(st)=>{rec.status=st;if(st==='ko')PR.sk[skill]=(PR.sk[skill]||0)+1;savePR();return st};
@@ -810,7 +812,7 @@ function paintJump(cur){paintBar(cur);jbox.querySelectorAll('button[data-s]').fo
 async function play(s){
   setMenu(false);const my=++RUN;chat.innerHTML='';zone.innerHTML='';
   try{
-    for(let k=s;k<SEC.length;k++){paintJump(k);await SEC[k]();done(k)}
+    for(let k=s;k<SEC.length;k++){paintJump(k);RESUME=!PR.done.includes(k);await SEC[k]();RESUME=false;done(k)}
     zone.innerHTML=`<div class="note">Fin du V2 · U1 en dialogue.</div><div class="chips" style="margin-top:8px"><button class="again" type="button" id="ag">Rejouer depuis le début</button></div>`;
     zone.querySelector('#ag').onclick=()=>play(0);
   }catch(e){if(e.message!=='stop')throw e}
@@ -819,4 +821,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7,8].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101p"></script>
+</html><script src="voice.js?v=20261101q"></script>
