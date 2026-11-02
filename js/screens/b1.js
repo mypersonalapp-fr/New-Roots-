@@ -1,10 +1,10 @@
 // The Roots — B (B1.0 / B1.1) : accès aux ateliers de Grammaire en dialogue (G1, G2…).
 // Les ateliers sont des pages autonomes (b1-0/g1.html, b1-0/g2.html) ouvertes en plein écran.
-import "../data/roots-ai-url.js?v=20261101w";
+import "../data/roots-ai-url.js?v=20261101x";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const BG = `<img class="screen-cover-bg bg-img-light" src="assets/img/shell-bg.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-dark" src="assets/img/shell-bg-dark.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape" src="assets/img/shell-bg-landscape.jpg" alt="" aria-hidden="true"/><img class="screen-cover-bg bg-img-landscape-dark" src="assets/img/shell-bg-landscape-dark.jpg" alt="" aria-hidden="true"/>`;
-const prog = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return { co1: { parts: (co1.done || []).length, total: 8, ok: (co1.done || []).length >= 8 }, v3cf: { parts: (v3cf.done || []).length, total: 5, ok: (v3cf.done || []).length >= 5 }, v3u1: { parts: (v3u1.done || []).length, total: 10, ok: (v3u1.done || []).length >= 10 }, v2u4: { parts: (v2u4.done || []).length, total: 10, ok: (v2u4.done || []).length >= 10 }, v2u5: { parts: (v2u5.done || []).length, total: 9, ok: (v2u5.done || []).length >= 9 }, v2u6: { parts: (v2u6.done || []).length, total: 10, ok: (v2u6.done || []).length >= 10 }, v2u7: { parts: (v2u7.done || []).length, total: 10, ok: (v2u7.done || []).length >= 10 }, v2u8: { parts: (v2u8.done || []).length, total: 10, ok: (v2u8.done || []).length >= 10 }, v2u9: { parts: (v2u9.done || []).length, total: 10, ok: (v2u9.done || []).length >= 10 }, v2u10: { parts: (v2u10.done || []).length, total: 10, ok: (v2u10.done || []).length >= 10 }, v2u3: { parts: (v2u3.done || []).length, total: 9, ok: (v2u3.done || []).length >= 9 }, v2u2: { parts: (v2u2.done || []).length, total: 10, ok: (v2u2.done || []).length >= 10 }, v1u4: { parts: (v1u4.done || []).length, total: 8, ok: (v1u4.done || []).length >= 8 }, v2u1: { parts: (v2u1.done || []).length, total: 9, ok: (v2u1.done || []).length >= 9 }, v1u9: { parts: (v1u9.done || []).length, total: 9, ok: (v1u9.done || []).length >= 9 }, v1u10: { parts: (v1u10.done || []).length, total: 9, ok: (v1u10.done || []).length >= 9 },}; } };
+const prog = (k) => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return { co1: { parts: (co1.done || []).length, total: 9, ok: (co1.done || []).length >= 9 }, v3cf: { parts: (v3cf.done || []).length, total: 5, ok: (v3cf.done || []).length >= 5 }, v3u1: { parts: (v3u1.done || []).length, total: 10, ok: (v3u1.done || []).length >= 10 }, v2u4: { parts: (v2u4.done || []).length, total: 10, ok: (v2u4.done || []).length >= 10 }, v2u5: { parts: (v2u5.done || []).length, total: 9, ok: (v2u5.done || []).length >= 9 }, v2u6: { parts: (v2u6.done || []).length, total: 10, ok: (v2u6.done || []).length >= 10 }, v2u7: { parts: (v2u7.done || []).length, total: 10, ok: (v2u7.done || []).length >= 10 }, v2u8: { parts: (v2u8.done || []).length, total: 10, ok: (v2u8.done || []).length >= 10 }, v2u9: { parts: (v2u9.done || []).length, total: 10, ok: (v2u9.done || []).length >= 10 }, v2u10: { parts: (v2u10.done || []).length, total: 10, ok: (v2u10.done || []).length >= 10 }, v2u3: { parts: (v2u3.done || []).length, total: 9, ok: (v2u3.done || []).length >= 9 }, v2u2: { parts: (v2u2.done || []).length, total: 10, ok: (v2u2.done || []).length >= 10 }, v1u4: { parts: (v1u4.done || []).length, total: 8, ok: (v1u4.done || []).length >= 8 }, v2u1: { parts: (v2u1.done || []).length, total: 9, ok: (v2u1.done || []).length >= 9 }, v1u9: { parts: (v1u9.done || []).length, total: 9, ok: (v1u9.done || []).length >= 9 }, v1u10: { parts: (v1u10.done || []).length, total: 9, ok: (v1u10.done || []).length >= 9 },}; } };
 
 // Statut de chaque atelier, lu dans la progression enregistrée par les pages.
 export function b1Status() {
@@ -16,47 +16,47 @@ export function b1Status() {
 
 const LIEUX = [
   { k: "gram", t: "Grammaire", p: "La salle de classe", img: "lieu-gram.jpg" },
-  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261101w", preview: true },
+  { k: "conj", t: "Conjugaison", p: "L'atelier de l'horloger", img: "lieu-conj.jpg", url: "b1-0/c1.html?v=20261101x", preview: true },
   { k: "voc", t: "Vocabulaire", p: "La bibliothèque", img: "lieu-voc.jpg" },
   { k: "comp", t: "Compréhension", p: "L'observatoire", img: "lieu-comp.jpg" },
   { k: "expr", t: "Expression", p: "Le petit théâtre", img: "lieu-expr.jpg" },
 ];
 const WORKSHOPS = [
-  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261101w" },
-  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261101w" },
-  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261101w" },
-  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261101w" },
-  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261101w" },
-  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261101w" },
-  { k: "c1", n: "C1", t: "Le présent simple", s: "Former les phrases au présent simple", url: "b1-0/c1.html?v=20261101w" },
-  { k: "c2", n: "C2", t: "Le présent continu", s: "Former des phrases sur les actions en cours", url: "b1-0/c2.html?v=20261101w" },
-  { k: "c3", n: "C3", t: "Le prétérit simple", s: "Raconter et construire des phrases au passé", url: "b1-0/c3.html?v=20261101w" },
-  { k: "c4", n: "C4", t: "Le prétérit continu", s: "Décrire une action qui était en cours dans le passé", url: "b1-0/c4.html?v=20261101w" },
-  { k: "c5", n: "C5", t: "Les formes du futur", s: "Will, be going to, présent continu : décider, projeter, organiser", url: "b1-0/c5.html?v=20261101w" },
-  { k: "v1u1", n: "U1", t: "Identité et personnes", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u1.html?v=20261101w" },
-  { k: "v1u2", n: "U2", t: "La maison et les objets du quotidien", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u2.html?v=20261101w" },
-  { k: "v1u3", n: "U3", t: "École et apprentissage", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u3.html?v=20261101w" },
-  { k: "v1u4", n: "U4", t: "Temps, calendrier et routines", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u4.html?v=20261101w" },
-  { k: "v1u5", n: "U5", t: "Alimentation et repas", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u5.html?v=20261101w" },
-  { k: "v1u6", n: "U6", t: "La ville et les transports", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u6.html?v=20261101w" },
-  { k: "v1u7", n: "U7", t: "Le corps, la santé et les émotions", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u7.html?v=20261101w" },
-  { k: "v1u8", n: "U8", t: "Vêtements, météo et saisons", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u8.html?v=20261101w" },
-  { k: "v1u9", n: "U9", t: "Loisirs, sport et médias", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u9.html?v=20261101w" },
-  { k: "v1u10", n: "U10", t: "Actions, échanges et connecteurs", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u10.html?v=20261101w" },
-  { k: "v2u1", n: "U1", t: "Voyages et réservations", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u1.html?v=20261101w" },
-  { k: "v2u2", n: "U2", t: "Achats et argent", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u2.html?v=20261101w" },
-  { k: "v2u3", n: "U3", t: "Alimentation et restaurant", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u3.html?v=20261101w" },
-  { k: "v2u4", n: "U4", t: "Santé, symptômes et pharmacie", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u4.html?v=20261101w" },
-  { k: "v2u5", n: "U5", t: "Vêtements, chaussures et style", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u5.html?v=20261101w" },
-  { k: "v2u6", n: "U6", t: "Ville, transports et itinéraires", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u6.html?v=20261101w" },
-  { k: "v2u7", n: "U7", t: "Météo, saisons et climat", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u7.html?v=20261101w" },
-  { k: "v2u8", n: "U8", t: "Loisirs, sport et médias", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u8.html?v=20261101w" },
-  { k: "v2u9", n: "U9", t: "Communication, téléphone et internet", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u9.html?v=20261101w" },
-  { k: "v2u10", n: "U10", t: "Travail, études et carrière", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u10.html?v=20261101w" },
-  { k: "v3u1", n: "U1", t: "Opinions, arguments et échanges", s: "V3 · Passerelle A2 → B1 · 50 mots et expressions en 5 lots", url: "b1-0/v3u1.html?v=20261101w" },
-  { k: "v3cf", n: "Test", t: "Contrôle final de vocabulaire", s: "V3 · Introduction au B1 · 15 points", url: "b1-0/v3cf.html?v=20261101w" },
-  { k: "co1", n: "CO1", t: "Comprendre des opinions et des échanges courts", s: "V3 · Passerelle A2 → B1 · 3 séquences et un contrôle sur 15", url: "b1-0/co1.html?v=20261101w" },
-  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261101w" },
+  { k: "g1", n: "G1", t: "The Foundations of Real English", s: "Les fondamentaux pour parler un anglais naturel", url: "b1-0/g1.html?v=20261101x" },
+  { k: "g2", n: "G2", t: "Du choix de la forme à une communication précise", s: "Present Simple vs Present Continuous", url: "b1-0/g2.html?v=20261101x" },
+  { k: "g3", n: "G3", t: "Parler d’une possibilité future et de sa conséquence", s: "First conditional", url: "b1-0/g3.html?v=20261101x" },
+  { k: "g4", n: "G4", t: "Past Simple and Present Perfect", s: "Raconter un film, parler de ses expériences", url: "b1-0/g4.html?v=20261101x" },
+  { k: "g5", n: "G5", t: "Parler du futur en contexte", s: "Will, be going to, Present Continuous, Present Simple", url: "b1-0/g5.html?v=20261101x" },
+  { k: "g6", n: "G6", t: "Raconter une action passée", s: "Past Simple, Past Continuous et used to", url: "b1-0/g6.html?v=20261101x" },
+  { k: "c1", n: "C1", t: "Le présent simple", s: "Former les phrases au présent simple", url: "b1-0/c1.html?v=20261101x" },
+  { k: "c2", n: "C2", t: "Le présent continu", s: "Former des phrases sur les actions en cours", url: "b1-0/c2.html?v=20261101x" },
+  { k: "c3", n: "C3", t: "Le prétérit simple", s: "Raconter et construire des phrases au passé", url: "b1-0/c3.html?v=20261101x" },
+  { k: "c4", n: "C4", t: "Le prétérit continu", s: "Décrire une action qui était en cours dans le passé", url: "b1-0/c4.html?v=20261101x" },
+  { k: "c5", n: "C5", t: "Les formes du futur", s: "Will, be going to, présent continu : décider, projeter, organiser", url: "b1-0/c5.html?v=20261101x" },
+  { k: "v1u1", n: "U1", t: "Identité et personnes", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u1.html?v=20261101x" },
+  { k: "v1u2", n: "U2", t: "La maison et les objets du quotidien", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u2.html?v=20261101x" },
+  { k: "v1u3", n: "U3", t: "École et apprentissage", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u3.html?v=20261101x" },
+  { k: "v1u4", n: "U4", t: "Temps, calendrier et routines", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u4.html?v=20261101x" },
+  { k: "v1u5", n: "U5", t: "Alimentation et repas", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u5.html?v=20261101x" },
+  { k: "v1u6", n: "U6", t: "La ville et les transports", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u6.html?v=20261101x" },
+  { k: "v1u7", n: "U7", t: "Le corps, la santé et les émotions", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u7.html?v=20261101x" },
+  { k: "v1u8", n: "U8", t: "Vêtements, météo et saisons", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u8.html?v=20261101x" },
+  { k: "v1u9", n: "U9", t: "Loisirs, sport et médias", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u9.html?v=20261101x" },
+  { k: "v1u10", n: "U10", t: "Actions, échanges et connecteurs", s: "V1 · 50 mots et expressions en 5 lots", url: "b1-0/v1u10.html?v=20261101x" },
+  { k: "v2u1", n: "U1", t: "Voyages et réservations", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u1.html?v=20261101x" },
+  { k: "v2u2", n: "U2", t: "Achats et argent", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u2.html?v=20261101x" },
+  { k: "v2u3", n: "U3", t: "Alimentation et restaurant", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u3.html?v=20261101x" },
+  { k: "v2u4", n: "U4", t: "Santé, symptômes et pharmacie", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u4.html?v=20261101x" },
+  { k: "v2u5", n: "U5", t: "Vêtements, chaussures et style", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u5.html?v=20261101x" },
+  { k: "v2u6", n: "U6", t: "Ville, transports et itinéraires", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u6.html?v=20261101x" },
+  { k: "v2u7", n: "U7", t: "Météo, saisons et climat", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u7.html?v=20261101x" },
+  { k: "v2u8", n: "U8", t: "Loisirs, sport et médias", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u8.html?v=20261101x" },
+  { k: "v2u9", n: "U9", t: "Communication, téléphone et internet", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u9.html?v=20261101x" },
+  { k: "v2u10", n: "U10", t: "Travail, études et carrière", s: "V2 · Palier A2 · 50 mots et expressions en 5 lots", url: "b1-0/v2u10.html?v=20261101x" },
+  { k: "v3u1", n: "U1", t: "Opinions, arguments et échanges", s: "V3 · Passerelle A2 → B1 · 50 mots et expressions en 5 lots", url: "b1-0/v3u1.html?v=20261101x" },
+  { k: "v3cf", n: "Test", t: "Contrôle final de vocabulaire", s: "V3 · Introduction au B1 · 15 points", url: "b1-0/v3cf.html?v=20261101x" },
+  { k: "co1", n: "CO1", t: "Comprendre des opinions et des échanges courts", s: "V3 · Passerelle A2 → B1 · 3 séquences, 6 entraînements et un contrôle sur 15", url: "b1-0/co1.html?v=20261101x" },
+  { k: "tf", n: "Test", t: "Test final de grammaire", s: "Bilan cumulatif G1 à G6 · 36 questions", url: "b1-0/test.html?v=20261101x" },
 ];
 
 export function renderB1(root, { onExit } = {}) {
