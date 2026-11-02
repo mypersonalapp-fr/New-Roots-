@@ -557,7 +557,7 @@ async function runEx(ex,key,num,skill){
       if(v==null){await T(`Question passée. <small>Réponse : <em>${esc(show)}</em></small>`);return fin('skip')}
       if(a===0)rec.initial=v;
       let okv=check(ex,v);
-      if(!okv&&/^(Traduis|Retrouve)/.test(ex.k||'')&&v.trim()&&await aiOK()){
+      if(!okv&&/^(Traduis|Retrouve|Reformule)/.test(ex.k||'')&&v.trim()&&await aiOK()){
         try{const w=waitRow();const r=await callAI({sit:ex.screen,crit:['Traduction correcte et naturelle en anglais : '+ex.screen.replace(/[«»]/g,'').trim()],model:show,ans:v,ctx:'Vocabulaire, traduction : accepte toute traduction correcte (grammaire, orthographe, mot visé de l’unité) même si elle diffère du corrigé.',logic:'Verdict correct seulement si la phrase est juste en anglais ET rend le sens du français.',prev:[]});w.remove();okv=r.verdict==='correct'||(r.satisfying&&!(r.errors||[]).length)}catch(e){}
       }
       if(okv){rec.final=v;await T(ex.yes+(a?' <small>(enregistré : en cours d’acquisition)</small>':''));return fin(a?'learning':'ok')}
@@ -749,9 +749,9 @@ async function VPAIRS(){
   P();lg(`${VU.N} · Contraires`);
   await titleCard('Paires de contraires à retenir','',esc(VU.pairsintro));
   const d=document.createElement('div');d.className='vc';
-  d.innerHTML=VU.pairs.map(r=>`<div><b>${esc2(r[0])}</b> — ${esc2(r[1])}<span><i>${esc2(r[2])}</i></span></div>`).join('');chat.appendChild(d);down();await sleep(RM?0:600);
+  d.innerHTML=VU.pairs.map(r=>`<div><b>${esc2(r[0])}</b>${r[1]?' — '+esc2(r[1]):''}<span><i>${esc2(r[2])}</i></span></div>`).join('');chat.appendChild(d);down();await sleep(RM?0:600);
   await choose(['J’ai lu — suite']);
-  await B(`<span class="ln">${esc(VU.confh)}</span><small>${esc(VU.conf)}</small>`);
+  if(VU.conf)await B(`<span class="ln">${esc(VU.confh)}</span><small>${esc(VU.conf)}</small>`);
 }
 async function VLOT(k){
   P();const L=VU.lots[k];lg(`${VU.N} · Lot ${k+1}`);
@@ -794,8 +794,13 @@ async function VREEMPB(){
   await titleCard('Réemploi rapide','Réutilise les mots de l’unité');
   await VEX(VU.rr.map(x=>Object.assign(x,{num:0})),`v${VU.pal}u${VU.n}.rr.`);
 }
-const SEC=VU.fmt==='C'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB,VREEMPB]:VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
-const VJN=VU.fmt==='C'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices','Réemploi']:VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
+async function VDIAL(){
+  P();lg(`${VU.N} · Mini-dialogues`);
+  await titleCard('Mini-dialogues de réemploi','');
+  for(const t of VU.dial){const i=t.indexOf(' : ');const multi=t.indexOf('\n')>=0;const lab=(!multi&&i>0&&i<30)?t.slice(0,i):'Dialogue';const txt=(!multi&&i>0&&i<30)?t.slice(i+3):t;await B(`<span class="ln">${esc(lab)}</span><small>${esc(txt).replace(/\n/g,'<br>')}</small>`)}
+}
+const SEC=VU.fmt==='D'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB].concat(VU.dial.length?[VDIAL]:[]):VU.fmt==='C'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VPAIRS,VNOTE,VEXB,VREEMPB]:VU.fmt==='B'?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VNOTE,VEXB,VREEMPB]:VU.exinlot?[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VREP,VREEMP,VPROD]:[VFICHE,()=>VLOT(0),()=>VLOT(1),()=>VLOT(2),()=>VLOT(3),()=>VLOT(4),VEXOS,VPROD];
+const VJN=VU.fmt==='D'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices'].concat(VU.dial.length?['Dialogues']:[]):VU.fmt==='C'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Contraires','Repères','Exercices','Réemploi']:VU.fmt==='B'?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Exercices','Réemploi']:VU.exinlot?['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Repères','Réemploi','Production']:['Début','Lot 1','Lot 2','Lot 3','Lot 4','Lot 5','Exercices','Production'];
 
 
 /* ===== navigation par sections ===== */
@@ -821,4 +826,4 @@ jbox.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>play(+b.dataset
 document.getElementById('rz').onclick=()=>{PR={done:[],mis:{},ex:0,hist:[],seen:{},set:'A',ans:{},sk:{},ctl:{}};savePR();paintJump();play(0)};
 {const first=[0,1,2,3,4,5,6,7].find(i=>!PR.done.includes(i));paintJump();play(first===undefined?0:first)}
 </script>
-</html><script src="voice.js?v=20261101q"></script>
+</html><script src="voice.js?v=20261101s"></script>
